@@ -72,7 +72,7 @@
         
         <div class="site-meta">
             <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
-            <h2 class="site-description">爱tingting</h2>
+            <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
             
@@ -281,13 +281,19 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#解法一日志包含">解法一日志包含</a></li>
-    <li><a href="#解法二打自增">解法二打自增</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#非预期">非预期</a></li>
-    <li><a href="#预期解">预期解</a></li>
+    <li><a href="#ez_php">ez_php</a>
+      <ol>
+        <li><a href="#解法一日志包含">解法一日志包含</a></li>
+        <li><a href="#解法二打自增">解法二打自增</a></li>
+      </ol>
+    </li>
+    <li><a href="#coding-loving-ssti">Coding Loving-ssti</a></li>
+    <li><a href="#light_pink-sql">light_pink-sql</a>
+      <ol>
+        <li><a href="#非预期">非预期</a></li>
+        <li><a href="#预期解">预期解</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -310,7 +316,7 @@
                 write.up
             </a>
         
-            <a href="/categories/web/" style="background-color: #2a9d8f; color: #fff;">
+            <a href="/categories/web/" style="background-color: #ff0000; color: #fff;">
                 web
             </a>
         
@@ -371,8 +377,8 @@
     <section class="article-content">
     
     
-    <h1 id="ez_php">ez_php
-</h1><p><img src="/p/nss-round28-web/image-20250324211919479.png"
+    <h2 id="ez_php">ez_php
+</h2><p><img src="/p/nss-round28-web/image-20250324211919479.png"
 	width="784"
 	height="389"
 	srcset="/p/nss-round28-web/image-20250324211919479_hu_9e2f1f5bb774f8a4.png 480w, /p/nss-round28-web/image-20250324211919479_hu_c65d9ac534a666c3.png 1024w"
@@ -411,8 +417,8 @@
 		data-flex-basis="1050px"
 	
 ></p>
-<h2 id="解法一日志包含">解法一日志包含
-</h2><p>接下来我打的是日志包含，算是非预期</p>
+<h3 id="解法一日志包含">解法一日志包含
+</h3><p>接下来我打的是日志包含，算是非预期</p>
 <p><img src="/p/nss-round28-web/image-20250324212746776.png"
 	width="1238"
 	height="690"
@@ -442,8 +448,8 @@
 		data-flex-basis="418px"
 	
 ></p>
-<h2 id="解法二打自增">解法二打自增
-</h2><p>文件包含读取后，有base64字符（还一个非预期直接/file就能出flag）</p>
+<h3 id="解法二打自增">解法二打自增
+</h3><p>文件包含读取后，有base64字符（还一个非预期直接/file就能出flag）</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -703,8 +709,8 @@
     >对于RCE和文件包含的一点总结 | root@wanth3f1ag</a></p>
 <p>[<a class="link" href="https://boogipop.com/2023/03/02/[HNCTF]-challenge_rce/"  target="_blank" rel="noopener"
     >HNCTF] challenge_rce - Boogiepop Doesn&rsquo;t Laugh</a></p>
-<h1 id="coding-loving-ssti">Coding Loving-ssti
-</h1><p>有源码先审计代码</p>
+<h2 id="coding-loving-ssti">Coding Loving-ssti
+</h2><p>有源码先审计代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -963,10 +969,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>总结，fenjing还是很强，以前不会用，以后注意一定要带上参数</p>
-<h1 id="light_pink-sql">light_pink-sql
-</h1><p>这题是考sql，但是有非预期</p>
-<h2 id="非预期">非预期
-</h2><p>拿dirsearch扫一下</p>
+<h2 id="light_pink-sql">light_pink-sql
+</h2><p>这题是考sql，但是有非预期</p>
+<h3 id="非预期">非预期
+</h3><p>拿dirsearch扫一下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1018,8 +1024,8 @@
 		data-flex-basis="448px"
 	
 ></p>
-<h2 id="预期解">预期解
-</h2><p>预期解显然就是打sql</p>
+<h3 id="预期解">预期解
+</h3><p>预期解显然就是打sql</p>
 <p>先打<code>1'#%23</code>(%23就是#，&ndash;+被过滤了)</p>
 <p>然后试<code>1' order by 5%23</code>(试到6报错)</p>
 <p><img src="/p/nss-round28-web/image-20250325110841608.png"
@@ -1205,6 +1211,32 @@
             
                 
 <article class="">
+    <a href="/p/2025-tcgctf-write.up/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-TCGCTF-write.up</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2024-xyctf-web-%E5%A4%8D%E7%8E%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2024-xyctf-web-复现</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-%E9%95%BF%E5%9F%8E%E6%9D%AF-ccforum/">
         
         
@@ -1231,12 +1263,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-nss%23round29-misc/">
+    <a href="/p/2025-sqctf/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-nss#round29-misc</h2>
+            <h2 class="article-title">2025-sqctf</h2>
         </div>
     </a>
 </article>
@@ -1305,8 +1337,6 @@
     </section>
     
     <section class="powerby">
-        
-            我爱tingting <br/>
         使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
         主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
