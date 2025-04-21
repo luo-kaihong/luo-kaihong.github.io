@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" misc 27262524 拿到一个加密嵌套压缩包，直接爆破\n发现密码是272727，做misc多了，直接敏锐察觉接下来的密码就是文件名重复三次了，写一个脚本\n">
-<title>2025-nss-round29-misc</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" web 直接dirsearch扫描得flag.php即可\nmisc three-ucsc 盲水印命令\n1 java -jar BlindWatermark-v0.0.3.jar decode -f signwithflag.png flag.png 得到8f02d3e7\n然后二进制转base64转摩斯\n-ce89-4d6b-830e-\n流量包追逐流一翻找到part3密码\n">
+<title>2025-UCSC-CTF</title>
 
-<link rel='canonical' href='https://luo-kaihong.github.io/p/2025-nss-round29-misc/'>
+<link rel='canonical' href='https://luo-kaihong.github.io/p/2025-ucsc-ctf/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2025-nss-round29-misc">
-<meta property='og:description' content=" misc 27262524 拿到一个加密嵌套压缩包，直接爆破\n发现密码是272727，做misc多了，直接敏锐察觉接下来的密码就是文件名重复三次了，写一个脚本\n">
-<meta property='og:url' content='https://luo-kaihong.github.io/p/2025-nss-round29-misc/'>
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2025-UCSC-CTF">
+<meta property='og:description' content=" web 直接dirsearch扫描得flag.php即可\nmisc three-ucsc 盲水印命令\n1 java -jar BlindWatermark-v0.0.3.jar decode -f signwithflag.png flag.png 得到8f02d3e7\n然后二进制转base64转摩斯\n-ce89-4d6b-830e-\n流量包追逐流一翻找到part3密码\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/2025-ucsc-ctf/'>
 <meta property='og:site_name' content='罗铠鸿'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-03-31T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-31T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="2025-nss-round29-misc">
-<meta name="twitter:description" content=" misc 27262524 拿到一个加密嵌套压缩包，直接爆破\n发现密码是272727，做misc多了，直接敏锐察觉接下来的密码就是文件名重复三次了，写一个脚本\n">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-04-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-04-20T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="2025-UCSC-CTF">
+<meta name="twitter:description" content=" web 直接dirsearch扫描得flag.php即可\nmisc three-ucsc 盲水印命令\n1 java -jar BlindWatermark-v0.0.3.jar decode -f signwithflag.png flag.png 得到8f02d3e7\n然后二进制转base64转摩斯\n-ce89-4d6b-830e-\n流量包追逐流一翻找到part3密码\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -281,9 +281,18 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#27262524">27262524</a></li>
-    <li><a href="#jojo">JOJO</a></li>
-    <li><a href="#东北jail">东北jail</a></li>
+    <li><a href="#web">web</a></li>
+    <li><a href="#misc">misc</a>
+      <ol>
+        <li><a href="#three-ucsc"><strong>three-ucsc</strong></a></li>
+        <li><a href="#小套不是套"><strong>小套不是套</strong></a>
+          <ol>
+            <li><a href="#补充残缺的png头our-secret解密">补充残缺的png头+Our Secret解密</a></li>
+            <li><a href="#crc爆破">crc爆破</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -315,7 +324,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/2025-nss-round29-misc/">2025-nss-round29-misc</a>
+            <a href="/p/2025-ucsc-ctf/">2025-UCSC-CTF</a>
         </h2>
     
         
@@ -337,7 +346,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2025-03-31</time>
+                <time class="article-time--published">2025-04-20</time>
             </div>
         
 
@@ -368,22 +377,85 @@
     
     
     <hr>
-<h1 id="misc">misc
-</h1><h2 id="27262524">27262524
-</h2><p>拿到一个加密嵌套压缩包，直接爆破</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331162413963.png"
-	width="568"
-	height="522"
-	srcset="/p/2025-nss-round29-misc/image-20250331162413963_hu_f36731001188ca65.png 480w, /p/2025-nss-round29-misc/image-20250331162413963_hu_d1227128ef293b90.png 1024w"
+<h2 id="web">web
+</h2><p>直接dirsearch扫描得flag.php即可</p>
+<h2 id="misc">misc
+</h2><h3 id="three-ucsc"><strong>three-ucsc</strong>
+</h3><p>盲水印命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">java -jar BlindWatermark-v0.0.3.jar decode -f signwithflag.png flag.png 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250420140403286.png" alt="image-20250420140403286" style="zoom: 33%;" />
+<p>得到<strong>8f02d3e7</strong></p>
+<p><strong>然后二进制转base64转摩斯</strong></p>
+<img src="image-20250420140328613.png" alt="image-20250420140328613" style="zoom:50%;" />
+<p>-ce89-4d6b-830e-</p>
+<p>流量包追逐流一翻找到part3密码</p>
+<img src="image-20250420140653117.png" alt="image-20250420140653117" style="zoom:50%;" />
+<p>得到5d0cb5695077</p>
+<p>最终flag{8f02d3e7-ce89-4d6b-830e-5d0cb5695077}</p>
+<h3 id="小套不是套"><strong>小套不是套</strong>
+</h3><p>第一个二维码一扫得到tess的密码!@#QWE123987。</p>
+<p>第二层是个伪加密，09改00</p>
+<img src="image-20250420194024676.png" alt="image-20250420194024676" style="zoom:50%;" />
+<p>得到图片</p>
+<img src="image-20250420194502259.png" alt="image-20250420194502259" style="zoom:50%;" />
+<h4 id="补充残缺的png头our-secret解密">补充残缺的png头+Our Secret解密
+</h4><p>010打开，FFD9其实是给确少png文件头的png。为什么？首先png文件头格式是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">89 50 4E 47 0D 0A 1A 0A
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>且一定有IHDR数据块</p>
+<img src="image-20250420203019642.png" alt="image-20250420203019642" style="zoom:50%;" />
+<p>然后<code>0D 0A 1A 0A</code>开始复制到png文件尾（<strong>IEND块</strong><code>00 00 00 00 49 45 4E 44 AE 42 60 82</code>）</p>
+<img src="image-20250420203639217.png" alt="image-20250420203639217" style="zoom:50%;" />
+<p>在这段数据块前添加png文件头<code>89 50 4E 47</code>就组成了一个新的图片</p>
+<img src="image-20250420203746226.png" alt="image-20250420203746226" style="zoom:50%;" />
+<p>但是其实不对，后面的数据块也要加上，因为这个特征是oursecret隐写</p>
+<p><img src="/p/2025-ucsc-ctf/image-20250420230016180.png"
+	width="593"
+	height="239"
+	srcset="/p/2025-ucsc-ctf/image-20250420230016180_hu_bc63e7fa01ae6d07.png 480w, /p/2025-ucsc-ctf/image-20250420230016180_hu_21b6aab954ecda78.png 1024w"
 	loading="lazy"
+	
+		alt="image-20250420230016180"
 	
 	
 		class="gallery-image" 
-		data-flex-grow="108"
-		data-flex-basis="261px"
+		data-flex-grow="248"
+		data-flex-basis="595px"
 	
 ></p>
-<p>发现密码是272727，做misc多了，直接敏锐察觉接下来的密码就是文件名重复三次了，写一个脚本</p>
+<p>后面其实这就是隐藏的数据，所以用Our Secret来解密（文档隐藏，解密工具）</p>
+<img src="image-20250420205514877.png" alt="image-20250420205514877" style="zoom:50%;" />
+<h4 id="crc爆破">crc爆破
+</h4><p>但是Our Secret解密需要密钥，所以肯定来自于套.zip,看里面全是很小字节的文件，再看看crc，那肯定是crc爆破（爆破每一个压缩包的CRC值获取有意义的字符串）</p>
+<img src="image-20250420211513513.png" alt="image-20250420211513513" style="zoom: 33%;" />
+<p>网上没有什么按顺序自动化的提取压缩包crc并爆破crc得到结果，下面这个可以很快的提取crc，但是爆破很慢，而且不能将爆破后的crc结果按顺序拼接在一起，不过可以用它提取出crc，然后我们写脚本爆破！</p>
+<p>工具<a class="link" href="https://github.com/AabyssZG/CRC32-Tools"  target="_blank" rel="noopener"
+    >GitHub - AabyssZG/CRC32-Tools: Easy CRC32 Tools，so easy！！！</a></p>
+<p><a class="link" href="https://goodlunatic.github.io/posts/1ad9200/#2crc%e7%88%86%e7%a0%b4"  target="_blank" rel="noopener"
+    >CTF-Misc Guide - ⚡Lunatic BLOG⚡</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python CRC32-Tools.py -4 套.zip
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250420220527765.png" alt="image-20250420220527765" style="zoom:50%;" />
+<p>很快就提取出来了，然后让ai将这些crc按文件顺序排序，再爆破，再拼接就好了。（其实将这堆数据给ai，让它排序，它就自动排序了）</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -435,264 +507,79 @@
 </span><span class="lnt">47
 </span><span class="lnt">48
 </span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pyzipper</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">import</span> <span class="n">binascii</span>
+</span></span><span class="line"><span class="cl"><span class="n">import</span> <span class="n">string</span>
+</span></span><span class="line"><span class="cl"><span class="n">from</span> <span class="n">itertools</span> <span class="n">import</span> <span class="n">product</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">extract_zip</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="n">password</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">*</span> <span class="mi">3</span>  <span class="c1"># 密码为文件名重复三次</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =================配置区=================</span>
+</span></span><span class="line"><span class="cl"><span class="n">CRC_LIST</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x9a70f44a</span><span class="p">,</span> <span class="mh">0xed3cf30c</span><span class="p">,</span> <span class="mh">0xc31b9eed</span><span class="p">,</span> <span class="mh">0x80ea10ee</span><span class="p">,</span> <span class="mh">0x3c9f215d</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xb8afb3a5</span><span class="p">,</span> <span class="mh">0x970e9680</span><span class="p">,</span> <span class="mh">0x7dd1f5d4</span><span class="p">,</span> <span class="mh">0x9b2bb671</span><span class="p">,</span> <span class="mh">0xca796ad9</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xc7886351</span><span class="p">,</span> <span class="mh">0x684cb228</span><span class="p">,</span> <span class="mh">0x4fba3a6e</span><span class="p">,</span> <span class="mh">0x2ebcaa7d</span><span class="p">,</span> <span class="mh">0xaa6c9f1b</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x956b6759</span><span class="p">,</span> <span class="mh">0xcbaa5851</span><span class="p">,</span> <span class="mh">0x37e61f54</span><span class="p">,</span> <span class="mh">0xe1157dcf</span><span class="p">,</span> <span class="mh">0x999a3789</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x1908fc9a</span><span class="p">,</span> <span class="mh">0xf73f4991</span><span class="p">,</span> <span class="mh">0x597cd643</span><span class="p">,</span> <span class="mh">0xd2fe5d72</span><span class="p">,</span> <span class="mh">0xc91c7092</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x790fe28f</span><span class="p">,</span> <span class="mh">0x2c1a0170</span><span class="p">,</span> <span class="mh">0x2523e64a</span><span class="p">,</span> <span class="mh">0x5b4282f2</span><span class="p">,</span> <span class="mh">0x2860a82f</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pyzipper</span><span class="o">.</span><span class="n">AESZipFile</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">zf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">pwd</span><span class="o">=</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] 解压成功: </span><span class="si">{</span><span class="n">zip_path</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">new_zips</span> <span class="o">=</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;.zip&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">new_zips</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">new_zips</span>
-</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[-] 解压失败: </span><span class="si">{</span><span class="n">zip_path</span><span class="si">}</span><span class="s2">, 错误: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="n">CHARSET</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">printable</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># 可打印字符排除控制字符</span>
+</span></span><span class="line"><span class="cl"><span class="n">THREADS</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># 多线程加速配置</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ========================================</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 其余代码与原始脚本相同</span>
-</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">crack_crc</span><span class="p">(</span><span class="n">target_crc</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;CRC32爆破核心函数&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="n">CHARSET</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">combo</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">binascii</span><span class="o">.</span><span class="n">crc32</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFFFFFF</span> <span class="o">==</span> <span class="n">target_crc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;????&#34;</span>  <span class="c1"># 未找到时的占位符</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">initial_zip</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;D:\网安题文件\27.zip&#34;</span>  <span class="c1"># 初始ZIP路径</span>
-</span></span><span class="line"><span class="cl">    <span class="n">output_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;D:\网安题文件&#34;</span>  <span class="c1"># 输出目录</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 按文件名数字顺序处理</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sorted_crc</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">crc</span> <span class="ow">in</span> <span class="n">enumerate</span><span class="p">(</span><span class="n">CRC_LIST</span><span class="p">)],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">key</span><span class="o">=</span><span class="n">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># 确保输出目录存在</span>
-</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 爆破并拼接结果</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flag_parts</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">crc</span> <span class="ow">in</span> <span class="n">sorted_crc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;[*] 正在爆破 f{idx}.bin (0x{crc:08x})...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">crack_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">flag_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;[+] f{idx}.bin -&gt; {result}&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># 使用队列处理所有ZIP文件（广度优先遍历）</span>
-</span></span><span class="line"><span class="cl">    <span class="n">processed</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># 已处理文件集合（避免重复）</span>
-</span></span><span class="line"><span class="cl">    <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">initial_zip</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 处理填充并输出flag</span>
+</span></span><span class="line"><span class="cl">    <span class="n">full_flag</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">flag_parts</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">=================最终结果=================&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;{full_flag}&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="ow">not</span> <span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">        <span class="n">current_zip</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">current_zip</span> <span class="ow">in</span> <span class="n">processed</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">        <span class="n">processed</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_zip</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># 解压并获取新生成的ZIP文件</span>
-</span></span><span class="line"><span class="cl">        <span class="n">new_zips</span> <span class="o">=</span> <span class="n">extract_zip</span><span class="p">(</span><span class="n">current_zip</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">zip_file</span> <span class="ow">in</span> <span class="n">new_zips</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">zip_file</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[*] 所有ZIP文件已处理完成！&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这里我遇到一个坑，一开始我直接解压显示错误，后面banzip解压可以，但是代码解压也不行，后面了解是加密算法有点坑</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331200401336.png"
-	width="1408"
-	height="104"
-	srcset="/p/2025-nss-round29-misc/image-20250331200401336_hu_c7f161490e141f16.png 480w, /p/2025-nss-round29-misc/image-20250331200401336_hu_65a1f5128af3fcc3.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="1353"
-		data-flex-basis="3249px"
-	
-></p>
-<p>这个加密算法是AES，而我代码一开始是用Python内置的<code>zipfile</code>模块，仅支持传统的 <strong>ZipCrypto</strong> 加密，后面换成 pyzipper模块就欧克。得到图片</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331200614629.png"
-	width="686"
-	height="385"
-	srcset="/p/2025-nss-round29-misc/image-20250331200614629_hu_61bef0c8ad5048f1.png 480w, /p/2025-nss-round29-misc/image-20250331200614629_hu_5c3476607800589.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="178"
-		data-flex-basis="427px"
-	
-></p>
-<p>foremos提取了一张二维码</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331201006592.png"
-	width="409"
-	height="398"
-	srcset="/p/2025-nss-round29-misc/image-20250331201006592_hu_4ea81a4b34e41bba.png 480w, /p/2025-nss-round29-misc/image-20250331201006592_hu_288ce17f1163cd.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="102"
-		data-flex-basis="246px"
-	
-></p>
-<p>直接微信扫码得到flag</p>
-<p>NSSCTF{The_competition_has_so_far_held_26_rounds}</p>
-<p>补充一句，这里的二维码其实反相了，按道理要用</p>
-<p><a class="link" href="https://uutool.cn/img-color-reverse/"  target="_blank" rel="noopener"
-    >https://uutool.cn/img-color-reverse/</a></p>
-<p>这个网站恢复，然后再用QR扫，但是微信扫码比较强，直接出。</p>
-<h2 id="jojo">JOJO
-</h2><p>题目给了一张图片，随波一把梭没用</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331201730299.png"
-	width="660"
-	height="494"
-	srcset="/p/2025-nss-round29-misc/image-20250331201730299_hu_9bd25eb3ced5384f.png 480w, /p/2025-nss-round29-misc/image-20250331201730299_hu_ee5f970f1a379747.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="133"
-		data-flex-basis="320px"
-	
-></p>
-<p>丢进010看看</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331221750862.png"
-	width="670"
-	height="243"
-	srcset="/p/2025-nss-round29-misc/image-20250331221750862_hu_dfcac6819c476659.png 480w, /p/2025-nss-round29-misc/image-20250331221750862_hu_5e054d1e191b51cd.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="275"
-		data-flex-basis="661px"
-	
-></p>
-<p>发现这里把zip文件头50删了，那我们直接加上。然后binwalk分离，得到一个压缩包，里面有一张图片</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331222405783.png"
-	width="503"
-	height="513"
-	srcset="/p/2025-nss-round29-misc/image-20250331222405783_hu_9f965a7bf910cee1.png 480w, /p/2025-nss-round29-misc/image-20250331222405783_hu_57534795358b36b1.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="98"
-		data-flex-basis="235px"
-	
-></p>
-<p>然后放随波逐流，发现还藏了压缩包，直接binwalk分离。然后发现是个加密压缩包，而且看起来像伪加密，但是其实不是。所以要找密码，爆破爆不出，那就是藏在哪里了。</p>
-<p>这张图片放随波逐流时发现crc不对</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331231113591.png"
-	width="1022"
-	height="892"
-	srcset="/p/2025-nss-round29-misc/image-20250331231113591_hu_56c42bcebc3a5c66.png 480w, /p/2025-nss-round29-misc/image-20250331231113591_hu_3a1ce071d458cc1b.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="114"
-		data-flex-basis="274px"
-	
-></p>
-<p>想到可能宽高不对劲，用模板改一下宽高（快捷键Alt+4）</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331231242722.png"
-	width="796"
-	height="469"
-	srcset="/p/2025-nss-round29-misc/image-20250331231242722_hu_e7f4f308cb2249f1.png 480w, /p/2025-nss-round29-misc/image-20250331231242722_hu_c1314c97d3372d31.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="169"
-		data-flex-basis="407px"
-	
-></p>
-<p>高改成1800就可以看到密码：DarkWill（有些题可以到字符但是乱码，就要爆破宽了）</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331231312711.png"
-	width="572"
-	height="190"
-	srcset="/p/2025-nss-round29-misc/image-20250331231312711_hu_26357adfbb0d843d.png 480w, /p/2025-nss-round29-misc/image-20250331231312711_hu_31e1425f58f853c6.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="301"
-		data-flex-basis="722px"
-	
-></p>
-<p>解压是txt，里面是一大串字符，那不用想就是套娃</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331231644193.png"
-	width="1412"
-	height="451"
-	srcset="/p/2025-nss-round29-misc/image-20250331231644193_hu_7e06c0c28a0acab.png 480w, /p/2025-nss-round29-misc/image-20250331231644193_hu_c9793205aab15928.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="313"
-		data-flex-basis="751px"
-	
-></p>
-<p>一眼base16编码</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331232652692.png"
-	width="1488"
-	height="702"
-	srcset="/p/2025-nss-round29-misc/image-20250331232652692_hu_34349c6f8e2b414c.png 480w, /p/2025-nss-round29-misc/image-20250331232652692_hu_e5972aaddef854b9.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="211"
-		data-flex-basis="508px"
-	
-></p>
-<p>解码以后一眼凯撒加密，偏移量慢慢试，不想试可以取前面一小段放到随波梭哈看看偏移量</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331232858957.png"
-	width="1806"
-	height="416"
-	srcset="/p/2025-nss-round29-misc/image-20250331232858957_hu_a95c86dda2450aae.png 480w, /p/2025-nss-round29-misc/image-20250331232858957_hu_c00e0362096d752b.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="434"
-		data-flex-basis="1041px"
-	
-></p>
-<p>解密后一样base64转图片（注意去掉前面的world），然后丢随波逐流，发现有zip，然后又分离得到一个压缩包</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331233607073.png"
-	width="737"
-	height="244"
-	srcset="/p/2025-nss-round29-misc/image-20250331233607073_hu_d7d61064867ca26b.png 480w, /p/2025-nss-round29-misc/image-20250331233607073_hu_c7b049f4c73bf609.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="302"
-		data-flex-basis="724px"
-	
-></p>
-<p>一眼伪加密，09改成00后打开，flag就在里面</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331233541224.png"
-	width="303"
-	height="135"
-	srcset="/p/2025-nss-round29-misc/image-20250331233541224_hu_381e7be707eea3ce.png 480w, /p/2025-nss-round29-misc/image-20250331233541224_hu_1984e598eeff5164.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="224"
-		data-flex-basis="538px"
-	
-></p>
-<p>总结：此题套娃，出题人接受拷打，难点：出题人防随波逐流，比如第一个要补全压缩包，要利用模板！第二个难点就是补全图片宽高，需要比较敏感。题目知识点不难，但是很难一下想到，还是要多用模板！下班。</p>
-<h2 id="东北jail">东北jail
-</h2>
+</div><img src="image-20250420225325259.png" alt="image-20250420225325259" style="zoom:50%;" />
+<img src="image-20250420222734138.png" alt="image-20250420222734138" style="zoom:50%;" />
+<p>再随波逐流梭哈一下得到<code>Key is SecretIsY0u</code>，所以密钥就是SecretIsY0u</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">提一句：这个工具可以爆破，但是由于前面提取就不是按顺序，所以把爆破后拼接顺序也不对，其实可以让gpt将这些crc碰撞的值按文件顺序拼接就可以得到正确的结果。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">但是这个工具只能4字节一下，但是crc爆破范围是18字节以下，如果遇到其实也只需要找脚本把文件的crc提取出来再用上面的脚本就好了，这个工具纯省力，运气好梭哈。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250420222122635.png" alt="image-20250420222122635" style="zoom:50%;" />
+<p>之后就是解密了</p>
+<img src="image-20250420223610522.png" alt="image-20250420223610522" style="zoom:50%;" />
+<p>这题套题有点难受：<strong>伪加密+补全残缺png+crc爆破+our Secret解密</strong></p>
+
 </section>
 
 
@@ -734,12 +621,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-ucsc-ctf/">
+    <a href="/p/2025-tgctf-write.up/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-UCSC-CTF</h2>
+            <h2 class="article-title">2025-TGCTF-write.up</h2>
         </div>
     </a>
 </article>
@@ -747,12 +634,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-tgctf-write.up/">
+    <a href="/p/2025-nss-round29-misc/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-TGCTF-write.up</h2>
+            <h2 class="article-title">2025-nss-round29-misc</h2>
         </div>
     </a>
 </article>

