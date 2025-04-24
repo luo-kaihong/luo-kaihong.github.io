@@ -2008,7 +2008,7 @@
 <p>网上找了文章学习一下</p>
 <p><a class="link" href="https://threezh1.com/2020/10/31/express-validator%206.6.0%20%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E5%88%86%E6%9E%90/"  target="_blank" rel="noopener"
     >https://threezh1.com/2020/10/31/express-validator%206.6.0%20%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E5%88%86%E6%9E%90/</a></p>
-<p>然后改一下参数就可以打</p>
+<p>原型payload是</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -2017,7 +2017,7 @@
 <pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">{</span><span class="s2">&#34;a&#34;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&#34;__proto__&#34;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&#34;test&#34;</span><span class="o">:</span> <span class="s2">&#34;testvalue&#34;</span><span class="p">}},</span> <span class="s2">&#34;a\&#34;].__proto__[\&#34;test&#34;</span><span class="o">:</span> <span class="mi">222</span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>所以直接login打payload就行，<strong>注意改Content-Type: application/json</strong></p>
+</div><p>然后改一下参数就可以打，所以直接login打payload就行，<strong>注意改Content-Type: application/json</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
