@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" misc 27262524 拿到一个加密嵌套压缩包，直接爆破\n发现密码是272727，做misc多了，直接敏锐察觉接下来的密码就是文件名重复三次了，写一个脚本\n">
-<title>2025-nss-round29-misc</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ez_puzzle 开发者工具打开源码然后会触发程序的反调试。这⾥直接右键，然后选择&quot;向忽略列表添加脚本&quot;。整个程序就不会停⽌\n了，但是这样我们也不能调试了。不过没关系，这一步不重要\n">
+<title>2025xyctf-web</title>
 
-<link rel='canonical' href='https://luo-kaihong.github.io/p/2025-nss-round29-misc/'>
+<link rel='canonical' href='https://luo-kaihong.github.io/p/2025xyctf-web/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2025-nss-round29-misc">
-<meta property='og:description' content=" misc 27262524 拿到一个加密嵌套压缩包，直接爆破\n发现密码是272727，做misc多了，直接敏锐察觉接下来的密码就是文件名重复三次了，写一个脚本\n">
-<meta property='og:url' content='https://luo-kaihong.github.io/p/2025-nss-round29-misc/'>
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2025xyctf-web">
+<meta property='og:description' content=" ez_puzzle 开发者工具打开源码然后会触发程序的反调试。这⾥直接右键，然后选择&quot;向忽略列表添加脚本&quot;。整个程序就不会停⽌\n了，但是这样我们也不能调试了。不过没关系，这一步不重要\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/2025xyctf-web/'>
 <meta property='og:site_name' content='罗铠鸿'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-03-31T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-31T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="2025-nss-round29-misc">
-<meta name="twitter:description" content=" misc 27262524 拿到一个加密嵌套压缩包，直接爆破\n发现密码是272727，做misc多了，直接敏锐察觉接下来的密码就是文件名重复三次了，写一个脚本\n">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-04-24T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="2025xyctf-web">
+<meta name="twitter:description" content=" ez_puzzle 开发者工具打开源码然后会触发程序的反调试。这⾥直接右键，然后选择&quot;向忽略列表添加脚本&quot;。整个程序就不会停⽌\n了，但是这样我们也不能调试了。不过没关系，这一步不重要\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -281,9 +281,8 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#27262524">27262524</a></li>
-    <li><a href="#jojo">JOJO</a></li>
-    <li><a href="#东北jail">东北jail</a></li>
+    <li><a href="#ez_puzzle">ez_puzzle</a></li>
+    <li><a href="#signin">Signin</a></li>
   </ol>
 </nav>
         </div>
@@ -306,8 +305,8 @@
                 write.up
             </a>
         
-            <a href="/categories/misc/" style="background-color: #000000; color: #fff;">
-                misc
+            <a href="/categories/web/" style="background-color: #ff0000; color: #fff;">
+                web
             </a>
         
     </header>
@@ -315,7 +314,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/2025-nss-round29-misc/">2025-nss-round29-misc</a>
+            <a href="/p/2025xyctf-web/">2025xyctf-web</a>
         </h2>
     
         
@@ -337,7 +336,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2025-03-31</time>
+                <time class="article-time--published">2025-04-24</time>
             </div>
         
 
@@ -352,7 +351,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -368,23 +367,21 @@
     
     
     <hr>
-<h1 id="misc">misc
-</h1><h2 id="27262524">27262524
-</h2><p>拿到一个加密嵌套压缩包，直接爆破</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331162413963.png"
-	width="568"
-	height="522"
-	srcset="/p/2025-nss-round29-misc/image-20250331162413963_hu_f36731001188ca65.png 480w, /p/2025-nss-round29-misc/image-20250331162413963_hu_d1227128ef293b90.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="108"
-		data-flex-basis="261px"
-	
-></p>
-<p>发现密码是272727，做misc多了，直接敏锐察觉接下来的密码就是文件名重复三次了，写一个脚本</p>
+<h2 id="ez_puzzle">ez_puzzle
+</h2><p>开发者工具打开源码然后会触发程序的反调试。这⾥直接右键，然后选择&quot;向忽略列表添加脚本&quot;。整个程序就不会停⽌</p>
+<p>了，但是这样我们也不能调试了。不过没关系，这一步不重要</p>
+<img src="image-20250424224623479.png" alt="image-20250424224623479" style="zoom:33%;" />
 <div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这里要2秒完成，显然不科学，搜一下time，发现startTime与endtime,不出意外就是endtime-startTime&lt;2s,直接给startTime=10000000，这样游戏时间就是负数&lt;2s,然后游戏通关就行
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250424223733606.png" alt="image-20250424223733606" style="zoom:33%;" />
+<h2 id="signin">Signin
+</h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -441,258 +438,93 @@
 </span><span class="lnt">53
 </span><span class="lnt">54
 </span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pyzipper</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">@File    :   main.py
+</span></span></span><span class="line"><span class="cl"><span class="s1">@Time    :   2025/03/28 22:20:49
+</span></span></span><span class="line"><span class="cl"><span class="s1">@Author  :   LamentXU 
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">flag in /flag_</span><span class="si">{uuid4}</span><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">extract_zip</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 导入bottle模块</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">Bottle</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">static_file</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">route</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从../../secret.txt文件中读取密钥</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../../secret.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">secret</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建Bottle应用实例</span>
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Bottle</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义路由&#39;/&#39;对应的处理函数，返回简单的问候信息</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;&#39;HI&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义路由&#39;/download&#39;对应的处理函数，用于处理文件下载请求</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@route</span><span class="p">(</span><span class="s1">&#39;/download&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">download</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 从请求参数中获取filename的值</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filename</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查文件名是否包含某些可能用于目录遍历攻击的字符或模式</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="s1">&#39;../../&#39;</span> <span class="ow">in</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;../&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果检测到非法字符，返回403 Forbidden响应</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">403</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;Forbidden&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 以二进制模式打开文件并读取内容</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 返回文件内容</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">data</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义路由&#39;/secret&#39;对应的处理函数，用于处理需要身份验证的请求</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@route</span><span class="p">(</span><span class="s1">&#39;/secret&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">secret_page</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="n">password</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">*</span> <span class="mi">3</span>  <span class="c1"># 密码为文件名重复三次</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 尝试从请求的cookie中获取会话信息</span>
+</span></span><span class="line"><span class="cl">        <span class="n">session</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_cookie</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果会话信息不存在或用户名为&#39;guest&#39;，创建新的会话并设置用户名为&#39;guest&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span> <span class="ow">or</span> <span class="n">session</span><span class="p">[</span><span class="s2">&#34;name&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;guest&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">session</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;guest&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s1">&#39;Forbidden!&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果用户名为&#39;admin&#39;，返回特定信息</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">session</span><span class="p">[</span><span class="s2">&#34;name&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;admin&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s1">&#39;The secret has been deleted!&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果过程中出现任何异常，返回错误信息</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Error!&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pyzipper</span><span class="o">.</span><span class="n">AESZipFile</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">zf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">pwd</span><span class="o">=</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] 解压成功: </span><span class="si">{</span><span class="n">zip_path</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">new_zips</span> <span class="o">=</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;.zip&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">new_zips</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">new_zips</span>
-</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[-] 解压失败: </span><span class="si">{</span><span class="n">zip_path</span><span class="si">}</span><span class="s2">, 错误: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 其余代码与原始脚本相同</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">initial_zip</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;D:\网安题文件\27.zip&#34;</span>  <span class="c1"># 初始ZIP路径</span>
-</span></span><span class="line"><span class="cl">    <span class="n">output_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;D:\网安题文件&#34;</span>  <span class="c1"># 输出目录</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># 确保输出目录存在</span>
-</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># 使用队列处理所有ZIP文件（广度优先遍历）</span>
-</span></span><span class="line"><span class="cl">    <span class="n">processed</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># 已处理文件集合（避免重复）</span>
-</span></span><span class="line"><span class="cl">    <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">initial_zip</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="ow">not</span> <span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">        <span class="n">current_zip</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">current_zip</span> <span class="ow">in</span> <span class="n">processed</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">        <span class="n">processed</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_zip</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># 解压并获取新生成的ZIP文件</span>
-</span></span><span class="line"><span class="cl">        <span class="n">new_zips</span> <span class="o">=</span> <span class="n">extract_zip</span><span class="p">(</span><span class="n">current_zip</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">zip_file</span> <span class="ow">in</span> <span class="n">new_zips</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">zip_file</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[*] 所有ZIP文件已处理完成！&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动Bottle应用，监听地址为0.0.0.0，端口为8080，关闭调试模式</span>
+</span></span><span class="line"><span class="cl"><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这里我遇到一个坑，一开始我直接解压显示错误，后面banzip解压可以，但是代码解压也不行，后面了解是加密算法有点坑</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331200401336.png"
-	width="1408"
-	height="104"
-	srcset="/p/2025-nss-round29-misc/image-20250331200401336_hu_c7f161490e141f16.png 480w, /p/2025-nss-round29-misc/image-20250331200401336_hu_65a1f5128af3fcc3.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="1353"
-		data-flex-basis="3249px"
-	
-></p>
-<p>这个加密算法是AES，而我代码一开始是用Python内置的<code>zipfile</code>模块，仅支持传统的 <strong>ZipCrypto</strong> 加密，后面换成 pyzipper模块就欧克。得到图片</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331200614629.png"
-	width="686"
-	height="385"
-	srcset="/p/2025-nss-round29-misc/image-20250331200614629_hu_61bef0c8ad5048f1.png 480w, /p/2025-nss-round29-misc/image-20250331200614629_hu_5c3476607800589.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="178"
-		data-flex-basis="427px"
-	
-></p>
-<p>foremos提取了一张二维码</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331201006592.png"
-	width="409"
-	height="398"
-	srcset="/p/2025-nss-round29-misc/image-20250331201006592_hu_4ea81a4b34e41bba.png 480w, /p/2025-nss-round29-misc/image-20250331201006592_hu_288ce17f1163cd.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="102"
-		data-flex-basis="246px"
-	
-></p>
-<p>直接微信扫码得到flag</p>
-<p>NSSCTF{The_competition_has_so_far_held_26_rounds}</p>
-<p>补充一句，这里的二维码其实反相了，按道理要用</p>
-<p><a class="link" href="https://uutool.cn/img-color-reverse/"  target="_blank" rel="noopener"
-    >https://uutool.cn/img-color-reverse/</a></p>
-<p>这个网站恢复，然后再用QR扫，但是微信扫码比较强，直接出。</p>
-<h2 id="jojo">JOJO
-</h2><p>题目给了一张图片，随波一把梭没用</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331201730299.png"
-	width="660"
-	height="494"
-	srcset="/p/2025-nss-round29-misc/image-20250331201730299_hu_9bd25eb3ced5384f.png 480w, /p/2025-nss-round29-misc/image-20250331201730299_hu_ee5f970f1a379747.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="133"
-		data-flex-basis="320px"
-	
-></p>
-<p>丢进010看看</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331221750862.png"
-	width="670"
-	height="243"
-	srcset="/p/2025-nss-round29-misc/image-20250331221750862_hu_dfcac6819c476659.png 480w, /p/2025-nss-round29-misc/image-20250331221750862_hu_5e054d1e191b51cd.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="275"
-		data-flex-basis="661px"
-	
-></p>
-<p>发现这里把zip文件头50删了，那我们直接加上。然后binwalk分离，得到一个压缩包，里面有一张图片</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331222405783.png"
-	width="503"
-	height="513"
-	srcset="/p/2025-nss-round29-misc/image-20250331222405783_hu_9f965a7bf910cee1.png 480w, /p/2025-nss-round29-misc/image-20250331222405783_hu_57534795358b36b1.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="98"
-		data-flex-basis="235px"
-	
-></p>
-<p>然后放随波逐流，发现还藏了压缩包，直接binwalk分离。然后发现是个加密压缩包，而且看起来像伪加密，但是其实不是。所以要找密码，爆破爆不出，那就是藏在哪里了。</p>
-<p>这张图片放随波逐流时发现crc不对</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331231113591.png"
-	width="1022"
-	height="892"
-	srcset="/p/2025-nss-round29-misc/image-20250331231113591_hu_56c42bcebc3a5c66.png 480w, /p/2025-nss-round29-misc/image-20250331231113591_hu_3a1ce071d458cc1b.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="114"
-		data-flex-basis="274px"
-	
-></p>
-<p>想到可能宽高不对劲，用模板改一下宽高（快捷键Alt+4）</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331231242722.png"
-	width="796"
-	height="469"
-	srcset="/p/2025-nss-round29-misc/image-20250331231242722_hu_e7f4f308cb2249f1.png 480w, /p/2025-nss-round29-misc/image-20250331231242722_hu_c1314c97d3372d31.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="169"
-		data-flex-basis="407px"
-	
-></p>
-<p>高改成1800就可以看到密码：DarkWill（有些题可以到字符但是乱码，就要爆破宽了）</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331231312711.png"
-	width="572"
-	height="190"
-	srcset="/p/2025-nss-round29-misc/image-20250331231312711_hu_26357adfbb0d843d.png 480w, /p/2025-nss-round29-misc/image-20250331231312711_hu_31e1425f58f853c6.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="301"
-		data-flex-basis="722px"
-	
-></p>
-<p>解压是txt，里面是一大串字符，那不用想就是套娃</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331231644193.png"
-	width="1412"
-	height="451"
-	srcset="/p/2025-nss-round29-misc/image-20250331231644193_hu_7e06c0c28a0acab.png 480w, /p/2025-nss-round29-misc/image-20250331231644193_hu_c9793205aab15928.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="313"
-		data-flex-basis="751px"
-	
-></p>
-<p>一眼base16编码</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331232652692.png"
-	width="1488"
-	height="702"
-	srcset="/p/2025-nss-round29-misc/image-20250331232652692_hu_34349c6f8e2b414c.png 480w, /p/2025-nss-round29-misc/image-20250331232652692_hu_e5972aaddef854b9.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="211"
-		data-flex-basis="508px"
-	
-></p>
-<p>解码以后一眼凯撒加密，偏移量慢慢试，不想试可以取前面一小段放到随波梭哈看看偏移量</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331232858957.png"
-	width="1806"
-	height="416"
-	srcset="/p/2025-nss-round29-misc/image-20250331232858957_hu_a95c86dda2450aae.png 480w, /p/2025-nss-round29-misc/image-20250331232858957_hu_c00e0362096d752b.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="434"
-		data-flex-basis="1041px"
-	
-></p>
-<p>解密后一样base64转图片（注意去掉前面的world），然后丢随波逐流，发现有zip，然后又分离得到一个压缩包</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331233607073.png"
-	width="737"
-	height="244"
-	srcset="/p/2025-nss-round29-misc/image-20250331233607073_hu_d7d61064867ca26b.png 480w, /p/2025-nss-round29-misc/image-20250331233607073_hu_c7b049f4c73bf609.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="302"
-		data-flex-basis="724px"
-	
-></p>
-<p>一眼伪加密，09改成00后打开，flag就在里面</p>
-<p><img src="/p/2025-nss-round29-misc/image-20250331233541224.png"
-	width="303"
-	height="135"
-	srcset="/p/2025-nss-round29-misc/image-20250331233541224_hu_381e7be707eea3ce.png 480w, /p/2025-nss-round29-misc/image-20250331233541224_hu_1984e598eeff5164.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="224"
-		data-flex-basis="538px"
-	
-></p>
-<p>总结：此题套娃，出题人接受拷打，难点：出题人防随波逐流，比如第一个要补全压缩包，要利用模板！第二个难点就是补全图片宽高，需要比较敏感。题目知识点不难，但是很难一下想到，还是要多用模板！下班。</p>
-<h2 id="东北jail">东北jail
-</h2>
+</div><p>首先肯定是要目录穿越拿secret.txt，不过有过滤，不过没关系，./../绕过（./../ 会先进入当前目录，然后返回上级目录，相当于 ../）</p>
+<p>所以直接</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">download</span><span class="err">?</span><span class="n">filename</span><span class="o">=./.././.././../</span><span class="n">secret</span><span class="o">.</span><span class="n">txt</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250424233507428.png" alt="image-20250424233507428" style="zoom:50%;" />
+<p><strong>拿到secret：Hell0_H@cker_Y0u_A3r_Sm@r7</strong></p>
+<p>访问secert抓包，一看这个base64编码有这么多A，不出意外就是打pickle反序列化了</p>
+<img src="image-20250424233917984.png" alt="image-20250424233917984" style="zoom:50%;" />
+<p>解码一看，嗯嗯，不错</p>
+<img src="image-20250424234112927.png" alt="image-20250424234112927" style="zoom:33%;" />
 </section>
 
 
@@ -734,12 +566,25 @@
             
                 
 <article class="">
-    <a href="/p/2025-ucsc-ctf/">
+    <a href="/p/2024-xyctf-web-%E5%A4%8D%E7%8E%B0/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-UCSC-CTF</h2>
+            <h2 class="article-title">2024-xyctf-web-复现</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-nss-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-nss-每日一题</h2>
         </div>
     </a>
 </article>
@@ -760,12 +605,12 @@
             
                 
 <article class="">
-    <a href="/p/2025xyctf-web/">
+    <a href="/p/2025-%E9%95%BF%E5%9F%8E%E6%9D%AF-ccforum/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025xyctf-web</h2>
+            <h2 class="article-title">2025-长城杯-ccforum</h2>
         </div>
     </a>
 </article>
@@ -773,25 +618,12 @@
             
                 
 <article class="">
-    <a href="/p/2024-xyctf-web-%E5%A4%8D%E7%8E%B0/">
+    <a href="/p/nss-round28-web/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2024-xyctf-web-复现</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-nss-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-nss-每日一题</h2>
+            <h2 class="article-title">nss-round28-web</h2>
         </div>
     </a>
 </article>
