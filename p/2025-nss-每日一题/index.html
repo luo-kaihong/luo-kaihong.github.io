@@ -313,15 +313,22 @@
         <li><a href="#lodash-41716-原型污染漏洞">lodash 4.17.16 原型污染漏洞</a></li>
       </ol>
     </li>
-    <li><a href="#424-1">4.24</a></li>
-    <li><a href="#425">4.25</a>
+    <li><a href="#425">4.25</a></li>
+    <li><a href="#426">4.26</a>
       <ol>
         <li><a href="#urllib2头部注入cve-2016-5699">Urllib2头部注入(CVE-2016-5699)</a></li>
       </ol>
     </li>
-    <li><a href="#426">4.26</a>
+    <li><a href="#427">4.27</a>
       <ol>
         <li><a href="#thinkphp框架--5016-sql注入漏洞">Thinkphp框架 &lt; 5.0.16 sql注入漏洞</a></li>
+      </ol>
+    </li>
+    <li><a href="#428">4.28</a>
+      <ol>
+        <li><a href="#解法一扫描出phpinfo直接搜索flag找到了">解法一，扫描出phpinfo直接搜索flag找到了。</a></li>
+        <li><a href="#解法二打php扩展加密">解法二：打php扩展加密</a></li>
+        <li><a href="#解法三打session-upload">解法三:打session upload</a></li>
       </ol>
     </li>
   </ol>
@@ -392,7 +399,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    阅读时长: 20 分钟
                 </time>
             </div>
         
@@ -2067,9 +2074,9 @@
 </div>
 </div><p>官方wp引用了上文<a class="link" href="https://xz.aliyun.com/news/11499"  target="_blank" rel="noopener"
     >关于Prototype Pollution Attack的二三事-先知社区</a>，讲的很详细</p>
-<h2 id="424-1">4.24
-</h2><p><strong>[HBCTF 2017]大美西安</strong></p>
 <h2 id="425">4.25
+</h2><p><strong>[HBCTF 2017]大美西安</strong></p>
+<h2 id="426">4.26
 </h2><h3 id="urllib2头部注入cve-2016-5699">Urllib2头部注入(CVE-2016-5699)
 </h3><p><strong>[SWPU 2016]web7</strong></p>
 <img src="image-20250427231404915.png" alt="image-20250427231404915" style="zoom:33%;" />
@@ -2273,7 +2280,7 @@
     >SWPUCTF 2016]Web7 | 北歌</a></p>
 <p>[<a class="link" href="https://cn-sec.com/archives/943668.html"  target="_blank" rel="noopener"
     >CVE-2016-5699] Python HTTP header injection in urllib/urllib2 | CN-SEC 中文网</a></p>
-<h2 id="426">4.26
+<h2 id="427">4.27
 </h2><h3 id="thinkphp框架--5016-sql注入漏洞">Thinkphp框架 &lt; 5.0.16 sql注入漏洞
 </h3><p><strong>摆就完事了2.0zhe</strong></p>
 <p>这题开始做有点问题，因为这题竟然是考Thinkphp框架 &lt; 5.0.16 sql注入漏洞，但是本题却刚好是5.0.16版本</p>
@@ -2405,7 +2412,21 @@
 </span></span><span class="line"><span class="cl">            <span class="k">break</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div>
+</div><h2 id="428">4.28
+</h2><p><strong>[SCTF 2018]BabySyc - Simple PHP Web</strong></p>
+<h3 id="解法一扫描出phpinfo直接搜索flag找到了">解法一，扫描出phpinfo直接搜索flag找到了。
+</h3><img src="image-20250428125543660.png" alt="image-20250428125543660" style="zoom:50%;" />
+<img src="image-20250428125525586.png" alt="image-20250428125525586" style="zoom:50%;" />
+<h3 id="解法二打php扩展加密">解法二：打php扩展加密
+</h3><p><a class="link" href="https://xz.aliyun.com/news/2085"  target="_blank" rel="noopener"
+    >看我如何玩转PHP代码加密与解密-先知社区</a></p>
+<p><a class="link" href="https://www.cnblogs.com/iamstudy/articles/sctf2018_simple_php_web_writeup.html"  target="_blank" rel="noopener"
+    >SCTF2018 BabySyc - Simple PHP Web Writeup - l3m0n - 博客园</a></p>
+<h3 id="解法三打session-upload">解法三:打session upload
+</h3><p><a class="link" href="https://xz.aliyun.com/news/2087"  target="_blank" rel="noopener"
+    >SCTF 2018 Writeup — De1ta-先知社区</a></p>
+<p>不会逆向，复现都复不出</p>
+
 </section>
 
 
