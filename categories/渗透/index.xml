@@ -7,7 +7,165 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>luokaihong</copyright>
-        <lastBuildDate>Thu, 12 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://luo-kaihong.github.io/categories/%E6%B8%97%E9%80%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 19 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://luo-kaihong.github.io/categories/%E6%B8%97%E9%80%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>2025-Initial</title>
+        <link>https://luo-kaihong.github.io/p/2025-initial/</link>
+        <pubDate>Sat, 19 Jul 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://luo-kaihong.github.io/p/2025-initial/</guid>
+        <description>&lt;hr&gt;
+&lt;h1 id=&#34;春秋云境-initial&#34;&gt;&lt;strong&gt;春秋云境 Initial&lt;/strong&gt;
+&lt;/h1&gt;&lt;h2 id=&#34;靶标介绍&#34;&gt;靶标介绍：
+&lt;/h2&gt;&lt;p&gt;Initial是一套难度为简单的靶场环境，完成该挑战可以帮助玩家初步认识内网渗透的简单流程。该靶场只有一个flag，各部分位于不同的机器上。&lt;/p&gt;
+&lt;h2 id=&#34;flag1&#34;&gt;flag1:
+&lt;/h2&gt;&lt;p&gt;扫出来一个网站&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719204128535.png&#34;
+	width=&#34;1221&#34;
+	height=&#34;401&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719204128535_hu_869ee2aed57e3f10.png 480w, https://luo-kaihong.github.io/p/2025-initial/image-20250719204128535_hu_3bf7f3e95e517531.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250719204128535&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;304&#34;
+		data-flex-basis=&#34;730px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;是个登入框，由fscan，判断出来为thinkphp.5.0.23 rce漏洞&lt;/p&gt;
+&lt;img src=&#34;image-20250719204148110.png&#34; alt=&#34;image-20250719204148110&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;h2 id=&#34;&#34;&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;使用thinkphp工具一把梭sudo提权&#34;&gt;使用thinkphp工具一把梭+sudo提权
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719204559906.png&#34;
+	width=&#34;833&#34;
+	height=&#34;302&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719204559906_hu_d2a02fed10daa220.png 480w, https://luo-kaihong.github.io/p/2025-initial/image-20250719204559906_hu_2e57c09050fdac5a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250719204559906&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;275&#34;
+		data-flex-basis=&#34;661px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;蚁剑发现可以发现当前的权限是 &lt;code&gt;www-data&lt;/code&gt;，查找具有 SUID 权限的文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;find / -user root -perm -4000 -print 2&amp;gt;/dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719210132547.png&#34;
+	width=&#34;677&#34;
+	height=&#34;259&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719210132547_hu_dbb9c6bc2bce4357.png 480w, https://luo-kaihong.github.io/p/2025-initial/image-20250719210132547_hu_b945f8ee7bda092b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250719210132547&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;261&#34;
+		data-flex-basis=&#34;627px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;发现可以进行sudo提权，sudo -l （就是列出你能用 sudo 执行的命令）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719210542247.png&#34;
+	width=&#34;885&#34;
+	height=&#34;89&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719210542247_hu_4fbbc795a2277b56.png 480w, https://luo-kaihong.github.io/p/2025-initial/image-20250719210542247_hu_f4df65f596e2da81.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250719210542247&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;994&#34;
+		data-flex-basis=&#34;2386px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以发现存在一个root权限并且没有密码的mysql&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/Bossfrank/article/details/132035121&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;渗透测试：Linux提权精讲（三）之sudo方法第三期_nmap sudo 提权-CSDN博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://gtfobins.github.io/gtfobins/mysql/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;mysql | GTFOBins&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719212109329.png&#34;
+	width=&#34;747&#34;
+	height=&#34;260&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719212109329_hu_87ec90b6cd18fb8d.png 480w, https://luo-kaihong.github.io/p/2025-initial/image-20250719212109329_hu_be3d3027422bb3c2.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250719212109329&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;287&#34;
+		data-flex-basis=&#34;689px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;flag{60b53231-
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;flag2和3内网打点&#34;&gt;flag2和3：内网打点
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;ifconfig&lt;/code&gt;发现了一个内部网段 172.22.1.15&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719212519464.png&#34;
+	width=&#34;604&#34;
+	height=&#34;260&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719212519464_hu_d8c4f9ef99bc1cde.png 480w, https://luo-kaihong.github.io/p/2025-initial/image-20250719212519464_hu_b24ec6dae219543a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250719212519464&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;232&#34;
+		data-flex-basis=&#34;557px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;所以需要用fscan 扫描内网IP的C段(目的是发现更多存活主机和开放端口)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;首先先上传linux版本的fscan（直接拖进蚁剑）&lt;/strong&gt;&lt;/p&gt;
+&lt;img src=&#34;image-20250719223308100.png&#34; alt=&#34;image-20250719223308100&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;&lt;strong&gt;然后在tmp目录终端下执行&lt;code&gt;./fscan -h 172.22.1.0/24&lt;/code&gt;,查看result.txt&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719224302824.png&#34;
+	width=&#34;1887&#34;
+	height=&#34;965&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250719224302824_hu_95d62cf9d22d9c2e.png 480w, https://luo-kaihong.github.io/p/2025-initial/image-20250719224302824_hu_ffcaad52952f9e56.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250719224302824&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;195&#34;
+		data-flex-basis=&#34;469px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们搜集到如下信息：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;172.22.1.2:DC域控
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;172.22.1.21:Windows的机器并且存在MS17-010 漏洞
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;172.22.1.18:信呼OA办公系统
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
         <title>2025-Hospital</title>
         <link>https://luo-kaihong.github.io/p/2025-hospital/</link>
         <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
