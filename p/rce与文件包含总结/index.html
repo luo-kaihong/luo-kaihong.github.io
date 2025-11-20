@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" RCE 文件包含 如果文件包含函数没有经过严格的过滤或者定义，并且参数可以被用户控制，这样就有可能包含非预期的文件。如果文件中存在恶意代码，无论文件是什么类型恶意代码都会被解析。\n">
+<title>RCE与文件包含总结</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="RCE与文件包含总结">
+<meta property='og:description' content=" RCE 文件包含 如果文件包含函数没有经过严格的过滤或者定义，并且参数可以被用户控制，这样就有可能包含非预期的文件。如果文件中存在恶意代码，无论文件是什么类型恶意代码都会被解析。\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/'>
+<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-11-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-11-19T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="RCE与文件包含总结">
+<meta name="twitter:description" content=" RCE 文件包含 如果文件包含函数没有经过严格的过滤或者定义，并且参数可以被用户控制，这样就有可能包含非预期的文件。如果文件中存在恶意代码，无论文件是什么类型恶意代码都会被解析。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1利用伪协议打本地文件包含">1.利用伪协议打本地文件包含</a>
+      <ol>
+        <li><a href="#1data伪协议"><strong>1.data伪协议</strong></a></li>
+        <li><a href="#2filter协议文件包含">2.filter协议文件包含</a>
+          <ol>
+            <li></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web/" style="background-color: #ff0000; color: #fff;">
+                web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/">RCE与文件包含总结</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-11-19</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<hr>
+<h1 id="rce">RCE
+</h1><h1 id="文件包含">文件包含
+</h1><p>如果文件包含函数没有经过严格的过滤或者定义，并且参数可以被用户控制，这样就有可能包含非预期的文件。<strong>如果文件中存在恶意代码，无论文件是什么类型恶意代码都会被解析。</strong></p>
+<p><strong>PHP文件包含函数有以下四种：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">include
+</span></span><span class="line"><span class="cl">inclued_once
+</span></span><span class="line"><span class="cl">require
+</span></span><span class="line"><span class="cl">require_once
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>require()/require_once()</code>：如果在包含过程中有错，那么直接退出，不执行进一步操作。
+<code>include()/include_once()</code>: 如果在包含过程中出错，只会发出警告</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">所以require与include区别：如果指定的文件不存在或包含过程中发生错误，require()/require_once()这两个函数会抛出一个E_COMPILE_ERROR级别的致命错误。这意味着脚本会立即停止执行，不会继续运行后续代码。nclude()/include_once() 函数则相对宽松。当遇到文件不存在或包含错误时，它们只会产生一个E_WARNING级别的警告，而脚本会继续执行后续代码。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>加上后缀_once的作用：如果文件已经包含过了，那么不会再次包含</strong></p>
+<p><code>当利用这四大漏洞函数包含文件的时候，不论什么类型的文件，都会作为PHP脚本解析(比如：上传一个图片马，包含后当作php解析就可以执行木马了)</code></p>
+<h2 id="1利用伪协议打本地文件包含">1.利用伪协议打本地文件包含
+</h2><p>讲了概念，讲一下如何利用include进行文件读取或者rce，前面我们知道include将文件都会作为PHP脚本解析，所以我们可以把参数指向的文件内容嵌入到其中就可以使得代码成功解析，达到一个rce的效果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">什么是伪协议？
+</span></span><span class="line"><span class="cl">伪协议（Pseudo Protocol）在这里通常指PHP中封装的一系列协议，如file://、php://、data://等，它们允许以不同的方式访问输入/输出流、文件系统、数据等。这些协议在文件包含函数（如include、require）中可以使用，从而使得文件包含不再局限于本地文件，还可以从内存、标准输入输出、数据流等来源包含数据。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">简单来说，伪协议就是PHP提供的一些“特殊路径”，它们不是真正的文件路径，但可以用类似文件路径的方式写入，然后PHP会按照协议的规定去解析并获取数据。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PHP带有很多内置的URL风格的封装协议，可用于 fopen\copy\file_exists\filesize等文件系统函数
+</span></span><span class="line"><span class="cl">常见的PHP伪协议如下：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">file:// 访问本地文件系统
+</span></span><span class="line"><span class="cl">http:// 访问http（s）网址
+</span></span><span class="line"><span class="cl">ftp:// 访问ftp（s)URL
+</span></span><span class="line"><span class="cl">php:// 访问各个输入输出流
+</span></span><span class="line"><span class="cl">zlib:// 处理压缩流
+</span></span><span class="line"><span class="cl">data:// 读取数据
+</span></span><span class="line"><span class="cl">glob:// 找查匹配的文件路径模式
+</span></span><span class="line"><span class="cl">phar:// PHP归档
+</span></span><span class="line"><span class="cl">ssh2:// Secure Shell 2
+</span></span><span class="line"><span class="cl">rar:// RAR处理压缩数据
+</span></span><span class="line"><span class="cl">ogg:// 处理音频流
+</span></span><span class="line"><span class="cl">expect:// 处理交互式的流
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://www.php.net/manual/zh/wrappers.file.php"  target="_blank" rel="noopener"
+    >PHP: file:// - Manual</a></p>
+<h3 id="1data伪协议"><strong>1.data伪协议</strong>
+</h3><p>使用条件是phpinfo开启如下配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">allow_url_fopen : on
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">allow_url_include :on
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://www.php.net/manual/zh/wrappers.data.php"  target="_blank" rel="noopener"
+    >PHP: data:// - Manual</a></p>
+<p>例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$a</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">include</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251119213538624.png"
+	width="1709"
+	height="228"
+	srcset="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251119213538624_hu_fa770a2bcfd76be.png 480w, /p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251119213538624_hu_386dcb114b6da9e7.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251119213538624"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="749"
+		data-flex-basis="1798px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">data://text/plain,&lt;?php phpinfo();?&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">解释一下
+</span></span><span class="line"><span class="cl">data: ：这是数据 URL 的前缀，告诉浏览器或应用程序后续的数据是以数据方式嵌入的，而不是指向外部资源。
+</span></span><span class="line"><span class="cl">text/plain：这是 MIME 类型，表示数据的格式。在这个例子中，text/plain 表示数据是普通文本。MIME 类型用于告知接收端如何处理数据。
+</span></span><span class="line"><span class="cl">&lt;?php phpinfo();?&gt;：这是实际的数据内容。在这里，这是一个 PHP 代码片段，它调用了 phpinfo() 函数。该函数用于输出有关当前 PHP 环境和配置的详细信息，包括 PHP 版本、加载的扩展、服务器信息、PHP 配置选项等。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此外，也可以用base64编码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">data://text/plain;base64,PD9waHAgcGhwaW5mbygpOw==
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2filter协议文件包含">2.filter协议文件包含
+</h3><p>使用条件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">allow_url_include = On
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>（注意：filter文件包含时要打开这个配置，用filter文件读取则可以不需要）</p>
+<p>php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， 在数据流内容读取之前没有机会应用其他过滤器。简单通俗的说，这是一个中间件，在读入或写入数据的时候对数据进行处理后输出的一个过程。</p>
+<p>测试一下，1.php里写phpinfo(),然后包含</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">php://filter/resource=2.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251120002443076.png"
+	width="1146"
+	height="407"
+	srcset="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251120002443076_hu_b8dcf51ee338a202.png 480w, /p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251120002443076_hu_315de93eb5f5b887.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251120002443076"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="281"
+		data-flex-basis="675px"
+	
+></p>
+<p>发现执行1.php中的命令</p>
+<p>当我们打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">php://filter/read=convert.base64-encode/resource=2.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以发现只对其进行编码，让其不执行。从而<strong>导致任意文件读取</strong></p>
+<p><img src="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251120002737276.png"
+	width="852"
+	height="346"
+	srcset="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251120002737276_hu_4e31dd6550a3dda8.png 480w, /p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251120002737276_hu_aa2f113021590e86.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251120002737276"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="246"
+		data-flex-basis="590px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">解释一下上面的命令
+</span></span><span class="line"><span class="cl">convert.base64-encode 表示将数据进行 Base64 编码。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">resource=1.php：这部分指定了要处理的资源
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">但是这里的话需要注意，filter伪协议不能搭配我们的通配符去使用，对于 php://filter 这种用于数据过滤和流处理的伪协议，一般不支持通配符操作。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们还可以进行其它编码，我可以配合过滤器使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">过滤器（Filter） 是一种用于处理数据流的程序或函数，它接收输入数据，对其进行特定转换或筛选，并输出处理后的结果。在php中，过滤器分为字符串过滤器、转换过滤器、压缩过滤器以及加密过滤器。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考：<a class="link" href="https://www.php.net/manual/zh/filters.string.php"  target="_blank" rel="noopener"
+    >PHP: 字符串过滤器 - Manual</a></p>
+<p><a class="link" href="https://blog.csdn.net/JL20050725/article/details/150420908"  target="_blank" rel="noopener"
+    >php://filter伪协议（总结）与死亡代码的绕过_php伪协议filter之&amp;txt=-CSDN博客</a></p>
+<h5 id="转换过滤器">转换过滤器
+</h5><p>作用：对数据流进行编码，通常用来读取文件源码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">convert.base64-encode：将内容 Base64 编码。
+</span></span><span class="line"><span class="cl">convert.base64-decode：将 Base64 内容解码。
+</span></span><span class="line"><span class="cl">convert.quoted-printable-encode：引号可打印编码。
+</span></span><span class="line"><span class="cl">convert.quoted-printable-decode：引号可打印解码。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">convert.iconv.*：一种字符编码转换过滤器
+</span></span><span class="line"><span class="cl">语法；
+</span></span><span class="line"><span class="cl">convert.iconv.目标编码/源编码			convert.iconv.UTF-8/GBK	
+</span></span><span class="line"><span class="cl">convert.iconv.源编码.目标编码			convert.iconv.utf8.utf16
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="字符串过滤器">字符串过滤器
+</h5><p>该类通常以<code>string</code>开头，对每个字符都进行同样方式的处理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">string</span><span class="o">.</span><span class="n">toupper</span><span class="err">：</span><span class="n">转为大写</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span><span class="o">.</span><span class="n">tolower</span><span class="err">：</span><span class="n">转为小写</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span><span class="o">.</span><span class="n">strip_tags</span><span class="err">：</span><span class="n">这个过滤器就比较有意思</span><span class="err">，</span><span class="n">用来处理掉读入的所有标签</span><span class="err">，</span><span class="n">例如XML的等等</span><span class="err">。</span><span class="n">在绕过死亡exit大有用处</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span><span class="o">.</span><span class="n">rot13</span><span class="err">：</span><span class="n">字符右移十三位</span><span class="err">。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="加密过滤器">加密过滤器
+</h5><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">压缩过滤器
+</span></span><span class="line"><span class="cl">注意，这里的压缩过滤器指的并不是在数据流传入的时候对整个数据进行写入文件后压缩文件，也不代表可以压缩或者解压数据流。压缩过滤器不产生命令行工具如 gzip的头和尾信息。只是压缩和解压数据流中的有效载荷部分。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">用到的两个相关过滤器：zlib.deflate（压缩）和 zlib.inflate（解压）。zilb是比较主流的用法，至于bzip2.compress和 bzip2.decompress工作的方式与 zlib 过滤器大致相同。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">php://filter/zlib.deflate|zlib.inflate/resource=flag.php
+</span></span><span class="line"><span class="cl">等同于
+</span></span><span class="line"><span class="cl">php://filter/resource=flag.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>常用的payload</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">convert</span><span class="o">.</span><span class="n">base64</span><span class="o">-</span><span class="n">encode</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">convert</span><span class="o">.</span><span class="n">base64</span><span class="o">-</span><span class="n">decode</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">convert</span><span class="o">.</span><span class="n">quoted</span><span class="o">-</span><span class="n">printable</span><span class="o">-</span><span class="n">encode</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">convert</span><span class="o">.</span><span class="n">iconv</span><span class="o">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="o">/</span><span class="n">GBK</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">convert</span><span class="o">.</span><span class="n">iconv</span><span class="o">.</span><span class="n">UTF</span><span class="o">-</span><span class="mf">8.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">16</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">zlib</span><span class="o">.</span><span class="n">deflate</span><span class="o">|</span><span class="n">zlib</span><span class="o">.</span><span class="n">inflate</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">bzip2</span><span class="o">.</span><span class="n">compress</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">string</span><span class="o">.</span><span class="n">rot13</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span><span class="line"><span class="cl"><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="nb">filter</span><span class="o">/</span><span class="n">string</span><span class="o">.</span><span class="n">tolower</span><span class="o">/</span><span class="n">resource</span><span class="o">=</span><span class="n">flag</span><span class="o">.</span><span class="n">php</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E6%96%B0%E5%8D%8E%E4%B8%89%E5%AE%9E%E4%B9%A0%E6%89%93%E9%9D%B6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">新华三实习打靶</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9Bawdp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">江西省赛awdp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025极客大挑战</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-%E6%B1%9F%E8%A5%BF%E7%9C%81%E6%8C%AF%E5%85%B4%E6%9D%AF/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-江西省振兴杯</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-%E5%BC%BA%E7%BD%91%E6%9D%AF/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-强网杯</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

