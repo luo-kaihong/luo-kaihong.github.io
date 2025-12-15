@@ -389,14 +389,10 @@
     </li>
     <li><a href="#二有限制本地文件包含漏洞">二：有限制本地文件包含漏洞</a>
       <ol>
-        <li>
-          <ol>
-            <li><a href="#2100截断文件包含">2.1%00截断文件包含</a></li>
-            <li><a href="#22路径长度截断文件包含">2.2.路径长度截断文件包含</a></li>
-            <li><a href="#23点号截断文件包含">2.3.点号截断文件包含</a></li>
-            <li><a href="#24require_once-绕过不能重复包含文件的限制">2.4.require_once 绕过不能重复包含文件的限制</a></li>
-          </ol>
-        </li>
+        <li><a href="#2100截断文件包含">2.1%00截断文件包含</a></li>
+        <li><a href="#22路径长度截断文件包含">2.2.路径长度截断文件包含</a></li>
+        <li><a href="#23点号截断文件包含">2.3.点号截断文件包含</a></li>
+        <li><a href="#24require_once-绕过不能重复包含文件的限制">2.4.require_once 绕过不能重复包含文件的限制</a></li>
       </ol>
     </li>
     <li><a href="#三日志包含">三.日志包含</a>
@@ -1028,7 +1024,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="34命令执行中无字母rce">3.4:命令执行中无字母rce
-</h3><div class="highlight"><div class="chroma">
+</h3><p>？？？</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -1201,8 +1198,6 @@
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">scandir</span><span class="p">()</span> <span class="o">:</span><span class="nx">将返回当前目录中的所有文件和目录的列表。返回的结果是一个数组，其中包含当前目录下的所有文件和目录名称（glob</span><span class="p">()</span><span class="nx">可替换）</span>
@@ -1216,8 +1211,6 @@
 </span></span><span class="line"><span class="cl"><span class="nx">array_reverse</span><span class="p">()</span><span class="o">:</span><span class="nx">将数组内容反转</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">strrev</span><span class="p">()</span><span class="o">:</span><span class="nx">用于反转给定字符串</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">getcwd</span><span class="p">()</span><span class="nx">：获取当前工作目录路径</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">dirname</span><span class="p">()</span> <span class="nx">：函数返回路径中的目录部分。如果传入的值是绝对路径（不包含文件名），则返回的是上一层路径，传入的是文件名绝对路径则返回文件的当前路径</span>
 </span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">()</span> <span class="nx">：函数改变当前的目录。</span>
@@ -1610,7 +1603,7 @@
 </div>
 </div><h2 id="六eval种无参数rce">六：eval种无参数rce
 </h2><h3 id="1获取环境变量">1.获取环境变量
-</h3><p>使用getenv()获取超全局变量的数组，使用array_rand和array_flip爆破出所有的全局变量。（这里环境没放flag，如果放了可以爆破出来）</p>
+</h3><p>使用<code>getenv()</code>获取超全局变量的数组，使用array_rand和array_flip爆破出所有的全局变量。（这里环境没放flag，如果放了可以爆破出来）</p>
 <p><img src="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251122191225420.png"
 	width="1824"
 	height="209"
@@ -2419,7 +2412,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">php://filter/resource=2.php
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">php://filter/resource=1.php
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/rce%E4%B8%8E%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%80%BB%E7%BB%93/image-20251120002443076.png"
@@ -2867,8 +2860,8 @@ phar://不管参数中是什么拓展名，都会被当做压缩包
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>那比如我想读1.php，那就只需要传参1就行了，那这时候怎么绕过像正常的无限制本地包含一样去进行</p>
-<h4 id="2100截断文件包含">2.1%00截断文件包含
-</h4><p><strong>利用条件</strong></p>
+<h3 id="2100截断文件包含">2.1%00截断文件包含
+</h3><p><strong>利用条件</strong></p>
 <p>这个漏洞的使用必须满足如下条件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2887,8 +2880,8 @@ phar://不管参数中是什么拓展名，都会被当做压缩包
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">file=../../../../../../etc/passwd%00
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h4 id="22路径长度截断文件包含">2.2.路径长度截断文件包含
-</h4><p>操作系统存在着最大路径长度的限制。可以输入超过最大路劲长度的目录，这样系统就会将后面的路劲丢弃，导致拓展名截断。</p>
+</div><h3 id="22路径长度截断文件包含">2.2.路径长度截断文件包含
+</h3><p>操作系统存在着最大路径长度的限制。可以输入超过最大路劲长度的目录，这样系统就会将后面的路劲丢弃，导致拓展名截断。</p>
 <p>漏洞利用条件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2912,10 +2905,10 @@ phar://不管参数中是什么拓展名，都会被当做压缩包
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>执行后发现已经成功截断了后面的拓展名</p>
-<h4 id="23点号截断文件包含">2.3.点号截断文件包含
-</h4><p>点号截断包含<strong>只使用与Windows系统</strong>，点号的长度大于256B的时候，就可以造成拓展名截断，不过多展示，和上面差不多</p>
-<h4 id="24require_once-绕过不能重复包含文件的限制">2.4.require_once 绕过不能重复包含文件的限制
-</h4><div class="highlight"><div class="chroma">
+<h3 id="23点号截断文件包含">2.3.点号截断文件包含
+</h3><p>点号截断包含<strong>只使用与Windows系统</strong>，点号的长度大于256B的时候，就可以造成拓展名截断，不过多展示，和上面差不多</p>
+<h3 id="24require_once-绕过不能重复包含文件的限制">2.4.require_once 绕过不能重复包含文件的限制
+</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -4025,12 +4018,12 @@ phar://不管参数中是什么拓展名，都会被当做压缩包
             
                 
 <article class="">
-    <a href="/p/%E6%96%B0%E5%8D%8E%E4%B8%89%E5%AE%9E%E4%B9%A0%E6%89%93%E9%9D%B6/">
+    <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">新华三实习打靶</h2>
+            <h2 class="article-title">2025-鹏程杯</h2>
         </div>
     </a>
 </article>
@@ -4038,12 +4031,12 @@ phar://不管参数中是什么拓展名，都会被当做压缩包
             
                 
 <article class="">
-    <a href="/p/%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9Bawdp/">
+    <a href="/p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">江西省赛awdp</h2>
+            <h2 class="article-title">2025领航杯-awdp</h2>
         </div>
     </a>
 </article>
@@ -4051,12 +4044,12 @@ phar://不管参数中是什么拓展名，都会被当做压缩包
             
                 
 <article class="">
-    <a href="/p/2025%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/">
+    <a href="/p/buu-awdp/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025极客大挑战</h2>
+            <h2 class="article-title">buu-awdp</h2>
         </div>
     </a>
 </article>
@@ -4064,12 +4057,12 @@ phar://不管参数中是什么拓展名，都会被当做压缩包
             
                 
 <article class="">
-    <a href="/p/2025-%E6%B1%9F%E8%A5%BF%E7%9C%81%E6%8C%AF%E5%85%B4%E6%9D%AF/">
+    <a href="/p/cc4/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-江西省振兴杯</h2>
+            <h2 class="article-title">cc4</h2>
         </div>
     </a>
 </article>
@@ -4077,12 +4070,12 @@ phar://不管参数中是什么拓展名，都会被当做压缩包
             
                 
 <article class="">
-    <a href="/p/2025-%E5%BC%BA%E7%BD%91%E6%9D%AF/">
+    <a href="/p/%E9%9D%A2%E7%BB%8F/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-强网杯</h2>
+            <h2 class="article-title">面经</h2>
         </div>
     </a>
 </article>

