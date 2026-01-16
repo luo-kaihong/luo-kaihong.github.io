@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" CC6 CC6链其实就是URLDNS链的前半加上CC1链的后半。\n1.将ChainedTransformer传入并通过decorate()方法获取到LazyMap对象 链子出口依旧是\n1 ChainedTransformer.transform()-&gt;InvokerTransformer.transform()-&gt;Runtime.exec() 然后我来找来到了LazyMap的get方法\n">
 <title>cc6</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="cc6">
 <meta property='og:description' content=" CC6 CC6链其实就是URLDNS链的前半加上CC1链的后半。\n1.将ChainedTransformer传入并通过decorate()方法获取到LazyMap对象 链子出口依旧是\n1 ChainedTransformer.transform()-&gt;InvokerTransformer.transform()-&gt;Runtime.exec() 然后我来找来到了LazyMap的get方法\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/cc6/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-09-11T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-09-11T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="cc6">
 <meta name="twitter:description" content=" CC6 CC6链其实就是URLDNS链的前半加上CC1链的后半。\n1.将ChainedTransformer传入并通过decorate()方法获取到LazyMap对象 链子出口依旧是\n1 ChainedTransformer.transform()-&gt;InvokerTransformer.transform()-&gt;Runtime.exec() 然后我来找来到了LazyMap的get方法\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -379,7 +379,7 @@
 <p><img src="/p/cc6/image-20251129230054718.png"
 	width="1197"
 	height="230"
-	srcset="/p/cc6/image-20251129230054718_hu_f5f857f21769fa66.png 480w, /p/cc6/image-20251129230054718_hu_a6a92fa66956f894.png 1024w"
+	srcset="/p/cc6/image-20251129230054718_hu_6ac1f3989ab78450.png 480w, /p/cc6/image-20251129230054718_hu_6e5e1520d4c58710.png 1024w"
 	loading="lazy"
 	
 		alt="image-20251129230054718"
@@ -404,7 +404,7 @@
 <p><img src="/p/cc6/image-20250911212446569.png"
 	width="1407"
 	height="425"
-	srcset="/p/cc6/image-20250911212446569_hu_f3e6b44cc52c3864.png 480w, /p/cc6/image-20250911212446569_hu_89ae6003aa2318a6.png 1024w"
+	srcset="/p/cc6/image-20250911212446569_hu_5bb8c6c7bbfca353.png 480w, /p/cc6/image-20250911212446569_hu_fd1346350f921d3c.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250911212446569"
@@ -445,7 +445,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 5. 如果 key 已存在，直接返回对应的 value</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">key</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>意思就是<strong>如果key不在Map中，则会自动生成一个值并存入key，否则就会返回已有的值</strong>，这里可以看到是根据factory.transform方法生成value的，如果能控制<code>factory</code>的值为<code>ChainedTransformer</code>，就可以实现命令执行，但是往上翻源码，发现factory是protected类型，不可控</p>
@@ -461,7 +461,7 @@
 <p><img src="/p/cc6/image-20250911213036456.png"
 	width="837"
 	height="229"
-	srcset="/p/cc6/image-20250911213036456_hu_cd8d340809c072fa.png 480w, /p/cc6/image-20250911213036456_hu_415a629943e1853c.png 1024w"
+	srcset="/p/cc6/image-20250911213036456_hu_2fe130216ef54f5d.png 480w, /p/cc6/image-20250911213036456_hu_acd363d658c3d43c.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250911213036456"
@@ -476,7 +476,7 @@
 <p><img src="/p/cc6/image-20250911213148569.png"
 	width="680"
 	height="142"
-	srcset="/p/cc6/image-20250911213148569_hu_9694e881bce4b2d5.png 480w, /p/cc6/image-20250911213148569_hu_9a3f7a5d399e47f6.png 1024w"
+	srcset="/p/cc6/image-20250911213148569_hu_464640045eaed1c7.png 480w, /p/cc6/image-20250911213148569_hu_f3687c2953c22404.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250911213148569"
@@ -522,16 +522,16 @@
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Transformer</span><span class="o">[]</span><span class="w"> </span><span class="n">TransformerArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="w">
@@ -541,17 +541,17 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">TransformerArray</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LazyMap</span><span class="w"> </span><span class="n">lazyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">LazyMap</span><span class="p">)</span><span class="w"> </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="p">(),</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lazyMap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;key&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/cc6/image-20250911214230884.png"
 	width="1798"
 	height="731"
-	srcset="/p/cc6/image-20250911214230884_hu_9567293d8c4ebe28.png 480w, /p/cc6/image-20250911214230884_hu_f74f868b1a06c721.png 1024w"
+	srcset="/p/cc6/image-20250911214230884_hu_5181e56e7a39f0c7.png 480w, /p/cc6/image-20250911214230884_hu_1e3a600e22924716.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250911214230884"
@@ -567,7 +567,7 @@
 <p><img src="/p/cc6/image-20250911214827736.png"
 	width="1299"
 	height="320"
-	srcset="/p/cc6/image-20250911214827736_hu_7589a2ed3897451a.png 480w, /p/cc6/image-20250911214827736_hu_15553e00e1651708.png 1024w"
+	srcset="/p/cc6/image-20250911214827736_hu_fc37c2fa2fbf7a8f.png 480w, /p/cc6/image-20250911214827736_hu_a678d48a0ea769a9.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250911214827736"
@@ -656,19 +656,19 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Transformer</span><span class="o">[]</span><span class="w"> </span><span class="n">TransformerArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="w">
@@ -678,7 +678,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">TransformerArray</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LazyMap</span><span class="w"> </span><span class="n">lazyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">LazyMap</span><span class="p">)</span><span class="w"> </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="p">(),</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">A</span><span class="o">=</span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;org.apache.commons.collections.keyvalue.TiedMapEntry&#34;</span><span class="p">);</span><span class="w">
@@ -686,13 +686,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TiedMapEntry</span><span class="w"> </span><span class="n">tiedMapEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">TiedMapEntry</span><span class="p">)</span><span class="w"> </span><span class="n">constructor</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">lazyMap</span><span class="p">,</span><span class="s">&#34;key&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">tiedMapEntry</span><span class="p">.</span><span class="na">getValue</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/cc6/image-20250911222824915.png"
 	width="1810"
 	height="938"
-	srcset="/p/cc6/image-20250911222824915_hu_f21ad623fa0b8f1b.png 480w, /p/cc6/image-20250911222824915_hu_60383a24ed48df4e.png 1024w"
+	srcset="/p/cc6/image-20250911222824915_hu_2e0e5f88a06e394c.png 480w, /p/cc6/image-20250911222824915_hu_863c73f495b21cfc.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250911222824915"
@@ -707,7 +707,7 @@
 <p><img src="/p/cc6/image-20250911224119979.png"
 	width="1453"
 	height="415"
-	srcset="/p/cc6/image-20250911224119979_hu_f7ccdd9a79ecb997.png 480w, /p/cc6/image-20250911224119979_hu_545ae11ece1faab5.png 1024w"
+	srcset="/p/cc6/image-20250911224119979_hu_3d29e59465d89820.png 480w, /p/cc6/image-20250911224119979_hu_5ff370ded77e0f36.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250911224119979"
@@ -766,19 +766,19 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Transformer</span><span class="o">[]</span><span class="w"> </span><span class="n">TransformerArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="w">
@@ -788,7 +788,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">TransformerArray</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LazyMap</span><span class="w"> </span><span class="n">lazyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">LazyMap</span><span class="p">)</span><span class="w"> </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="p">(),</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">A</span><span class="o">=</span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;org.apache.commons.collections.keyvalue.TiedMapEntry&#34;</span><span class="p">);</span><span class="w">
@@ -796,7 +796,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TiedMapEntry</span><span class="w"> </span><span class="n">tiedMapEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">TiedMapEntry</span><span class="p">)</span><span class="w"> </span><span class="n">constructor</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">lazyMap</span><span class="p">,</span><span class="s">&#34;key&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">tiedMapEntry</span><span class="p">.</span><span class="na">hashCode</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>谁调用hashcode？</p>
@@ -805,7 +805,7 @@
 <p><img src="/p/cc6/image-20250912235627236.png"
 	width="1691"
 	height="283"
-	srcset="/p/cc6/image-20250912235627236_hu_a15434157f20edcd.png 480w, /p/cc6/image-20250912235627236_hu_bb2c2ca16f4046a5.png 1024w"
+	srcset="/p/cc6/image-20250912235627236_hu_d5a6c28ed2c88415.png 480w, /p/cc6/image-20250912235627236_hu_6319c428d9da3cbd.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250912235627236"
@@ -900,14 +900,14 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">putVal</span><span class="p">(</span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">),</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>序列化的时候可以用HashMap的put方法传key和value</p>
 <p><img src="/p/cc6/image-20250913003552551.png"
 	width="1202"
 	height="87"
-	srcset="/p/cc6/image-20250913003552551_hu_98a9396cba16a5c9.png 480w, /p/cc6/image-20250913003552551_hu_9258b349f2be9fb3.png 1024w"
+	srcset="/p/cc6/image-20250913003552551_hu_e7135222c5faaec8.png 480w, /p/cc6/image-20250913003552551_hu_87461b765233f168.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250913003552551"
@@ -971,19 +971,19 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Transformer</span><span class="o">[]</span><span class="w"> </span><span class="n">TransformerArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="w">
@@ -993,7 +993,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">TransformerArray</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LazyMap</span><span class="w"> </span><span class="n">lazyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">LazyMap</span><span class="p">)</span><span class="w"> </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -1002,13 +1002,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TiedMapEntry</span><span class="w"> </span><span class="n">tiedMapEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">TiedMapEntry</span><span class="p">)</span><span class="w"> </span><span class="n">constructor</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">lazyMap</span><span class="p">,</span><span class="s">&#34;key&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">tiedMapEntry</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;value&#34;</span><span class="p">);</span><span class="c1">//HashMap类是readObject入口。所以这个map就是HashMap new的对象</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/cc6/image-20250913003835241.png"
 	width="1797"
 	height="975"
-	srcset="/p/cc6/image-20250913003835241_hu_9f1962aede1b4bba.png 480w, /p/cc6/image-20250913003835241_hu_2fd6a86fa2f2a815.png 1024w"
+	srcset="/p/cc6/image-20250913003835241_hu_c5be4b00eb22500f.png 480w, /p/cc6/image-20250913003835241_hu_11db79b150bdd244.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250913003835241"
@@ -1085,23 +1085,23 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileOutputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectInputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectOutputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Field</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileOutputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectInputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectOutputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Field</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Transformer</span><span class="o">[]</span><span class="w"> </span><span class="n">TransformerArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="w">
@@ -1111,7 +1111,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">TransformerArray</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LazyMap</span><span class="w"> </span><span class="n">lazyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">LazyMap</span><span class="p">)</span><span class="w"> </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="s">&#34;1&#34;</span><span class="p">));</span><span class="c1">//在newLazyMap对象的时候，把factory属性随便写个没用的Transformer</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -1139,7 +1139,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ois</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="5移除lazymap中get的key">5.移除LazyMap中get的key
@@ -1169,7 +1169,7 @@
 </div><p><img src="/p/cc6/image-20250913225926455.png"
 	width="1376"
 	height="594"
-	srcset="/p/cc6/image-20250913225926455_hu_27ecf5f852c7a077.png 480w, /p/cc6/image-20250913225926455_hu_bcf620c32b91cc6a.png 1024w"
+	srcset="/p/cc6/image-20250913225926455_hu_379ee531ee185bee.png 480w, /p/cc6/image-20250913225926455_hu_a91271c04a4c057d.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250913225926455"
@@ -1255,23 +1255,23 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">org.example</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.Transformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ChainedTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.ConstantTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.functors.InvokerTransformer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.keyvalue.TiedMapEntry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.collections.map.LazyMap</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileOutputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectInputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectOutputStream</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Field</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileOutputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectInputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ObjectOutputStream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Constructor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.reflect.Field</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">cc6</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Transformer</span><span class="o">[]</span><span class="w"> </span><span class="n">TransformerArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="w">
@@ -1281,7 +1281,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chainedTransformer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">TransformerArray</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过decorate()方法获取到LazyMap对象，并将ChainedTransformer传入</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LazyMap</span><span class="w"> </span><span class="n">lazyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">LazyMap</span><span class="p">)</span><span class="w"> </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="s">&#34;1&#34;</span><span class="p">));</span><span class="c1">//在newLazyMap对象的时候，把factory属性随便写个没用的Transformer</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -1310,13 +1310,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ois</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/cc6/image-20250913232046221.png"
 	width="1805"
 	height="1034"
-	srcset="/p/cc6/image-20250913232046221_hu_2ae5d122515c595d.png 480w, /p/cc6/image-20250913232046221_hu_191366e0d166053e.png 1024w"
+	srcset="/p/cc6/image-20250913232046221_hu_6e9c332e3bc3c86e.png 480w, /p/cc6/image-20250913232046221_hu_169cddfd2511696c.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250913232046221"
@@ -1342,7 +1342,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">HashMap</span><span class="p">.</span><span class="na">readObject</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">HashMap</span><span class="p">.</span><span class="na">hash</span><span class="p">()</span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">HashMap</span><span class="p">.</span><span class="na">hash</span><span class="p">()</span><span class="o">+</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">TiedMapEntry</span><span class="p">.</span><span class="na">hashCode</span><span class="p">()</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">TiedMapEntry</span><span class="p">.</span><span class="na">getValue</span><span class="p">()</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">get</span><span class="p">()</span><span class="w">
@@ -1452,12 +1452,12 @@
             
                 
 <article class="">
-    <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
+    <a href="/p/cb%E9%93%BE/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">2025-鹏程杯</h2>
+            <h2 class="article-title">CB链</h2>
         </div>
     </a>
 </article>
@@ -1522,7 +1522,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

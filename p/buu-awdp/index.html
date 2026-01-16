@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" babypython 考点：软链接读mac主机获得随机数种子伪造admin 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 # -*- coding: utf-8 -*- from flask import Flask,session,render_template,redirect, url_for, escape, request,Response import uuid import base64 import random import secret from werkzeug.utils import secure_filename import os random.seed(uuid.getnode()) app = Flask(__name__) app.config[&#39;SECRET_KEY&#39;] = str(random.random()*100) app.config[&#39;UPLOAD_FOLDER&#39;] = &#39;./uploads&#39; app.config[&#39;MAX_CONTENT_LENGTH&#39;] = 100 * 1024 ALLOWED_EXTENSIONS = set([&#39;zip&#39;]) def allowed_file(filename): return &#39;.&#39; in filename and \\ filename.rsplit(&#39;.&#39;, 1)[1].lower() in ALLOWED_EXTENSIONS @app.route(&#39;/&#39;, methods=[&#39;GET&#39;]) def index(): error = request.args.get(&#39;error&#39;, &#39;&#39;) if(error == &#39;1&#39;): session.pop(&#39;username&#39;, None) return render_template(&#39;index.html&#39;, forbidden=1) if not &#39;username&#39; in session: session[&#39;username&#39;] = &#34;guest&#34; if &#39;username&#39; in session: return render_template(&#39;index.html&#39;, user=session[&#39;username&#39;], secret=secret.secret) else: return render_template(&#39;index.html&#39;) @app.route(&#39;/upload&#39;, methods=[&#39;POST&#39;]) def upload_file(): if &#39;the_file&#39; not in request.files: return redirect(url_for(&#39;index&#39;)) file = request.files[&#39;the_file&#39;] if file.filename == &#39;&#39;: return redirect(url_for(&#39;index&#39;)) if file and allowed_file(file.filename): filename = secure_filename(file.filename) file_save_path = os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], filename) if(os.path.exists(file_save_path)): return &#39;This file already exists&#39; file.save(file_save_path) else: return &#39;This file is not a zipfile&#39; try: extract_path = file_save_path + &#39;_&#39; os.system(&#39;unzip -n &#39; + file_save_path + &#39; -d &#39;+ extract_path) read_obj = os.popen(&#39;cat &#39; + extract_path + &#39;/*&#39;) file = read_obj.read() read_obj.close() os.system(&#39;rm -rf &#39; + extract_path) except Exception as e: file = None os.remove(file_save_path) if(file != None): if(file.find(base64.b64decode(&#39;ZmxhZw==&#39;).decode(&#39;utf-8&#39;)) != -1): return redirect(url_for(&#39;index&#39;, error=1)) return Response(file) if __name__ == &#39;__main__&#39;: #app.run(debug=True) app.run(host=&#39;127.0.0.1&#39;, debug=False, port=10008) ">
 <title>buu-awdp</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="buu-awdp">
 <meta property='og:description' content=" babypython 考点：软链接读mac主机获得随机数种子伪造admin 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 # -*- coding: utf-8 -*- from flask import Flask,session,render_template,redirect, url_for, escape, request,Response import uuid import base64 import random import secret from werkzeug.utils import secure_filename import os random.seed(uuid.getnode()) app = Flask(__name__) app.config[&#39;SECRET_KEY&#39;] = str(random.random()*100) app.config[&#39;UPLOAD_FOLDER&#39;] = &#39;./uploads&#39; app.config[&#39;MAX_CONTENT_LENGTH&#39;] = 100 * 1024 ALLOWED_EXTENSIONS = set([&#39;zip&#39;]) def allowed_file(filename): return &#39;.&#39; in filename and \\ filename.rsplit(&#39;.&#39;, 1)[1].lower() in ALLOWED_EXTENSIONS @app.route(&#39;/&#39;, methods=[&#39;GET&#39;]) def index(): error = request.args.get(&#39;error&#39;, &#39;&#39;) if(error == &#39;1&#39;): session.pop(&#39;username&#39;, None) return render_template(&#39;index.html&#39;, forbidden=1) if not &#39;username&#39; in session: session[&#39;username&#39;] = &#34;guest&#34; if &#39;username&#39; in session: return render_template(&#39;index.html&#39;, user=session[&#39;username&#39;], secret=secret.secret) else: return render_template(&#39;index.html&#39;) @app.route(&#39;/upload&#39;, methods=[&#39;POST&#39;]) def upload_file(): if &#39;the_file&#39; not in request.files: return redirect(url_for(&#39;index&#39;)) file = request.files[&#39;the_file&#39;] if file.filename == &#39;&#39;: return redirect(url_for(&#39;index&#39;)) if file and allowed_file(file.filename): filename = secure_filename(file.filename) file_save_path = os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], filename) if(os.path.exists(file_save_path)): return &#39;This file already exists&#39; file.save(file_save_path) else: return &#39;This file is not a zipfile&#39; try: extract_path = file_save_path + &#39;_&#39; os.system(&#39;unzip -n &#39; + file_save_path + &#39; -d &#39;+ extract_path) read_obj = os.popen(&#39;cat &#39; + extract_path + &#39;/*&#39;) file = read_obj.read() read_obj.close() os.system(&#39;rm -rf &#39; + extract_path) except Exception as e: file = None os.remove(file_save_path) if(file != None): if(file.find(base64.b64decode(&#39;ZmxhZw==&#39;).decode(&#39;utf-8&#39;)) != -1): return redirect(url_for(&#39;index&#39;, error=1)) return Response(file) if __name__ == &#39;__main__&#39;: #app.run(debug=True) app.run(host=&#39;127.0.0.1&#39;, debug=False, port=10008) ">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/buu-awdp/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-12-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-12-12T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="buu-awdp">
 <meta name="twitter:description" content=" babypython 考点：软链接读mac主机获得随机数种子伪造admin 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 # -*- coding: utf-8 -*- from flask import Flask,session,render_template,redirect, url_for, escape, request,Response import uuid import base64 import random import secret from werkzeug.utils import secure_filename import os random.seed(uuid.getnode()) app = Flask(__name__) app.config[&#39;SECRET_KEY&#39;] = str(random.random()*100) app.config[&#39;UPLOAD_FOLDER&#39;] = &#39;./uploads&#39; app.config[&#39;MAX_CONTENT_LENGTH&#39;] = 100 * 1024 ALLOWED_EXTENSIONS = set([&#39;zip&#39;]) def allowed_file(filename): return &#39;.&#39; in filename and \\ filename.rsplit(&#39;.&#39;, 1)[1].lower() in ALLOWED_EXTENSIONS @app.route(&#39;/&#39;, methods=[&#39;GET&#39;]) def index(): error = request.args.get(&#39;error&#39;, &#39;&#39;) if(error == &#39;1&#39;): session.pop(&#39;username&#39;, None) return render_template(&#39;index.html&#39;, forbidden=1) if not &#39;username&#39; in session: session[&#39;username&#39;] = &#34;guest&#34; if &#39;username&#39; in session: return render_template(&#39;index.html&#39;, user=session[&#39;username&#39;], secret=secret.secret) else: return render_template(&#39;index.html&#39;) @app.route(&#39;/upload&#39;, methods=[&#39;POST&#39;]) def upload_file(): if &#39;the_file&#39; not in request.files: return redirect(url_for(&#39;index&#39;)) file = request.files[&#39;the_file&#39;] if file.filename == &#39;&#39;: return redirect(url_for(&#39;index&#39;)) if file and allowed_file(file.filename): filename = secure_filename(file.filename) file_save_path = os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], filename) if(os.path.exists(file_save_path)): return &#39;This file already exists&#39; file.save(file_save_path) else: return &#39;This file is not a zipfile&#39; try: extract_path = file_save_path + &#39;_&#39; os.system(&#39;unzip -n &#39; + file_save_path + &#39; -d &#39;+ extract_path) read_obj = os.popen(&#39;cat &#39; + extract_path + &#39;/*&#39;) file = read_obj.read() read_obj.close() os.system(&#39;rm -rf &#39; + extract_path) except Exception as e: file = None os.remove(file_save_path) if(file != None): if(file.find(base64.b64decode(&#39;ZmxhZw==&#39;).decode(&#39;utf-8&#39;)) != -1): return redirect(url_for(&#39;index&#39;, error=1)) return Response(file) if __name__ == &#39;__main__&#39;: #app.run(debug=True) app.run(host=&#39;127.0.0.1&#39;, debug=False, port=10008) ">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -525,7 +525,7 @@
 </div><p><img src="/p/buu-awdp/image-20251212213554833.png"
 	width="800"
 	height="210"
-	srcset="/p/buu-awdp/image-20251212213554833_hu_666e0837350ac2ef.png 480w, /p/buu-awdp/image-20251212213554833_hu_4fbeb5429e4e4ef4.png 1024w"
+	srcset="/p/buu-awdp/image-20251212213554833_hu_b3764069532ef357.png 480w, /p/buu-awdp/image-20251212213554833_hu_533467aa04357ec6.png 1024w"
 	loading="lazy"
 	
 		alt="image-20251212213554833"
@@ -653,6 +653,32 @@
             
                 
 <article class="">
+    <a href="/p/2022vnctf%E5%A4%8D%E7%8E%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2022vnctf复现</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-ciscn%E5%88%9D%E8%B5%9B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-ciscn初赛</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
         
         
@@ -679,38 +705,12 @@
             
                 
 <article class="">
-    <a href="/p/cc4/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">cc4</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
     <a href="/p/%E9%9D%A2%E7%BB%8F/">
         
         
 
         <div class="article-details">
             <h2 class="article-title">面经</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025isctf/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025isctf</h2>
         </div>
     </a>
 </article>
@@ -775,7 +775,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

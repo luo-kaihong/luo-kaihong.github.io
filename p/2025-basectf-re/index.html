@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" week1 You are good at IDA 主函数看到一部分flag-Y0u_4Re_，看提示有f12+shift\n这个视图列举出了 IDA 识别到的所有字符串\n1 2 3 双击这一行可以跳转到文件中这个字符串的位置，DATA XREF:显示了哪个函数使用了这个字符串，双击可以跳转到那个函数 然后将里面的数值按 R 键以字符形式显示，然后显示伪代码就能得到第二部分 并且函数里面给了最后一部分的提示 得到900d_47_(右键将ascii转换_)，看提示，最后一部分在一个名字叫Interesting的函数里面\n">
 <title>2025-basectf-re</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-basectf-re">
 <meta property='og:description' content=" week1 You are good at IDA 主函数看到一部分flag-Y0u_4Re_，看提示有f12+shift\n这个视图列举出了 IDA 识别到的所有字符串\n1 2 3 双击这一行可以跳转到文件中这个字符串的位置，DATA XREF:显示了哪个函数使用了这个字符串，双击可以跳转到那个函数 然后将里面的数值按 R 键以字符形式显示，然后显示伪代码就能得到第二部分 并且函数里面给了最后一部分的提示 得到900d_47_(右键将ascii转换_)，看提示，最后一部分在一个名字叫Interesting的函数里面\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-basectf-re/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-06-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-06-05T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-basectf-re">
 <meta name="twitter:description" content=" week1 You are good at IDA 主函数看到一部分flag-Y0u_4Re_，看提示有f12+shift\n这个视图列举出了 IDA 识别到的所有字符串\n1 2 3 双击这一行可以跳转到文件中这个字符串的位置，DATA XREF:显示了哪个函数使用了这个字符串，双击可以跳转到那个函数 然后将里面的数值按 R 键以字符形式显示，然后显示伪代码就能得到第二部分 并且函数里面给了最后一部分的提示 得到900d_47_(右键将ascii转换_)，看提示，最后一部分在一个名字叫Interesting的函数里面\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -390,7 +390,7 @@
 <p><img src="/p/2025-basectf-re/image-20250605204033089.png"
 	width="644"
 	height="284"
-	srcset="/p/2025-basectf-re/image-20250605204033089_hu_424c514e23f6934c.png 480w, /p/2025-basectf-re/image-20250605204033089_hu_26a5bd25a406582e.png 1024w"
+	srcset="/p/2025-basectf-re/image-20250605204033089_hu_3b495aba3458abf4.png 480w, /p/2025-basectf-re/image-20250605204033089_hu_ffef97f568c2cefa.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250605204033089"
@@ -516,12 +516,12 @@
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// eax
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">char</span> <span class="n">v5</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span> <span class="c1">// [rsp+20h] [rbp-60h] BYREF
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">__int16</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [rsp+40h] [rbp-40h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">char</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// [rsp+42h] [rbp-3Eh]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [rsp+48h] [rbp-38h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">v9</span><span class="p">;</span> <span class="c1">// [rsp+4Ch] [rbp-34h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">v5</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span> <span class="c1">// [rsp+20h] [rbp-60h] BYREF
+</span></span></span><span class="line"><span class="cl">  <span class="kr">__int16</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [rsp+40h] [rbp-40h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// [rsp+42h] [rbp-3Eh]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [rsp+48h] [rbp-38h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">v9</span><span class="p">;</span> <span class="c1">// [rsp+4Ch] [rbp-34h]
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nf">sub_401840</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">j_puts</span><span class="p">(</span><span class="n">Buffer</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">j_puts</span><span class="p">(</span><span class="n">aTakeTheShortes</span><span class="p">);</span>
@@ -1313,7 +1313,7 @@
 <p><img src="/p/2025-basectf-re/image-20250606111020775.png"
 	width="1108"
 	height="113"
-	srcset="/p/2025-basectf-re/image-20250606111020775_hu_91c9a85ec4208e98.png 480w, /p/2025-basectf-re/image-20250606111020775_hu_8bc6a6211eacc091.png 1024w"
+	srcset="/p/2025-basectf-re/image-20250606111020775_hu_9081afaa88b4fa2a.png 480w, /p/2025-basectf-re/image-20250606111020775_hu_1206620aef06fd31.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250606111020775"
@@ -1683,11 +1683,11 @@
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">sub_140015FB0</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">a1</span><span class="p">,</span> <span class="n">_DWORD</span> <span class="o">*</span><span class="n">a2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="kr">__int64</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// rax
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// [rsp+24h] [rbp+4h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [rsp+44h] [rbp+24h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">// [rsp+64h] [rbp+44h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [rsp+84h] [rbp+64h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// [rsp+24h] [rbp+4h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [rsp+44h] [rbp+24h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">// [rsp+64h] [rbp+44h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [rsp+84h] [rbp+64h]
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nf">sub_140011366</span><span class="p">(</span><span class="o">&amp;</span><span class="n">unk_140022015</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="n">v3</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">v5</span> <span class="o">=</span> <span class="o">*</span><span class="n">a1</span><span class="p">;</span>
@@ -2084,7 +2084,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

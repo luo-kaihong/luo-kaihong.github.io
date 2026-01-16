@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 9.6 把当前所有文件打包打/tmp/backup.tar.gz(/home/ctf不然打包)\n1 tar -zcvf /tmp/backup.tar.gz . 扫c段。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 import requests from concurrent.futures import ThreadPoolExecutor def get_ip(url): try: resp = requests.get(url, timeout=5) if resp.status_code == 200: # 在URL前后添加双引号 formatted_url = f&#39;&#34;{url}&#34;&#39; with open(&#34;host.txt&#34;, &#34;a&#34;) as f: f.write(formatted_url + &#34;\\n&#34;) print(formatted_url) except requests.RequestException as e: pass # 忽略连接超时等错误 if __name__ == &#34;__main__&#34;: # 清空或创建host.txt文件 open(&#34;host.txt&#34;, &#34;w&#34;).close() # 生成URL列表 urls = [f&#34;http://192-168-1-{i}.pvp6430.bugku.cn&#34; for i in range(1, 255)] # 使用线程池并发请求 with ThreadPoolExecutor(max_workers=100) as executor: executor.map(get_ip, urls) wc了，好久没打，白名单那里出问题，浪费大把时间，刚把源码打包结束了。\n">
 <title>2025-9.6awd</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-9.6awd">
 <meta property='og:description' content=" 9.6 把当前所有文件打包打/tmp/backup.tar.gz(/home/ctf不然打包)\n1 tar -zcvf /tmp/backup.tar.gz . 扫c段。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 import requests from concurrent.futures import ThreadPoolExecutor def get_ip(url): try: resp = requests.get(url, timeout=5) if resp.status_code == 200: # 在URL前后添加双引号 formatted_url = f&#39;&#34;{url}&#34;&#39; with open(&#34;host.txt&#34;, &#34;a&#34;) as f: f.write(formatted_url + &#34;\\n&#34;) print(formatted_url) except requests.RequestException as e: pass # 忽略连接超时等错误 if __name__ == &#34;__main__&#34;: # 清空或创建host.txt文件 open(&#34;host.txt&#34;, &#34;w&#34;).close() # 生成URL列表 urls = [f&#34;http://192-168-1-{i}.pvp6430.bugku.cn&#34; for i in range(1, 255)] # 使用线程池并发请求 with ThreadPoolExecutor(max_workers=100) as executor: executor.map(get_ip, urls) wc了，好久没打，白名单那里出问题，浪费大把时间，刚把源码打包结束了。\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-9.6awd/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-09-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-09-06T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-9.6awd">
 <meta name="twitter:description" content=" 9.6 把当前所有文件打包打/tmp/backup.tar.gz(/home/ctf不然打包)\n1 tar -zcvf /tmp/backup.tar.gz . 扫c段。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 import requests from concurrent.futures import ThreadPoolExecutor def get_ip(url): try: resp = requests.get(url, timeout=5) if resp.status_code == 200: # 在URL前后添加双引号 formatted_url = f&#39;&#34;{url}&#34;&#39; with open(&#34;host.txt&#34;, &#34;a&#34;) as f: f.write(formatted_url + &#34;\\n&#34;) print(formatted_url) except requests.RequestException as e: pass # 忽略连接超时等错误 if __name__ == &#34;__main__&#34;: # 清空或创建host.txt文件 open(&#34;host.txt&#34;, &#34;w&#34;).close() # 生成URL列表 urls = [f&#34;http://192-168-1-{i}.pvp6430.bugku.cn&#34; for i in range(1, 255)] # 使用线程池并发请求 with ThreadPoolExecutor(max_workers=100) as executor: executor.map(get_ip, urls) wc了，好久没打，白名单那里出问题，浪费大把时间，刚把源码打包结束了。\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -569,7 +569,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

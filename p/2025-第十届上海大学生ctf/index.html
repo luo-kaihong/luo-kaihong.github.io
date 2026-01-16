@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" web cryto 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 known_message_hex = &#34;54686520666c61672069732068696464656e20736f6d65776865726520696e207468697320656e637279707465642073797374656d2e&#34; known_ciphertext_hex = &#34;b7eb5c9e8ea16f3dec89b6dfb65670343efe2ea88e0e88c490da73287c86e8ebf375ea1194b0d8b14f8b6329a44f396683f22cf8adf8&#34; flag_ciphertext_hex = &#34;85ef58d9938a4d1793a993a0ac0c612368cf3fa8be07d9dd9f8c737d299cd9adb76fdc1187b6c3a00c866a20&#34; def xor_hex_strings(hex_str1, hex_str2): bytes1 = bytes.fromhex(hex_str1) bytes2 = bytes.fromhex(hex_str2) # Ensure both byte strings are of the same length # If not, truncate the longer one to match the shorter one min_len = min(len(bytes1), len(bytes2)) result_bytes = bytes([b1 ^ b2 for b1, b2 in zip(bytes1[:min_len], bytes2[:min_len])]) return result_bytes.hex() # 1. 计算两个密文的异或值 ciphertext_xor_hex = xor_hex_strings(known_ciphertext_hex, flag_ciphertext_hex) # 2. 将已知明文与异或结果进行异或操作 # 注意：这里需要将已知明文转换为hex，或者直接使用其原始字节表示 # 假设已知明文的长度与密文的有效部分长度相同 known_message_bytes = bytes.fromhex(known_message_hex) ciphertext_xor_bytes = bytes.fromhex(ciphertext_xor_hex) # 确保长度匹配，取较短的长度进行异或 min_len = min(len(known_message_bytes), len(ciphertext_xor_bytes)) flag_bytes = bytes([b1 ^ b2 for b1, b2 in zip(known_message_bytes[:min_len], ciphertext_xor_bytes[:min_len])]) print(f&#34;解密得到的flag: {flag_bytes.decode(&#39;utf-8&#39;, errors=&#39;ignore&#39;)}&#34;) 数据分析 SQLi_Detection 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 def detect_sql_injection(file_path): # 定义检测模式 boolean_patterns = [&#34;&#39; OR&#34;, &#34;&#39; AND&#34;] union_patterns = [&#34;&#39; UNION SELECT&#34;] stacked_patterns = [&#34;&#39;;&#34;] dangerous_keywords = [&#34;DROP&#34;, &#34;DELETE&#34;, &#34;UPDATE&#34;, &#34;INSERT&#34;, &#34;ALTER&#34;, &#34;SHUTDOWN&#34;] count = 0 with open(file_path, &#39;r&#39;) as file: for line in file: line_upper = line.upper().strip() # 检查布尔注入 if any(pattern in line_upper for pattern in boolean_patterns): count += 1 continue # 检查联合查询注入 if any(pattern in line_upper for pattern in union_patterns): count += 1 continue # 检查堆叠查询注入 if any(pattern in line_upper for pattern in stacked_patterns): if &#39;;&#39; in line: parts = line.split(&#39;;&#39;) if len(parts) &gt; 1: second_part = parts[1].upper() if any(keyword in second_part for keyword in dangerous_keywords): count += 1 return count # 使用示例 injection_count = detect_sql_injection(&#39;logs.txt&#39;) print(f&#34;flag{{{injection_count}}}&#34;) flag{451}\n">
 <title>2025-第十届上海大学生ctf</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-第十届上海大学生ctf">
 <meta property='og:description' content=" web cryto 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 known_message_hex = &#34;54686520666c61672069732068696464656e20736f6d65776865726520696e207468697320656e637279707465642073797374656d2e&#34; known_ciphertext_hex = &#34;b7eb5c9e8ea16f3dec89b6dfb65670343efe2ea88e0e88c490da73287c86e8ebf375ea1194b0d8b14f8b6329a44f396683f22cf8adf8&#34; flag_ciphertext_hex = &#34;85ef58d9938a4d1793a993a0ac0c612368cf3fa8be07d9dd9f8c737d299cd9adb76fdc1187b6c3a00c866a20&#34; def xor_hex_strings(hex_str1, hex_str2): bytes1 = bytes.fromhex(hex_str1) bytes2 = bytes.fromhex(hex_str2) # Ensure both byte strings are of the same length # If not, truncate the longer one to match the shorter one min_len = min(len(bytes1), len(bytes2)) result_bytes = bytes([b1 ^ b2 for b1, b2 in zip(bytes1[:min_len], bytes2[:min_len])]) return result_bytes.hex() # 1. 计算两个密文的异或值 ciphertext_xor_hex = xor_hex_strings(known_ciphertext_hex, flag_ciphertext_hex) # 2. 将已知明文与异或结果进行异或操作 # 注意：这里需要将已知明文转换为hex，或者直接使用其原始字节表示 # 假设已知明文的长度与密文的有效部分长度相同 known_message_bytes = bytes.fromhex(known_message_hex) ciphertext_xor_bytes = bytes.fromhex(ciphertext_xor_hex) # 确保长度匹配，取较短的长度进行异或 min_len = min(len(known_message_bytes), len(ciphertext_xor_bytes)) flag_bytes = bytes([b1 ^ b2 for b1, b2 in zip(known_message_bytes[:min_len], ciphertext_xor_bytes[:min_len])]) print(f&#34;解密得到的flag: {flag_bytes.decode(&#39;utf-8&#39;, errors=&#39;ignore&#39;)}&#34;) 数据分析 SQLi_Detection 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 def detect_sql_injection(file_path): # 定义检测模式 boolean_patterns = [&#34;&#39; OR&#34;, &#34;&#39; AND&#34;] union_patterns = [&#34;&#39; UNION SELECT&#34;] stacked_patterns = [&#34;&#39;;&#34;] dangerous_keywords = [&#34;DROP&#34;, &#34;DELETE&#34;, &#34;UPDATE&#34;, &#34;INSERT&#34;, &#34;ALTER&#34;, &#34;SHUTDOWN&#34;] count = 0 with open(file_path, &#39;r&#39;) as file: for line in file: line_upper = line.upper().strip() # 检查布尔注入 if any(pattern in line_upper for pattern in boolean_patterns): count += 1 continue # 检查联合查询注入 if any(pattern in line_upper for pattern in union_patterns): count += 1 continue # 检查堆叠查询注入 if any(pattern in line_upper for pattern in stacked_patterns): if &#39;;&#39; in line: parts = line.split(&#39;;&#39;) if len(parts) &gt; 1: second_part = parts[1].upper() if any(keyword in second_part for keyword in dangerous_keywords): count += 1 return count # 使用示例 injection_count = detect_sql_injection(&#39;logs.txt&#39;) print(f&#34;flag{{{injection_count}}}&#34;) flag{451}\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-08-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-08-06T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-第十届上海大学生ctf">
 <meta name="twitter:description" content=" web cryto 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 known_message_hex = &#34;54686520666c61672069732068696464656e20736f6d65776865726520696e207468697320656e637279707465642073797374656d2e&#34; known_ciphertext_hex = &#34;b7eb5c9e8ea16f3dec89b6dfb65670343efe2ea88e0e88c490da73287c86e8ebf375ea1194b0d8b14f8b6329a44f396683f22cf8adf8&#34; flag_ciphertext_hex = &#34;85ef58d9938a4d1793a993a0ac0c612368cf3fa8be07d9dd9f8c737d299cd9adb76fdc1187b6c3a00c866a20&#34; def xor_hex_strings(hex_str1, hex_str2): bytes1 = bytes.fromhex(hex_str1) bytes2 = bytes.fromhex(hex_str2) # Ensure both byte strings are of the same length # If not, truncate the longer one to match the shorter one min_len = min(len(bytes1), len(bytes2)) result_bytes = bytes([b1 ^ b2 for b1, b2 in zip(bytes1[:min_len], bytes2[:min_len])]) return result_bytes.hex() # 1. 计算两个密文的异或值 ciphertext_xor_hex = xor_hex_strings(known_ciphertext_hex, flag_ciphertext_hex) # 2. 将已知明文与异或结果进行异或操作 # 注意：这里需要将已知明文转换为hex，或者直接使用其原始字节表示 # 假设已知明文的长度与密文的有效部分长度相同 known_message_bytes = bytes.fromhex(known_message_hex) ciphertext_xor_bytes = bytes.fromhex(ciphertext_xor_hex) # 确保长度匹配，取较短的长度进行异或 min_len = min(len(known_message_bytes), len(ciphertext_xor_bytes)) flag_bytes = bytes([b1 ^ b2 for b1, b2 in zip(known_message_bytes[:min_len], ciphertext_xor_bytes[:min_len])]) print(f&#34;解密得到的flag: {flag_bytes.decode(&#39;utf-8&#39;, errors=&#39;ignore&#39;)}&#34;) 数据分析 SQLi_Detection 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 def detect_sql_injection(file_path): # 定义检测模式 boolean_patterns = [&#34;&#39; OR&#34;, &#34;&#39; AND&#34;] union_patterns = [&#34;&#39; UNION SELECT&#34;] stacked_patterns = [&#34;&#39;;&#34;] dangerous_keywords = [&#34;DROP&#34;, &#34;DELETE&#34;, &#34;UPDATE&#34;, &#34;INSERT&#34;, &#34;ALTER&#34;, &#34;SHUTDOWN&#34;] count = 0 with open(file_path, &#39;r&#39;) as file: for line in file: line_upper = line.upper().strip() # 检查布尔注入 if any(pattern in line_upper for pattern in boolean_patterns): count += 1 continue # 检查联合查询注入 if any(pattern in line_upper for pattern in union_patterns): count += 1 continue # 检查堆叠查询注入 if any(pattern in line_upper for pattern in stacked_patterns): if &#39;;&#39; in line: parts = line.split(&#39;;&#39;) if len(parts) &gt; 1: second_part = parts[1].upper() if any(keyword in second_part for keyword in dangerous_keywords): count += 1 return count # 使用示例 injection_count = detect_sql_injection(&#39;logs.txt&#39;) print(f&#34;flag{{{injection_count}}}&#34;) flag{451}\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -377,7 +377,7 @@
 </h2><p><img src="/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/image-20250806095313765.png"
 	width="331"
 	height="83"
-	srcset="/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/image-20250806095313765_hu_9f7717e6a7fc933c.png 480w, /p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/image-20250806095313765_hu_1d2dfd9e29325fa1.png 1024w"
+	srcset="/p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/image-20250806095313765_hu_e1cfa076a758481c.png 480w, /p/2025-%E7%AC%AC%E5%8D%81%E5%B1%8A%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9Fctf/image-20250806095313765_hu_da2743b84d2b1e78.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250806095313765"
@@ -960,7 +960,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

